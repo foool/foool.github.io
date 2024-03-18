@@ -47,12 +47,12 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Create<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>Slio<span style="padding-left:9.5px"></span>R2<span style="padding-left:9.5px"></span>Client
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="StartSlioLTF" class="tlc_func">StartSlioLTF</a>(block, system, pwork, dtID) <span class="tlc_fkw">Output</span>
- <br><span class="tlc_assign">%assign</span> nulldef = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetNullDefinitionFromTfl">SLibGetNullDefinitionFromTfl</a>()
- <br>&nbsp; <br><span class="tlc_assign">%assign</span> isMdlRef = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>()
+ <br><span class="tlc_assign">%assign</span> nulldef = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibGetNullDefinitionFromTfl">SLibGetNullDefinitionFromTfl</a>()
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> isMdlRef = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>()
  <br><span class="tlc_assign">%assign</span> relBlockPath = <span class="tlc_bifunc">STRING</span>(ParamSettings.InputSignalBlockPath)
  <br><span class="tlc_assign">%assign</span> loggedName = <span class="tlc_bifunc">STRING</span>(ParamSettings.LoggedName)
  <br><span class="tlc_assign">%assign</span> propName = <span class="tlc_bifunc">STRING</span>(ParamSettings.PropName)
- <br><span class="tlc_assign">%assign</span> mapInfo = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/slio.html#GetDataMapInfoForSystem">GetDataMapInfoForSystem</a>(system)
+ <br><span class="tlc_assign">%assign</span> mapInfo = <a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/slio.html#GetDataMapInfoForSystem">GetDataMapInfoForSystem</a>(system)
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Max<span style="padding-left:9.5px"></span>points
 </span> <br><span class="tlc_assign">%assign</span> maxPoints = ParamSettings.MaxPoints[0]
  <br><span class="tlc_if">%if</span> maxPoints < 0
@@ -70,11 +70,11 @@ body {
  <br>&nbsp;&nbsp;const void * signalDescriptor = %<<span>nulldef</span>>;
  <br>&nbsp;&nbsp;void * loggingInterval = %<<span>nulldef</span>>;
  <br>&nbsp;&nbsp;char * datasetName = "tmp_raccel_logsout";
- <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mapInfo = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/slio.html#GetDataMapInfoForSystem">GetDataMapInfoForSystem</a>(system)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mapInfo = <a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/slio.html#GetDataMapInfoForSystem">GetDataMapInfoForSystem</a>(system)
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isMdlRef   
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sims = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("MdlRefSfcnS")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sims = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("MdlRefSfcnS")
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sims = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib.html#RTMsGet">RTMsGet</a>(system, "RootSS")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sims = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib.html#RTMsGet">RTMsGet</a>(system, "RootSS")
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp; <br>&nbsp;&nbsp;void * slioCatalogue = rt_slioCatalogue() ? ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;rtwGetPointerFromUniquePtr(rt_slioCatalogue()) : ... 
@@ -84,7 +84,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Get the dimensions of the foreach subsystem which is inside the model block</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> 0 < block.NumForEachLevels
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint_T numForEachLevels = %<<span>block.NumForEachLevels</span>>;
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/intrusive_accessor.html#CreateDims">CreateDims</a>(block.NumForEachLevels,block.ForEachDims,"forEachDims")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/intrusive_accessor.html#CreateDims">CreateDims</a>(block.NumForEachLevels,block.ForEachDims,"forEachDims")>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isMdlRef
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T forEachMdlRefDimsArray[32];
@@ -92,20 +92,20 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Get the dimensions of the foreach subsystem which contains the model block</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(!slIsRapidAcceleratorSimulating()) {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;forEachMdlRefDimsArraySize = slSigLogGetForEachDimsForRefModel(...
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib.html#RTMsGet">RTMsGet</a>(system, "MdlRefSfcnS")>, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib.html#RTMsGet">RTMsGet</a>(system, "MdlRefSfcnS")>, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;forEachMdlRefDimsArray);
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>    
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;treeVector = rtwGetTreeVector();
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Virtual buses</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ParamSettings.IsVirtualBus[0]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/slio.html#getSlioBusNodes">getSlioBusNodes</a>(block, system, "treeVector")>       
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/slio.html#getSlioBusNodes">getSlioBusNodes</a>(block, system, "treeVector")>       
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% NV Bus</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeIsBus">LibDataTypeIsBus</a>(dtID)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/slio.html#getSlioNVBusNodes">getSlioNVBusNodes</a>(block, system, "treeVector")> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeIsBus">LibDataTypeIsBus</a>(dtID)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/slio.html#getSlioNVBusNodes">getSlioNVBusNodes</a>(block, system, "treeVector")> 
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Signal</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/slio.html#getSlioSignalNode">getSlioSignalNode</a>(block, system, "treeVector")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/slio.html#getSlioSignalNode">getSlioSignalNode</a>(block, system, "treeVector")>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span> 
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isMdlRef
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> foreachTopDims = "forEachMdlRefDimsArraySize ? (const uint_T*)forEachMdlRefDimsArray : " + nulldef + ", forEachMdlRefDimsArraySize"
@@ -168,16 +168,16 @@ body {
 </span> <br><span class="tlc_fkw">%function</span> <a id="getSlioSignalNode" class="tlc_func">getSlioSignalNode</a>(block, system, treeVector) <span class="tlc_fkw">Output</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sigName = <span class="tlc_bifunc">STRING</span>(ParamSettings.OrigSignalName)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portIdx = 0
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/slio.html#getSlioLeafNode">getSlioLeafNode</a>(block, system, portIdx, sigName, treeVector)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/slio.html#getSlioLeafNode">getSlioLeafNode</a>(block, system, portIdx, sigName, treeVector)>
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%%getSlioSignalNode</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Prepare<span style="padding-left:9.5px"></span>Signal<span style="padding-left:9.5px"></span>descriptor<span style="padding-left:9.5px"></span>
 </span> <br><span class="tlc_fkw">%function</span> <a id="getSlioLeafNode" class="tlc_func">getSlioLeafNode</a>(block, system, portIdx, sigName, treeVector) <span class="tlc_fkw">Output</span>
  <br>{  
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Data type registration</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portDT = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalDataTypeId">LibBlockInputSignalDataTypeId</a>(portIdx)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtID = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeIdAliasedThruToFromId">LibGetDataTypeIdAliasedThruToFromId</a>(portDT)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portDT = <a href="https://foool.github.io/r2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalDataTypeId">LibBlockInputSignalDataTypeId</a>(portIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtID = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeIdAliasedThruToFromId">LibGetDataTypeIdAliasedThruToFromId</a>(portDT)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Complexity</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> complexity = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalIsComplex">LibBlockInputSignalIsComplex</a>(portIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> complexity = <a href="https://foool.github.io/r2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalIsComplex">LibBlockInputSignalIsComplex</a>(portIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Interpolation</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ParamSettings.IsContinuous[portIdx]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> interpMethod = "linear"
@@ -185,19 +185,19 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> interpMethod = "zoh"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Dimensions</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nDims = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalNumDimensions">LibBlockInputSignalNumDimensions</a>(portIdx)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dims = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalDimensions">LibBlockInputSignalDimensions</a>(portIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nDims = <a href="https://foool.github.io/r2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalNumDimensions">LibBlockInputSignalNumDimensions</a>(portIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dims = <a href="https://foool.github.io/r2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalDimensions">LibBlockInputSignalDimensions</a>(portIdx)
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Units</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sigUnits = <span class="tlc_bifunc">STRING</span>(ParamSettings.SignalUnits[portIdx])
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Sample Time</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sampleTime = ParamSettings.SampleTimeLabels[portIdx]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>() &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#MdlRefDisallowSampleTimeInheritance">MdlRefDisallowSampleTimeInheritance</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>() &amp;&amp; !<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#MdlRefDisallowSampleTimeInheritance">MdlRefDisallowSampleTimeInheritance</a>()
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> discreteInterval = 0
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> discreteInterval = ParamSettings.DiscreteInterval[portIdx]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stopTime = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("TFinal")
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/slio.html#addSlioLeafNode">addSlioLeafNode</a>(...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stopTime = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("TFinal")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/slio.html#addSlioLeafNode">addSlioLeafNode</a>(...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dtID,...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dims, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nDims, ...
@@ -215,9 +215,9 @@ body {
  <br>&nbsp;&nbsp;dtID, dims, nDims, complexity, ...
  <br>&nbsp;&nbsp;interpMethod, sigName, sigUnits, sampleTime, discreteIncr, ...
  <br>&nbsp;&nbsp;stopTime, treeVector) Output
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> datatypeName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/intrusive_accessor.html#getDatatypeNameFromId">getDatatypeNameFromId</a>(dtID)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/slio.html#OutputTypedVector">OutputTypedVector</a>(nDims, dims, "int_T", "sigDimsArray")>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsBuiltInDataType">LibIsBuiltInDataType</a>(dtID)    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> datatypeName = <a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/intrusive_accessor.html#getDatatypeNameFromId">getDatatypeNameFromId</a>(dtID)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/slio.html#OutputTypedVector">OutputTypedVector</a>(nDims, dims, "int_T", "sigDimsArray")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibIsBuiltInDataType">LibIsBuiltInDataType</a>(dtID)    
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtwAddLeafNode(...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dtID</span>>, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>sigName</span>>", ...
@@ -231,8 +231,8 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>discreteIncr</span>>, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>stopTime</span>>, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>treeVector</span>>);
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsDataTypeFixpt">LibIsDataTypeFixpt</a>(dtID)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> curDT = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptlib.html#FixPt_GetDataTypeFromIndex">FixPt_GetDataTypeFromIndex</a>(dtID)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibIsDataTypeFixpt">LibIsDataTypeFixpt</a>(dtID)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> curDT = <a href="https://foool.github.io/r2020a/rtw/c/tlc/fixpt/fixptlib.html#FixPt_GetDataTypeFromIndex">FixPt_GetDataTypeFromIndex</a>(dtID)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fxp_isSigned = curDT.IsSigned
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fxp_wordLen = curDT.RequiredBits
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fxp_slope = curDT.FracSlope
@@ -257,23 +257,23 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>stopTime</span>>, ...     
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>treeVector</span>>);
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% enum parameters</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsEnumDataType">LibIsEnumDataType</a>(dtID)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibIsEnumDataType">LibIsEnumDataType</a>(dtID)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> storageID = -1
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsEnumTypeStoredAsInt">LibIsEnumTypeStoredAsInt</a>(dtID)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibIsEnumTypeStoredAsInt">LibIsEnumTypeStoredAsInt</a>(dtID)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> storageID = 6 <span class="tlc_comment">%% int32</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> storageID = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetEnumTypeStorageType">LibGetEnumTypeStorageType</a>(dtID)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> storageID = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetEnumTypeStorageType">LibGetEnumTypeStorageType</a>(dtID)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> resolvedDatatypeName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetMLDataTypeFromId">SLibGetMLDataTypeFromId</a>(storageID)
- <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nEnums = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#FcnGetEnumTypeNumEnums">FcnGetEnumTypeNumEnums</a>(dtID)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> resolvedDatatypeName = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetMLDataTypeFromId">SLibGetMLDataTypeFromId</a>(storageID)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nEnums = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#FcnGetEnumTypeNumEnums">FcnGetEnumTypeNumEnums</a>(dtID)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> allEnumValues = Vector(%<<span>nEnums</span>>) [0@%<<span>nEnums</span>>]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> allEnumLabels = Vector(%<<span>nEnums</span>>) [""@%<<span>nEnums</span>>]
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> enumIdx = nEnums
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> allEnumValues[enumIdx] = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetEnumTypeValueFromIndex">SLibGetEnumTypeValueFromIndex</a>(dtID, enumIdx)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> allEnumLabels[enumIdx] = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetEnumTypeStringFromIndex">SLibGetEnumTypeStringFromIndex</a>(dtID, enumIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> allEnumValues[enumIdx] = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetEnumTypeValueFromIndex">SLibGetEnumTypeValueFromIndex</a>(dtID, enumIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> allEnumLabels[enumIdx] = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetEnumTypeStringFromIndex">SLibGetEnumTypeStringFromIndex</a>(dtID, enumIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
- <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/slio.html#OutputTypedVector">OutputTypedVector</a>(nEnums, allEnumValues, "int_T", "enumValues")>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/slio.html#OutputTypedVector">OutputTypedVector</a>(nEnums, allEnumLabels, "char_T*",  "enumLabels")>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/slio.html#OutputTypedVector">OutputTypedVector</a>(nEnums, allEnumValues, "int_T", "enumValues")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/slio.html#OutputTypedVector">OutputTypedVector</a>(nEnums, allEnumLabels, "char_T*",  "enumLabels")>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtwAddEnumLeafNode(...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dtID</span>>, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>sigName</span>>", ...
@@ -290,7 +290,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(const char**)enumLabels, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>nEnums</span>>, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>treeVector</span>>);
- <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsStringDataType">LibIsStringDataType</a>(dtID)    
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibIsStringDataType">LibIsStringDataType</a>(dtID)    
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtwAddLeafNode(...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dtID</span>>, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>sigName</span>>", ...
@@ -307,7 +307,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% UNKNOWN types</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> warnTxt = "User-defined data types not supported for logging to mat-file."
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportWarning">LibBlockReportWarning</a>([], warnTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportWarning">LibBlockReportWarning</a>([], warnTxt)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%%addSlioLeafNode</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>CreateOffsets<span style="padding-left:9.5px"></span>=========================================================
@@ -317,7 +317,7 @@ body {
 </span> <br><span class="tlc_fkw">%function</span> <a id="CreateOffsets" class="tlc_func">CreateOffsets</a>(parentDatatypeId, numChildren) <span class="tlc_fkw">Output</span>
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> offsets = "uint_T offsets[%<<span>numChildren</span>>] = {"
  <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> childNo = numChildren
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> offVal = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeElementOffset">LibDataTypeElementOffset</a>(parentDatatypeId, childNo)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> offVal = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeElementOffset">LibDataTypeElementOffset</a>(parentDatatypeId, childNo)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> offsets = offsets + "%<<span>offVal</span>>"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> childNo != numChildren-1
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> offsets = offsets + ", "
@@ -330,25 +330,25 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>construct<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>node<span style="padding-left:9.5px"></span>tree.<span style="padding-left:9.5px"></span>
 </span> <br><span class="tlc_fkw">%function</span> <a id="getSlioNVBusNodes" class="tlc_func">getSlioNVBusNodes</a>(block, system, treeVector) <span class="tlc_fkw">Output</span>
  <br>{
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtID = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeIdAliasedThruToFromId">LibGetDataTypeIdAliasedThruToFromId</a>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalDataTypeId">LibBlockInputSignalDataTypeId</a>(0))
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtID = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeIdAliasedThruToFromId">LibGetDataTypeIdAliasedThruToFromId</a>(<a href="https://foool.github.io/r2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalDataTypeId">LibBlockInputSignalDataTypeId</a>(0))
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sigName = <span class="tlc_bifunc">STRING</span>(ParamSettings.InputSignalName[0])
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nChildren = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeNumElements">LibDataTypeNumElements</a>(dtID)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nChildren = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeNumElements">LibDataTypeNumElements</a>(dtID)
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hierInfoIdx = ParamSettings.BusHierDescIndex[0]
  <br>&nbsp;&nbsp;<span class="tlc_comment">%% Dimensions</span>
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nDims = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalNumDimensions">LibBlockInputSignalNumDimensions</a>(0)
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dims = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalDimensions">LibBlockInputSignalDimensions</a>(0)
- <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/slio.html#OutputTypedVector">OutputTypedVector</a>(nDims, dims, "int_T", "sigDimsArray")>
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> busSize = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeSLSizeFromId">LibGetDataTypeSLSizeFromId</a>(dtID)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nDims = <a href="https://foool.github.io/r2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalNumDimensions">LibBlockInputSignalNumDimensions</a>(0)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dims = <a href="https://foool.github.io/r2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalDimensions">LibBlockInputSignalDimensions</a>(0)
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/slio.html#OutputTypedVector">OutputTypedVector</a>(nDims, dims, "int_T", "sigDimsArray")>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> busSize = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeSLSizeFromId">LibGetDataTypeSLSizeFromId</a>(dtID)
  <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Sample Time</span>
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sampleTime = ParamSettings.SampleTimeLabels[0]
- <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>() &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#MdlRefDisallowSampleTimeInheritance">MdlRefDisallowSampleTimeInheritance</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>() &amp;&amp; !<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#MdlRefDisallowSampleTimeInheritance">MdlRefDisallowSampleTimeInheritance</a>()
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> discreteInterval = 0
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> discreteInterval = ParamSettings.DiscreteInterval[0]
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stopTime = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("TFinal")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stopTime = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("TFinal")
  <br>&nbsp; <br>&nbsp;&nbsp;{
- <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/intrusive_accessor.html#CreateOffsets">CreateOffsets</a>(dtID, nChildren)>  
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/intrusive_accessor.html#CreateOffsets">CreateOffsets</a>(dtID, nChildren)>  
  <br>&nbsp;&nbsp;rtwAddTopNVBusNode(...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dtID</span>>, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>sigName</span>>", ...
@@ -368,7 +368,7 @@ body {
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> interpolationMethod = "zoh"
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/slio.html#getSlioNVBusNodeLeaves">getSlioNVBusNodeLeaves</a>(block, system, dtID, ...
+ <br>&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/slio.html#getSlioNVBusNodeLeaves">getSlioNVBusNodeLeaves</a>(block, system, dtID, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;hierInfoIdx, interpolationMethod, sampleTime, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;discreteInterval, stopTime, treeVector)>
  <br>}
@@ -378,10 +378,10 @@ body {
  <br>&nbsp;&nbsp;block, system, parentDatatypeId, parentHierInfoIdx,...
  <br>&nbsp;&nbsp;interpolationMethod, sampleTime, discreteInterval,...
  <br>&nbsp;&nbsp;stopTime, treeVector) Output
- <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nChildren = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeNumElements">LibDataTypeNumElements</a>(parentDatatypeId)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nChildren = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeNumElements">LibDataTypeNumElements</a>(parentDatatypeId)
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> childIdx = nChildren
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Child datatype id</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childDTypeId = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeElementDataTypeId">LibDataTypeElementDataTypeId</a>(...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childDTypeId = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeElementDataTypeId">LibDataTypeElementDataTypeId</a>(...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parentDatatypeId, childIdx)
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Child signal name</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> ::CompiledModel.BlockHierarchyMap
@@ -389,17 +389,17 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childName = SignalHierLoggingInfo[childHierInfoIdx].SignalName
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Child dimensions</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childNDims = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeElementNumDimensions">LibDataTypeElementNumDimensions</a>(...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childNDims = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeElementNumDimensions">LibDataTypeElementNumDimensions</a>(...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parentDatatypeId, childIdx)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childDims = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeElementDimensions">LibDataTypeElementDimensions</a>(...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childDims = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeElementDimensions">LibDataTypeElementDimensions</a>(...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parentDatatypeId, childIdx)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeIsBus">LibDataTypeIsBus</a>(childDTypeId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeIsBus">LibDataTypeIsBus</a>(childDTypeId)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Child number of children</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childNumberOfChildren = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeNumElements">LibDataTypeNumElements</a>(childDTypeId)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/slio.html#OutputTypedVector">OutputTypedVector</a>(childNDims, childDims, "int_T", "childSigDimsArray")>     
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/intrusive_accessor.html#CreateOffsets">CreateOffsets</a>(childDTypeId, childNumberOfChildren)>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> busSize = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeSLSizeFromId">LibGetDataTypeSLSizeFromId</a>(childDTypeId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childNumberOfChildren = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeNumElements">LibDataTypeNumElements</a>(childDTypeId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/slio.html#OutputTypedVector">OutputTypedVector</a>(childNDims, childDims, "int_T", "childSigDimsArray")>     
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/intrusive_accessor.html#CreateOffsets">CreateOffsets</a>(childDTypeId, childNumberOfChildren)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> busSize = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeSLSizeFromId">LibGetDataTypeSLSizeFromId</a>(childDTypeId)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtwAddNVBusNode(...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>childDTypeId</span>>, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>childName</span>>", ...
@@ -410,16 +410,16 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offsets, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>treeVector</span>>);
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
- <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/slio.html#getSlioNVBusNodeLeaves">getSlioNVBusNodeLeaves</a>(block, system, childDTypeId, ...
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/slio.html#getSlioNVBusNodeLeaves">getSlioNVBusNodeLeaves</a>(block, system, childDTypeId, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;childHierInfoIdx, interpolationMethod, sampleTime, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;discreteInterval, stopTime,treeVector)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Is the signal complex number</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childComplex = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeElementIsComplex">LibDataTypeElementIsComplex</a>(parentDatatypeId, childIdx)      
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childComplex = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeElementIsComplex">LibDataTypeElementIsComplex</a>(parentDatatypeId, childIdx)      
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Signal unit</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childUnits = <span class="tlc_bifunc">STRING</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeElementASCIIEscapedUnits">LibDataTypeElementASCIIEscapedUnits</a>(parentDatatypeId, childIdx))
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/slio.html#addSlioLeafNode">addSlioLeafNode</a>(...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childUnits = <span class="tlc_bifunc">STRING</span>(<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeElementASCIIEscapedUnits">LibDataTypeElementASCIIEscapedUnits</a>(parentDatatypeId, childIdx))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/slio.html#addSlioLeafNode">addSlioLeafNode</a>(...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;childDTypeId, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;childDims,...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;childNDims,...
@@ -451,7 +451,7 @@ body {
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portIdx = 0
  <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> childNo = nChildren
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childHierInfoIdx = SignalHierLoggingInfo[hierInfoIdx].Children[childNo]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/slio.html#getSlioBusNodeLeaves">getSlioBusNodeLeaves</a>(block, system, childHierInfoIdx, portIdx, treeVector)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portIdx = <a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/slio.html#getSlioBusNodeLeaves">getSlioBusNodeLeaves</a>(block, system, childHierInfoIdx, portIdx, treeVector)
  <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
  <br>&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
  <br>&nbsp;&nbsp;rtwPopNVBusNode(%<<span>treeVector</span>>);
@@ -469,34 +469,34 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;treeVector);
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> childNo = nChildren
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childHierInfoIdx = SignalHierLoggingInfo[hierInfoIdx].Children[childNo]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/slio.html#getSlioBusNodeLeaves">getSlioBusNodeLeaves</a>(block, system, childHierInfoIdx, portIdx, treeVector)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portIdx = <a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/slio.html#getSlioBusNodeLeaves">getSlioBusNodeLeaves</a>(block, system, childHierInfoIdx, portIdx, treeVector)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtwPopNVBusNode(%<<span>treeVector</span>>);
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> portIdx
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span> 
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/slio.html#getSlioLeafNode">getSlioLeafNode</a>(block, system, portIdx, sigName, treeVector)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/slio.html#getSlioLeafNode">getSlioLeafNode</a>(block, system, portIdx, sigName, treeVector)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> portIdx + 1
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>    
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%%getSlioBusNodeLeaves</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>get<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>datatype<span style="padding-left:9.5px"></span>name<span style="padding-left:9.5px"></span>form<span style="padding-left:9.5px"></span>datatype<span style="padding-left:9.5px"></span>id.<span style="padding-left:9.5px"></span>
 </span> <br><span class="tlc_fkw">%function</span> <a id="getDatatypeNameFromId" class="tlc_func">getDatatypeNameFromId</a>(datatypeId)
- <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsBuiltInDataType">LibIsBuiltInDataType</a>(datatypeId)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetMLDataTypeFromId">SLibGetMLDataTypeFromId</a>(datatypeId)
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibIsBuiltInDataType">LibIsBuiltInDataType</a>(datatypeId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeName = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetMLDataTypeFromId">SLibGetMLDataTypeFromId</a>(datatypeId)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> typeName == "boolean"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeName = "logical"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isFxp = TLC_FALSE
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% fixpt parameters</span>
- <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsDataTypeFixpt">LibIsDataTypeFixpt</a>(datatypeId)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> curDT = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptlib.html#FixPt_GetDataTypeFromIndex">FixPt_GetDataTypeFromIndex</a>(datatypeId)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptlib.html#fxpIsDataTypeFixPt">fxpIsDataTypeFixPt</a>(curDT) 
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibIsDataTypeFixpt">LibIsDataTypeFixpt</a>(datatypeId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> curDT = <a href="https://foool.github.io/r2020a/rtw/c/tlc/fixpt/fixptlib.html#FixPt_GetDataTypeFromIndex">FixPt_GetDataTypeFromIndex</a>(datatypeId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/fixpt/fixptlib.html#fxpIsDataTypeFixPt">fxpIsDataTypeFixPt</a>(curDT) 
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeName = "fixed-point"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isFxp    = TLC_TRUE
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptlib.html#fxpIsDataTypeScaledDouble">fxpIsDataTypeScaledDouble</a>(curDT)     
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/fixpt/fixptlib.html#fxpIsDataTypeScaledDouble">fxpIsDataTypeScaledDouble</a>(curDT)     
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeName = "scaled-double"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isFxp    = TLC_TRUE
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptlib.html#FixPt_DataTypeIsDouble">FixPt_DataTypeIsDouble</a>(curDT)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/fixpt/fixptlib.html#FixPt_DataTypeIsDouble">FixPt_DataTypeIsDouble</a>(curDT)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeName = "double"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isFxp = TLC_FALSE
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> FixPt_DatatTypeIsSingle(curDT)
@@ -509,11 +509,11 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> TLC_FALSE
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% enum parameters</span>
- <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsEnumDataType">LibIsEnumDataType</a>(datatypeId)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeNameFromId">LibGetDataTypeNameFromId</a>(datatypeId)
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibIsEnumDataType">LibIsEnumDataType</a>(datatypeId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeName = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeNameFromId">LibGetDataTypeNameFromId</a>(datatypeId)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isFxp = TLC_FALSE
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% UNKNOWN types</span>
- <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsStringDataType">LibIsStringDataType</a>(datatypeId)
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibIsStringDataType">LibIsStringDataType</a>(datatypeId)
  <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeName = "string"
  <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isFxp = TLC_FALSE   
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
@@ -556,7 +556,7 @@ body {
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::isRAccel
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ::RSimRTWCAPIVar
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib.html#RTMsGet">RTMsGet</a>(system, "DataMapInfo")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib.html#RTMsGet">RTMsGet</a>(system, "DataMapInfo")
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br><span class="tlc_fkw">%endfunction</span>
  <br></body></html>

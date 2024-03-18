@@ -49,9 +49,9 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetElementIdxFromVarGroup" class="tlc_func">SLibGetElementIdxFromVarGroup</a>(aVarGroupIdx, aElementSrcOrIndex) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">TYPE</span>(aElementSrcOrIndex) == "String"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numElement = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupNumElements">SLibVarGroupNumElements</a>(aVarGroupIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numElement = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupNumElements">SLibVarGroupNumElements</a>(aVarGroupIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> mIdx = numElement
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupElementSource">SLibVarGroupElementSource</a>(aVarGroupIdx, mIdx) == aElementSrcOrIndex
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupElementSource">SLibVarGroupElementSource</a>(aVarGroupIdx, mIdx) == aElementSrcOrIndex
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> mIdx
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
@@ -66,9 +66,9 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>instance<span style="padding-left:9.5px"></span>through<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>coder<span style="padding-left:9.5px"></span>group<span style="padding-left:9.5px"></span>pointer<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>self.<span style="padding-left:9.5px"></span>For<span style="padding-left:9.5px"></span>example:
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>"self->anotherCoderGroup->childSelfInst1"
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibIsBlockInstanceAccessedViaPointerInSelf" class="tlc_func">SLibIsBlockInstanceAccessedViaPointerInSelf</a>(aBlock)
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childSelfCoderGroupIndex = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetChildSelfCoderGroupIndex">SLibGetChildSelfCoderGroupIndex</a>(aBlock)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childSelfCoderGroupIndex = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibGetChildSelfCoderGroupIndex">SLibGetChildSelfCoderGroupIndex</a>(aBlock)
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> childSelfCoderGroupIndex != -1
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(aBlock)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(aBlock)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childCoderGroupsRecord = blockInterface.CoderDataGroups.CoderDataGroup
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numChildCoderGroups = <span class="tlc_bifunc">SIZE</span>(childCoderGroupsRecord, 1)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> numChildCoderGroups > 1
@@ -77,14 +77,14 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childSelfCoderGroup = childCoderGroupsRecord
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> groupIndexWithChildSelfNameInCurrentModel = ...
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/datagrouplib.html#SLibCoderDataGroupIndex">SLibCoderDataGroupIndex</a>(childSelfCoderGroup.Name)      
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/datagrouplib.html#SLibCoderDataGroupIndex">SLibCoderDataGroupIndex</a>(childSelfCoderGroup.Name)      
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childSelfGroupNameRegisteredInCurrentModel = ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;groupIndexWithChildSelfNameInCurrentModel != -1
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childSelfGroupIsInParent = ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(childSelfCoderGroup, "AsStructure") &amp;&amp; ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;childSelfCoderGroup.AsStructure == "InParent"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetDoesSelfHasCoderDataGroup">SLibGetDoesSelfHasCoderDataGroup</a>()
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currentModelSelfGroup = ::CompiledModel.CoderDataGroup[<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetSelfCoderDataGroupIndex">SLibGetSelfCoderDataGroupIndex</a>()]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibGetDoesSelfHasCoderDataGroup">SLibGetDoesSelfHasCoderDataGroup</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currentModelSelfGroup = ::CompiledModel.CoderDataGroup[<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibGetSelfCoderDataGroupIndex">SLibGetSelfCoderDataGroupIndex</a>()]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childAndParentHaveDifferentSelfGroups = ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;currentModelSelfGroup.Name != childSelfCoderGroup.Name  
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> childSelfGroupIsInParent &amp;&amp; ...
@@ -103,8 +103,8 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>"self->anotherCoderGroup->childSelfInst1"
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetPathToInstanceFromSelf" class="tlc_func">SLibGetPathToInstanceFromSelf</a>(aBlock)
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> path = ""
- <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childSelfCoderGroupIndex = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetChildSelfCoderGroupIndex">SLibGetChildSelfCoderGroupIndex</a>(aBlock)
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(aBlock)
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childSelfCoderGroupIndex = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibGetChildSelfCoderGroupIndex">SLibGetChildSelfCoderGroupIndex</a>(aBlock)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(aBlock)
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childCoderGroupsRecord = blockInterface.CoderDataGroups.CoderDataGroup
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numChildCoderGroups = <span class="tlc_bifunc">SIZE</span>(childCoderGroupsRecord, 1)
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> numChildCoderGroups > 1
@@ -112,7 +112,7 @@ body {
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childSelfCoderGroup = childCoderGroupsRecord
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> selfVarGroup = ::CompiledModel.VarGroups.VarGroup[<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetSelfVarGroupIndex">SLibGetSelfVarGroupIndex</a>()]
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> selfVarGroup = ::CompiledModel.VarGroups.VarGroup[<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibGetSelfVarGroupIndex">SLibGetSelfVarGroupIndex</a>()]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> vgElementId = selfVarGroup.NumVarGroupElements
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vgElement = selfVarGroup.VarGroupElements[vgElementId]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> idNumElement = <span class="tlc_bifunc">IDNUM</span>(vgElement)
@@ -120,7 +120,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> coderGroupIndex = idNumElement[1]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> coderGroup = ::CompiledModel.CoderDataGroup[coderGroupIndex]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> coderGroup.Name == childSelfCoderGroup.Name
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> path = tSimStruct + "->" + <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeMemberName">LibCGTypeMemberName</a>(selfVarGroup.CGTypeIdx, vgElementId) + "->" + aBlock.Identifier
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> path = tSimStruct + "->" + <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeMemberName">LibCGTypeMemberName</a>(selfVarGroup.CGTypeIdx, vgElementId) + "->" + aBlock.Identifier
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -132,36 +132,36 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>pointer<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>RTM<span style="padding-left:9.5px"></span>VarGroup<span style="padding-left:9.5px"></span>Generated<span style="padding-left:9.5px"></span>through<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>cgType
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetFieldPointerFromSelf" class="tlc_func">SLibGetFieldPointerFromSelf</a>(eleNameOrIndex,addTypeCast) <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetUseRTMcgType">SLibGetUseRTMcgType</a>() || !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetDoesSelfHasCoderDataGroup">SLibGetDoesSelfHasCoderDataGroup</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibGetUseRTMcgType">SLibGetUseRTMcgType</a>() || !<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibGetDoesSelfHasCoderDataGroup">SLibGetDoesSelfHasCoderDataGroup</a>()
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = ""
  <br>&nbsp;&nbsp;<span class="tlc_comment">%% If we are here, we should either have mapped Self (Coder Group) or unmapped Self (RTM)</span>
- <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetDoesSelfHasCoderDataGroup">SLibGetDoesSelfHasCoderDataGroup</a>()
- <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> selfVarGroupIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetSelfVarGroupIndex">SLibGetSelfVarGroupIndex</a>()
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> elIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetElementIdxFromVarGroup">SLibGetElementIdxFromVarGroup</a>(selfVarGroupIdx, eleNameOrIndex)
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibGetDoesSelfHasCoderDataGroup">SLibGetDoesSelfHasCoderDataGroup</a>()
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> selfVarGroupIdx = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibGetSelfVarGroupIndex">SLibGetSelfVarGroupIndex</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> elIdx = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetElementIdxFromVarGroup">SLibGetElementIdxFromVarGroup</a>(selfVarGroupIdx, eleNameOrIndex)
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ptr = ""
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> elIdx > -1
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupIsStruct">SLibVarGroupIsStruct</a>(selfVarGroupIdx)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelRefScalableBuild">IsModelRefScalableBuild</a>()
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> selfVar = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>() ? <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#FcnGetSFcnDWorkRTM">FcnGetSFcnDWorkRTM</a>() : ::CompiledModel.GlobalScope.tRTM
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupIsStruct">SLibVarGroupIsStruct</a>(selfVarGroupIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelRefScalableBuild">IsModelRefScalableBuild</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> selfVar = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>() ? <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#FcnGetSFcnDWorkRTM">FcnGetSFcnDWorkRTM</a>() : ::CompiledModel.GlobalScope.tRTM
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> selfVar = tSimStruct
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibSynthesizedRTM">SLibSynthesizedRTM</a>()
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#SLibCG_AccessRTM">SLibCG_AccessRTM</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibSynthesizedRTM">SLibSynthesizedRTM</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/opaquelib.html#SLibCG_AccessRTM">SLibCG_AccessRTM</a>()</span>>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> deref =  <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelRefScalableBuild">IsModelRefScalableBuild</a>() ? "." : "->"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> deref =  <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelRefScalableBuild">IsModelRefScalableBuild</a>() ? "." : "->"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = selfVar + deref
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = retStr + <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupElementName">SLibVarGroupElementName</a>(selfVarGroupIdx, elIdx)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupElementType">SLibVarGroupElementType</a>(selfVarGroupIdx, elIdx)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeIsPointer">LibCGTypeIsPointer</a>(typeIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = retStr + <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupElementName">SLibVarGroupElementName</a>(selfVarGroupIdx, elIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeIdx = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupElementType">SLibVarGroupElementType</a>(selfVarGroupIdx, elIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeIsPointer">LibCGTypeIsPointer</a>(typeIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ptr  = "*"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = "&amp;("+ retStr +")"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> addTypeCast
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = "((" + <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#SLibGetTypeNameFromCGType">SLibGetTypeNameFromCGType</a>(typeIdx) + ptr + ")" + retStr + ")"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = "((" + <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/opaquelib.html#SLibGetTypeNameFromCGType">SLibGetTypeNameFromCGType</a>(typeIdx) + ptr + ")" + retStr + ")"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retStr
@@ -172,14 +172,14 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetBlockIOPointerFromRTM" class="tlc_func">SLibGetBlockIOPointerFromRTM</a>(addTypeCast)
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> Accelerator
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMuGet">RTMuGet</a>("ModelBlockIO") 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMuGet">RTMuGet</a>("ModelBlockIO") 
  <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> CodeFormat == "S-Function"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("LocalBlockIO")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("LocalBlockIO")
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMuGet">RTMuGet</a>("BlockIO") 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMuGet">RTMuGet</a>("BlockIO") 
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> addTypeCast
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockIOCast = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnRewriteCast">FcnRewriteCast</a>("(%<::tBlockIOType> *) %<<span>retStr</span>>")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockIOCast = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/syslib.html#FcnRewriteCast">FcnRewriteCast</a>("(%<::tBlockIOType> *) %<<span>retStr</span>>")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = "(%<<span>blockIOCast</span>>)"
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retStr
@@ -192,10 +192,10 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetBlockIOStruct" class="tlc_func">SLibGetBlockIOStruct</a>(addTypeCast) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.HasSimStructVars == 1
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetBlockIOPointerFromRTM">SLibGetBlockIOPointerFromRTM</a>(addTypeCast)
- <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelRefScalableBuild">IsModelRefScalableBuild</a>() &amp;&amp; !GenerateClassInterface
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> baseSystem = ::CompiledModel.System[<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(baseSystem, "BlockIO")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetBlockIOPointerFromRTM">SLibGetBlockIOPointerFromRTM</a>(addTypeCast)
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelRefScalableBuild">IsModelRefScalableBuild</a>() &amp;&amp; !GenerateClassInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> baseSystem = ::CompiledModel.System[<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(baseSystem, "BlockIO")
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ::tBlockIO 
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -205,14 +205,14 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>I/O.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetBlockIOStruct" class="tlc_func">LibGetBlockIOStruct</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetBlockIOStruct">SLibGetBlockIOStruct</a>(TLC_TRUE)
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetBlockIOStruct">SLibGetBlockIOStruct</a>(TLC_TRUE)
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetBlockIOStruct</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGetConstBlockIOPointerFromRTM<span style="padding-left:9.5px"></span>=================================
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>pointer<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>const<span style="padding-left:9.5px"></span>BlockIO<span style="padding-left:9.5px"></span>structure<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>RTM.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetConstBlockIOPointerFromRTM" class="tlc_func">SLibGetConstBlockIOPointerFromRTM</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> "((%<::tConstBlockIOType> *) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("ConstBlockIO")>)"
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> "((%<::tConstBlockIOType> *) %<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("ConstBlockIO")>)"
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGetConstBlockIOPointerFromRTM</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGetSelfPointerFromRTM<span style="padding-left:9.5px"></span>=================================
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
@@ -233,7 +233,7 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>DWork<span style="padding-left:9.5px"></span>variable.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetSelfStruct" class="tlc_func">LibGetSelfStruct</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetSelfStruct">SLibGetSelfStruct</a>(TLC_TRUE) 
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetSelfStruct">SLibGetSelfStruct</a>(TLC_TRUE) 
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetDWorkStruct</span>
  <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetConstBlockIOStruct<span style="padding-left:9.5px"></span>==========================================
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
@@ -241,7 +241,7 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetConstBlockIOStruct" class="tlc_func">LibGetConstBlockIOStruct</a>() <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isGRTMalloc
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetConstBlockIOPointerFromRTM">SLibGetConstBlockIOPointerFromRTM</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetConstBlockIOPointerFromRTM">SLibGetConstBlockIOPointerFromRTM</a>()
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ::tConstBlockIOStruct
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -256,9 +256,9 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;((cross || ThisSubsysCross) &amp;&amp; MultiInstanceERTCode &amp;&amp; !GenerateClassInterface))
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> UsingMalloc || Accelerator || ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((cross || ThisSubsysCross) &amp;&amp; MultiInstanceERTCode &amp;&amp; !GenerateClassInterface)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("U")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("U")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> CodeFormat == "S-Function"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr =  <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetIdxed">RTMGetIdxed</a>("InputPortSignalPtrs", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr =  <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetIdxed">RTMGetIdxed</a>("InputPortSignalPtrs", 0)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = ::tInput
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -276,15 +276,15 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>coder<span style="padding-left:9.5px"></span>group<span style="padding-left:9.5px"></span>structure<span style="padding-left:9.5px"></span>name<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>record,<span style="padding-left:9.5px"></span>otherwise<span style="padding-left:9.5px"></span>fallbacks<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>default<span style="padding-left:9.5px"></span>routine<span style="padding-left:9.5px"></span>SLibGetExternalInputStruct
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetExternalInputStructForRecord" class="tlc_func">SLibGetExternalInputStructForRecord</a>(extInp) <span class="tlc_fkw">void</span>  
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> coderGroupId = ...
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/datagrouplib.html#SLibGetCoderGroupIdForDataRecord">SLibGetCoderGroupIdForDataRecord</a>(extInp)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/datagrouplib.html#SLibGetCoderGroupIdForDataRecord">SLibGetCoderGroupIdForDataRecord</a>(extInp)
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> coderGroupId != -1
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> coderGroup = ::CompiledModel.CoderDataGroup[coderGroupId]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/datagrouplib.html#SLibCoderDataGroupType">SLibCoderDataGroupType</a>(coderGroup)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/datagrouplib.html#SLibCoderDataGroupInstance">SLibCoderDataGroupInstance</a>(coderGroup)
- <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetExternalInputStructHelper">SLibGetExternalInputStructHelper</a>(TLC_TRUE, TLC_FALSE, TLC_FALSE, typeName, varName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeName = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/datagrouplib.html#SLibCoderDataGroupType">SLibCoderDataGroupType</a>(coderGroup)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varName = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/datagrouplib.html#SLibCoderDataGroupInstance">SLibCoderDataGroupInstance</a>(coderGroup)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetExternalInputStructHelper">SLibGetExternalInputStructHelper</a>(TLC_TRUE, TLC_FALSE, TLC_FALSE, typeName, varName)
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% default group</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetExternalInputStruct">LibGetExternalInputStruct</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#LibGetExternalInputStruct">LibGetExternalInputStruct</a>()
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br><span class="tlc_fkw">%endfunction</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGetExternalInputStruct<span style="padding-left:9.5px"></span>========================================
@@ -294,14 +294,14 @@ body {
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetExternalInputStruct" class="tlc_func">SLibGetExternalInputStruct</a>(addTypeCast,isCallSite,cross) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeName = ::tInputType
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varName = ::tInput
- <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetExternalInputStructHelper">SLibGetExternalInputStructHelper</a>(addTypeCast,isCallSite,cross, typeName, varName)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetExternalInputStructHelper">SLibGetExternalInputStructHelper</a>(addTypeCast,isCallSite,cross, typeName, varName)
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGetExternalInputStruct</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetExternalInputStruct<span style="padding-left:9.5px"></span>========================================
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>external<span style="padding-left:9.5px"></span>input<span style="padding-left:9.5px"></span>signal.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetExternalInputStruct" class="tlc_func">LibGetExternalInputStruct</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetExternalInputStruct">SLibGetExternalInputStruct</a>(TLC_TRUE, TLC_FALSE, TLC_FALSE)
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetExternalInputStruct">SLibGetExternalInputStruct</a>(TLC_TRUE, TLC_FALSE, TLC_FALSE)
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetExternalInputStruct</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGetExternalOutputStructHelper
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
@@ -313,9 +313,9 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((cross || ThisSubsysCross) &amp;&amp; MultiInstanceERTCode &amp;&amp; !GenerateClassInterface))
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(!Accelerator)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> UsingMalloc || ((cross || ThisSubsysCross) &amp;&amp; MultiInstanceERTCode &amp;&amp; !GenerateClassInterface)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("Y")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("Y")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> CodeFormat == "S-Function"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetIdxed">RTMGetIdxed</a>("OutputPortSignal", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetIdxed">RTMGetIdxed</a>("OutputPortSignal", 0)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr =  varName
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -333,15 +333,15 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>coder<span style="padding-left:9.5px"></span>group<span style="padding-left:9.5px"></span>structure<span style="padding-left:9.5px"></span>name<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>record,<span style="padding-left:9.5px"></span>otherwise<span style="padding-left:9.5px"></span>fallbacks<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>default<span style="padding-left:9.5px"></span>routine<span style="padding-left:9.5px"></span>SLibGetExternalOutputStruct
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetExternalOutputStructForRecord" class="tlc_func">SLibGetExternalOutputStructForRecord</a>(extOutp) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> coderGroupId = ...
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/datagrouplib.html#SLibGetCoderGroupIdForDataRecord">SLibGetCoderGroupIdForDataRecord</a>(extOutp)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/datagrouplib.html#SLibGetCoderGroupIdForDataRecord">SLibGetCoderGroupIdForDataRecord</a>(extOutp)
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> coderGroupId != -1
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> coderGroup = ::CompiledModel.CoderDataGroup[coderGroupId]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/datagrouplib.html#SLibCoderDataGroupType">SLibCoderDataGroupType</a>(coderGroup)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/datagrouplib.html#SLibCoderDataGroupInstance">SLibCoderDataGroupInstance</a>(coderGroup)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetExternalOutputStructHelper">SLibGetExternalOutputStructHelper</a>(TLC_TRUE, TLC_FALSE, TLC_FALSE, typeName, varName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeName = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/datagrouplib.html#SLibCoderDataGroupType">SLibCoderDataGroupType</a>(coderGroup)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varName = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/datagrouplib.html#SLibCoderDataGroupInstance">SLibCoderDataGroupInstance</a>(coderGroup)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetExternalOutputStructHelper">SLibGetExternalOutputStructHelper</a>(TLC_TRUE, TLC_FALSE, TLC_FALSE, typeName, varName)
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>      
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% default group</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetExternalOutputStruct">LibGetExternalOutputStruct</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#LibGetExternalOutputStruct">LibGetExternalOutputStruct</a>()
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br><span class="tlc_fkw">%endfunction</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGetExternalOutputStruct<span style="padding-left:9.5px"></span>=======================================
@@ -351,21 +351,21 @@ body {
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetExternalOutputStruct" class="tlc_func">SLibGetExternalOutputStruct</a>(addTypeCast,isCallSite,cross) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeName = ::tOutputType
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varName = ::tOutput
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetExternalOutputStructHelper">SLibGetExternalOutputStructHelper</a>(addTypeCast,isCallSite,cross, typeName, varName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetExternalOutputStructHelper">SLibGetExternalOutputStructHelper</a>(addTypeCast,isCallSite,cross, typeName, varName)
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGetExternalOutputStruct</span>
  <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetExternalOutputStruct<span style="padding-left:9.5px"></span>=======================================
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>external<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>signal.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetExternalOutputStruct" class="tlc_func">LibGetExternalOutputStruct</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetExternalOutputStruct">SLibGetExternalOutputStruct</a>(TLC_TRUE, TLC_FALSE, TLC_FALSE)
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetExternalOutputStruct">SLibGetExternalOutputStruct</a>(TLC_TRUE, TLC_FALSE, TLC_FALSE)
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetExternalOutputStruct</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGetContStatesPointerFromRTM<span style="padding-left:9.5px"></span>==================================
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>pointer<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>continues<span style="padding-left:9.5px"></span>states<span style="padding-left:9.5px"></span>structure<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>RTM.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetContStatesPointerFromRTM" class="tlc_func">SLibGetContStatesPointerFromRTM</a>(addTypeCast) <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("ContStates")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("ContStates")
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> addTypeCast
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr =  "((%<::tContStateType> *) %<<span>retStr</span>>)"
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -377,7 +377,7 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetContinuousStateStruct" class="tlc_func">SLibGetContinuousStateStruct</a>(addTypeCast) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.HasSimStructVars == 1
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetContStatesPointerFromRTM">SLibGetContStatesPointerFromRTM</a>(addTypeCast)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetContStatesPointerFromRTM">SLibGetContStatesPointerFromRTM</a>(addTypeCast)
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ::tContState
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -387,14 +387,14 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>continuous<span style="padding-left:9.5px"></span>state<span style="padding-left:9.5px"></span>variable.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetContinuousStateStruct" class="tlc_func">LibGetContinuousStateStruct</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetContinuousStateStruct">SLibGetContinuousStateStruct</a>(TLC_TRUE)
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetContinuousStateStruct">SLibGetContinuousStateStruct</a>(TLC_TRUE)
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetContinuousStateStruct</span>
  <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetPeriodicStateIndicesPtrFromRTM<span style="padding-left:9.5px"></span>==================================
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>pointer<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>periodic<span style="padding-left:9.5px"></span>state<span style="padding-left:9.5px"></span>indices<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>RTM.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetPeriodicStateIndicesPtrFromRTM" class="tlc_func">SLibGetPeriodicStateIndicesPtrFromRTM</a>(addTypeCast) <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("PeriodicContStateIndices")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("PeriodicContStateIndices")
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> addTypeCast
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr =  "((%<::tPeriodicStateIndType>*) %<<span>retStr</span>>)"
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -405,7 +405,7 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>periodic<span style="padding-left:9.5px"></span>continuous<span style="padding-left:9.5px"></span>state.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetPeriodicContStateIndices" class="tlc_func">LibGetPeriodicContStateIndices</a>() <span class="tlc_fkw">Output</span>
- <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>())   
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (!<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>())   
  <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> tPeriodicStateInd
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetPeriodicContStateIndices</span>
  <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGetPeriodicStateRangesPtrFromRTM<span style="padding-left:9.5px"></span>==================================
@@ -413,7 +413,7 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>pointer<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>periodic<span style="padding-left:9.5px"></span>state<span style="padding-left:9.5px"></span>ranges<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>RTM.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetPeriodicStateRangesPtrFromRTM" class="tlc_func">SLibGetPeriodicStateRangesPtrFromRTM</a>(addTypeCast) <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("PeriodicContStateRanges")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("PeriodicContStateRanges")
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> addTypeCast
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr =  "((%<<span>tPeriodicStateRngType</span>>*) %<<span>retStr</span>>)"
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -424,7 +424,7 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>range<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>periodic<span style="padding-left:9.5px"></span>continuous<span style="padding-left:9.5px"></span>state.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetPeriodicContStateRanges" class="tlc_func">LibGetPeriodicContStateRanges</a>() <span class="tlc_fkw">Output</span>
- <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>())   
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (!<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>())   
  <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> tPeriodicStateRng
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetPeriodicContStateRanges</span>
  <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGetContStateDerivativesStructFromRTM<span style="padding-left:9.5px"></span>=========================
@@ -433,15 +433,15 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>RTM.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetContStateDerivativesStructFromRTM" class="tlc_func">SLibGetContStateDerivativesStructFromRTM</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/partitiongroupinglib.html#SLibIsPartitionGrouping">SLibIsPartitionGrouping</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/partitiongroupinglib.html#SLibIsPartitionGrouping">SLibIsPartitionGrouping</a>()
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <span class="tlc_bifunc">EXISTS</span>(::GlobalCurrentPID)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/partitiongroupinglib.html#SLibPartitionNeedContFcnDecl">SLibPartitionNeedContFcnDecl</a>(::GlobalCurrentPID)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "((%<::tXdotType> *) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("dX")>)"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/partitiongroupinglib.html#SLibPartitionNeedContFcnDecl">SLibPartitionNeedContFcnDecl</a>(::GlobalCurrentPID)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "((%<::tXdotType> *) %<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("dX")>)"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/partitiongroupinglib.html#SLibPartitionGetContStateDerivativeStruct">SLibPartitionGetContStateDerivativeStruct</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/partitiongroupinglib.html#SLibPartitionGetContStateDerivativeStruct">SLibPartitionGetContStateDerivativeStruct</a>()
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "((%<::tXdotType> *) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("dX")>)"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "((%<::tXdotType> *) %<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("dX")>)"
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGetContStateDerivativesStructFromRTM</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetDotContinuousStateStruct<span style="padding-left:9.5px"></span>===================================
@@ -452,7 +452,7 @@ body {
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isDeriv = (::BlockFcn == "Derivative")
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isForcingFunction = (::BlockFcn == "ForcingFunction")
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.HasSimStructVars == 1 || isDeriv || isForcingFunction
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetContStateDerivativesStructFromRTM">SLibGetContStateDerivativesStructFromRTM</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetContStateDerivativesStructFromRTM">SLibGetContStateDerivativesStructFromRTM</a>()
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ::tXdot
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -463,7 +463,7 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>RTM.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetContStateDisabledStructFromRTM" class="tlc_func">SLibGetContStateDisabledStructFromRTM</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> "((%<::tXdisType> *) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("ContStateDisabled")>)"
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> "((%<::tXdisType> *) %<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("ContStateDisabled")>)"
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGetContStateDisabledStructFromRTM</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetContinuousStateDisabledStruct<span style="padding-left:9.5px"></span>==============================
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
@@ -473,7 +473,7 @@ body {
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isDeriv = (::BlockFcn == "Derivative")
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isForcingFunction = (::BlockFcn == "ForcingFunction")
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.HasSimStructVars == 1 || ::isRSimWithSolverModule || isDeriv || isForcingFunction
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetContStateDisabledStructFromRTM">SLibGetContStateDisabledStructFromRTM</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetContStateDisabledStructFromRTM">SLibGetContStateDisabledStructFromRTM</a>()
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ::tXdis
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -484,7 +484,7 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>RTM.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetContStatesAbsoluteToleranceStructFromRTM" class="tlc_func">SLibGetContStatesAbsoluteToleranceStructFromRTM</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> "((%<::tXAbsTolType> *) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("AbsTolVector")>)"
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> "((%<::tXAbsTolType> *) %<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("AbsTolVector")>)"
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGetContStateAbsoluteToleranceStructFromRTM</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetContinuousStateAbsoluteToleranceStruct<span style="padding-left:9.5px"></span>==============================
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
@@ -492,7 +492,7 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetContinuousStateAbsoluteToleranceStruct" class="tlc_func">LibGetContinuousStateAbsoluteToleranceStruct</a>() <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.HasSimStructVars == 1 || ::isRSimWithSolverModule 
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetContStatesAbsoluteToleranceStructFromRTM">SLibGetContStatesAbsoluteToleranceStructFromRTM</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetContStatesAbsoluteToleranceStructFromRTM">SLibGetContStatesAbsoluteToleranceStructFromRTM</a>()
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ::tXAbsTol
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -503,7 +503,7 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>RTM.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetContStatesPerturbMinStructFromRTM" class="tlc_func">SLibGetContStatesPerturbMinStructFromRTM</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> "((%<::tXPerturbMinType> *) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("JacobianPerturbationBoundsMinVec")>)"
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> "((%<::tXPerturbMinType> *) %<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("JacobianPerturbationBoundsMinVec")>)"
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGetContStatePerturbMinStructFromRTM</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetContinuousStatePerturbMinStruct<span style="padding-left:9.5px"></span>==============================
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
@@ -511,7 +511,7 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetContinuousStatePerturbMinStruct" class="tlc_func">LibGetContinuousStatePerturbMinStruct</a>() <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.HasSimStructVars == 1 || ::isRSimWithSolverModule 
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetContStatesPerturbMinStructFromRTM">SLibGetContStatesPerturbMinStructFromRTM</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetContStatesPerturbMinStructFromRTM">SLibGetContStatesPerturbMinStructFromRTM</a>()
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ::tXPerturbMin
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -522,7 +522,7 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>RTM.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetContStatesPerturbMaxStructFromRTM" class="tlc_func">SLibGetContStatesPerturbMaxStructFromRTM</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> "((%<::tXPerturbMaxType> *) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("JacobianPerturbationBoundsMaxVec")>)"
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> "((%<::tXPerturbMaxType> *) %<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("JacobianPerturbationBoundsMaxVec")>)"
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGetContStatePerturbMaxStructFromRTM</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetContinuousStatePerturbMaxStruct<span style="padding-left:9.5px"></span>==============================
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
@@ -530,7 +530,7 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetContinuousStatePerturbMaxStruct" class="tlc_func">LibGetContinuousStatePerturbMaxStruct</a>() <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.HasSimStructVars == 1 || ::isRSimWithSolverModule 
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetContStatesPerturbMaxStructFromRTM">SLibGetContStatesPerturbMaxStructFromRTM</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetContStatesPerturbMaxStructFromRTM">SLibGetContStatesPerturbMaxStructFromRTM</a>()
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ::tXPerturbMax
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -542,11 +542,11 @@ body {
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetMassMatrixGlobal" class="tlc_func">LibGetMassMatrixGlobal</a>() <span class="tlc_fkw">Output</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.HasSimStructVars == 1
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
- <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/partitiongroupinglib.html#SLibIsPartitionGrouping">SLibIsPartitionGrouping</a>() &amp;&amp; ...
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/partitiongroupinglib.html#SLibIsPartitionGrouping">SLibIsPartitionGrouping</a>() &amp;&amp; ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">EXISTS</span>(::GlobalCurrentPID) &amp;&amp; ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">TYPE</span>(::GlobalCurrentPID) == "Number" &amp;&amp; ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;::GlobalCurrentPID >= 0
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/partitiongroupinglib.html#SLibPartitionGetMassMatricesVarName">SLibPartitionGetMassMatricesVarName</a>(::GlobalCurrentPID)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/partitiongroupinglib.html#SLibPartitionGetMassMatricesVarName">SLibPartitionGetMassMatricesVarName</a>(::GlobalCurrentPID)
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ::tMassMatrixGlobal
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -556,11 +556,11 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>Ir<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>Mass<span style="padding-left:9.5px"></span>Matrix.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetMassMatrixGlobalIr" class="tlc_func">LibGetMassMatrixGlobalIr</a>() <span class="tlc_fkw">Output</span>
- <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>())   
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (!<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>())   
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> Accelerator
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("MassMatrixIr")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("MassMatrixIr")
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>  
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetMassMatrixGlobal">LibGetMassMatrixGlobal</a>()+".ir"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#LibGetMassMatrixGlobal">LibGetMassMatrixGlobal</a>()+".ir"
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetMassMatrixGlobalIr</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetMassMatrixGlobalJc<span style="padding-left:9.5px"></span>======================================
@@ -568,11 +568,11 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>Jc<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>Mass<span style="padding-left:9.5px"></span>Matrix.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetMassMatrixGlobalJc" class="tlc_func">LibGetMassMatrixGlobalJc</a>() <span class="tlc_fkw">Output</span>
- <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()) 
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (!<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()) 
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> Accelerator
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("MassMatrixJc")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("MassMatrixJc")
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>  
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetMassMatrixGlobal">LibGetMassMatrixGlobal</a>()+".jc"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#LibGetMassMatrixGlobal">LibGetMassMatrixGlobal</a>()+".jc"
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetMassMatrixGlobalJc</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetMassMatrixGlobalPr<span style="padding-left:9.5px"></span>======================================
@@ -580,12 +580,12 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>Pr<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>Mass<span style="padding-left:9.5px"></span>Matrix.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetMassMatrixGlobalPr" class="tlc_func">LibGetMassMatrixGlobalPr</a>() <span class="tlc_fkw">Output</span>
- <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>() 
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("MassMatrixBasePr")
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>() 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("MassMatrixBasePr")
  <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> Accelerator
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("MassMatrixPr")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("MassMatrixPr")
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>  
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetMassMatrixGlobal">LibGetMassMatrixGlobal</a>()+".pr"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#LibGetMassMatrixGlobal">LibGetMassMatrixGlobal</a>()+".pr"
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetMassMatrixGlobalPr</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGetDWorkPointerFromRTM<span style="padding-left:9.5px"></span>========================================
@@ -593,9 +593,9 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>pointer<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>DWork<span style="padding-left:9.5px"></span>structure<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>RTM.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetDWorkPointerFromRTM" class="tlc_func">SLibGetDWorkPointerFromRTM</a>(addTypeCast) <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("RootDWork") 
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("RootDWork") 
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> addTypeCast
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dworkCast = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnRewriteCast">FcnRewriteCast</a>("(%<::tDWorkType> *) %<<span>retStr</span>>")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dworkCast = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/syslib.html#FcnRewriteCast">FcnRewriteCast</a>("(%<::tDWorkType> *) %<<span>retStr</span>>")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = "(%<<span>dworkCast</span>>)"  
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retStr
@@ -606,28 +606,28 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetCoderDataGroupPointerFromRTM" class="tlc_func">SLibGetCoderDataGroupPointerFromRTM</a>(group, addTypeCast) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootSystem = ::CompiledModel.System[NumSystems-1]
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> baseSystem = ::CompiledModel.System[<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> baseSystem = ::CompiledModel.System[<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()]
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fieldName = "HasCoderDataGroup" + group.Name + "Arg"
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> baseSystem.%<<span>fieldName</span>> = TLC_TRUE
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varGroupIndex = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/datagrouplib.html#SLibGetRootVarGroupIdxForCoderGroup">SLibGetRootVarGroupIdxForCoderGroup</a>(group)
- <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/datagrouplib.html#SLibAccessViaPointerInSelf">SLibAccessViaPointerInSelf</a>(group)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varGroupIndex = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/datagrouplib.html#SLibGetRootVarGroupIdxForCoderGroup">SLibGetRootVarGroupIdxForCoderGroup</a>(group)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/datagrouplib.html#SLibAccessViaPointerInSelf">SLibAccessViaPointerInSelf</a>(group)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> elem = "RCDG" + <span class="tlc_bifunc">STRING</span>(group.GroupIndex)
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> elem = "VG" + <span class="tlc_bifunc">STRING</span>(varGroupIndex)
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (group.GroupIndex == <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetSelfCoderDataGroupIndex">SLibGetSelfCoderDataGroupIndex</a>())
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (group.GroupIndex == <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibGetSelfCoderDataGroupIndex">SLibGetSelfCoderDataGroupIndex</a>())
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = ::tSimStruct
- <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetUseRTMcgType">SLibGetUseRTMcgType</a>())
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetFieldPointerFromSelf">SLibGetFieldPointerFromSelf</a>(elem, addTypeCast)
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> (<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibGetUseRTMcgType">SLibGetUseRTMcgType</a>())
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetFieldPointerFromSelf">SLibGetFieldPointerFromSelf</a>(elem, addTypeCast)
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/datagrouplib.html#SLibCoderDataGroupRTMFieldName">SLibCoderDataGroupRTMFieldName</a>(group))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>(<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/datagrouplib.html#SLibCoderDataGroupRTMFieldName">SLibCoderDataGroupRTMFieldName</a>(group))
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> group.AsStructure == "InSelf"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = "&amp;(%<<span>retStr</span>>)"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> addTypeCast
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeString = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/datagrouplib.html#SLibCoderDataGroupType">SLibCoderDataGroupType</a>(group)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeCast = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnRewriteCast">FcnRewriteCast</a>("(%<<span>typeString</span>> *) %<<span>retStr</span>>")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeString = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/datagrouplib.html#SLibCoderDataGroupType">SLibCoderDataGroupType</a>(group)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeCast = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/syslib.html#FcnRewriteCast">FcnRewriteCast</a>("(%<<span>typeString</span>> *) %<<span>retStr</span>>")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = "(%<<span>typeCast</span>>)"
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retStr
@@ -638,10 +638,10 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetDWorkStruct" class="tlc_func">SLibGetDWorkStruct</a>(addTypeCast) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.HasSimStructVars == 1
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetDWorkPointerFromRTM">SLibGetDWorkPointerFromRTM</a>(addTypeCast)
- <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelRefScalableBuild">IsModelRefScalableBuild</a>() &amp;&amp; !GenerateClassInterface
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> baseSystem = ::CompiledModel.System[<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(baseSystem, "DWork")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetDWorkPointerFromRTM">SLibGetDWorkPointerFromRTM</a>(addTypeCast)
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelRefScalableBuild">IsModelRefScalableBuild</a>() &amp;&amp; !GenerateClassInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> baseSystem = ::CompiledModel.System[<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(baseSystem, "DWork")
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ::tDWork
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -651,7 +651,7 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>DWork<span style="padding-left:9.5px"></span>variable.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetDWorkStruct" class="tlc_func">LibGetDWorkStruct</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetDWorkStruct">SLibGetDWorkStruct</a>(TLC_TRUE) 
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetDWorkStruct">SLibGetDWorkStruct</a>(TLC_TRUE) 
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetDWorkStruct</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGetCoderDataGroupStruct<span style="padding-left:9.5px"></span>================================================
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
@@ -659,12 +659,12 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetCoderDataGroupStruct" class="tlc_func">SLibGetCoderDataGroupStruct</a>(group, addTypeCast) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.HasSimStructVars == 1
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetCoderDataGroupPointerFromRTM">SLibGetCoderDataGroupPointerFromRTM</a>(group,0)
- <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelRefScalableBuild">IsModelRefScalableBuild</a>() &amp;&amp; !GenerateClassInterface
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> baseSystem = ::CompiledModel.System[<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(baseSystem, "CoderDataGroup" + group.Name)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetCoderDataGroupPointerFromRTM">SLibGetCoderDataGroupPointerFromRTM</a>(group,0)
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelRefScalableBuild">IsModelRefScalableBuild</a>() &amp;&amp; !GenerateClassInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> baseSystem = ::CompiledModel.System[<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(baseSystem, "CoderDataGroup" + group.Name)
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/datagrouplib.html#SLibCoderDataGroupInstance">SLibCoderDataGroupInstance</a>(group)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/datagrouplib.html#SLibCoderDataGroupInstance">SLibCoderDataGroupInstance</a>(group)
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGetCoderDataGroupStruct</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetCoderDataGroupStruct<span style="padding-left:9.5px"></span>================================================
@@ -672,49 +672,49 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>CoderDataGroup<span style="padding-left:9.5px"></span>variable.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetCoderDataGroupStruct" class="tlc_func">LibGetCoderDataGroupStruct</a>(group) <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetCoderDataGroupStruct">SLibGetCoderDataGroupStruct</a>(group, TLC_TRUE) 
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetCoderDataGroupStruct">SLibGetCoderDataGroupStruct</a>(group, TLC_TRUE) 
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetCoderDataGroupStruct</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetContStatesStruct<span style="padding-left:9.5px"></span>==========================================
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>ContStates<span style="padding-left:9.5px"></span>variable.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetContStatesStruct" class="tlc_func">LibGetContStatesStruct</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetContinuousStateStruct">LibGetContinuousStateStruct</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#LibGetContinuousStateStruct">LibGetContinuousStateStruct</a>()
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetContStatesStruct</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetContStatesDisabledStruct<span style="padding-left:9.5px"></span>==================================
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>ContStatesDisabled<span style="padding-left:9.5px"></span>variable.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetContStatesDisabledStruct" class="tlc_func">LibGetContStatesDisabledStruct</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetContinuousStateDisabledStruct">LibGetContinuousStateDisabledStruct</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#LibGetContinuousStateDisabledStruct">LibGetContinuousStateDisabledStruct</a>()
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetContStatesDisabledStruct</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetContStatesAbsoluteToleranceStruct<span style="padding-left:9.5px"></span>=========================<span style="padding-left:9.5px"></span>
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>ContStatesAbsoluteTolerance<span style="padding-left:9.5px"></span>variable.
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetContStatesAbsoluteToleranceStruct" class="tlc_func">LibGetContStatesAbsoluteToleranceStruct</a>() <span class="tlc_fkw">void</span>                        
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetContinuousStateAbsoluteToleranceStruct">LibGetContinuousStateAbsoluteToleranceStruct</a>() 
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#LibGetContinuousStateAbsoluteToleranceStruct">LibGetContinuousStateAbsoluteToleranceStruct</a>() 
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetContStatesAbsoluteToleranceStruct </span>
  <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetContStatesPerturbMinStruct<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>=========================<span style="padding-left:9.5px"></span>
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>ContStatesPerturbMin<span style="padding-left:9.5px"></span>variable.
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetContStatesPerturbMinStruct" class="tlc_func">LibGetContStatesPerturbMinStruct</a>() <span class="tlc_fkw">void</span>                        
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetContinuousStatePerturbMinStruct">LibGetContinuousStatePerturbMinStruct</a>() 
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#LibGetContinuousStatePerturbMinStruct">LibGetContinuousStatePerturbMinStruct</a>() 
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetContStatesPerturbMinStruct</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetContStatesPerturbMaxStruct<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>=========================<span style="padding-left:9.5px"></span>
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>ContStatesPerturbMax<span style="padding-left:9.5px"></span>variable.
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetContStatesPerturbMaxStruct" class="tlc_func">LibGetContStatesPerturbMaxStruct</a>() <span class="tlc_fkw">void</span>                        
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetContinuousStatePerturbMaxStruct">LibGetContinuousStatePerturbMaxStruct</a>() 
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#LibGetContinuousStatePerturbMaxStruct">LibGetContinuousStatePerturbMaxStruct</a>() 
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetContStatesPerturbMinStruct</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetContStatesDerivativeStruct<span style="padding-left:9.5px"></span>================================
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>ContStatesDerivative<span style="padding-left:9.5px"></span>variable.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetContStatesDerivativeStruct" class="tlc_func">LibGetContStatesDerivativeStruct</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetDotContinuousStateStruct">LibGetDotContinuousStateStruct</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#LibGetDotContinuousStateStruct">LibGetDotContinuousStateStruct</a>()
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetContStatesDerivativeStruct</span>
  <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGetPreviousZCStructFromRTM<span style="padding-left:9.5px"></span>===================================
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
@@ -722,9 +722,9 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetPreviousZCStructFromRTM" class="tlc_func">SLibGetPreviousZCStructFromRTM</a>(addTypeCast) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> CodeFormat == "S-Function"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMuGet">RTMuGet</a>("PrevZCSigState")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMuGet">RTMuGet</a>("PrevZCSigState")
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("PrevZCSigState")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("PrevZCSigState")
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> addTypeCast
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = "((%<::tPrevZCStateType> *) %<<span>retStr</span>>)"
@@ -737,10 +737,10 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetPreviousZCStruct" class="tlc_func">SLibGetPreviousZCStruct</a>(addTypeCast) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.HasSimStructVars == 1
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetPreviousZCStructFromRTM">SLibGetPreviousZCStructFromRTM</a>(addTypeCast)
- <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelRefScalableBuild">IsModelRefScalableBuild</a>() &amp;&amp; !GenerateClassInterface
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> baseSystem = ::CompiledModel.System[<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(baseSystem, "ZCEvent")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetPreviousZCStructFromRTM">SLibGetPreviousZCStructFromRTM</a>(addTypeCast)
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelRefScalableBuild">IsModelRefScalableBuild</a>() &amp;&amp; !GenerateClassInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> baseSystem = ::CompiledModel.System[<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(baseSystem, "ZCEvent")
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ::tPrevZCState
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -750,22 +750,22 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>previous<span style="padding-left:9.5px"></span>zero<span style="padding-left:9.5px"></span>crossings<span style="padding-left:9.5px"></span>variable.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetPreviousZCStruct" class="tlc_func">LibGetPreviousZCStruct</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetPreviousZCStruct">SLibGetPreviousZCStruct</a>(TLC_TRUE)
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetPreviousZCStruct">SLibGetPreviousZCStruct</a>(TLC_TRUE)
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetPreviousZCStruct</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetZCEventStruct<span style="padding-left:9.5px"></span>===========================================
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>previous<span style="padding-left:9.5px"></span>zero<span style="padding-left:9.5px"></span>crossings<span style="padding-left:9.5px"></span>variable.
-</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Called<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html">opaquelib.tlc</a>:<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#SLibCGIRVarGroupPath">SLibCGIRVarGroupPath</a>().
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Called<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span><a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/opaquelib.html">opaquelib.tlc</a>:<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/opaquelib.html#SLibCGIRVarGroupPath">SLibCGIRVarGroupPath</a>().
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetZCEventStruct" class="tlc_func">LibGetZCEventStruct</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetPreviousZCStruct">LibGetPreviousZCStruct</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#LibGetPreviousZCStruct">LibGetPreviousZCStruct</a>()
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetZCEventStruct</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetParameterStruct<span style="padding-left:9.5px"></span>===========================================
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>parameters<span style="padding-left:9.5px"></span>variable.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetParameterStruct" class="tlc_func">LibGetParameterStruct</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetParametersStruct">LibGetParametersStruct</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#LibGetParametersStruct">LibGetParametersStruct</a>()
  <br><span class="tlc_fkw">%endfunction</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGetParamPointerFromRTM<span style="padding-left:9.5px"></span>========================================
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
@@ -773,11 +773,11 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetParamPointerFromRTM" class="tlc_func">SLibGetParamPointerFromRTM</a>(addTypeCast) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> Accelerator
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("ModelRtp")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("ModelRtp")
  <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> CodeFormat == "S-Function"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("LocalDefaultParam")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("LocalDefaultParam")
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("DefaultParam")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("DefaultParam")
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> addTypeCast
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = "((%<::tParametersType> *) %<<span>retStr</span>>)"
@@ -790,10 +790,10 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetParametersStruct" class="tlc_func">SLibGetParametersStruct</a>(addTypeCast) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.HasSimStructVars == 1
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetParamPointerFromRTM">SLibGetParamPointerFromRTM</a>(addTypeCast)
- <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelRefScalableBuild">IsModelRefScalableBuild</a>() &amp;&amp; !GenerateClassInterface
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> baseSystem = ::CompiledModel.System[<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(baseSystem, "Parameter")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetParamPointerFromRTM">SLibGetParamPointerFromRTM</a>(addTypeCast)
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelRefScalableBuild">IsModelRefScalableBuild</a>() &amp;&amp; !GenerateClassInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> baseSystem = ::CompiledModel.System[<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(baseSystem, "Parameter")
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> paramStructVarName = ::tParameters
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> paramStructVarName
@@ -804,7 +804,7 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>parameters<span style="padding-left:9.5px"></span>variable.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetParametersStruct" class="tlc_func">LibGetParametersStruct</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetParametersStruct">SLibGetParametersStruct</a>(TLC_TRUE) 
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetParametersStruct">SLibGetParametersStruct</a>(TLC_TRUE) 
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetParametersStruct</span>
  <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGetZCSignalValueStructFromRTM<span style="padding-left:9.5px"></span>================================
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
@@ -812,9 +812,9 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetZCSignalValueStructFromRTM" class="tlc_func">SLibGetZCSignalValueStructFromRTM</a>(addTypeCast) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CodeFormat == "S-Function" &amp;&amp; !::Accelerator
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("NonsampledZCs")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("NonsampledZCs")
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("SolverZcSignalVector")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("SolverZcSignalVector")
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> addTypeCast
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = "((%<::tZCSignalValueType> *) %<<span>retStr</span>>)"
@@ -827,7 +827,7 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetZCSignalValueStruct" class="tlc_func">SLibGetZCSignalValueStruct</a>(addTypeCast) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.HasSimStructVars == 1 || ::isRSimWithSolverModule
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetZCSignalValueStructFromRTM">SLibGetZCSignalValueStructFromRTM</a>(addTypeCast)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetZCSignalValueStructFromRTM">SLibGetZCSignalValueStructFromRTM</a>(addTypeCast)
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ::tZCSignalValue
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -837,10 +837,10 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>non-sampled<span style="padding-left:9.5px"></span>zero<span style="padding-left:9.5px"></span>crossings.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LibGetZCSignalValueStruct" class="tlc_func">LibGetZCSignalValueStruct</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetZCSignalValueStruct">SLibGetZCSignalValueStruct</a>(TLC_TRUE)
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#SLibGetZCSignalValueStruct">SLibGetZCSignalValueStruct</a>(TLC_TRUE)
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetZCSignalValueStruct</span>
  <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="LibGetZCSVStruct" class="tlc_func">LibGetZCSVStruct</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetZCSignalValueStruct">LibGetZCSignalValueStruct</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html#LibGetZCSignalValueStruct">LibGetZCSignalValueStruct</a>()
  <br><span class="tlc_fkw">%endfunction</span>
  <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>(2)<span style="padding-left:9.5px"></span>Local<span style="padding-left:9.5px"></span>Library<span style="padding-left:9.5px"></span>Functions<span style="padding-left:9.5px"></span>(Fcn<span style="padding-left:9.5px"></span>Functions)
@@ -849,5 +849,5 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>End<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>library<span style="padding-left:9.5px"></span>code
 </span> <br><span class="tlc_comment">%%
 </span> <br>&nbsp; <br><span class="tlc_endif">%endif</span> <span class="tlc_comment">%% _FCNIOLIB_</span>
- <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html">fcniolib.tlc</a>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/fcniolib.html">fcniolib.tlc</a>
 </span> <br></body></html>
