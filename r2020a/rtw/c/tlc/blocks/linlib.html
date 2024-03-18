@@ -83,9 +83,9 @@ body {
 </span> <br><span class="tlc_fkw">%function</span> <a id="LinLibSparseYEqAXFlat" class="tlc_func">LinLibSparseYEqAXFlat</a>(lhs, lhsIdx, lhsIsSet, Mtx, MtxOffset, rhs,/
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nterms) Output
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> lhs == "Y"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Yi = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", "", lhsIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Yi = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", "", lhsIdx)
  <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> lhs == "dX"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Yi = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousStateDerivative">LibBlockContinuousStateDerivative</a>("", "", lhsIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Yi = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousStateDerivative">LibBlockContinuousStateDerivative</a>("", "", lhsIdx)
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Yi = "%<<span>lhs</span>>[%<<span>lhsIdx</span>>]"
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -94,20 +94,20 @@ body {
  <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> iterm = nterms
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> AijIdx = MtxOffset + iterm
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Aij = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameter">LibBlockParameter</a>(%<<span>MtxParamName</span>>, "", "", AijIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Aij = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameter">LibBlockParameter</a>(%<<span>MtxParamName</span>>, "", "", AijIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> XjIdx = ParamSettings.ColIdxOfNonZero%<<span>Mtx</span>>[AijIdx]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> rhs == "U"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xj = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "", XjIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xj = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "", XjIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> rhs == "Xc"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xj = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", "", XjIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xj = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", "", XjIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> rhs == "Xd"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xj = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", XjIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xj = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", XjIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Unhandled rhs value: %<<span>rhs</span>>"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportFatalError">LibBlockReportFatalError</a>([], errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportFatalError">LibBlockReportFatalError</a>([], errTxt)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rhsStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html#LinLibEvalAXandAppend">LinLibEvalAXandAppend</a>(rhsStr,Aij,Xj)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rhsStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html#LinLibEvalAXandAppend">LinLibEvalAXandAppend</a>(rhsStr,Aij,Xj)
  <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> rhsStr == ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> 0
@@ -125,20 +125,20 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nterms) Output
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> nterms < RollThreshold
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "%<<span>nterms</span>> is less than RollThreshold = %<<span>RollThreshold</span>>"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportError">LibBlockReportError</a>([], errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportError">LibBlockReportError</a>([], errTxt)>
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> jMnz = "col%<<span>Mtx</span>>idxRow%<<span>lhsIdx</span>>"
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ColIdx = "ParamSettings.ColIdxOfNonZero%<<span>Mtx</span>>"
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> jMnzInitStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html#LinLibEnclVectInCurlyBraces">LinLibEnclVectInCurlyBraces</a>(%<<span>ColIdx</span>>,MtxOffset,nterms)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> jMnzInitStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html#LinLibEnclVectInCurlyBraces">LinLibEnclVectInCurlyBraces</a>(%<<span>ColIdx</span>>,MtxOffset,nterms)
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> MtxParamName = "%<<span>Mtx</span>>"
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pMtxParam = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(%<<span>MtxParamName</span>>, "", "", MtxOffset)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pMtxParam = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(%<<span>MtxParamName</span>>, "", "", MtxOffset)
  <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> lhs == "Y"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Yi = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", "", lhsIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Yi = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", "", lhsIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pYi = "y%<<span>lhsIdx</span>>"
  <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> lhs == "dX"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Yi = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousStateDerivative">LibBlockContinuousStateDerivative</a>("", "", lhsIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Yi = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousStateDerivative">LibBlockContinuousStateDerivative</a>("", "", lhsIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pYi = "dx%<<span>lhsIdx</span>>"
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Yi = "%<<span>lhs</span>>[%<<span>lhsIdx</span>>]"
@@ -146,21 +146,21 @@ body {
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> rhs == "U"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xj = "%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(0, "", "", 0)>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xj = "%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(0, "", "", 0)>"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pXj = "u"
  <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> rhs == "Xc"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xj = "&amp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", "", 0)>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xj = "&amp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", "", 0)>"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pXj = "xc"
  <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> rhs == "Xd"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xj = "&amp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", 0)>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xj = "&amp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", 0)>"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pXj = "xd"
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Unhandled rhs value: %<<span>rhs</span>>"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportFatalError">LibBlockReportFatalError</a>([], errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportFatalError">LibBlockReportFatalError</a>([], errTxt)>
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nMnz = ((lhsIsSet == 0) ? (nterms-1) : nterms)
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtype = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalDataTypeName">LibBlockInputSignalDataTypeName</a>(0, "")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtype = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalDataTypeName">LibBlockInputSignalDataTypeName</a>(0, "")
  <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
  <br>&nbsp;&nbsp;{
  <br>&nbsp;&nbsp;&nbsp;&nbsp;static const int_T %<<span>jMnz</span>>[%<<span>nterms</span>>] = %<<span>jMnzInitStr</span>>;
@@ -195,9 +195,9 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">SIZE</span>(evalval,0) > 0 &amp;&amp; <span class="tlc_bifunc">SIZE</span>(evalval,1) > 0
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nterms = ParamSettings.NumNonZero%<<span>A</span>>InRow[iy]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> nterms < RollThreshold || nterms == 0
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> yIsSet = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html#LinLibSparseYEqAXFlat">LinLibSparseYEqAXFlat</a>(y,iy,0,A,Aoffset,x,nterms)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> yIsSet = <a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html#LinLibSparseYEqAXFlat">LinLibSparseYEqAXFlat</a>(y,iy,0,A,Aoffset,x,nterms)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> yIsSet = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html#LinLibSparseYEqAXRolled">LinLibSparseYEqAXRolled</a>(y,iy,0,A,Aoffset,x,nterms)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> yIsSet = <a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html#LinLibSparseYEqAXRolled">LinLibSparseYEqAXRolled</a>(y,iy,0,A,Aoffset,x,nterms)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Aoffset = Aoffset+nterms
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -209,18 +209,18 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">SIZE</span>(evalval,0) > 0 &amp;&amp; <span class="tlc_bifunc">SIZE</span>(evalval,1) > 0
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nterms = ParamSettings.NumNonZero%<<span>B</span>>InRow[iy]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ParamSettings.InputContiguous == "no" || nterms < RollThreshold || nterms == 0
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmp = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html#LinLibSparseYEqAXFlat">LinLibSparseYEqAXFlat</a>(y,iy,yIsSet,B,Boffset,u,nterms)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmp = <a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html#LinLibSparseYEqAXFlat">LinLibSparseYEqAXFlat</a>(y,iy,yIsSet,B,Boffset,u,nterms)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmp = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html#LinLibSparseYEqAXRolled">LinLibSparseYEqAXRolled</a>(y,iy,yIsSet,B,Boffset,u,nterms)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmp = <a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html#LinLibSparseYEqAXRolled">LinLibSparseYEqAXRolled</a>(y,iy,yIsSet,B,Boffset,u,nterms)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> yIsSet = (tmp == 1) ? 1 : yIsSet
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Boffset = Boffset+nterms
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> yIsSet == 0
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> y == "Y"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Yi = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", "", iy)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Yi = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", "", iy)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> y == "dX"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Yi = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousStateDerivative">LibBlockContinuousStateDerivative</a>( "", "", iy)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Yi = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousStateDerivative">LibBlockContinuousStateDerivative</a>( "", "", iy)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Yi = "%<<span>y</span>>[%<<span>iy</span>>]"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -238,7 +238,7 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LinLibYEqAXPlusBU" class="tlc_func">LinLibYEqAXPlusBU</a>(y, A, x, B, u, nA, mA, mB) <span class="tlc_fkw">Output</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeId = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibBlockInputSignalAliasedThruDataTypeId">LibBlockInputSignalAliasedThruDataTypeId</a>(0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeId = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibBlockInputSignalAliasedThruDataTypeId">LibBlockInputSignalAliasedThruDataTypeId</a>(0)
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% A*x</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;{
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static const int_T dims[3] = { %<<span>nA</span>>, %<<span>mA</span>>, 1 };
@@ -249,7 +249,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> FcnRec ArgList{Expr " %<<span>A</span>>"; TypeId dTypeId; IsPtr 1; IsCplx 0; IsConst 0}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> FcnRec ArgList{Expr " %<<span>x</span>>"; TypeId dTypeId; IsPtr 1; IsCplx 0; IsConst 0}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> FcnRec ArgList{Expr " &amp;dims[0]"; TypeId tSS_INTEGER; IsPtr 1; IsCplx 0; IsConst 0}
- <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenFcnCall">LibGenFcnCall</a>(FcnRec)>;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/mathlib.html#LibGenFcnCall">LibGenFcnCall</a>(FcnRec)>;
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% B*u</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;{
@@ -261,14 +261,14 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> FcnRec ArgList{Expr " %<<span>B</span>>"; TypeId dTypeId; IsPtr 1; IsCplx 0; IsConst 0}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> FcnRec ArgList{Expr " %<<span>u</span>>"; TypeId dTypeId; IsPtr 1; IsCplx 0; IsConst 0}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> FcnRec ArgList{Expr "&amp;dims[0]"; TypeId tSS_INTEGER; IsPtr 1; IsCplx 0; IsConst 0}
- <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenFcnCall">LibGenFcnCall</a>(FcnRec)>;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/mathlib.html#LibGenFcnCall">LibGenFcnCall</a>(FcnRec)>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;}
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LinLibYEqAXPlusBU</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LinLibYEqAX<span style="padding-left:9.5px"></span>===========================================
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LinLibYEqAX" class="tlc_func">LinLibYEqAX</a>(y, A, x, nA, mA) <span class="tlc_fkw">Output</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeId = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibBlockInputSignalAliasedThruDataTypeId">LibBlockInputSignalAliasedThruDataTypeId</a>(0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeId = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibBlockInputSignalAliasedThruDataTypeId">LibBlockInputSignalAliasedThruDataTypeId</a>(0)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% A*x</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;{
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static const int_T dims[3] = { %<<span>nA</span>>, %<<span>mA</span>>, 1 };
@@ -279,7 +279,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> FcnRec ArgList{Expr " %<<span>A</span>>"; TypeId dTypeId; IsPtr 1; IsCplx 0; IsConst 0}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> FcnRec ArgList{Expr " %<<span>x</span>>"; TypeId dTypeId; IsPtr 1; IsCplx 0; IsConst 0}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> FcnRec ArgList{Expr " &amp;dims[0]"; TypeId tSS_INTEGER; IsPtr 1; IsCplx 0; IsConst 0}
- <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenFcnCall">LibGenFcnCall</a>(FcnRec)>;      
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/mathlib.html#LibGenFcnCall">LibGenFcnCall</a>(FcnRec)>;      
  <br>&nbsp;&nbsp;&nbsp;&nbsp;}
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LinLibYEqAX</span>
  <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LinLibSIMOSysOutputFcn<span style="padding-left:9.5px"></span>============================================
@@ -291,15 +291,15 @@ body {
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> yrollRegion = [0:%<ny-1>]
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> yrollVars = (noFeedThru) ? ["Y"] : ["Y", "<param>/D"]
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !noFeedThru
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> U = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> U = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "", 0)
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
  <br>&nbsp;&nbsp;<span class="tlc_roll">%roll</span> yidx = yrollRegion, ylcv = RollThreshold, block, "Roller", yrollVars
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Yi = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", ylcv, yidx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Yi = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", ylcv, yidx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !noFeedThru
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Di = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameter">LibBlockParameter</a>(D, "", ylcv, yidx)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> OutputStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html#LinLibEvalAXandAppend">LinLibEvalAXandAppend</a>("",Di,U)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Di = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameter">LibBlockParameter</a>(D, "", ylcv, yidx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> OutputStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html#LinLibEvalAXandAppend">LinLibEvalAXandAppend</a>("",Di,U)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> OutputStr != ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>Yi</span>> = %<<span>OutputStr</span>>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -311,15 +311,15 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rhsStr = ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> xidx = nx
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> x == "Xd"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xj = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", xidx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xj = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", xidx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> x == "Xc"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xj = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", "", xidx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xj = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", "", xidx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Unhandled input %<<span>x</span>>."
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportError">LibBlockReportError</a>(block, errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportError">LibBlockReportError</a>(block, errTxt)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Cij = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockMatrixParameter">LibBlockMatrixParameter</a>(C,ylcv,"",yidx,"","",xidx)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rhsStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html#LinLibEvalAXandAppend">LinLibEvalAXandAppend</a>(rhsStr,Cij,Xj)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Cij = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#LibBlockMatrixParameter">LibBlockMatrixParameter</a>(C,ylcv,"",yidx,"","",xidx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rhsStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html#LinLibEvalAXandAppend">LinLibEvalAXandAppend</a>(rhsStr,Cij,Xj)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> rhsStr != ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> prefix = ((OutputStr == "") ? "=" : "+=")
@@ -327,18 +327,18 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> x == "Xd"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pX = "&amp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", 0)>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pX = "&amp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", 0)>"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> x == "Xc"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pX = "&amp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", "", 0)>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pX = "&amp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", "", 0)>"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Unhandled input %<<span>x</span>>."
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportError">LibBlockReportError</a>(block, errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportError">LibBlockReportError</a>(block, errTxt)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pCmtx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockMatrixParameterAddr">LibBlockMatrixParameterAddr</a>(C,ylcv,"",yidx,"","",0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pCmtx = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#LibBlockMatrixParameterAddr">LibBlockMatrixParameterAddr</a>(C,ylcv,"",yidx,"","",0)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nterms = ((OutputStr == "") ? (nx-1) : nx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Note the generated code defines a de-zeroed col-major vector </span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nRows  = <span class="tlc_bifunc">SIZE</span>(C.Value,0)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtype = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalDataTypeName">LibBlockInputSignalDataTypeName</a>(0, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtype = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalDataTypeName">LibBlockInputSignalDataTypeName</a>(0, "")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T nx = %<<span>nterms</span>>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const %<<span>dtype</span>> *x = %<<span>pX</span>>;
@@ -360,14 +360,14 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="LinLibCCformDerivFcn" class="tlc_func">LinLibCCformDerivFcn</a>(nx) <span class="tlc_fkw">Output</span>
  <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> U = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "", 0)
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dx = "%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousStateDerivative">LibBlockContinuousStateDerivative</a>("","",0)>"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> U = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "", 0)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dx = "%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousStateDerivative">LibBlockContinuousStateDerivative</a>("","",0)>"
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> nx < RollThreshold || nx == 0
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rhsStr = ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> ix = nx
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Ai = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameter">LibBlockParameter</a>(A, "", "", ix)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xi = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", "", ix)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rhsStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html#LinLibEvalAXandAppend">LinLibEvalAXandAppend</a>(rhsStr,Ai,Xi)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Ai = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameter">LibBlockParameter</a>(A, "", "", ix)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xi = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", "", ix)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rhsStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html#LinLibEvalAXandAppend">LinLibEvalAXandAppend</a>(rhsStr,Ai,Xi)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ParamSettings.Realization == "UCCform"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dx</span>> = %<<span>U</span>>;
@@ -376,25 +376,25 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = nx-1
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ix = nx-idx-1
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousStateDerivative">LibBlockContinuousStateDerivative</a>("","",ix)>...
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", "", ix-1)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousStateDerivative">LibBlockContinuousStateDerivative</a>("","",ix)>...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= %<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", "", ix-1)>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> ParamSettings.Realization == "LCCform"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousStateDerivative">LibBlockContinuousStateDerivative</a>("","",nx-1)>= %<<span>U</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousStateDerivative">LibBlockContinuousStateDerivative</a>("","",nx-1)>= %<<span>U</span>>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> rhsStr != ""
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousStateDerivative">LibBlockContinuousStateDerivative</a>("","",nx-1)>+= %<<span>rhsStr</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousStateDerivative">LibBlockContinuousStateDerivative</a>("","",nx-1)>+= %<<span>rhsStr</span>>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = nx-1
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousStateDerivative">LibBlockContinuousStateDerivative</a>("","",idx)>...
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", "", idx+1)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousStateDerivative">LibBlockContinuousStateDerivative</a>("","",idx)>...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= %<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", "", idx+1)>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtype = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalDataTypeName">LibBlockInputSignalDataTypeName</a>(0, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtype = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalDataTypeName">LibBlockInputSignalDataTypeName</a>(0, "")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;int_T i;
- <br>&nbsp;&nbsp;&nbsp;&nbsp;const %<<span>dtype</span>> *Amtx = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(A, "", "", 0)>;
- <br>&nbsp;&nbsp;&nbsp;&nbsp;const %<<span>dtype</span>> *x = &amp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", "", 0)>;
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dtype</span>> *dx = &amp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousStateDerivative">LibBlockContinuousStateDerivative</a>("", "",0)> ;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const %<<span>dtype</span>> *Amtx = %<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(A, "", "", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const %<<span>dtype</span>> *x = &amp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", "", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dtype</span>> *dx = &amp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousStateDerivative">LibBlockContinuousStateDerivative</a>("", "",0)> ;
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ParamSettings.Realization == "UCCform"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dx[0] = %<<span>U</span>>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (i=%<nx-1>; i>0; i--) {
@@ -418,12 +418,12 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LinLibCCformUpdateFcn" class="tlc_func">LinLibCCformUpdateFcn</a>(nx) <span class="tlc_fkw">Output</span>
  <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> U = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "", 0)
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtype = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalDataTypeName">LibBlockInputSignalDataTypeName</a>(0, "")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> U = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "", 0)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtype = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalDataTypeName">LibBlockInputSignalDataTypeName</a>(0, "")
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> nx == 1
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> A0 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameter">LibBlockParameter</a>(A, "", "", 0)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> x0 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", 0)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ax  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html#LinLibEvalAXandAppend">LinLibEvalAXandAppend</a>("",A0,x0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> A0 = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameter">LibBlockParameter</a>(A, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> x0 = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ax  = <a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html#LinLibEvalAXandAppend">LinLibEvalAXandAppend</a>("",A0,x0)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ax = ((ax == "") ? "" : (" + " + ax))
  <br>&nbsp;&nbsp;&nbsp;&nbsp;/
  <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>x0</span>> = %<<span>U</span>> %<<span>ax</span>>;
@@ -432,9 +432,9 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;/
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rhsStr = ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> ix = nx
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Ai = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameter">LibBlockParameter</a>(A, "", "", ix)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xi = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", ix)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rhsStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html#LinLibEvalAXandAppend">LinLibEvalAXandAppend</a>(rhsStr,Ai,Xi)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Ai = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameter">LibBlockParameter</a>(A, "", "", ix)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xi = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", ix)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rhsStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html#LinLibEvalAXandAppend">LinLibEvalAXandAppend</a>(rhsStr,Ai,Xi)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> rhsStr != ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xtmp += %<<span>rhsStr</span>>;
@@ -442,25 +442,25 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ParamSettings.Realization == "UCCform"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = nx-1
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ix = nx-idx-1
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xi = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", ix)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>Xi</span>> = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", ix-1)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xi = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", ix)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>Xi</span>> = %<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", ix-1)>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> x0 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> x0 = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", 0)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>x0</span>> = xtmp;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> ParamSettings.Realization == "LCCform"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = nx-1
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ix = idx
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xi = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", ix)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>Xi</span>> = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", ix+1)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xi = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", ix)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>Xi</span>> = %<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", ix+1)>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xn = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", nx-1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Xn = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", nx-1)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>Xn</span>> = xtmp;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;int_T i;
- <br>&nbsp;&nbsp;&nbsp;&nbsp;const %<<span>dtype</span>> *Amtx = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(A, "", "", 0)>;
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dtype</span>> *x = &amp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const %<<span>dtype</span>> *Amtx = %<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(A, "", "", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dtype</span>> *x = &amp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", 0)>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dtype</span>> xtmp = %<<span>U</span>>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;/
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ParamSettings.Realization == "UCCform"
@@ -487,7 +487,7 @@ body {
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">SIZE</span>(InitialCondition.Value,0) == 0 || <span class="tlc_bifunc">SIZE</span>(InitialCondition.Value,1) == 0
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ICstr = "0.0"
  <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <span class="tlc_bifunc">SIZE</span>(InitialCondition.Value,1) == 1
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span>  ICstr = "%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameter">LibBlockParameter</a>(InitialCondition, "", "", 0)>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span>  ICstr = "%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameter">LibBlockParameter</a>(InitialCondition, "", "", 0)>"
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ContStates[0] > 0
@@ -499,7 +499,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (NumDWork > 0)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkWidth">LibBlockDWorkWidth</a>(DSTATE)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nx = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkWidth">LibBlockDWorkWidth</a>(DSTATE)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ICstr == ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rollVars = ["<dwork>/DSTATE", "<param>/InitialCondition"]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
@@ -510,12 +510,12 @@ body {
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rollRegions = [0:%<nx-1>]
  <br>&nbsp;&nbsp;<span class="tlc_roll">%roll</span> xIdx = rollRegions, lcv = RollThreshold, block, "Roller", rollVars
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ContStates[0] > 0
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> x = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", lcv, xIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> x = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", lcv, xIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> x = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", lcv, xIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> x = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", lcv, xIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ICstr == ""
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>x</span>> = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameter">LibBlockParameter</a>(InitialCondition, "", lcv, xIdx)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>x</span>> = %<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameter">LibBlockParameter</a>(InitialCondition, "", lcv, xIdx)>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>x</span>> = %<<span>ICstr</span>>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -525,29 +525,29 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LinLibOutputs" class="tlc_func">LinLibOutputs</a>(block, system) <span class="tlc_fkw">Output</span>
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ninputs = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalWidth">LibBlockInputSignalWidth</a>(0)
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> noutputs = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalWidth">LibBlockOutputSignalWidth</a>(0)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ninputs = <a href="https://foool.github.io/r2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalWidth">LibBlockInputSignalWidth</a>(0)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> noutputs = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalWidth">LibBlockOutputSignalWidth</a>(0)
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ContStates[0] > 0
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nstates = ContStates[0]
  <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> NumDWork > 0
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nstates = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkWidth">LibBlockDWorkWidth</a>(DSTATE)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nstates = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkWidth">LibBlockDWorkWidth</a>(DSTATE)
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nstates = 0
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(C.Value) &amp;&amp; <span class="tlc_bifunc">ISEMPTY</span>(D.Value)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = noutputs
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", "", idx)> = 0.0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", "", idx)> = 0.0;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ParamSettings.Realization == "General"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> y = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(0, "", "", 0)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> c = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(C, "", "", 0)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> d = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(D, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> y = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(0, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> c = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(C, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> d = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(D, "", "", 0)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ContStates[0] > 0
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> x = "&amp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", "", 0)>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> x = "&amp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", "", 0)>"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> x = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkAddr">LibBlockDWorkAddr</a>(DSTATE, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> x = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkAddr">LibBlockDWorkAddr</a>(DSTATE, "", "", 0)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> FeedThru = TLC_FALSE
@@ -577,26 +577,26 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> FeedThru
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(0, "", "", 0)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html#LinLibYEqAXPlusBU">LinLibYEqAXPlusBU</a>(y,c,x,d,u,noutputs,nstates,ninputs)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(0, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html#LinLibYEqAXPlusBU">LinLibYEqAXPlusBU</a>(y,c,x,d,u,noutputs,nstates,ninputs)>/
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html#LinLibYEqAX">LinLibYEqAX</a>(y,c,x,noutputs,nstates)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html#LinLibYEqAX">LinLibYEqAX</a>(y,c,x,noutputs,nstates)>/
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> ParamSettings.Realization == "Sparse"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> x = ( (ContStates[0] > 0) ? "Xc" : "Xd" )
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html#LinLibSparseYEqAXPlusBU">LinLibSparseYEqAXPlusBU</a>("Y","C",x,"D","U",noutputs)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html#LinLibSparseYEqAXPlusBU">LinLibSparseYEqAXPlusBU</a>("Y","C",x,"D","U",noutputs)>/
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> (ParamSettings.Realization == "UCCform") ||/
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(ParamSettings.Realization == "LCCform")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ninputs != 1
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Cannot handle input signal of width %<<span>ninputs</span>>"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportError">LibBlockReportError</a>(block, errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportError">LibBlockReportError</a>(block, errTxt)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> x = ( (ContStates[0] > 0) ? "Xc" : "Xd" )
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html#LinLibSIMOSysOutputFcn">LinLibSIMOSysOutputFcn</a>(block, x,noutputs,nstates)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html#LinLibSIMOSysOutputFcn">LinLibSIMOSysOutputFcn</a>(block, x,noutputs,nstates)>/
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Unknown realization: %<<span>ParamSettings.Realization</span>>"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportFatalError">LibBlockReportFatalError</a>(block, errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportFatalError">LibBlockReportFatalError</a>(block, errTxt)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;<span class="tlc_endfunction">%endfunction</span> <span class="tlc_comment">%% LinLibOutputs</span>
@@ -605,64 +605,64 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LinLibDerivatives" class="tlc_func">LinLibDerivatives</a>(block, system) <span class="tlc_fkw">Output</span>
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nstates = ContStates[0]
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ninputs = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalWidth">LibBlockInputSignalWidth</a>(0)
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> noutputs = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalWidth">LibBlockOutputSignalWidth</a>(0)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ninputs = <a href="https://foool.github.io/r2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalWidth">LibBlockInputSignalWidth</a>(0)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> noutputs = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalWidth">LibBlockOutputSignalWidth</a>(0)
  <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ParamSettings.Realization == "General"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(0, "", "", 0)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> a = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(A, "", "", 0)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> b = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(B, "", "", 0)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> x = "&amp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", "", 0)>"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dx = "&amp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousStateDerivative">LibBlockContinuousStateDerivative</a>("","",0)>"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html#LinLibYEqAXPlusBU">LinLibYEqAXPlusBU</a>(dx,a,x,b,u,nstates,nstates,ninputs)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(0, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> a = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(A, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> b = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(B, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> x = "&amp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousState">LibBlockContinuousState</a>("", "", 0)>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dx = "&amp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockContinuousStateDerivative">LibBlockContinuousStateDerivative</a>("","",0)>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html#LinLibYEqAXPlusBU">LinLibYEqAXPlusBU</a>(dx,a,x,b,u,nstates,nstates,ninputs)>/
  <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> ParamSettings.Realization == "Sparse"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html#LinLibSparseYEqAXPlusBU">LinLibSparseYEqAXPlusBU</a>("dX","A","Xc","B","U",nstates)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html#LinLibSparseYEqAXPlusBU">LinLibSparseYEqAXPlusBU</a>("dX","A","Xc","B","U",nstates)>/
  <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> ParamSettings.Realization == "UCCform" ||/
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ParamSettings.Realization == "LCCform"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html#LinLibCCformDerivFcn">LinLibCCformDerivFcn</a>(nstates)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html#LinLibCCformDerivFcn">LinLibCCformDerivFcn</a>(nstates)>/
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Unknown realization: %<<span>ParamSettings.Realization</span>>"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportFatalError">LibBlockReportFatalError</a>(block, errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportFatalError">LibBlockReportFatalError</a>(block, errTxt)>
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LinLibDerivatives</span>
  <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LinLibUpdate<span style="padding-left:9.5px"></span>======================================================
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="LinLibUpdate" class="tlc_func">LinLibUpdate</a>(block, system) <span class="tlc_fkw">Output</span>
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nstates = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkWidth">LibBlockDWorkWidth</a>(DSTATE)
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ninputs = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalWidth">LibBlockInputSignalWidth</a>(0)
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> noutputs = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalWidth">LibBlockOutputSignalWidth</a>(0)
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtype = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalDataTypeName">LibBlockInputSignalDataTypeName</a>(0, "")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nstates = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkWidth">LibBlockDWorkWidth</a>(DSTATE)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ninputs = <a href="https://foool.github.io/r2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalWidth">LibBlockInputSignalWidth</a>(0)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> noutputs = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalWidth">LibBlockOutputSignalWidth</a>(0)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtype = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalDataTypeName">LibBlockInputSignalDataTypeName</a>(0, "")
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(::CompiledModel,"LocalXStateName")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stateId = ::CompiledModel.LocalXStateName
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stateId = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibRequestIDWithLength">LibRequestIDWithLength</a>("xnew", TLC_TRUE, TLC_FALSE, 31)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stateId = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibRequestIDWithLength">LibRequestIDWithLength</a>("xnew", TLC_TRUE, TLC_FALSE, 31)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> ::CompiledModel LocalXStateName "%<<span>stateId</span>>"
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;<span class="tlc_comment">%%</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ParamSettings.Realization == "General"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dtype</span>> %<<span>stateId</span>>[%<<span>nstates</span>>];
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(0, "", "", 0)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> a = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(A, "", "", 0)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> b = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(B, "", "", 0)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> xd = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkAddr">LibBlockDWorkAddr</a>(DSTATE, "", "", 0)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html#LinLibYEqAXPlusBU">LinLibYEqAXPlusBU</a>(stateId,a,xd,b,u,nstates,nstates,ninputs)>/
- <br>&nbsp;&nbsp;&nbsp;&nbsp;(void) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMemFcnCall">LibGenMemFcnCall</a>("memcpy", xd, stateId, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(0, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> a = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(A, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> b = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(B, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> xd = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkAddr">LibBlockDWorkAddr</a>(DSTATE, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html#LinLibYEqAXPlusBU">LinLibYEqAXPlusBU</a>(stateId,a,xd,b,u,nstates,nstates,ninputs)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(void) %<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/mathlib.html#LibGenMemFcnCall">LibGenMemFcnCall</a>("memcpy", xd, stateId, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"sizeof(%<<span>dtype</span>>)*%<<span>nstates</span>>")>;
  <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> ParamSettings.Realization == "Sparse"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dtype</span>> %<<span>stateId</span>>[%<<span>nstates</span>>];
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html#LinLibSparseYEqAXPlusBU">LinLibSparseYEqAXPlusBU</a>(stateId,"A","Xd","B","U",nstates)>/
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> xd = "&amp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", 0)>"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;(void) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMemFcnCall">LibGenMemFcnCall</a>("memcpy", xd,  stateId, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html#LinLibSparseYEqAXPlusBU">LinLibSparseYEqAXPlusBU</a>(stateId,"A","Xd","B","U",nstates)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> xd = "&amp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(DSTATE, "", "", 0)>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(void) %<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/mathlib.html#LibGenMemFcnCall">LibGenMemFcnCall</a>("memcpy", xd,  stateId, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"sizeof(%<<span>dtype</span>>)*%<<span>nstates</span>>")>;
  <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> ParamSettings.Realization == "UCCform" ||/
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ParamSettings.Realization == "LCCform"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html#LinLibCCformUpdateFcn">LinLibCCformUpdateFcn</a>(nstates)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html#LinLibCCformUpdateFcn">LinLibCCformUpdateFcn</a>(nstates)>/
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Unknown realization: %<<span>ParamSettings.Realization</span>>"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportFatalError">LibBlockReportFatalError</a>(block, errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportFatalError">LibBlockReportFatalError</a>(block, errTxt)>
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LinLibUpdate</span>
  <br>&nbsp; <br><span class="tlc_endif">%endif</span> <span class="tlc_comment">%% _LINLIB_</span>
- <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/linlib.html">linlib.tlc</a>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/r2020a/rtw/c/tlc/blocks/linlib.html">linlib.tlc</a>
 </span> <br></body></html>

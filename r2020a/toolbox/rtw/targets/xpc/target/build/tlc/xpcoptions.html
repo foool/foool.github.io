@@ -48,7 +48,7 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>(CompiledModel.ModelReferenceBlocks)
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numDSM = CompiledModel.NumDataStoresPushedToTopModel
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> numDSM > 0
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibReportErrorWithId">SLibReportErrorWithId</a>("xPCTarget:modeloptions:GlobalDataStores")&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibReportErrorWithId">SLibReportErrorWithId</a>("xPCTarget:modeloptions:GlobalDataStores")&gt;
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (<span class="tlc_bifunc">SIZE</span>(mdlRefBlks,0) > 0)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sizeofParams = 0
@@ -62,30 +62,30 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sizeofParams = 0
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br><span class="tlc_endif">%endif</span>
- <br>&nbsp; <br><span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()
- <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibIsCoreAffinityRequired">LibIsCoreAffinityRequired</a>()
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibReportErrorWithId">SLibReportErrorWithId</a>("xPCTarget:modeloptions:CoreAffinityRequired")&gt;
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/commonthreadlib.html#LibIsCoreAffinityRequired">LibIsCoreAffinityRequired</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibReportErrorWithId">SLibReportErrorWithId</a>("xPCTarget:modeloptions:CoreAffinityRequired")&gt;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>%%%%SLibIsCustomizationRequired()
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> MAXNUMXPCMDLTHREAD = 64  
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStr         = ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comma           = ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numSubrateTasks = 0
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nTaskGroups     = %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#LibDeploymentGetNumTaskGroups">LibDeploymentGetNumTaskGroups</a>()&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nTaskGroups     = %&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#LibDeploymentGetNumTaskGroups">LibDeploymentGetNumTaskGroups</a>()&gt;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numPeriodicTriggers = 0
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> tgIdx = nTaskGroups
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tg = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#LibDeploymentGetTaskGroup">LibDeploymentGetTaskGroup</a>(tgIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tg = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#LibDeploymentGetTaskGroup">LibDeploymentGetTaskGroup</a>(tgIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tg.Periodicity.Type, "PeriodicTrigger")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numPeriodicTriggers = numPeriodicTriggers + 1
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEQUAL</span>(numPeriodicTriggers, 1)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibReportErrorWithId">SLibReportErrorWithId</a>("xPCTarget:modeloptions:MultiPeriodicTriggers")&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibReportErrorWithId">SLibReportErrorWithId</a>("xPCTarget:modeloptions:MultiPeriodicTriggers")&gt;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(tg, "Task")
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibReportErrorWithId">SLibReportErrorWithId</a>("xPCTarget:modeloptions:BlocksMappedToTrigger")&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibReportErrorWithId">SLibReportErrorWithId</a>("xPCTarget:modeloptions:BlocksMappedToTrigger")&gt;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numSubrateTasks = numSubrateTasks + <span class="tlc_bifunc">SIZE</span>(tg.Task, 1)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> tIdx = <span class="tlc_bifunc">SIZE</span>(tg.Task, 1)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> task = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#LibDeploymentGetTask">LibDeploymentGetTask</a>(tIdx, tgIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> task = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#LibDeploymentGetTask">LibDeploymentGetTask</a>(tIdx, tgIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> period =  task.Period  
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>( period, rtInf )
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
@@ -104,7 +104,7 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
  <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (numSubrateTasks > MAXNUMXPCMDLTHREAD)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errArgs = ["%&lt;numSubrateTasks&gt;", "%&lt;MAXNUMXPCMDLTHREAD&gt;"]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibReportErrorWithIdAndArgs">SLibReportErrorWithIdAndArgs</a>("xPCTarget:modeloptions:NumSubrateTasks", errArgs)> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibReportErrorWithIdAndArgs">SLibReportErrorWithIdAndArgs</a>("xPCTarget:modeloptions:NumSubrateTasks", errArgs)> 
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T XPCWHICHSAMPLE[%&lt;numSubrateTasks&gt;] = {%&lt;initStr&gt;};
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define XPCMDSSUPPORT 1
@@ -191,12 +191,12 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> SLRTFTZOFF = 0
  <br><span class="tlc_endif">%endif</span>
  <br>&nbsp; <br>#define SLRTFTZOFFFLAG %&lt;SLRTFTZOFF&gt;
- <br>&nbsp; <br>%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmdlreftiming.html#FcnGenChangeStepSizesFcn">FcnGenChangeStepSizesFcn</a>()&gt;
+ <br>&nbsp; <br>%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertmdlreftiming.html#FcnGenChangeStepSizesFcn">FcnGenChangeStepSizesFcn</a>()&gt;
  <br>&nbsp; <br>void XPCCALLCONV changeStepSize(real_T stepSize) {
- <br>&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmdlreftiming.html#FcnCallChangeStepSizesFcn">FcnCallChangeStepSizesFcn</a>("stepSize")&gt;
+ <br>&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertmdlreftiming.html#FcnCallChangeStepSizesFcn">FcnCallChangeStepSizesFcn</a>("stepSize")&gt;
  <br>}
  <br>&nbsp; <br>void XPCCALLCONV SLRTSetErrorStatus(const char * errMsg) {
- <br>&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMSetErrStat">RTMSetErrStat</a>("errMsg")&gt;;
+ <br>&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMSetErrStat">RTMSetErrStat</a>("errMsg")&gt;;
  <br>}
  <br>&nbsp; <br>#endif /* %&lt;xpcOptHdrDef&gt; */
  <br>&nbsp; <br><span class="tlc_closefile">%closefile</span> RLOptionsDotHeader
@@ -213,21 +213,21 @@ body {line-height: 100%; font-family:courier;}
  <br><span class="tlc_assign">%assign</span> ModelThreadHighestPriority = NumSampleTimes + RTTASKPRIORITYBASE - 1
  <br><span class="tlc_assign">%assign</span> stOneBased = 1
  <br><span class="tlc_assign">%assign</span> ntask = 0
- <br><span class="tlc_assign">%assign</span> isDeploymentDiagram = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()
+ <br><span class="tlc_assign">%assign</span> isDeploymentDiagram = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()
  <br><span class="tlc_if">%if</span> isDeploymentDiagram
- <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nTaskGroups     = %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#LibDeploymentGetNumTaskGroups">LibDeploymentGetNumTaskGroups</a>()&gt;
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nTaskGroups     = %&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#LibDeploymentGetNumTaskGroups">LibDeploymentGetNumTaskGroups</a>()&gt;
  <br>&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> tgIdx = nTaskGroups
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tg = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#LibDeploymentGetTaskGroup">LibDeploymentGetTaskGroup</a>(tgIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tg = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#LibDeploymentGetTaskGroup">LibDeploymentGetTaskGroup</a>(tgIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tg.Periodicity.Type, "PeriodicTrigger")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> tIdx = <span class="tlc_bifunc">SIZE</span>(tg.Task, 1)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> task = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#LibDeploymentGetTask">LibDeploymentGetTask</a>(tIdx, tgIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> task = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#LibDeploymentGetTask">LibDeploymentGetTask</a>(tIdx, tgIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> period =  task.Period
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>( period, rtInf )
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% skip initialize and terminate functions which have rtInf period
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> taskname = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTaskName">LibGetTaskName</a>(tgIdx, tIdx)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/obsoletelib.html#LibIsEqual">LibIsEqual</a>(taskname, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> taskname = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTaskName">LibGetTaskName</a>(tgIdx, tIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/obsoletelib.html#LibIsEqual">LibIsEqual</a>(taskname, "")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> taskname = task.FunctionName
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> st = NumSampleTimes
@@ -299,5 +299,5 @@ body {line-height: 100%; font-family:courier;}
  <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
  <br><span class="tlc_endwith">%endwith</span> %% CompiledModel
  <br>&nbsp; <br><span class="tlc_endif">%endif</span> %% _RLOPTIONS_
- <br>&nbsp; <br>%% [EOF] <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcoptions.html">xpcoptions.tlc</a> 
+ <br>&nbsp; <br>%% [EOF] <a href="https://foool.github.io/r2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcoptions.html">xpcoptions.tlc</a> 
  <br></body></html>

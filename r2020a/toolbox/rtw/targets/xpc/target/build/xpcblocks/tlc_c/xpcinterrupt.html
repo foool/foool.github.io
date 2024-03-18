@@ -20,7 +20,7 @@ body {line-height: 100%; font-family:courier;}
  <br>%% Copyright 1996-2011 The MathWorks, Inc.
  <br>&nbsp; <br><span class="tlc_implements">%implements</span> "xpcinterrupt" "C"
  <br>&nbsp; <br><span class="tlc_function">%function</span> <a id="BlockTypeSetup" class="tlc_func">BlockTypeSetup</a>(block, system) void
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("xpcimports.h")&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("xpcimports.h")&gt;
  <br><span class="tlc_endfunction">%endfunction</span>
  <br>&nbsp; <br>%% Function: BlockInstanceSetup ===============================================
  <br>%% Abstract:
@@ -50,7 +50,7 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_exit">%exit</span> Serious error: No blocks of type xpcinterrupt found.
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;%% Do the stuff that needs to be done one time only.
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcinterruptfunctions.html#xPCIRQDoOnce">xPCIRQDoOnce</a>()&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcinterruptfunctions.html#xPCIRQDoOnce">xPCIRQDoOnce</a>()&gt;
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp; <br>&nbsp;&nbsp;%% Need to find the downstream function-call subsystems.  There is
  <br>&nbsp;&nbsp;%% only one output port on the interrupt s-function.
@@ -59,7 +59,7 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp;&nbsp;%% The remaining test is whether the destination has other function-call
  <br>&nbsp;&nbsp;%% sources besides this Interrupt block which is not allowed since the
  <br>&nbsp;&nbsp;%% Interrupt block installs it as an ISR.
- <br>&nbsp;&nbsp;%% That test can done by checking <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordWidth">LibGetRecordWidth</a>(ssBlock.ControlInputPort).
+ <br>&nbsp;&nbsp;%% That test can done by checking <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordWidth">LibGetRecordWidth</a>(ssBlock.ControlInputPort).
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> "%&lt;SFcnSystemOutputCall[0].BlockToCall&gt;" == "unconnected"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> IRQ         = <span class="tlc_bifunc">CAST</span>("Number", SFcnParamSettings.IRQ)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> %&lt;IRQ&gt; == -1
@@ -82,7 +82,7 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp;&nbsp;&nbsp;%%foreach callIdx = NumSFcnSysOutputCalls
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> callIdx = 0
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuf
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#LibBlockExecuteFcnCall">LibBlockExecuteFcnCall</a>( block, 0 )>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/syslib.html#LibBlockExecuteFcnCall">LibBlockExecuteFcnCall</a>( block, 0 )>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuf
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> "%&lt;SFcnSystemOutputCall[0].BlockToCall&gt;" != "unconnected"
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Create a skeleton ISR to execute the function call
@@ -92,13 +92,13 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ 
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;tmpBuf&gt;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tid = block.OutputPortTIDs[0]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> time = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibGetTaskTime">LibGetTaskTime</a>(tid)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> time = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibGetTaskTime">LibGetTaskTime</a>(tid)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xpceDAQUpdateTimeStamp(%&lt;tid&gt;, %&lt;time&gt;);
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xpceDAQPostEvent(%&lt;tid&gt;);
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> funcbuf
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srcFile = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibGetModelDotCFile">LibGetModelDotCFile</a>()
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibSetSourceFileSection">LibSetSourceFileSection</a>(srcFile, "Functions", funcbuf)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srcFile = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/codetemplatelib.html#LibGetModelDotCFile">LibGetModelDotCFile</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/codetemplatelib.html#LibSetSourceFileSection">LibSetSourceFileSection</a>(srcFile, "Functions", funcbuf)>
  <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;%%endforeach
  <br><span class="tlc_endfunction">%endfunction</span>
@@ -115,11 +115,11 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Will get incremented in xPCGenerateIRQCode
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isrSystem = "xPCISR%<::xPCIntCounter + 1>"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcinterruptfunctions.html#xPCGenerateIRQCode">xPCGenerateIRQCode</a>(SFcnParamSettings, isrSystem)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcinterruptfunctions.html#xPCGenerateIRQCode">xPCGenerateIRQCode</a>(SFcnParamSettings, isrSystem)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> SFcnParamSettings Reserved ::xPCIntCounter
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> SFcnParamSettings.Reserved = ::xPCIntCounter
  <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;%%endforeach
  <br><span class="tlc_endfunction">%endfunction</span>
- <br>%% [EOF] <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcinterrupt.html">xpcinterrupt.tlc</a>
+ <br>%% [EOF] <a href="https://foool.github.io/r2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcinterrupt.html">xpcinterrupt.tlc</a>
  <br></body></html>

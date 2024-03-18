@@ -24,35 +24,35 @@ body {line-height: 100%; font-family:courier;}
  <br>%%
  <br>&nbsp; <br><span class="tlc_function">%function</span> <a id="DataAccess" class="tlc_func">DataAccess</a>(record, request, idx, reim, newValue) void
  <br>&nbsp; <br>&nbsp;&nbsp;%% Generic assigns  
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width    = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalmaplib.html#LibGetDataWidth">LibGetDataWidth</a>(record)
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> props    = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetCustomStorageAttributes">LibGetCustomStorageAttributes</a>(record)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width    = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/globalmaplib.html#LibGetDataWidth">LibGetDataWidth</a>(record)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> props    = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetCustomStorageAttributes">LibGetCustomStorageAttributes</a>(record)
  <br>&nbsp;&nbsp;%% If width is not > 1 then never use pointer to the base type.
  <br>&nbsp;&nbsp;%% Otherwise check if the feature is enabled.
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isUsePtr2BaseType = TLC_FALSE
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> width > 1
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isUsePtr2BaseType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarIsPassByPtr2BaseType">SLibAutosarIsPassByPtr2BaseType</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isUsePtr2BaseType = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarIsPassByPtr2BaseType">SLibAutosarIsPassByPtr2BaseType</a>()
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetCustomStorageClassName">LibGetCustomStorageClassName</a>(record)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetCustomStorageClassName">LibGetCustomStorageClassName</a>(record)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "CalPrm"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> name     = props.ElementName
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portName = props.PortName
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarIsAR4">SLibAutosarIsAR4</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarIsAR4">SLibAutosarIsAR4</a>()
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Rte_api  = "Rte_Calprm_%&lt;portName&gt;_%&lt;name&gt;"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Rte_api  = "Rte_Prm_%&lt;portName&gt;_%&lt;name&gt;"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "InternalCalPrm"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> name     = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> name     = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(record)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Rte_api  = "Rte_CData_%&lt;name&gt;"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportError">LibReportError</a>("Should not be here")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibReportError">LibReportError</a>("Should not be here")>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>    
  <br>&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
  <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Rte_data = "%&lt;Rte_api&gt;_data"
  <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> MultiInstanceERTCode
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> selfArg = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#FcnGetInstanceHandleName">FcnGetInstanceHandleName</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> selfArg = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/autosarsup.html#FcnGetInstanceHandleName">FcnGetInstanceHandleName</a>()
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> selfArg = ""
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -65,12 +65,12 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%break
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "contents"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% As we access this calibration parameter, update access info
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibAutosarActive">SLibAutosarActive</a>()
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnAddAccessInfoForAutosarCalibration">FcnAddAccessInfoForAutosarCalibration</a>(record, TLC_FALSE)>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceRTWTarget">IsModelReferenceRTWTarget</a>()
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnAddAccessInfoForAutosarCalibration">FcnAddAccessInfoForAutosarCalibration</a>(record, TLC_TRUE)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibAutosarActive">SLibAutosarActive</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnAddAccessInfoForAutosarCalibration">FcnAddAccessInfoForAutosarCalibration</a>(record, TLC_FALSE)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceRTWTarget">IsModelReferenceRTWTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnAddAccessInfoForAutosarCalibration">FcnAddAccessInfoForAutosarCalibration</a>(record, TLC_TRUE)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnCustomStorageIsPassByRef">FcnCustomStorageIsPassByRef</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnCustomStorageIsPassByRef">FcnCustomStorageIsPassByRef</a>(record)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Array or structure access
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isUsePtr2BaseType
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "(%&lt;Rte_api&gt;(%&lt;selfArg&gt;))%&lt;idx&gt;"
@@ -88,15 +88,15 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%break
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "address"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% As we access this calibration parameter, update access info
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibAutosarActive">SLibAutosarActive</a>()
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnAddAccessInfoForAutosarCalibration">FcnAddAccessInfoForAutosarCalibration</a>(record, TLC_FALSE)>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceRTWTarget">IsModelReferenceRTWTarget</a>()
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnAddAccessInfoForAutosarCalibration">FcnAddAccessInfoForAutosarCalibration</a>(record, TLC_TRUE)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibAutosarActive">SLibAutosarActive</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnAddAccessInfoForAutosarCalibration">FcnAddAccessInfoForAutosarCalibration</a>(record, TLC_FALSE)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceRTWTarget">IsModelReferenceRTWTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnAddAccessInfoForAutosarCalibration">FcnAddAccessInfoForAutosarCalibration</a>(record, TLC_TRUE)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnCustomStorageIsPassByRef">FcnCustomStorageIsPassByRef</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/r2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnCustomStorageIsPassByRef">FcnCustomStorageIsPassByRef</a>(record)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "Warning: address access for scalar's is not supported"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnCustomStorageIsArrayDataType">FcnCustomStorageIsArrayDataType</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnCustomStorageIsArrayDataType">FcnCustomStorageIsArrayDataType</a>(record)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% need to deference for array types when not using pointer to base
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% type
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isUsePtr2BaseType
@@ -117,13 +117,13 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% be used when the data is laid out in memory like built-in Simulink
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% data.  If the data is not laid out in memory like Simulink data,
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% return the vector ["other"].
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnCustomStorageIsPassByRef">FcnCustomStorageIsPassByRef</a>(record) %% Scalar
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/r2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnCustomStorageIsPassByRef">FcnCustomStorageIsPassByRef</a>(record) %% Scalar
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Scalar is not addressable
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ["other"]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% AUTOSAR vectors can be accessed like Simulink vectors
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Matrices have been excluded by Setup function
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibDefaultCustomStorageLayout">LibDefaultCustomStorageLayout</a>(record)        
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibDefaultCustomStorageLayout">LibDefaultCustomStorageLayout</a>(record)        
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%break
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "qualifier"
@@ -147,21 +147,21 @@ body {line-height: 100%; font-family:courier;}
  <br><span class="tlc_function">%function</span> <a id="ClassAccess" class="tlc_func">ClassAccess</a>(record, request) void
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> request
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "setup"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numData = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageClassRecordNumData">LibCustomStorageClassRecordNumData</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numData = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageClassRecordNumData">LibCustomStorageClassRecordNumData</a>(record)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = numData
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> data = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetDataRecord">LibGetDataRecord</a>(record, idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> data = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetDataRecord">LibGetDataRecord</a>(record, idx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% error if data is not a Simulink parameter
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageVerifyRecordIsModelParameter">LibCustomStorageVerifyRecordIsModelParameter</a>(data)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageVerifyRecordIsModelParameter">LibCustomStorageVerifyRecordIsModelParameter</a>(data)&gt;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% error if data is complex
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageVerifyRecordIsNonComplex">LibCustomStorageVerifyRecordIsNonComplex</a>(data)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageVerifyRecordIsNonComplex">LibCustomStorageVerifyRecordIsNonComplex</a>(data)&gt;
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% error out if data is a matrix
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span>(!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarMatrixIOAsArray">SLibAutosarMatrixIOAsArray</a>())
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnCustomStorageVerifyRecordIsScalarOrVector">FcnCustomStorageVerifyRecordIsScalarOrVector</a>(data)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span>(!<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarMatrixIOAsArray">SLibAutosarMatrixIOAsArray</a>())
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnCustomStorageVerifyRecordIsScalarOrVector">FcnCustomStorageVerifyRecordIsScalarOrVector</a>(data)&gt;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Mark data type as exported
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtypeId = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetRecordDataTypeId">SLibGetRecordDataTypeId</a>( data )
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarMarkDataTypeAsExported">SLibAutosarMarkDataTypeAsExported</a>(dtypeId)&gt;
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarMarkChildrenDataTypeAsExported">SLibAutosarMarkChildrenDataTypeAsExported</a>(dtypeId)&gt;     
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtypeId = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetRecordDataTypeId">SLibGetRecordDataTypeId</a>( data )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarMarkDataTypeAsExported">SLibAutosarMarkDataTypeAsExported</a>(dtypeId)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarMarkChildrenDataTypeAsExported">SLibAutosarMarkChildrenDataTypeAsExported</a>(dtypeId)&gt;     
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%break
@@ -174,7 +174,7 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;%%
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Unknown access
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibDefaultCustomStorageUnknownClassAccessType">LibDefaultCustomStorageUnknownClassAccessType</a>(record, request)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibDefaultCustomStorageUnknownClassAccessType">LibDefaultCustomStorageUnknownClassAccessType</a>(record, request)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%break
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
  <br>&nbsp; <br><span class="tlc_endfunction">%endfunction</span>
@@ -192,16 +192,16 @@ body {line-height: 100%; font-family:courier;}
  <br><span class="tlc_function">%function</span> <a id="Version" class="tlc_func">Version</a>(record) void
  <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> 2
  <br><span class="tlc_endfunction">%endfunction</span>
- <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>%% Function: <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnCustomStorageVerifyRecordIsScalarOrVector">FcnCustomStorageVerifyRecordIsScalarOrVector</a>(record) ==
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>%% Function: <a href="https://foool.github.io/r2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnCustomStorageVerifyRecordIsScalarOrVector">FcnCustomStorageVerifyRecordIsScalarOrVector</a>(record) ==
  <br>%% Abstract: 
  <br>%%   Report an error if record is not a scalar or vector
  <br>%%
  <br><span class="tlc_function">%function</span> <a id="FcnCustomStorageVerifyRecordIsScalarOrVector" class="tlc_func">FcnCustomStorageVerifyRecordIsScalarOrVector</a>(record) void
- <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> layout = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalmaplib.html#LibGetDataLayout">LibGetDataLayout</a>(record)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> layout = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/globalmaplib.html#LibGetDataLayout">LibGetDataLayout</a>(record)
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> layout[0] == "col-mat-nd" || layout[0] == "col-mat"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(record)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errArgs = ["%&lt;id&gt;"]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibReportErrorWithIdAndArgs">SLibReportErrorWithIdAndArgs</a>("RTW:autosar:validateARParameterValue", errArgs)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibReportErrorWithIdAndArgs">SLibReportErrorWithIdAndArgs</a>("RTW:autosar:validateARParameterValue", errArgs)>
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_return">%return</span>
  <br>&nbsp; <br><span class="tlc_endfunction">%endfunction</span>
@@ -211,22 +211,22 @@ body {line-height: 100%; font-family:courier;}
  <br>%%
  <br><span class="tlc_function">%function</span> <a id="FcnCustomStorageIsStructDataType" class="tlc_func">FcnCustomStorageIsStructDataType</a>(record) void
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataTypeId = ...
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeIdAliasedThruToFromId">LibGetDataTypeIdAliasedThruToFromId</a>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeId">LibGetRecordDataTypeId</a>(record))
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsStructDataType">LibIsStructDataType</a>(dataTypeId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeIdAliasedThruToFromId">LibGetDataTypeIdAliasedThruToFromId</a>(<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeId">LibGetRecordDataTypeId</a>(record))
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibIsStructDataType">LibIsStructDataType</a>(dataTypeId)
  <br>&nbsp; <br><span class="tlc_endfunction">%endfunction</span>
  <br>&nbsp; <br>%% Function: FcnCustomStorageIsArrayDataType ===============
  <br>%% Abstract: 
  <br>%%   Checks whether record is an array
  <br>%%
  <br><span class="tlc_function">%function</span> <a id="FcnCustomStorageIsArrayDataType" class="tlc_func">FcnCustomStorageIsArrayDataType</a>(record) void
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordWidth">LibGetRecordWidth</a>(record) > 1) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> (<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordWidth">LibGetRecordWidth</a>(record) > 1) 
  <br><span class="tlc_endfunction">%endfunction</span>
  <br>&nbsp; <br>%% Function: FcnCustomStorageIsPassByRef ===============
  <br>%% Abstract: 
  <br>%%   does it require pass by reference semantics?
  <br>%%
  <br><span class="tlc_function">%function</span> <a id="FcnCustomStorageIsPassByRef" class="tlc_func">FcnCustomStorageIsPassByRef</a>(record) void
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnCustomStorageIsArrayDataType">FcnCustomStorageIsArrayDataType</a>(record) || <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnCustomStorageIsStructDataType">FcnCustomStorageIsStructDataType</a>(record)
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnCustomStorageIsArrayDataType">FcnCustomStorageIsArrayDataType</a>(record) || <a href="https://foool.github.io/r2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html#FcnCustomStorageIsStructDataType">FcnCustomStorageIsStructDataType</a>(record)
  <br><span class="tlc_endfunction">%endfunction</span>
  <br>&nbsp; <br>&nbsp; <br>%% Function: FcnAddAccessInfoForAutosarCalibration ===============
  <br>%% Abstract: 
@@ -253,13 +253,13 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> RunnableAccessInfo MdlRefOutputFcn 1
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> activeSys = CompiledModel.System[::activeSysIdx]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarFcnAddRunnableAccessInfoViaSystem">SLibAutosarFcnAddRunnableAccessInfoViaSystem</a>(activeSys, RunnableAccessInfo, "CalPrm")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarFcnAddRunnableAccessInfoViaSystem">SLibAutosarFcnAddRunnableAccessInfoViaSystem</a>(activeSys, RunnableAccessInfo, "CalPrm")>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> ::GlobalGeneratingSubFunctions
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isMdlRef
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> RunnableAccessInfo MdlRefOutputFcn 1
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarFcnAddRunnableAccessInfoViaFcnName">SLibAutosarFcnAddRunnableAccessInfoViaFcnName</a>(::BlockFcn, RunnableAccessInfo, "CalPrm")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarFcnAddRunnableAccessInfoViaFcnName">SLibAutosarFcnAddRunnableAccessInfoViaFcnName</a>(::BlockFcn, RunnableAccessInfo, "CalPrm")>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> ::BlockFcn == "GlobalMap"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Okay
@@ -273,5 +273,5 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
  <br><span class="tlc_endfunction">%endfunction</span>
- <br>&nbsp; <br>%% [EOF] <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html">CalPrm.tlc</a>
+ <br>&nbsp; <br>%% [EOF] <a href="https://foool.github.io/r2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/dataclasses/+AUTOSAR/tlc/CalPrm.html">CalPrm.tlc</a>
  <br></body></html>

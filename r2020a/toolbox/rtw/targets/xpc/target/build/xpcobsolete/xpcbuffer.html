@@ -33,9 +33,9 @@ body {line-height: 100%; font-family:courier;}
  <br><span class="tlc_function">%function</span> <a id="BlockInstanceSetup" class="tlc_func">BlockInstanceSetup</a>(block, system) void
  <br>&nbsp;&nbsp;%% Determine unmangled subsystem block name for error reporting.
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("SLName")
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> BufferBlockName = <span class="tlc_bifunc">STRING</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibUnmangledPathName">LibUnmangledPathName</a>(SLName))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> BufferBlockName = <span class="tlc_bifunc">STRING</span>(<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibUnmangledPathName">LibUnmangledPathName</a>(SLName))
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> BufferBlockName = <span class="tlc_bifunc">STRING</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibUnmangledPathName">LibUnmangledPathName</a>(Name))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> BufferBlockName = <span class="tlc_bifunc">STRING</span>(<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibUnmangledPathName">LibUnmangledPathName</a>(Name))
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DbWrite = 0
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DbRead = 0
@@ -58,14 +58,14 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> Connections.DirectSrcConn[0] == "yes"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;%% Get upstream block
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> UpstreamBlockRef = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/obsoletelib.html#LibSourceSignalBlock">LibSourceSignalBlock</a>(DataInputPort.SignalSrc[0])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> UpstreamBlockRef = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/obsoletelib.html#LibSourceSignalBlock">LibSourceSignalBlock</a>(DataInputPort.SignalSrc[0])
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> UpstreamBlockRef.Type == "S-Function"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sfuncName = UpstreamBlockRef.ParamSettings.FunctionName
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> sfuncName == "xpcbuffer"
  <br>&nbsp;%% This is a valid Read Buffer
  <br>&nbsp;<span class="tlc_assign">%assign</span> DbRead = 1
  <br>&nbsp;%% Get system and block indices
- <br>&nbsp;<span class="tlc_assign">%assign</span> signal    = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#SLibGetSourceRecord">SLibGetSourceRecord</a>(DataInputPort, 0)
+ <br>&nbsp;<span class="tlc_assign">%assign</span> signal    = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#SLibGetSourceRecord">SLibGetSourceRecord</a>(DataInputPort, 0)
  <br>&nbsp;<span class="tlc_assign">%assign</span> usSysIdx  = signal.SigSrc[0]
  <br>&nbsp;<span class="tlc_assign">%assign</span> usBlkIdx  = signal.SigSrc[2]
  <br>&nbsp;<span class="tlc_assign">%assign</span> UpstreamBlock = [%&lt;usSysIdx&gt;, %&lt;usBlkIdx&gt;]
@@ -109,7 +109,7 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> DbRead
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% DbRead
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% The Upstream block has to be in a function-call SS
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> signal = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#SLibGetSourceRecord">SLibGetSourceRecord</a>(DataInputPort, 0)            
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> signal = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#SLibGetSourceRecord">SLibGetSourceRecord</a>(DataInputPort, 0)            
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> signal.RecordType != "BlockOutput"
  <br>&nbsp;<span class="tlc_exit">%exit</span> Internal error, expected mapSource == "B"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -136,18 +136,18 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> UpstreamBlockRef = CompiledModel.System[usSysIdx].Block[usBlkIdx] 
  <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Setup variables used by: %&lt;BufferBlockName&gt; (Reader) and*/
  <br>&nbsp;&nbsp;&nbsp;&nbsp;/* %&lt;UpstreamBlockRef.BufferBlockName&gt; (Writer) */
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Reading,"","",0)&gt; = -1;
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Writing,"","",0)&gt; = -1;
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Last,"","",0)&gt; = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Reading,"","",0)&gt; = -1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Writing,"","",0)&gt; = -1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Last,"","",0)&gt; = 0;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;%% Use Write side BIO vector for one of the 2 buffers,
  <br>&nbsp;&nbsp;&nbsp;&nbsp;%% need to be in Write side block scope to access it.
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> CompiledModel.System[usSysIdx]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> UpstreamBlockRef 
- <br>&nbsp;<span class="tlc_assign">%assign</span> tmpVar = "&%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", "", 0)>;"
+ <br>&nbsp;<span class="tlc_assign">%assign</span> tmpVar = "&%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", "", 0)>;"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span> %% CompiledModel.System[usSysIdx]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>("","","",0)&gt; = %&lt;tmpVar&gt;
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>("","","",1)&gt; = &%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockRWork">LibBlockRWork</a>("","","",0)&gt;;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>("","","",0)&gt; = %&lt;tmpVar&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>("","","",1)&gt; = &%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockRWork">LibBlockRWork</a>("","","",0)&gt;;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br><span class="tlc_endfunction">%endfunction</span>
  <br>&nbsp; <br><span class="tlc_function">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block, system) Output
@@ -160,23 +160,23 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;{
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%int lockkey = intLock();
  <br>&nbsp;&nbsp;&nbsp;_asm { cli };
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Writing,"","",0)&gt; == 0) {
- <br>&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Reading,"","",0)&gt; = 1;
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else if (%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Writing,"","",0)&gt; == 1) {
- <br>&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Reading,"","",0)&gt; = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Writing,"","",0)&gt; == 0) {
+ <br>&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Reading,"","",0)&gt; = 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else if (%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Writing,"","",0)&gt; == 1) {
+ <br>&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Reading,"","",0)&gt; = 0;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
- <br>&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a></a>(Reading,"","",0)&gt; = %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a></a>(Last,"","",0)&gt;;
+ <br>&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>"><a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a></a>(Reading,"","",0)&gt; = %&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>"><a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a></a>(Last,"","",0)&gt;;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%intUnlock(lockkey);
  <br>&nbsp;&nbsp;&nbsp;_asm { sti };
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpVar = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Reading,"","",0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpVar = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Reading,"","",0)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Use memcpy because its fast and vector is contiguous.
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Read 1 of the 2 buffers and Write to output*/
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(void) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMemFcnCall">LibGenMemFcnCall</a>("memcpy", "&%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", "", 0)>", ...
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>("",tmpVar,"",""),"%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/obsoletelib.html#LibDataOutputPortWidth">LibDataOutputPortWidth</a>(0)&gt; * sizeof(real_T)")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(void) %<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/mathlib.html#LibGenMemFcnCall">LibGenMemFcnCall</a>("memcpy", "&%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", "", 0)>", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>("",tmpVar,"",""),"%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/obsoletelib.html#LibDataOutputPortWidth">LibDataOutputPortWidth</a>(0)&gt; * sizeof(real_T)")>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%lockkey = intLock();
  <br>&nbsp;&nbsp;&nbsp;_asm { cli };
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Reading,"","",0)&gt; = -1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Reading,"","",0)&gt; = -1;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%intUnlock(lockkey);
  <br>&nbsp;&nbsp;&nbsp;_asm { sti };
  <br>&nbsp;&nbsp;&nbsp;&nbsp;}
@@ -192,25 +192,25 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp;real_T *currentBuf;
  <br>&nbsp;%%int lockkey = intLock();
  <br>&nbsp;_asm { cli };
- <br>&nbsp;&nbsp; <br>&nbsp;if (%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Reading,"","",0)&gt; == 0) {
- <br>&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Writing,"","",0)&gt; = 1;
- <br>&nbsp;} else if (%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Reading,"","",0)&gt; == 1) {
- <br>&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Writing,"","",0)&gt; = 0;
+ <br>&nbsp;&nbsp; <br>&nbsp;if (%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Reading,"","",0)&gt; == 0) {
+ <br>&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Writing,"","",0)&gt; = 1;
+ <br>&nbsp;} else if (%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Reading,"","",0)&gt; == 1) {
+ <br>&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Writing,"","",0)&gt; = 0;
  <br>&nbsp;} else {
- <br>&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a></a>(Writing,"","",0)&gt; = !%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a></a>(Last,"","",0)&gt;;
+ <br>&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>"><a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a></a>(Writing,"","",0)&gt; = !%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>"><a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a></a>(Last,"","",0)&gt;;
  <br>&nbsp;}
  <br>&nbsp;%%intUnlock(lockkey);
  <br>&nbsp;_asm { sti };
  <br>&nbsp; <br>&nbsp;%% Generate code which uses PWork[IWork.Writing] of Read block
- <br>&nbsp;<span class="tlc_assign">%assign</span> tmpVar  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Writing,"","",0)
- <br>&nbsp;currentBuf = (real_T *)(%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>("", tmpVar, "", "")>);
+ <br>&nbsp;<span class="tlc_assign">%assign</span> tmpVar  = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Writing,"","",0)
+ <br>&nbsp;currentBuf = (real_T *)(%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>("", tmpVar, "", "")>);
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
  <br>&nbsp;%% Use roll since input to the Write block can be discontiguous.
  <br>&nbsp;%% Since Output vector is accessed via 1 of 2 elements of the Reader
  <br>&nbsp;%% blocks PWork, use only index portion of LibBlockOutputSignal.
  <br>&nbsp;<span class="tlc_assign">%assign</span> rollVars = ["U"]
  <br>&nbsp;<span class="tlc_roll">%roll</span> sigIdx = RollRegions, lcv = RollThreshold, block, "Roller", rollVars
- <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", lcv, sigIdx)
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", lcv, sigIdx)
  <br>&nbsp;&nbsp;&nbsp;%% Instead of using a rolled [index] for currentBuf, use ++ to so
  <br>&nbsp;&nbsp;&nbsp;%% each region continues where previous left off.
  <br>&nbsp;&nbsp;&nbsp;*currentBuf++ = %&lt;u&gt;;
@@ -218,13 +218,13 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> DownstreamBlockRef
  <br>&nbsp;%%lockkey = intLock();
  <br>&nbsp;_asm { cli };
- <br>&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a></a>(Last,"","",0)&gt; = %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a></a>(Writing,"","",0)&gt;;
- <br>&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Writing,"","",0)&gt; = -1;
+ <br>&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>"><a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a></a>(Last,"","",0)&gt; = %&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>"><a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a></a>(Writing,"","",0)&gt;;
+ <br>&nbsp;%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Writing,"","",0)&gt; = -1;
  <br>&nbsp;%%intUnlock(lockkey);
  <br>&nbsp;_asm { sti };
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>    
  <br><span class="tlc_endfunction">%endfunction</span>
- <br>&nbsp; <br>%% [EOF] <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/xpcobsolete/xpcbuffer.html">xpcbuffer.tlc</a>
+ <br>&nbsp; <br>%% [EOF] <a href="https://foool.github.io/r2020a/toolbox/rtw/targets/xpc/target/build/xpcobsolete/xpcbuffer.html">xpcbuffer.tlc</a>
  <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>&nbsp; <br></body></html>
