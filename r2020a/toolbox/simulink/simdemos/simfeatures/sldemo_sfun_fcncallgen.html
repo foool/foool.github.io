@@ -1,0 +1,145 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>2007<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Example<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>S-Function<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>generates<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>function-call
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>ntimes<span style="padding-left:9.5px"></span>at<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>designated<span style="padding-left:9.5px"></span>rate<span style="padding-left:9.5px"></span>(sample<span style="padding-left:9.5px"></span>time)
+</span> <br>&nbsp; <br><span class="tlc_implements">%implements</span> sldemo_sfun_fcncallgen "C"
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Enable<span style="padding-left:9.5px"></span>==============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Issue<span style="padding-left:9.5px"></span>enable<span style="padding-left:9.5px"></span>events
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="Enable" class="tlc_func">Enable</a>(block,system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuffer
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> fcnCallIdx = NumSFcnSysOutputCalls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% call the downstream system</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> SFcnSystemOutputCall[fcnCallIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% skip unconnected function call outputs</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/obsoletelib.html#LibIsEqual">LibIsEqual</a>(BlockToCall, "unconnected")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysIdx  = BlockToCall[0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkIdx  = BlockToCall[1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ssBlock = System[sysIdx].Block[blkIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidVal  = ParamSettings.SampleTimesToSet[0][1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmp2Buffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#LibExecuteFcnEnable">LibExecuteFcnEnable</a>(ssBlock, FcnPortElement, 0)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmp2Buffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (!<span class="tlc_bifunc">WHITE_SPACE</span>(tmp2Buffer))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tmp2Buffer</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuffer
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% output buffer</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(tmpBuffer)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> type = ParamSettings.FunctionName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(system,"PreventComments") || system.PreventComments != "yes"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Function-call Generator Block: '%<<span>Name</span>>' */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tmpBuffer</span>>/
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>   
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Disable<span style="padding-left:9.5px"></span>==============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Issue<span style="padding-left:9.5px"></span>disable<span style="padding-left:9.5px"></span>events
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="Disable" class="tlc_func">Disable</a>(block,system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuffer
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> fcnCallIdx = NumSFcnSysOutputCalls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% call the downstream system</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> SFcnSystemOutputCall[fcnCallIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% skip unconnected function call outputs</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/obsoletelib.html#LibIsEqual">LibIsEqual</a>(BlockToCall, "unconnected")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysIdx  = BlockToCall[0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkIdx  = BlockToCall[1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ssBlock = System[sysIdx].Block[blkIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidVal  = ParamSettings.SampleTimesToSet[0][1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmp2Buffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#LibExecuteFcnDisable">LibExecuteFcnDisable</a>(ssBlock, FcnPortElement, 0)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmp2Buffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (!<span class="tlc_bifunc">WHITE_SPACE</span>(tmp2Buffer))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tmp2Buffer</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuffer
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% output buffer</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(tmpBuffer)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> type = ParamSettings.FunctionName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(system,"PreventComments") || system.PreventComments != "yes"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Function-call Generator Block: '%<<span>Name</span>>' */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tmpBuffer</span>>/
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>   
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuffer
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> fcnCallIdx = NumSFcnSysOutputCalls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% call the downstream system</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> SFcnSystemOutputCall[fcnCallIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% skip unconnected function call outputs</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/obsoletelib.html#LibIsEqual">LibIsEqual</a>(BlockToCall, "unconnected")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysIdx  = BlockToCall[0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkIdx  = BlockToCall[1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ssBlock = System[sysIdx].Block[blkIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> num     = <span class="tlc_bifunc">SIZE</span>(SFcnParamSettings.Counter, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> idx     = (num > 1) ? fcnCallIdx : 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> count   = <span class="tlc_bifunc">CAST</span>("Number",SFcnParamSettings.Counter[idx])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidVal  = ParamSettings.SampleTimesToSet[0][1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmp2Buffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#LibExecuteFcnCall">LibExecuteFcnCall</a>(ssBlock, FcnPortElement, tidVal)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmp2Buffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (!<span class="tlc_bifunc">WHITE_SPACE</span>(tmp2Buffer))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> count > 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T i = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i = 0; i < %<<span>count</span>> ; ++i){
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tmp2Buffer</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> count > 1  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuffer
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% output buffer</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(tmpBuffer)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> type = ParamSettings.FunctionName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(system,"PreventComments") || system.PreventComments != "yes"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Function-call Generator Block: '%<<span>Name</span>>' */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tmpBuffer</span>>/
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span>fcncallgen.tlc
+</span> <br></body></html>

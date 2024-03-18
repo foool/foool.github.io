@@ -1,0 +1,128 @@
+<html>
+<head>
+
+<style>
+p {color : black; font-family:courier; font-size: 80%;}
+body {line-height: 100%; font-family:courier;}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_function {color: green;}.tlc_endfunction {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}
+.tlc_bifunc {color: brown;}
+</style>
+
+</head>
+<body>
+%% SYSTLC: Code generation Options Example Target /
+ <br>%%    TMF: user_default_tmf MAKE: make_rtw EXTMODE: ext_user
+ <br>&nbsp; <br>%% 
+ <br>%% 
+ <br>%% 
+ <br>%%
+ <br>%% Abstract:
+ <br>%%      system TLC file for user Target.
+ <br>%%  Note: This is an example of how to modify the system target file,
+ <br>%%        adding user-visible custom code generation options to the 
+ <br>%%        Code Generation pane of the Configuration Parameters dialog box. 
+ <br>%%        Note that a corresponding TMF file is not provided. 
+ <br>%%
+ <br>%% Copyright 1996-2010 The MathWorks, Inc.
+ <br>%%
+ <br>&nbsp; <br>%% The contents between 'BEGIN_RTW_OPTIONS' and 'END_RTW_OPTIONS' are strictly
+ <br>%% written by the standard format. 
+ <br>%%
+ <br>/%
+ <br>&nbsp;&nbsp;BEGIN_RTW_OPTIONS
+ <br>&nbsp; <br>&nbsp;&nbsp;rtwoptions(1).prompt        = 'userPreferred target options (I)';
+ <br>&nbsp;&nbsp;rtwoptions(1).type          = 'Category';
+ <br>&nbsp;&nbsp;rtwoptions(1).enable        = 'on';
+ <br>&nbsp;&nbsp;rtwoptions(1).default       = 4;   % number of items under this category
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;% excluding this one.
+ <br>&nbsp;&nbsp;rtwoptions(1).popupstrings  = '';  % At the first item, user has to 
+ <br>&nbsp;&nbsp;rtwoptions(1).tlcvariable   = '';  % initialize all supported fields
+ <br>&nbsp;&nbsp;rtwoptions(1).tooltip       = '';
+ <br>&nbsp;&nbsp;rtwoptions(1).callback      = '';
+ <br>&nbsp;&nbsp;rtwoptions(1).makevariable  = '';
+ <br>&nbsp; <br>&nbsp;&nbsp;rtwoptions(2).prompt        = 'Execution Mode';
+ <br>&nbsp;&nbsp;rtwoptions(2).type          = 'Popup';
+ <br>&nbsp;&nbsp;rtwoptions(2).default       = 'Real-Time';
+ <br>&nbsp;&nbsp;rtwoptions(2).popupstrings  = 'Real-Time|UserDefined';
+ <br>&nbsp;&nbsp;rtwoptions(2).tlcvariable   = 'tlcvariable1';
+ <br>&nbsp;&nbsp;rtwoptions(2).tooltip       = ['See this string as tooltip'];
+ <br>&nbsp; <br>&nbsp;&nbsp;rtwoptions(3).prompt        = 'Log Execution Time';
+ <br>&nbsp;&nbsp;rtwoptions(3).type          = 'Checkbox';
+ <br>&nbsp;&nbsp;rtwoptions(3).default       = 'on';
+ <br>&nbsp;&nbsp;rtwoptions(3).tlcvariable   = 'RL32LogTETModifier';
+ <br>&nbsp;&nbsp;rtwoptions(3).tooltip       = ['']; % no tooltip
+ <br>&nbsp; <br>&nbsp;&nbsp;rtwoptions(4).prompt        = 'Real-Time Interrupt Source';
+ <br>&nbsp;&nbsp;rtwoptions(4).type          = 'Popup';
+ <br>&nbsp;&nbsp;rtwoptions(4).default       = 'Timer';
+ <br>&nbsp;&nbsp;rtwoptions(4).popupstrings  = 'Timer|5|6|7|8|9|10|11|12|13|14|15';
+ <br>&nbsp;&nbsp;rtwoptions(4).tlcvariable   = 'tlcvariable3';
+ <br>&nbsp;&nbsp;rtwoptions(4).callback      = 'usertargetcallback(hDlg, hSrc, ''tlcvariable3'')';
+ <br>&nbsp;&nbsp;rtwoptions(4).tooltip       = [''];
+ <br>&nbsp;&nbsp;rtwoptions(4).tooltip       = ['See TLC file for how to user reserved '...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;' keyword ''hDlg'', and ''hSrc''.'];
+ <br>&nbsp;&nbsp;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ <br>&nbsp;&nbsp;% NOTE: the variables "hDlg" and "hSrc" here are reserved keywords 	       %
+ <br>&nbsp;&nbsp;%       representing handles to the Simulation Parameter dialog figure and   %
+ <br>&nbsp;&nbsp;%       its source object.  Do not reference these variables  except         %
+ <br>&nbsp;&nbsp;%       when calling the dialog API functions:                               %
+ <br>&nbsp;&nbsp;%       slConfigUISetVal, slConfigUIGetVal, and slConfigUISetEnabled.        %
+ <br>&nbsp;&nbsp;%       See the MATLAB function  usertargetcallback.m for examples. You can  %
+ <br>&nbsp;&nbsp;%       also write your MATLAB code directly in one of the callback fields.  %    
+ <br>&nbsp;&nbsp;%       If you intent to modify an option outside of the host configuration  %
+ <br>&nbsp;&nbsp;%       based on the value of an option, you should do so via the            %
+ <br>&nbsp;&nbsp;%       PostApplyCallback.                                                   %
+ <br>&nbsp;&nbsp;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ <br>&nbsp; <br>&nbsp;&nbsp;rtwoptions(5).prompt        = 'Signal Logging Buffer Size in Doubles';
+ <br>&nbsp;&nbsp;rtwoptions(5).type          = 'Edit';
+ <br>&nbsp;&nbsp;rtwoptions(5).default       = '100000';
+ <br>&nbsp;&nbsp;rtwoptions(5).tlcvariable   = 'tlcvariable2';
+ <br>&nbsp;&nbsp;rtwoptions(5).tooltip       = [''];
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%----------------------------------------%
+ <br>&nbsp;&nbsp;%   Configure code generation settings   %
+ <br>&nbsp;&nbsp;%----------------------------------------%
+ <br>&nbsp; <br>&nbsp;&nbsp;rtwgensettings.BuildDirSuffix = '_userpreferred_rtw';
+ <br>&nbsp;&nbsp;rtwgensettings.Version        = '1';
+ <br>&nbsp;&nbsp;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ <br>&nbsp;&nbsp;% NOTE: Setting rtwgensettings.Version to '1' declares callback             %
+ <br>&nbsp;&nbsp;%       compatibility so the Configuration Parameters GUI will              %
+ <br>&nbsp;&nbsp;%       trigger the callbacks.  Otherwise, callback will be ignored.        %
+ <br>&nbsp;&nbsp;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ <br>&nbsp;&nbsp;rtwgensettings.SelectCallback = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;'usertarget_selectcallback(hDlg, hSrc)';
+ <br>&nbsp;&nbsp;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ <br>&nbsp;&nbsp;% NOTE: SelectCallback should be used to set up the host configuration set  %
+ <br>&nbsp;&nbsp;%       for this target.  This callback is triggered when this target is    %
+ <br>&nbsp;&nbsp;%       selected in the system target browser dialog.                       %
+ <br>&nbsp;&nbsp;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ <br>&nbsp;&nbsp;rtwgensettings.ActivateCallback = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;'usertarget_activatecallback(model)';
+ <br>&nbsp;&nbsp;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ <br>&nbsp;&nbsp;% NOTE: Variable "model" is a reserved keywords.  It is the handle of the   %
+ <br>&nbsp;&nbsp;%       host model.                                                         %
+ <br>&nbsp;&nbsp;%       Use ActivateCallback to set up options outside of the host          %
+ <br>&nbsp;&nbsp;%       configuration set of this target, e.g. other model settings,        %
+ <br>&nbsp;&nbsp;%       toolchain selection, etc.  This callback is triggered when the host %
+ <br>&nbsp;&nbsp;%       configuration set of this target becomes the active configuration   %
+ <br>&nbsp;&nbsp;%       set of its host model, e.g. when a model is loaded, when the active %
+ <br>&nbsp;&nbsp;%       configuration set of a model is changed in the model explorer, when %
+ <br>&nbsp;&nbsp;%       changes in the configuration parameters dialog are applied and      %
+ <br>&nbsp;&nbsp;%       there is a change in target selection, etc.                         %
+ <br>&nbsp;&nbsp;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ <br>&nbsp;&nbsp;rtwgensettings.PostApplyCallback = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;'usertarget_postapplycallback(hDlg, hSrc, model)';
+ <br>&nbsp;&nbsp;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ <br>&nbsp;&nbsp;% NOTE: PostApplyCallback should be used to setup options outside of the    %
+ <br>&nbsp;&nbsp;%       configuration set of this target based on changes in the host       %
+ <br>&nbsp;&nbsp;%       configuration set options.  At the time when this callback is       %
+ <br>&nbsp;&nbsp;%       triggered, UI changes are already applied to the host configuration %
+ <br>&nbsp;&nbsp;%       set and thus up-to-date.                                            %
+ <br>&nbsp;&nbsp;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ <br>&nbsp;&nbsp;rtwgensettings.DerivedFrom = 'ert.tlc';
+ <br>&nbsp;&nbsp;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ <br>&nbsp;&nbsp;% NOTE: DerivedFrom declares the base target of this target. All the UI     %
+ <br>&nbsp;&nbsp;%       options and default settings are inherited.                         %
+ <br>&nbsp;&nbsp;%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;END_RTW_OPTIONS
+ <br>&nbsp;%/
+ <br>&nbsp; <br></body></html>

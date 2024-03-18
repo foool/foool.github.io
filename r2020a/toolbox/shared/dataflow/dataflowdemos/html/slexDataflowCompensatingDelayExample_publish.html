@@ -1,0 +1,245 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Compensating for Latency in Dataflow Models</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-04-25"><meta name="DC.source" content="slexDataflowCompensatingDelayExample_publish.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Compensating for Latency in Dataflow Models</h1><!--introduction--><p>This example uses dataflow, a data-driven domain in Simulink, to run an audio system simulation multithreaded. In this example we show how to compensate for pipeline delay introduced to break data dependencies to partition the model into multiple threads.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">About Dataflow</a></li><li><a href="#2">Introduction</a></li><li><a href="#3">Block to Thread Allocation</a></li><li><a href="#4">Compensating for Latency</a></li><li><a href="#5">Performance Analysis</a></li><li><a href="#6">Thread Allocation Results</a></li><li><a href="#9">Summary</a></li></ul></div><h2 id="1">About Dataflow</h2><p>With dataflow, blocks inside the domain execute based on arrival of data as opposed to Simulink's sample time, and models are automatically partitioned into concurrent threads that accelerate simulation and increase data throughput. For an introduction to dataflow see the <a href="matlab:web(fullfile(matlabroot,'toolbox','shared','dataflow','dataflowdemos','html','slexDataflowIntroductionExample_publish.html'))">Introduction to Dataflow for Multithreading in Simulink</a> example.</p><p>To take advantage of dataflow domain, hence multithreaded simulation, your model or section of your model must have only discrete-time blocks. Placing the section of your model with only discrete-time blocks in a Dataflow Subsystem defines the dataflow domain within a Simulink model. In Dataflow Subsystem the availability of data from upstream blocks, as opposed to sample times, is used to sort and execute blocks. You cannot have blocks that access time, require a Simulink solver, or do not support code generation inside a Dataflow Subsystem. The Dataflow Subsystem enables data-driven semantics to co-exist within other domains in the same Simulink model.</p><h2 id="2">Introduction</h2><p>This example uses dataflow to simulate an audio processing system that performs audio multiplexing on multiple threads. The dataflow region of the model is in a Dataflow Subsystem, which includes a Matrix Encoder and Matrix Decoder subsystem. The encoder generates a stereo signal from a four-channel audio signal using matrix encoding, and then recovers the original channels from the stereo mix using matrix decoding. The "Audio Player Selector" subsystem plays the decoded signal. This block's dialog can be used to select which one of the signals to be played back.</p><img vspace="5" hspace="5" src="slexDataflowCompensatingDelayExample_publish_01.png" alt=""> <h2 id="3">Block to Thread Allocation</h2><p>For this model, we can see how Simulink partitions the blocks inside the Dataflow Subsystem into threads using the Dataflow Multithreading Analysis app. This app can be opened by double-clicking the Dataflow Multithreading Analysis App block in the model. The Thread Timing diagram in the app shows how blocks are assigned to threads. In this app, you can view estimated speedup, compared to single-threaded simulation, for different delays by choosing the menu option "Analysis-&gt;Performance Tradeoff-&gt;Speedup &amp; Threads vs. Delays". This diagram shows the estimated speedup that can be obtained for different delay values. From this analysis, we can see that a delay value of 3 gives maximum speedup. Simulink uses pipeline delays to break data dependencies in the dataflow region to create concurrency and run the model on multiple threads. In the next section we will see how to compensate for this delay in signals that do not go through the dataflow region.</p><img vspace="5" hspace="5" src="slexDataflowCompensatingDelayExample_publish_02.png" alt=""> <h2 id="4">Compensating for Latency</h2><p>Simulink added pipeline delays in the Dataflow Subsystem to create concurrency. These pipeline delays delay the signal at the output of the dataflow region, compared to signals that are not processed by the dataflow region. All signals that go through the dataflow region will undergo this delay. This delay needs to be accounted for in signals that do not go through the dataflow region if such signals will be joined or compared to signals processed by the dataflow region. In this example, the dataflow region introduces a total delay of 3 sample periods. This is the number of delays that is set in the Dataflow Configuration block inside the Dataflow Subsystem.</p><p>The signals that are output from the matrix encoder and decoder blocks will have these 3 extra delays before going into "Audio Player Selector" block. However, the "Audio input" signal which also goes into the "Audio Player Selector" did not go through the dataflow region, and hence does not have any additional delay. In order to align this signal with the other two signals, this signal needs to be delayed by the same amount as the signals from dataflow region. We have added a Delay block named "Compensating Delay" in the "Audio input" signal for this purpose. The 3 sample period delay introduced in the dataflow region corresponds to 3 time steps outside the dataflow region. Since the "Audio input" signal contains 1024 samples in each channel per time step, we set the delay in number of samples as 1024*3 in the delay block. We also set "Input Processing"  parameter in the delay block to "Columns as channels (frame based)" to delay each audio channel by the same delay length. Adding this delay block will align all the signals going into "Audio Player Selector" block in this model.</p><p><img vspace="5" hspace="5" src="slexCompensatingDelayPix.png" alt=""> </p><h2 id="5">Performance Analysis</h2><p>By creating a dataflow region in the model with the Dataflow Subsystem it enabled Simulink to automatically partition the blocks in that region into concurrent execution threads. In this section we compare the performance of this multithreaded model with that of a single-threaded model that does not use dataflow. We can measure the amount of speedup obtained in the dataflow model by dividing the execution time taken by the model using multiple threads with the execution time taken by a model using a single thread. The model using a single thread does not use a Dataflow Subsystem, and hence does not use dataflow semantics. Execution time is measured using the output of the sim command. To isolate the impact of multithreading the dataflow region on simulation performance, the measurement includes only the run-time of the model and does not include the time it takes for the model to update and terminate.</p><p>While measuring the execution time the "Audio Player Selector" block is commented since the audio player runs in real-time and could block Simulink from running if there is too much data to play. The speedup number is computed and shown below. This number could be different from the estimated speedup shown in the Dataflow Multithreading Analysis app. This difference could arise from thread overhead and cache performance when running the model in multithreaded mode. Also, the estimated speedup considers only blocks inside dataflow domain, while the actual time measurement is of the entire model.</p><pre class="codeoutput">Simulation execution time for multithreaded model = 8.19s
+Simulation execution time for single-threaded model = 11.68s
+Actual speedup with dataflow: 1.4x
+</pre><h2 id="6">Thread Allocation Results</h2><p>The partitioning of the Dataflow Subsystem into threads can be seen by turning thread highlighting "on" using the menu option "Display-&gt;Highlight Dataflow Threads". For this model, 4 different threads used by the dataflow region are shown using 4 different colors. A virtual subsystem that contains blocks running in different threads is shown with black highlighting. For example, the Matrix Encoder and Matrix Decoder blocks show black highlighting, while the blocks inside these subsystems run in different threads. The Thread Legend window can be used to selectively highlight only some threads for inspecting the model.</p><p><img vspace="5" hspace="5" src="slexDataflowCompensatingDelayExampleHighlightThreadsPix.png" alt=""> </p><p>Opening the Dataflow Subsystem we see that it contains the Matrix Encoder and Matrix Decoder subsystems.</p><img vspace="5" hspace="5" src="slexDataflowCompensatingDelayExample_publish_03.png" alt=""> <p>Looking inside the encoder subsystem we see how the encoder was partitioned.</p><img vspace="5" hspace="5" src="slexDataflowCompensatingDelayExample_publish_04.png" alt=""> <img vspace="5" hspace="5" src="slexDataflowCompensatingDelayExample_publish_05.png" alt=""> <h2 id="9">Summary</h2><p>This example showed how an audio processing system simulation can use dataflow to automatically partition the model into concurrent execution threads and run the model using multiple threads. We also saw how to compensate for pipeline delay introduced by delaying signals that did not go through the dataflow region. These numbers and analysis were published on a Windows desktop computer with Intel&reg; Xeon&reg; CPU E5-1650 v3 @ 3.4 GHz 6 Cores 12 Threads processor.</p><p class="footer">Copyright 2016-2017 The MathWorks, Inc.<br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Compensating for Latency in Dataflow Models
+% This example uses dataflow, a data-driven domain in Simulink,
+% to run an audio system simulation multithreaded. In
+% this example we show how to compensate for pipeline delay introduced to
+% break data dependencies to partition the model into multiple threads.
+
+% Copyright 2016-2017 The MathWorks, Inc.
+
+%% About Dataflow
+% With dataflow, blocks inside the domain execute based on arrival of data
+% as opposed to Simulink's sample time, and models are automatically
+% partitioned into concurrent threads that accelerate simulation and
+% increase data throughput. For an introduction to dataflow see the
+% <matlab:web(fullfile(matlabroot,'toolbox','shared','dataflow','dataflowdemos','html','slexDataflowIntroductionExample_publish.html'))
+% Introduction to Dataflow for Multithreading in Simulink> example. 
+%
+% To take advantage of dataflow domain, hence multithreaded simulation,
+% your model or section of your model must have only discrete-time blocks.
+% Placing the section of your model with only discrete-time blocks in a
+% Dataflow Subsystem defines the dataflow domain within a Simulink model.
+% In Dataflow Subsystem the availability of data from upstream blocks, as
+% opposed to sample times, is used to sort and execute blocks. You cannot
+% have blocks that access time, require a Simulink solver, or do not
+% support code generation inside a Dataflow Subsystem. The Dataflow
+% Subsystem enables data-driven semantics to co-exist within other domains
+% in the same Simulink model.
+
+%% Introduction
+% This example uses dataflow to simulate an audio processing system that
+% performs audio multiplexing on multiple threads. The dataflow region of
+% the model is in a Dataflow Subsystem, which includes a Matrix Encoder and
+% Matrix Decoder subsystem. The encoder generates a stereo signal from a
+% four-channel audio signal using matrix encoding, and then recovers the
+% original channels from the stereo mix using matrix decoding. The "Audio
+% Player Selector" subsystem plays the decoded signal. This block's dialog
+% can be used to select which one of the signals to be played back.
+model_name = 'slexDataflowCompensatingDelayExample';
+open_system(model_name);
+
+% open_system(model_name);
+% open_system([model_name '/Subsystem']); % Open Dataflow Subsystem
+
+%% Block to Thread Allocation
+% For this model, we can see how Simulink partitions the blocks inside the
+% Dataflow Subsystem into threads using the Dataflow Multithreading
+% Analysis app. This app can be opened by double-clicking the Dataflow
+% Multithreading Analysis App block in the model. The Thread Timing diagram
+% in the app shows how blocks are assigned to threads. In this app, you
+% can view estimated speedup, compared to single-threaded simulation, for
+% different delays by choosing the menu option "Analysis->Performance
+% Tradeoff->Speedup & Threads vs. Delays". This diagram shows the estimated
+% speedup that can be obtained for different delay values. From this
+% analysis, we can see that a delay value of 3 gives maximum speedup.
+% Simulink uses pipeline delays to break data dependencies in the dataflow
+% region to create concurrency and run the model on multiple threads. In
+% the next section we will see how to compensate for this delay in signals
+% that do not go through the dataflow region.
+set_param(model_name, 'SimulationCommand', 'Update');
+dataflow.internal.visuals.openBlockVisual(model_name,struct(...
+    'AnalysisType',1,'ScreenScaling',[60 400 900 650],'BackGround','white'))
+
+%% Compensating for Latency
+% Simulink added pipeline delays in the Dataflow Subsystem to create
+% concurrency. These pipeline delays delay the signal at the output of the
+% dataflow region, compared to signals that are not processed by the
+% dataflow region. All signals that go through the dataflow region will
+% undergo this delay. This delay needs to be accounted for in signals that
+% do not go through the dataflow region if such signals will be joined or
+% compared to signals processed by the dataflow region. In this example,
+% the dataflow region introduces a total delay of 3 sample periods. This is
+% the number of delays that is set in the Dataflow Configuration block
+% inside the Dataflow Subsystem.
+%
+% The signals that are output from the matrix encoder and decoder blocks
+% will have these 3 extra delays before going into "Audio Player Selector"
+% block. However, the "Audio input" signal which also goes into the "Audio
+% Player Selector" did not go through the dataflow region, and hence does
+% not have any additional delay. In order to align this signal with the
+% other two signals, this signal needs to be delayed by the same amount as
+% the signals from dataflow region. We have added a Delay block named
+% "Compensating Delay" in the "Audio input" signal for this purpose. The 3
+% sample period delay introduced in the dataflow region corresponds to 3
+% time steps outside the dataflow region. Since the "Audio input" signal
+% contains 1024 samples in each channel per time step, we set the delay in
+% number of samples as 1024*3 in the delay block. We also set "Input
+% Processing"  parameter in the delay block to "Columns as channels (frame
+% based)" to delay each audio channel by the same delay length. Adding this
+% delay block will align all the signals going into "Audio Player Selector"
+% block in this model.
+%
+% <<slexCompensatingDelayPix.png>>
+%
+
+%% Performance Analysis
+% By creating a dataflow region in the model with the Dataflow Subsystem it
+% enabled Simulink to automatically partition the blocks in that region
+% into concurrent execution threads. In this section we compare the
+% performance of this multithreaded model with that of a single-threaded
+% model that does not use dataflow. We can measure the amount of speedup
+% obtained in the dataflow model by dividing the execution time taken by
+% the model using multiple threads with the execution time taken by a model
+% using a single thread. The model using a single thread does not use a
+% Dataflow Subsystem, and hence does not use dataflow semantics. Execution
+% time is measured using the output of the sim command. To isolate the
+% impact of multithreading the dataflow region on simulation performance,
+% the measurement includes only the run-time of the model and does not
+% include the time it takes for the model to update and terminate.
+%
+% While measuring the execution time the "Audio Player Selector" block is
+% commented since the audio player runs in real-time and could block
+% Simulink from running if there is too much data to play. The speedup
+% number is computed and shown below. This number could be different from
+% the estimated speedup shown in the Dataflow Multithreading Analysis app.
+% This difference could arise from thread overhead and cache performance
+% when running the model in multithreaded mode. Also, the estimated speedup
+% considers only blocks inside dataflow domain, while the actual time
+% measurement is of the entire model.
+set_param([model_name '/Audio Player Selector'], 'Commented', 'on');
+multithreadedExecTime = simulateExample(model_name,'StopTime','300');
+fprintf('Simulation execution time for multithreaded model = %.2fs/n', multithreadedExecTime);
+singleThreadedModel = 'slexDataflowCompensatingDelaySingleThreadedExample';
+open_system(singleThreadedModel);
+set_param([singleThreadedModel '/Audio Player Selector'], 'Commented', 'on');
+singleThreadedExecTime = simulateExample(singleThreadedModel,'StopTime','300');
+fprintf('Simulation execution time for single-threaded model = %.2fs/n', singleThreadedExecTime);
+fprintf('Actual speedup with dataflow: %.1fx/n', singleThreadedExecTime/multithreadedExecTime);
+close_system(singleThreadedModel, 0);
+
+%% Thread Allocation Results
+% The partitioning of the Dataflow Subsystem into threads can be seen by
+% turning thread highlighting "on" using the menu option
+% "Display->Highlight Dataflow Threads". For this model, 4 different
+% threads used by the dataflow region are shown using 4 different colors. A
+% virtual subsystem that contains blocks running in different threads is
+% shown with black highlighting. For example, the Matrix Encoder and Matrix
+% Decoder blocks show black highlighting, while the blocks inside these
+% subsystems run in different threads. The Thread Legend window can be used
+% to selectively highlight only some threads for inspecting the model.
+%
+% <<slexDataflowCompensatingDelayExampleHighlightThreadsPix.png>>
+%
+open_system(model_name);
+
+%% 
+% Opening the Dataflow Subsystem we see that it contains the Matrix Encoder
+% and Matrix Decoder subsystems.
+open_system([model_name '/Subsystem']); % Open Dataflow Subsystem
+
+%% 
+% Looking inside the encoder subsystem we see how the encoder was
+% partitioned.
+open_system([model_name,'/Subsystem/Matrix Encoder']);
+
+set_param(model_name, 'HighlightDataflowThreads', 'on');
+set_param(model_name, 'SimulationCommand', 'Update');
+
+print('-dpng',['-s' model_name], [model_name 'HighlightThreadsPix.png']);
+
+
+%% Summary
+% This example showed how an audio processing system simulation can use
+% dataflow to automatically partition the model into concurrent execution
+% threads and run the model using multiple threads. We also saw how to
+% compensate for pipeline delay introduced by delaying signals that did not
+% go through the dataflow region. These numbers and analysis were published
+% on a Windows desktop computer with Intel(R) Xeon(R) CPU E5-1650 v3 @ 3.4
+% GHz 6 Cores 12 Threads processor.
+
+close_system(model_name, 0);
+
+##### SOURCE END #####
+--></body></html>

@@ -1,0 +1,250 @@
+<html>
+<head>
+
+<style>
+p {color : black; font-family:courier; font-size: 80%;}
+body {line-height: 100%; font-family:courier;}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_function {color: green;}.tlc_endfunction {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}
+.tlc_bifunc {color: brown;}
+</style>
+
+</head>
+<body>
+%% File : <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcethercatinit.html">xpcethercatinit.tlc</a>
+ <br>%%
+ <br>%% Description: 
+ <br>%%   TLC Code Generation file for GenericFilter
+ <br>%%
+ <br>&nbsp; <br>%% Copyright 2009-2010 The MathWorks, Inc.
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_implements">%implements</span> xpcethercatinit  "C"
+ <br>&nbsp; <br>%% Function: Start ============================================================
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="Start" class="tlc_func">Start</a>(block, system) Output
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buffer
+ <br>&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T        status = 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static char_T       *errMsg;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xpcPCIDevice pciInfo;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T        j;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint8_T      *DeviceType;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* From LinkOsLayer.h   Intel PRO-100 specific definitions */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct EtherCATDevices {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint16_T VendorID;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint16_T DeviceID;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint8_T *DeviceType;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} EtherCATDeviceTable[] = {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* I8254x types */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0xABB1, "I8254x" }, //
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0xABB2, "I8254x" }, //
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x100E, "I8254x" }, //  PCI_DEVICE_I82540EM_DESKTOP
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x1010, "I8254x" }, //  PCI_DEVICE_I82546EB_COPPER_DUAL
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x1013, "I8254x" }, //  PCI_DEVICE_I82541EI_COPPER
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x1019, "I8254x" }, //  PCI_DEVICE_I82547GI_COPPER
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x1026, "I8254x" }, //  PCI_DEVICE_I82545GM_COPPER
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x104A, "I8254x" }, //  PCI_DEVICE_I82566DM
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x104D, "I8254x" }, //  PCI_DEVICE_I82566MC
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x105E, "I8254x" }, //  PCI_DEVICE_N1E5132_SERVER
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x1075, "I8254x" }, //  PCI_DEVICE_I82547EI
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x1076, "I8254x" }, //  PCI_DEVICE_I82541GI_COPPER
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x1078, "I8254x" }, //  PCI_DEVICE_I82541ER
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x1079, "I8254x" }, //  PCI_DEVICE_I82546GB_COPPER_DUAL
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x107C, "I8254x" }, //  PCI_DEVICE_I82541PI_DESKTOP
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x107D, "I8254x" }, //  PCI_DEVICE_I82572EI
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x108B, "I8254x" }, //  PCI_DEVICE_I82573E
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x108C, "I8254x" }, //  PCI_DEVICE_I82573
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x109A, "I8254x" }, //  PCI_DEVICE_I82573L
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x10A4, "I8254x" }, //  PCI_DEVICE_I82571GB_QUAD
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x10A7, "I8254x" }, //  PCI_DEVICE_I82575_ZOAR
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x10B9, "I8254x" }, //  PCI_DEVICE_I82572GI
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x10BC, "I8254x" }, //  PCI_DEVICE_I82571GB_QUAD_2
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x10BD, "I8254x" }, //  PCI_DEVICE_I82566L
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x10C9, "I8254x" }, //  PCI_DEVICE_I82576
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x10CE, "I8254x" }, //  PCI_DEVICE_I82567V
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x10D3, "I8254x" }, //  PCI_DEVICE_I82574L
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x10DE, "I8254x" }, //  PCI_DEVICE_I82567LM3
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x10EA, "I8254x" }, //  PCI_DEVICE_I82577LM
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x10EB, "I8254x" }, //  PCI_DEVICE_I82577LC
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x10EF, "I8254x" }, //  PCI_DEVICE_I82578DM
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x10F0, "I8254x" }, //  PCI_DEVICE_I82578DC
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x10F5, "I8254x" }, //  PCI_DEVICE_I82567LM
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x1501, "I8254x" }, //  PCI_DEVICE_I82567V3
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x1502, "I8254x" }, //  PCI_DEVICE_I82579LM
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x1503, "I8254x" }, //  PCI_DEVICE_I82579V
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x150C, "I8254x" }, //  PCI_DEVICE_I82583V
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x150E, "I8254x" }, //  PCI_DEVICE_I82580_QUAD
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x1521, "I8254x" }, //  PCI_DEVICE_I350
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x1526, "I8254x" }, //  PCI_DEVICE_I82576_ET2
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x1527, "I8254x" }, //  PCI_DEVICE_I82580_QUAD_FIBRE
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x1533, "I8254x" }, //  PCI_DEVICE_I210_COPPER
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x1539, "I8254x" }, //  PCI_DEVICE_I211AT
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x157B, "I8254x" }, //  PCI_DEVICE_I210_COPPER_FLASHLESS
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x153A, "I8254x" }, //  PCI_DEVICE_I217LM
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x153B, "I8254x" }, //  PCI_DEVICE_I217V
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x155A, "I8254x" }, //  PCI_DEVICE_I218LM
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x1559, "I8254x" }, //  PCI_DEVICE_I218V
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x15A3, "I8254x" }, //  PCI_DEVICE_I218V_2
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x15B7, "I8254x" }, //  PCI_DEVICE_I219LM
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  0x8086, 0x1570, "I8254x" }, //  PCI_DEVICE_I219V
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* I8255x types */
+ <br>//        {  0x8086, 0x103a, "I8255x" }, //  PCI device ID, Intel 82801DB(M) (ICH4) LAN Controller
+ <br>//        {  0x8086, 0x1229, "I8255x" }, //  82557 device ID
+ <br>//        {  0x8086, 0x1209, "I8255x" }, //  82557 ER device ID
+ <br>//        {  0x8086, 0x1050, "I8255x" }, //  PRO/100 VE device ID
+ <br>//        {  0x8086, 0x1039, "I8255x" }, //  82562 VE/VM device ID
+ <br>//        {  0x8086, 0x2449, "I8255x" }, //  82559 ER device ID
+ <br>//        {  0x8086, 0x27DC, "I8255x" }, //  PRO/100 VE device ID
+ <br>//        {  0x8086, 0x1059, "I8255x" }, //  Mobile version of 1229
+ <br>//        {  0x8086, 0x1092, "I8255x" }  //  PRO/100 VE3 device ID
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!xpcIsModelInit())
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static char_T      msg[256];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int32_T NICerror;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if( NICerror = registerNIC( %&lt;pciBus&gt;, %&lt;pciSlot&gt;, %&lt;pciFunction&gt;, 3 ) )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf( msg, "EtherCAT Init: Ethernet port at [%&lt;pciBus&gt;,%&lt;pciSlot&gt;,%&lt;pciFunction&gt;] in use by" );
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Cross block checking should catch RTIP, raw Ethernet or EtherCAT collisions, but I've included
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// them here for additional safety since I'm calling registerNIC
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// to catch host-target collisions.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;switch( NICerror )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 1:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf( msg, "%s host-target communication.", msg );
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 2:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf( msg, "%s Real-Time IP.", msg );
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 3:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf( msg, "%s raw Ethernet.", msg );
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 4:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf( msg, "%s EtherCAT.", msg );
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibSetRTModelErrorStatus">LibSetRTModelErrorStatus</a>( "msg" )>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Get the exec ratio at model start time.  Needed by the MS controller.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockRWork">LibBlockRWork</a>(EXECRATIO,"","",0)&gt; = %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockSampleTime">LibBlockSampleTime</a>(block)&gt; / slrteGetCurrentStepSize();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status = slrtGetPciConfigAtFunction( %&lt;pciBus&gt;, %&lt;pciSlot&gt;, %&lt;pciFunction&gt;, &pciInfo);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if( status == -1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibSetRTModelErrorStatus">LibSetRTModelErrorStatus</a>("/"You must specify a bus/slot/function, not auto search./"")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if( status == -2 )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibSetRTModelErrorStatus">LibSetRTModelErrorStatus</a>("/"There is no Ethernet adapter at bus %&lt;pciBus&gt;, slot %&lt;pciSlot&gt;, function %&lt;pciFunction&gt;./"")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status = -1;  // Preset to a failed search.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DeviceType = "";
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for( j = 0 ; j < sizeof(EtherCATDeviceTable)/sizeof(struct EtherCATDevices) ; j++ )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Search through the device table for the matching vendor/device ID.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(    ( pciInfo.DeviceId == EtherCATDeviceTable[j].DeviceID )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&& ( pciInfo.VendorId == EtherCATDeviceTable[j].VendorID ) )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DeviceType = EtherCATDeviceTable[j].DeviceType;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ( status ) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibSetRTModelErrorStatus">LibSetRTModelErrorStatus</a>("/"No valid Ethernet board found at bus %&lt;pciBus&gt; slot %&lt;pciSlot&gt; function %&lt;pciFunction&gt;/"")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char *logfile = "%&lt;logFileName&gt;";
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mwStateClear( %&lt;deviceIndex&gt; );
+ <br>printf("EtherCAT going to state %&lt;initstate&gt;/n" );
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status = xpcEtherCATinitialize(%&lt;deviceIndex&gt;, DeviceType, %&lt;pciBus&gt;, %&lt;pciSlot&gt;, %&lt;pciFunction&gt;, 1, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xmlecatArr_%&lt;deviceIndex&gt;, xmlecatArr_%&lt;deviceIndex&gt;_count,%&lt;errorReportingLevel&gt;,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;enaDC&gt;, logfile, %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockSampleTime">LibBlockSampleTime</a>(block)&gt;, %&lt;DCTuning&gt;, %&lt;initstate&gt; );
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (status != XPC_ECAT_OK) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;errMsg = xpcPrintEtherCATError(%&lt;deviceIndex&gt;, 0);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibSetRTModelErrorStatus">LibSetRTModelErrorStatus</a>( "errMsg" )>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//printf("init status = %08x/n", status );
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buffer
+ <br>&nbsp;&nbsp;&nbsp;%% Force this code to run before all the other blocks.
+ <br>&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>( buffer, "header" )>
+ <br>&nbsp; <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_function">%function</span> <a id="BlockTypeSetup" class="tlc_func">BlockTypeSetup</a>(block, system) void
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("stddef.h")&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("stdlib.h")&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("xpcethercatutils.h")&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("xpcimports.h")&gt;
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: BlockInstanceSetup ===========================================
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="BlockInstanceSetup" class="tlc_func">BlockInstanceSetup</a>(block, system) void
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToModelSources">LibAddToModelSources</a>("ecat_config_xml_%<deviceIndex&gt;")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;extern unsigned int xmlecatArr_%&lt;deviceIndex&gt;_count;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;extern unsigned char xmlecatArr_%&lt;deviceIndex&gt;[];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;extern int_T slrtEcatDCM[8];  // From master shift controller
+ <br>//    int32_T dcmHwSetIntTimestamp( void );
+ <br>//    void dcmCtlExecJob();  // Master shift control job
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibCacheExtern">LibCacheExtern</a>(buffer)&gt;
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br>%% Function: Outputs ======================================================
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block, system) Output
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buffer
+ <br>&nbsp;&nbsp;{ 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*------------ %&lt;Type&gt; Block: %&lt;Name&gt; Process Received Frames ------------*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int32_T data[6]={0};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int32_T msdata[4] = {0};
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> enaDC == "2"  %% Master shift mode information
+ <br>//       dcmHwSetIntTimestamp();  // For computing the time offset for MS DC time.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xpcEtherCATReadProcessData(%&lt;deviceIndex&gt;,NULL);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mwErrorGet((int_T)%&lt;deviceIndex&gt;,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&data[0], &data[1], &data[2], &data[3],&data[4],&data[5]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> enaDC == "2"  %% Master shift mode information
+ <br>//           data[3] = slrtEcatDCM[1];  // Master Shift error, for main Init output
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% msdata[0] = %&lt;enaDC&gt;;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% msdata[1] = slrtEcatDCM[0];  // Period according to the Ecat ref clock on first DC slave
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% // Get the last requested step size, return in nanoseconds
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% msdata[2] = (int32_T)(1e9 * ((%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockSampleTime">LibBlockSampleTime</a>(block)&gt; / %&lt;FundamentalStepSize&gt;) * slrteGetCurrentStepSize()));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% msdata[3] = slrtEcatDCM[1]; // phase error, for the controller
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% slrtEcatDCM[2] = msdata[2];  // send last sample time down
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% memcpy(%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(1, "", "", 0)>, msdata, 4*sizeof(int32_T));    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;memcpy(%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(0, "", "", 0)>, data,6*sizeof(int32_T));    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mwErrorClear( (int_T)%&lt;deviceIndex&gt; );
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Clear all momentary triggered values
+ <br>&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buffer
+ <br>&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemOutputCustomCode">LibSystemOutputCustomCode</a>(system, buffer, "header" )> 
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buffer
+ <br>&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*------------ %&lt;Type&gt; Block: %&lt;Name&gt; Write Process Data ,Run Admin Tasks and then Write Acyclic Data------------*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xpcEtherCATWriteProcessData(%&lt;deviceIndex&gt;,NULL);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xpcEtherCATExecAdminJobs(%&lt;deviceIndex&gt;);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xpcEtherCATWriteAcyclicData(%&lt;deviceIndex&gt;);
+ <br>&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buffer
+ <br>&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemOutputCustomCode">LibSystemOutputCustomCode</a>(system, buffer, "trailer" )>  
+ <br>&nbsp;<span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: Terminate ===========================================
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="Terminate" class="tlc_func">Terminate</a>(block, system) Output
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*------------ %&lt;Type&gt; Block: %&lt;Name&gt; Process Shutdown Network ------------*/
+ <br>&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T  status;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!xpcIsModelInit()) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;releaseNIC( %&lt;pciBus&gt;, %&lt;pciSlot&gt;, %&lt;pciFunction&gt; );
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status = xpcEtherCATstop(%&lt;deviceIndex&gt;, 1000 /* 1 second timeout */);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;}  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buffer
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlTerminateCustomCode">LibMdlTerminateCustomCode</a>( buffer, "trailer" )>
+ <br>&nbsp; <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br></body></html>

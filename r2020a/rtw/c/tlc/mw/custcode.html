@@ -1,0 +1,372 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2015<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:<span style="padding-left:9.5px"></span>Custom<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>block
+</span> <br>&nbsp; <br><span class="tlc_implements">%implements</span> "custcode" "C"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>ProcessRTWdata<span style="padding-left:9.5px"></span>===================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Insert<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>subsystem<span style="padding-left:9.5px"></span>custom<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>accordingly.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="ProcessRTWdata" class="tlc_func">ProcessRTWdata</a>(RTWdata, system) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootSystem = ::CompiledModel.System[NumSystems-1]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysName    = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#GetSystemNameForStartOfComments">GetSystemNameForStartOfComments</a>(system)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> SimulinkBlockComments
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ssNameInComment = "/* %<<span>sysName</span>> */"
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ssNameInComment = ""
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%  </span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% NOTE: DO NOT ADD CASES HERE WITHOUT ADDING THEM TO </span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% SRC/SIMULINK/SL_ENGIN/COMP_OPTMETHCFG.CPP AS NEW ENUMERATIONS</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_switch">%switch</span> Location
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% File level custom code blocks with 2 sections each</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Header File"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Model Header" <span class="tlc_comment">%% The updated name</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Top")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibHeaderFileCustomCode">LibHeaderFileCustomCode</a>(ssNameInComment, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibHeaderFileCustomCode">LibHeaderFileCustomCode</a>(Top, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Bottom")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibHeaderFileCustomCode">LibHeaderFileCustomCode</a>(ssNameInComment, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibHeaderFileCustomCode">LibHeaderFileCustomCode</a>(Bottom, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Parameter File"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Top")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibPrmFileCustomCode">LibPrmFileCustomCode</a>(ssNameInComment, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibPrmFileCustomCode">LibPrmFileCustomCode</a>(Top, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Bottom")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibPrmFileCustomCode">LibPrmFileCustomCode</a>(ssNameInComment, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibPrmFileCustomCode">LibPrmFileCustomCode</a>(Bottom, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Source File"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Model Source" <span class="tlc_comment">%% The updated name</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Top")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSourceFileCustomCode">LibSourceFileCustomCode</a>(ssNameInComment, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSourceFileCustomCode">LibSourceFileCustomCode</a>(Top, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Bottom")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSourceFileCustomCode">LibSourceFileCustomCode</a>(ssNameInComment + "/n", "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSourceFileCustomCode">LibSourceFileCustomCode</a>(Bottom, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Registration File"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Top")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibRegFileCustomCode">LibRegFileCustomCode</a>(ssNameInComment, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibRegFileCustomCode">LibRegFileCustomCode</a>(Top, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Bottom")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibRegFileCustomCode">LibRegFileCustomCode</a>(ssNameInComment, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibRegFileCustomCode">LibRegFileCustomCode</a>(Bottom, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Function level custom code blocks with 3 sections each</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Registration Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Top")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlRegCustomCode">LibMdlRegCustomCode</a>(ssNameInComment, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlRegCustomCode">LibMdlRegCustomCode</a>(Top, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Middle")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlRegCustomCode">LibMdlRegCustomCode</a>(ssNameInComment, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlRegCustomCode">LibMdlRegCustomCode</a>(Middle, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Bottom")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlRegCustomCode">LibMdlRegCustomCode</a>(ssNameInComment, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlRegCustomCode">LibMdlRegCustomCode</a>(Bottom, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Model Start Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Top")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>(ssNameInComment, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>(Top, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Middle")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>(ssNameInComment, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>(Middle, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Bottom")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>(ssNameInComment, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>(Bottom, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Model Initialize Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Top")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemInitializeCustomCode">LibSystemInitializeCustomCode</a>(rootSystem, ssNameInComment, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemInitializeCustomCode">LibSystemInitializeCustomCode</a>(rootSystem, Top, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Middle")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemInitializeCustomCode">LibSystemInitializeCustomCode</a>(rootSystem, ssNameInComment, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemInitializeCustomCode">LibSystemInitializeCustomCode</a>(rootSystem, Middle, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Bottom")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemInitializeCustomCode">LibSystemInitializeCustomCode</a>(rootSystem, ssNameInComment, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemInitializeCustomCode">LibSystemInitializeCustomCode</a>(rootSystem, Bottom, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Model Terminate Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Top")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlTerminateCustomCode">LibMdlTerminateCustomCode</a>(ssNameInComment, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlTerminateCustomCode">LibMdlTerminateCustomCode</a>(Top, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Middle")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlTerminateCustomCode">LibMdlTerminateCustomCode</a>(ssNameInComment, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlTerminateCustomCode">LibMdlTerminateCustomCode</a>(Middle, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Bottom")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlTerminateCustomCode">LibMdlTerminateCustomCode</a>(ssNameInComment, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlTerminateCustomCode">LibMdlTerminateCustomCode</a>(Bottom, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Model Outputs Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Top")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemOutputCustomCode">LibSystemOutputCustomCode</a>(rootSystem, ssNameInComment, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemOutputCustomCode">LibSystemOutputCustomCode</a>(rootSystem, Top, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Middle")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemOutputCustomCode">LibSystemOutputCustomCode</a>(rootSystem, ssNameInComment, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemOutputCustomCode">LibSystemOutputCustomCode</a>(rootSystem, Middle, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Bottom")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemOutputCustomCode">LibSystemOutputCustomCode</a>(rootSystem, ssNameInComment, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemOutputCustomCode">LibSystemOutputCustomCode</a>(rootSystem, Bottom, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Model Update Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Top")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemUpdateCustomCode">LibSystemUpdateCustomCode</a>(rootSystem, ssNameInComment, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemUpdateCustomCode">LibSystemUpdateCustomCode</a>(rootSystem, Top, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Middle")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemUpdateCustomCode">LibSystemUpdateCustomCode</a>(rootSystem, ssNameInComment, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemUpdateCustomCode">LibSystemUpdateCustomCode</a>(rootSystem, Middle, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Bottom")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemUpdateCustomCode">LibSystemUpdateCustomCode</a>(rootSystem, ssNameInComment, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemUpdateCustomCode">LibSystemUpdateCustomCode</a>(rootSystem, Bottom, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Model Derivatives Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> NumContStates < 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Cannot add custom MdlDerivatives code since " /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"there are no continuous states in the model"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Top")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemDerivativeCustomCode">LibSystemDerivativeCustomCode</a>(rootSystem, ssNameInComment , "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemDerivativeCustomCode">LibSystemDerivativeCustomCode</a>(rootSystem, Top, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Middle")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemDerivativeCustomCode">LibSystemDerivativeCustomCode</a>(rootSystem, ssNameInComment, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemDerivativeCustomCode">LibSystemDerivativeCustomCode</a>(rootSystem, Middle, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Bottom")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemDerivativeCustomCode">LibSystemDerivativeCustomCode</a>(rootSystem, ssNameInComment, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemDerivativeCustomCode">LibSystemDerivativeCustomCode</a>(rootSystem, Bottom, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Subsystem Function level custom code blocks with 3 sections each</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Subsystem Start Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "System Start Function" <span class="tlc_comment">%% The updated name</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% All subsystem start code is placed in models MdlStart function</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Top")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>(ssNameInComment, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>(Top, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Middle")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>(ssNameInComment, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>(Middle, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Bottom")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>(ssNameInComment, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>(Bottom, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Subsystem Outputs Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "System Outputs Function" <span class="tlc_comment">%% The updated name</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Top")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemOutputCustomCode">LibSystemOutputCustomCode</a>(system, ssNameInComment, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemOutputCustomCode">LibSystemOutputCustomCode</a>(system, Top, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Middle")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemOutputCustomCode">LibSystemOutputCustomCode</a>(system, ssNameInComment, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemOutputCustomCode">LibSystemOutputCustomCode</a>(system, Middle, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Bottom")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemOutputCustomCode">LibSystemOutputCustomCode</a>(system, ssNameInComment, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemOutputCustomCode">LibSystemOutputCustomCode</a>(system, Bottom, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Subsystem Update Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "System Update Function" <span class="tlc_comment">%% The updated name</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Top")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemUpdateCustomCode">LibSystemUpdateCustomCode</a>(system, ssNameInComment , "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemUpdateCustomCode">LibSystemUpdateCustomCode</a>(system, Top, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Middle")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemUpdateCustomCode">LibSystemUpdateCustomCode</a>(system, ssNameInComment , "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemUpdateCustomCode">LibSystemUpdateCustomCode</a>(system, Middle, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Bottom")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemUpdateCustomCode">LibSystemUpdateCustomCode</a>(system, ssNameInComment, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemUpdateCustomCode">LibSystemUpdateCustomCode</a>(system, Bottom, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Subsystem Terminate Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "System Terminate Function" <span class="tlc_comment">%% The updated name</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% All subsystem terminate code is placed in models terminate function.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Top")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlTerminateCustomCode">LibMdlTerminateCustomCode</a>(ssNameInComment, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlTerminateCustomCode">LibMdlTerminateCustomCode</a>(Top, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Middle")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlTerminateCustomCode">LibMdlTerminateCustomCode</a>(ssNameInComment, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlTerminateCustomCode">LibMdlTerminateCustomCode</a>(Middle, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Bottom")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlTerminateCustomCode">LibMdlTerminateCustomCode</a>(ssNameInComment, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlTerminateCustomCode">LibMdlTerminateCustomCode</a>(Bottom, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Subsystem Initialize Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "System Initialize Function" <span class="tlc_comment">%% The updated name</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Cache the initialize code in the system if it has an</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% initialize function, otherwise cache in models start function.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("system.SystemInitializeFcn") || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">EXISTS</span>("system.SystemResetFcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Top")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemInitializeCustomCode">LibSystemInitializeCustomCode</a>(system, ssNameInComment, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemInitializeCustomCode">LibSystemInitializeCustomCode</a>(system, Top, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Middle")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemInitializeCustomCode">LibSystemInitializeCustomCode</a>(system, ssNameInComment , "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemInitializeCustomCode">LibSystemInitializeCustomCode</a>(system, Middle, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Bottom")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemInitializeCustomCode">LibSystemInitializeCustomCode</a>(system, ssNameInComment , "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemInitializeCustomCode">LibSystemInitializeCustomCode</a>(system, Bottom, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Top")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>(ssNameInComment, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>(Top, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Middle")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>(ssNameInComment, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>(Middle, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Bottom")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>(ssNameInComment, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>(Bottom, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Subsystem Derivatives Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "System Derivatives Function" <span class="tlc_comment">%% The updated name</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Only cache the derivatives code if the system has an</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% derivatives function.  Error out otherwise.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("system.DerivativeFcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Top")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemDerivativeCustomCode">LibSystemDerivativeCustomCode</a>(system, ssNameInComment, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemDerivativeCustomCode">LibSystemDerivativeCustomCode</a>(system, Top, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Middle")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemDerivativeCustomCode">LibSystemDerivativeCustomCode</a>(system, ssNameInComment , "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemDerivativeCustomCode">LibSystemDerivativeCustomCode</a>(system, Middle, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Bottom")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemDerivativeCustomCode">LibSystemDerivativeCustomCode</a>(system, ssNameInComment , "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemDerivativeCustomCode">LibSystemDerivativeCustomCode</a>(system, Bottom, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "The System Derivatives custom code block "/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"cannot be placed in %<<span>ssNameInComment</span>> because the system does not "/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"have a derivatives function."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportError">LibReportError</a>(errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Subsystem Enable Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "System Enable Function" <span class="tlc_comment">%% The updated name</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Only cache the enable code if the system has an</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% enable function.  Error out otherwise.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("system.EnableFcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Top")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemEnableCustomCode">LibSystemEnableCustomCode</a>(system, ssNameInComment , "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemEnableCustomCode">LibSystemEnableCustomCode</a>(system, Top, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Middle")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemEnableCustomCode">LibSystemEnableCustomCode</a>(system, ssNameInComment , "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemEnableCustomCode">LibSystemEnableCustomCode</a>(system, Middle, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Bottom")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemEnableCustomCode">LibSystemEnableCustomCode</a>(system, ssNameInComment, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemEnableCustomCode">LibSystemEnableCustomCode</a>(system, Bottom, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "The System Enable custom code block "/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"cannot be placed in %<<span>ssNameInComment</span>> because the system does not "/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"have an enable function."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportError">LibReportError</a>(errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Subsystem Disable Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "System Disable Function" <span class="tlc_comment">%% The updated name</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Only cache the disable code if the system has an</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% disable function.  Error out otherwise.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("system.DisableFcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Top")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemDisableCustomCode">LibSystemDisableCustomCode</a>(system, ssNameInComment, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemDisableCustomCode">LibSystemDisableCustomCode</a>(system, Top, "header")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Middle")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemDisableCustomCode">LibSystemDisableCustomCode</a>(system, ssNameInComment , "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemDisableCustomCode">LibSystemDisableCustomCode</a>(system, Middle, "execution")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("Bottom")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemDisableCustomCode">LibSystemDisableCustomCode</a>(system, ssNameInComment , "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibSystemDisableCustomCode">LibSystemDisableCustomCode</a>(system, Bottom, "trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "The System Disable custom code block " ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"cannot be placed in %<<span>ssNameInComment</span>> because the system does not " ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"have a disable function."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportError">LibReportError</a>(errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Unknown custom code block: %<<span>Location</span>> " ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"in %<<span>ssNameInComment</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportError">LibReportError</a>(errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/custcode.html">custcode.tlc</a>
+</span> <br></body></html>

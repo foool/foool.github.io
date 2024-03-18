@@ -1,0 +1,269 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%****************************************************************************
+</span> <br><span class="tlc_comment">%%****************************************************************************
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>Packet<span style="padding-left:9.5px"></span>Output<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>Simulink<span style="padding-left:9.5px"></span>Desktop<span style="padding-left:9.5px"></span>Real-Time
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2015<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%****************************************************************************
+</span> <br><span class="tlc_comment">%%****************************************************************************
+</span> <br>&nbsp; <br>&nbsp; <br><span class="tlc_implements">%implements</span> "sldrtpo" "C"
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>include<span style="padding-left:9.5px"></span>Simulink<span style="padding-left:9.5px"></span>Desktop<span style="padding-left:9.5px"></span>Real-Time<span style="padding-left:9.5px"></span>library
+</span> <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/toolbox/sldrt/sldrt/sldrtlib.html">sldrtlib.tlc</a>"
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>include<span style="padding-left:9.5px"></span>CAN_MESSAGE<span style="padding-left:9.5px"></span>support
+</span> <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/toolbox/shared/can/canmex/tlc_c/can_message.html">can_message.tlc</a>"
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>BlockTypeSetup<span style="padding-left:9.5px"></span>====================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Register<span style="padding-left:9.5px"></span>CAN_MESSAGE<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>type<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>needed
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="BlockTypeSetup" class="tlc_func">BlockTypeSetup</a>(block, system) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsFundamentalBuiltInDataType">LibIsFundamentalBuiltInDataType</a>(PktDataTypeIds[0])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/shared/can/canmex/tlc_c/can_message.html#RegisterCANDataType">RegisterCANDataType</a>(block)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>BlockInstanceSetup<span style="padding-left:9.5px"></span>====================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Register<span style="padding-left:9.5px"></span>board<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>board<span style="padding-left:9.5px"></span>table
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="BlockInstanceSetup" class="tlc_func">BlockInstanceSetup</a>(block, system) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/sldrt/sldrt/sldrtlib.html#SLDRTRegisterBoard">SLDRTRegisterBoard</a>(block)>
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% BlockInstanceSetup</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>RTWinPacketOutputEndianCopy<span style="padding-left:9.5px"></span>===========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Copy<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>value<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>packet,<span style="padding-left:9.5px"></span>taking<span style="padding-left:9.5px"></span>endian<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>account
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="RTWinPacketOutputEndianCopy" class="tlc_func">RTWinPacketOutputEndianCopy</a>(block, srcdtid, src, dtid, byteSize) <span class="tlc_fkw">Output</span>
+ <br><span class="tlc_comment">%%
+</span> <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Standard numeric data type IDs:</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% 0: double, 1: single, 2: int8, 3: uint8, 4: int16, 5: uint16, 6: int32, 7: uint32</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dt = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeNameFromId">LibGetDataTypeNameFromId</a>(dtid)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srcdt = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeNameFromId">LibGetDataTypeNameFromId</a>(srcdtid)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% minimum and maximum value of target data type</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtMaxValue = "%<GET_TYPE_ID_REPLACEMENT("MAX_%<<span>dt</span>>")>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> dtid==3 || dtid==5 || dtid==7   <span class="tlc_comment">%% minimum for unsigned integer types is unsigned zero</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtMinValue = "0U"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtMinValue = "%<GET_TYPE_ID_REPLACEMENT("MIN_%<<span>dt</span>>")>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% no type conversion if data types match</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> srcdtid==dtid
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dt</span>> pktout = %<<span>src</span>>;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% handle conversions from double and single to integers</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% single to int32 and uint32 must be converted via real_T to exactly compare to 32-bit limits</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> (srcdtid==0 || srcdtid==1) &amp;&amp; dtid>=2 &amp;&amp; dtid<=7
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> srcdtid==1 &amp;&amp; (dtid==6 || dtid==7)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real_T pktin = %<<span>src</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>srcdt</span>> pktin = %<<span>src</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dt</span>> pktout = pktin>=%<<span>dtMaxValue</span>> ? %<<span>dtMaxValue</span>> : (pktin<=%<<span>dtMinValue</span>> ? %<<span>dtMinValue</span>> : (%<<span>dt</span>>) pktin);
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% handle signed integer target data types</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> (dtid==2 || dtid==4 || dtid==6)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (srcdtid==2 || srcdtid==4 || srcdtid==6)   <span class="tlc_comment">%% conversion from signed data type</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> srcdtid>dtid
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>srcdt</span>> pktin = %<<span>src</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dt</span>> pktout = pktin>=%<<span>dtMaxValue</span>> ? %<<span>dtMaxValue</span>> : (pktin<=%<<span>dtMinValue</span>> ? %<<span>dtMinValue</span>> : (%<<span>dt</span>>) pktin);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dt</span>> pktout = (%<<span>dt</span>>) %<<span>src</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>                                    <span class="tlc_comment">%% conversion from unsigned data type</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> srcdtid>dtid
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>srcdt</span>> pktin = %<<span>src</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dt</span>> pktout = pktin>=%<<span>dtMaxValue</span>> ? %<<span>dtMaxValue</span>> : (%<<span>dt</span>>) pktin;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dt</span>> pktout = (%<<span>dt</span>>) %<<span>src</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% handle unsigned integer target data types</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> (dtid==3 || dtid==5 || dtid==7)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (srcdtid==2 || srcdtid==4 || srcdtid==6)   <span class="tlc_comment">%% conversion from signed data type</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>srcdt</span>> pktin = %<<span>src</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> srcdtid>dtid
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dt</span>> pktout = pktin>=%<<span>dtMaxValue</span>> ? %<<span>dtMaxValue</span>> : (pktin<=0 ? 0 : (%<<span>dt</span>>) pktin);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dt</span>> pktout = pktin<0 ? 0 : (%<<span>dt</span>>) pktin;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>                                    <span class="tlc_comment">%% conversion from unsigned data type</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> srcdtid>dtid
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>srcdt</span>> pktin = %<<span>src</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dt</span>> pktout = pktin>=%<<span>dtMaxValue</span>> ? %<<span>dtMaxValue</span>> : (%<<span>dt</span>>) pktin;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dt</span>> pktout = (%<<span>dt</span>>) %<<span>src</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% plain typecast for other data type combinations</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dt</span>> pktout = (%<<span>dt</span>>) %<<span>src</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% copy the value if little endian or if single byte</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ByteOrder==1 || byteSize==1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*outdp.p_%<<span>dt</span>>++ = pktout;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% reverse the byte order of the value if big endian</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* %<<span>dt</span>>, big endian */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint8_T* pktoutptr = ((uint8_T*) &amp;pktout) + %<<span>byteSize</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> byteSize>RollThreshold
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int i;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (i=0; i<%<<span>byteSize</span>>; ++i)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*outdp.p_uint8_T++ = *--pktoutptr;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> byteIdx = byteSize
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*outdp.p_uint8_T++ = *--pktoutptr;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;}
+ <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% RTWinPacketOutputEndianCopy</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>RTWinPacketOutputSendParameterValue<span style="padding-left:9.5px"></span>===================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Send<span style="padding-left:9.5px"></span>parameter<span style="padding-left:9.5px"></span>value<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>packet<span style="padding-left:9.5px"></span>output
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="RTWinPacketOutputSendParameterValue" class="tlc_func">RTWinPacketOutputSendParameterValue</a>(block, value) <span class="tlc_fkw">Output</span>
+ <br><span class="tlc_comment">%%
+</span> <br>&nbsp;&nbsp;/* %<<span>Type</span>> Block: %<<span>Name</span>> */
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> valsize = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterWidth">LibBlockParameterWidth</a>(value)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> valsize==0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* no initial value should be set */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const double* parm = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterBaseAddr">LibBlockParameterBaseAddr</a>(value)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;char outdata[%<<span>PacketSize</span>>];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;RTWin_ANYTYPEPTR outdp;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;outdp.p_uint8_T = outdata;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% loop over ports</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> portIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockNumInputPorts">LibBlockNumInputPorts</a>(block)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtid = PktDataTypeIds[portIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> byteSize = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeSLSizeFromId">LibGetDataTypeSLSizeFromId</a>(PktDataTypeIds[portIdx])
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% roll over parameter elements</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_roll">%roll</span> sigIdx = DataInputPort[portIdx].RollRegions, lcv = RollThreshold, block, "Roller", ""
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% copy the value, taking endian into account</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/sldrt/sldrt/sldrtpo.html#RTWinPacketOutputEndianCopy">RTWinPacketOutputEndianCopy</a>(block, 0, "*parm++", dtid, byteSize)>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endroll">%endroll</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% actually write the packet</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pktidptr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(PacketID, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;RTBIO_DriverIO(%<<span>block.SLDRTBoardIdx</span>>, STREAMOUTPUT, IOWRITE, %<<span>PacketSize</span>>, %<<span>pktidptr</span>>, (double*) outdata, NULL);
+ <br>&nbsp;&nbsp;}
+ <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% RTWinPacketOutputSendParameterValue</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Start<span style="padding-left:9.5px"></span>==============================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Write<span style="padding-left:9.5px"></span>initial<span style="padding-left:9.5px"></span>value
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Start" class="tlc_func">Start</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br><span class="tlc_comment">%%
+</span> <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/sldrt/sldrt/sldrtpo.html#RTWinPacketOutputSendParameterValue">RTWinPacketOutputSendParameterValue</a>(block, InitialValue)>
+ <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% Start</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Outputs<span style="padding-left:9.5px"></span>===========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Write<span style="padding-left:9.5px"></span>outputs<span style="padding-left:9.5px"></span>on<span style="padding-left:9.5px"></span>each<span style="padding-left:9.5px"></span>time<span style="padding-left:9.5px"></span>step
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br><span class="tlc_comment">%%
+</span> <br>&nbsp;&nbsp;/* %<<span>Type</span>> Block: %<<span>Name</span>> */
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% handle Missed Ticks port</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numports = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/sldrt/sldrt/sldrtlib.html#SLDRTNumOutputPortsMissedTicks">SLDRTNumOutputPortsMissedTicks</a>(block)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% don't do anything if no output ports</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> numports <= 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* no code required */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> PacketSize>0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pktwritesize = PacketSize
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pktwritesize = 1
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% update Data Ready and Data Error outputs</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int status = RTBIO_DriverIO(%<<span>block.SLDRTBoardIdx</span>>, STREAMOUTPUT, IOSTATUS, %<<span>pktwritesize</span>>, NULL, NULL, NULL);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ShowError
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numports = numports-1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(numports, "", "", 0)> = (status>>1) &amp; 0x1;    /* Data Error port */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> numports > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(numports-1, "", "", 0)> = status &amp; 0x1;       /* Data Ready port */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;}
+ <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% Outputs</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Update<span style="padding-left:9.5px"></span>===========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Update<span style="padding-left:9.5px"></span>states<span style="padding-left:9.5px"></span>on<span style="padding-left:9.5px"></span>each<span style="padding-left:9.5px"></span>time<span style="padding-left:9.5px"></span>step
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Update" class="tlc_func">Update</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br><span class="tlc_comment">%%
+</span> <br>&nbsp;&nbsp;<span class="tlc_comment">%% don't do anything if no data to send</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> PacketSize <= 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;/* %<<span>Type</span>> Block: %<<span>Name</span>> */
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsFundamentalBuiltInDataType">LibIsFundamentalBuiltInDataType</a>(PktDataTypeIds[0])  <span class="tlc_comment">%% CAN_MESSAGE</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const CAN_MESSAGE* msg = (const CAN_MESSAGE*) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(0, "", "", 0)>;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% read packet ID from CAN_MESSAGE</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int32_T pktid = msg->Extended ? -msg->ID : (msg->ID | 0x800);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pktidptr = "&amp;pktid"
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outdatalen = "msg->Length"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outdataptr = "(double*) (&amp;msg->Data)"
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% read packet ID from parameter</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pktidptr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(PacketID, "", "", 0)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% declare output data buffer</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outdatalen = PacketSize
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outdataptr = "(double*) outdata"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint8_T outdata[%<<span>PacketSize</span>>];
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RTWin_ANYTYPEPTR outdp;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;outdp.p_uint8_T = outdata;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% loop over ports</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> portIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockNumInputPorts">LibBlockNumInputPorts</a>(block)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtid = PktDataTypeIds[portIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> byteSize = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeSLSizeFromId">LibGetDataTypeSLSizeFromId</a>(PktDataTypeIds[portIdx])
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% roll over signal elements</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rollVar = <span class="tlc_bifunc">SPRINTF</span>("u%d", portIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_roll">%roll</span> sigIdx = DataInputPort[portIdx].RollRegions, lcv = RollThreshold, block, "Roller", [ %<<span>rollVar</span>> ]
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% copy the value, taking endian into account</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/sldrt/sldrt/sldrtpo.html#RTWinPacketOutputEndianCopy">RTWinPacketOutputEndianCopy</a>(block, <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>DataTypeId"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>DataTypeId</a>(portIdx), <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(portIdx, "", lcv, sigIdx), dtid, byteSize)>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endroll">%endroll</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% actually write the packet</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;RTBIO_DriverIO(%<<span>block.SLDRTBoardIdx</span>>, STREAMOUTPUT, IOWRITE, %<<span>outdatalen</span>>, %<<span>pktidptr</span>>, %<<span>outdataptr</span>>, NULL);
+ <br>&nbsp;&nbsp;}
+ <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% Update</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Terminate<span style="padding-left:9.5px"></span>==============================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Write<span style="padding-left:9.5px"></span>final<span style="padding-left:9.5px"></span>value
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Terminate" class="tlc_func">Terminate</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br><span class="tlc_comment">%%
+</span> <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/sldrt/sldrt/sldrtpo.html#RTWinPacketOutputSendParameterValue">RTWinPacketOutputSendParameterValue</a>(block, FinalValue)>
+ <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% Terminate</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/toolbox/sldrt/sldrt/sldrtpo.html">sldrtpo.tlc</a>
+</span> <br></body></html>

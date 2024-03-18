@@ -1,0 +1,547 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>entry<span style="padding-left:9.5px"></span>point<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>"RealTimeMalloc"<span style="padding-left:9.5px"></span>code
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>format.<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>files<span style="padding-left:9.5px"></span>model.h,<span style="padding-left:9.5px"></span>model.c,<span style="padding-left:9.5px"></span>model_private.h,<span style="padding-left:9.5px"></span>model_data.c
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>produced.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2019<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/cachereusablelibs.html">cachereusablelibs.tlc</a>"
+ <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sfcnutil.html">sfcnutil.tlc</a>"
+ <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/data_cachebuffers.html">data_cachebuffers.tlc</a>"
+ <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_assignbuffers.html">prm_assignbuffers.tlc</a>"
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_FORMATWIDE_") == 0
+ <br><span class="tlc_assign">%assign</span> _FORMATWIDE_ = 1
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Don't<span style="padding-left:9.5px"></span>seem<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>know<span style="padding-left:9.5px"></span>about<span style="padding-left:9.5px"></span>LibReportFatalError<span style="padding-left:9.5px"></span>here
+</span> <br><span class="tlc_fkw">%function</span> <a id="CheckForCtrlCInterrupt" class="tlc_func">CheckForCtrlCInterrupt</a>(stage) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> interruptDetected = CGMODEL_ACCESS("CodeGenEntryLib.ctrlCInterruptDetected", stage)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> interruptDetected
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> exitMessage = "TLC interrupted by keyboard at stage %<<span>stage</span>>."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_exit">%exit</span> %<<span>exitMessage</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span> 
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> ::BlockFcn = "Unknown"
+ <br>&nbsp; <br><span class="tlc_if">%if</span> CodeFormat == "S-Function" &amp;&amp; !Accelerator
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sfcnNoAccel = 1
+ <br><span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sfcnNoAccel = 0
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTCodeFormat">SLibIsERTCodeFormat</a>()
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertlib.html#SLibErtWideInit">SLibErtWideInit</a>()</span>>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibFcnProtoCtrlActive">SLibFcnProtoCtrlActive</a>() || ...
+ <br>&nbsp;&nbsp;GenerateClassInterface
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::RTWStepPrototypeRecord = ""
+ <br>&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html">ertfcnprotocontrol.tlc</a>"
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibAutosarActive">SLibAutosarActive</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html">autosarsup.tlc</a>"
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_if">%if</span> GenerateClassInterface
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::RTWCPPStepPrototypeRecord = ""
+ <br>&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertclassgeneration.html">ertclassgeneration.tlc</a>"
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_assign">%assign</span> ::BlockFcn = "Registration"
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#FcnProcessChildCoderGroups">FcnProcessChildCoderGroups</a>()</span>>
+ <br><span class="tlc_assign">%assign</span> ::BlockFcn = "Unknown"
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatwide.html#CheckForCtrlCInterrupt">CheckForCtrlCInterrupt</a>("TLCEvent::PostRegistration")>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Cache<span style="padding-left:9.5px"></span>all<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>body<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>model.c<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>(minus<span style="padding-left:9.5px"></span>terminate<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>since
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>mallocs<span style="padding-left:9.5px"></span>occur<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>registration<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>instance<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>code).
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonbodlib.html#SLibGenBodyCache">SLibGenBodyCache</a>()</span>>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Cache<span style="padding-left:9.5px"></span>S-Function<span style="padding-left:9.5px"></span>registration<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>instance<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>prior<span style="padding-left:9.5px"></span>to
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>generating<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>structure<span style="padding-left:9.5px"></span>definitions/instances<span style="padding-left:9.5px"></span>(this<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>may<span style="padding-left:9.5px"></span>affect<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>contents<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>parameters<span style="padding-left:9.5px"></span>structure).<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>accessed<span style="padding-left:9.5px"></span>SimStruct<span style="padding-left:9.5px"></span>variables
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>cached<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>later<span style="padding-left:9.5px"></span>use<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>registration<span style="padding-left:9.5px"></span>generation.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>(mdt)<span style="padding-left:9.5px"></span>Setting<span style="padding-left:9.5px"></span>blockFcn<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>Initialize<span style="padding-left:9.5px"></span>means<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>Interface<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>no
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>longer<span style="padding-left:9.5px"></span>completely<span style="padding-left:9.5px"></span>correct.
+</span> <br><span class="tlc_assign">%assign</span> ::BlockFcn = "Registration"
+ <br><span class="tlc_if">%if</span> !sfcnNoAccel
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !Accelerator
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonreglib.html#LibCacheChildSFunctionRegistration">LibCacheChildSFunctionRegistration</a>(::tChildSimStruct, Name)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#LibCacheBlockInstanceData">LibCacheBlockInstanceData</a>()</span>>
+ <br><span class="tlc_endif">%endif</span>
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonreglib.html#SLibCacheBranchedSysCalledByNonInlinedSfcn">SLibCacheBranchedSysCalledByNonInlinedSfcn</a>()</span>>
+ <br><span class="tlc_assign">%assign</span> ::BlockFcn = "Unknown"
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Cache<span style="padding-left:9.5px"></span>terminate<span style="padding-left:9.5px"></span>function.
+</span> <br><span class="tlc_comment">%%
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Cache terminate function")>
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonbodlib.html#SLibGenTerminateBody">SLibGenTerminateBody</a>()</span>>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Cache terminate function")>
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>()
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#CreateModelrefSFunctionForTopSystem">CreateModelrefSFunctionForTopSystem</a>()</span>>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatwide.html#CheckForCtrlCInterrupt">CheckForCtrlCInterrupt</a>("TLCEvent::PostCacheTerminate")>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Cache<span style="padding-left:9.5px"></span>header<span style="padding-left:9.5px"></span>files.
+</span> <br><span class="tlc_comment">%%
+</span> <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonbodlib.html#SLibGenHeaderCache">SLibGenHeaderCache</a>()</span>>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Cache<span style="padding-left:9.5px"></span>structure<span style="padding-left:9.5px"></span>definitions<span style="padding-left:9.5px"></span>prior<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>registration.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Note<span style="padding-left:9.5px"></span>that
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>instance<span style="padding-left:9.5px"></span>should<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>cached<span style="padding-left:9.5px"></span>prior<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>definition<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>properly
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>handle<span style="padding-left:9.5px"></span>non-finites<span style="padding-left:9.5px"></span>values.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>For<span style="padding-left:9.5px"></span>example,<span style="padding-left:9.5px"></span>when<span style="padding-left:9.5px"></span>inlining<span style="padding-left:9.5px"></span>parameters<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>individual<span style="padding-left:9.5px"></span>parameters<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>declared<span style="padding-left:9.5px"></span>"const"<span style="padding-left:9.5px"></span>unless<span style="padding-left:9.5px"></span>they<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>non-finite.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Whether<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>parameter<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>non-finite<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>determined<span style="padding-left:9.5px"></span>while<span style="padding-left:9.5px"></span>caching<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>parameter<span style="padding-left:9.5px"></span>structure<span style="padding-left:9.5px"></span>instance.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_assign">%assign</span> ::BlockFcn = "Registration"
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Cache structure definitions")>
+ <br><span class="tlc_if">%if</span> sfcnNoAccel
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sfcnlib.html#SLibSfcnWideInit">SLibSfcnWideInit</a>()</span>>
+ <br><span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/data_cachebuffers.html#SLibCacheDataBuffers">SLibCacheDataBuffers</a>()</span>>
+ <br><span class="tlc_endif">%endif</span>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Cache structure definitions")>
+ <br><span class="tlc_assign">%assign</span> ::BlockFcn = "Unknown"
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>===========================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>CAPIInterface<span style="padding-left:9.5px"></span>information<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>map<span style="padding-left:9.5px"></span>parameters<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>signals.
+</span> <br><span class="tlc_comment">%%
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Write C-API")>
+ <br><span class="tlc_if">%if</span> RTWCAPI
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::BlockFcn = "Registration"
+ <br>&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capi.html">capi.tlc</a>"
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capi.html#SLibWriteToCAPIFiles">SLibWriteToCAPIFiles</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::BlockFcn = "Unknown"
+ <br><span class="tlc_endif">%endif</span>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Write C-API")>
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatwide.html#CheckForCtrlCInterrupt">CheckForCtrlCInterrupt</a>("TLCEvent::PostCAPI")>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>===========================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Target<span style="padding-left:9.5px"></span>Connectivity
+</span> <br><span class="tlc_comment">%%
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Write TgtConn File")>
+ <br><span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>() &amp;&amp; %<<span class="tlc_bifunc">FEVAL</span>("coder.internal.connectivity.TgtConnMgr.isNeeded")> 
+ <br>&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/tgtconn.html">tgtconn.tlc</a>"
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/tgtconn.html#SLibWriteTgtConnFile">SLibWriteTgtConnFile</a>()</span>>
+ <br><span class="tlc_endif">%endif</span>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Write TgtConn File")>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>==========================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Run<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>based<span style="padding-left:9.5px"></span>TargetFcnLib<span style="padding-left:9.5px"></span>callbacks
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Invoke<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>callbacks<span style="padding-left:9.5px"></span>before<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertreg.html">ertreg.tlc</a><span style="padding-left:9.5px"></span>determines<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>non-finites
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>need<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>initialized.<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>callbacks<span style="padding-left:9.5px"></span>need<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>early<span style="padding-left:9.5px"></span>since
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>they<span style="padding-left:9.5px"></span>may<span style="padding-left:9.5px"></span>result<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>non-finite<span style="padding-left:9.5px"></span>being<span style="padding-left:9.5px"></span>used.
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Run TLC based TFL callbacks")>
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#SLibRunTFLCallbacks">SLibRunTFLCallbacks</a>()</span>>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Run TLC based TFL callbacks")>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Dump<span style="padding-left:9.5px"></span>contents<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>model.c<span style="padding-left:9.5px"></span>file.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>must<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>done<span style="padding-left:9.5px"></span>before<span style="padding-left:9.5px"></span>dumping<span style="padding-left:9.5px"></span>model.h
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>since<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>source<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>may<span style="padding-left:9.5px"></span>split<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>process.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>header<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>declares
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>"extern"<span style="padding-left:9.5px"></span>when<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>splits.
+</span> <br><span class="tlc_comment">%%
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Cache model.c")>
+ <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatbody.html">formatbody.tlc</a>"
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatbody.html#SLibFormatBody">SLibFormatBody</a>()</span>>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Cache model.c")>
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatwide.html#CheckForCtrlCInterrupt">CheckForCtrlCInterrupt</a>("TLCEvent::PostCacheModel")>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>model_private.h,<span style="padding-left:9.5px"></span>model.c,<span style="padding-left:9.5px"></span>model_data.c
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>(order<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>important)
+</span> <br><span class="tlc_comment">%%
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Dump model_private.h, model.c, model_data.c")>
+ <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formattypes.html">formattypes.tlc</a>"
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatcommon.html#DumpHdrFileUserCode">DumpHdrFileUserCode</a>()</span>>
+ <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatprivate.html">formatprivate.tlc</a>"
+ <br><span class="tlc_assign">%assign</span> ::BlockFcn = "Registration"
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/childsfcnlib.html#SLibCacheRTCallSys">SLibCacheRTCallSys</a>()</span>>/
+ <br><span class="tlc_assert">%assert</span>(!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>() || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTCodeFormat">SLibIsERTCodeFormat</a>())
+ <br>&nbsp; <br><span class="tlc_switch">%switch</span> CodeFormat
+ <br>&nbsp;&nbsp;<span class="tlc_case">%case</span> "RealTime"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/srtreg.html">srtreg.tlc</a>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;<span class="tlc_case">%case</span> "Embedded-C"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::BlockFcn = "Registration"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertreg.html">ertreg.tlc</a>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;<span class="tlc_case">%case</span> "S-Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> Accelerator
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/accelreg.html">accelreg.tlc</a>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sfcnreg.html">sfcnreg.tlc</a>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sfcnsid.html">sfcnsid.tlc</a>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sfcnmid.html">sfcnmid.tlc</a>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br><span class="tlc_endswitch">%endswitch</span>
+ <br><span class="tlc_assign">%assign</span> BlockFcn = "Unknown"
+ <br><span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceRTWTarget">IsModelReferenceRTWTarget</a>() &amp;&amp; GenerateClassInterface
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%pre-register memset so that we will have proper header file inclusion</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> dummyBuf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMemFcnCall">LibGenMemFcnCall</a>("memset","(void *)%<::tSimStruct>","0",...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"sizeof(%<::tSimStructType>)")>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> dummyBuf
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> dummyBuf 
+ <br><span class="tlc_endif">%endif</span>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Dump model_private.h, model.c, model_data.c")>
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>model.h
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Done<span style="padding-left:9.5px"></span>after<span style="padding-left:9.5px"></span>reg<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>ensure<span style="padding-left:9.5px"></span>all<span style="padding-left:9.5px"></span>include<span style="padding-left:9.5px"></span>dependencies<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>collected.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatwide.html#CheckForCtrlCInterrupt">CheckForCtrlCInterrupt</a>("TLCEvent::PostDumpModelCode")>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Write<span style="padding-left:9.5px"></span>out<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>main<span style="padding-left:9.5px"></span>header<span style="padding-left:9.5px"></span>file
+</span> <br><span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>() 
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nonVirtSubsbys = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatcommon.html#DumpAllSystemHeadersExcludingRootSystem">DumpAllSystemHeadersExcludingRootSystem</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<span class="tlc_bifunc">WHITE_SPACE</span>(nonVirtSubsbys))
+ <br><span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formathdr.html">formathdr.tlc</a>"
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formathdr.html#SLibFormatHdr">SLibFormatHdr</a>()</span>>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Write header file comments")>
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commentlib.html#SLibWriteHeaderFileComments">SLibWriteHeaderFileComments</a>()</span>>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Write header file comments")>
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibGenerateVariantStuff">SLibGenerateVariantStuff</a>()</span>>
+ <br>&nbsp; <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibIncludeRTWGeneratedChildSysExportFile">SLibIncludeRTWGeneratedChildSysExportFile</a>()</span>>
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatcommon.html#DumpUserCodeAndCustomDataInst">DumpUserCodeAndCustomDataInst</a>()</span>>
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatcommon.html#DumpExportedDataInstance">DumpExportedDataInstance</a>()</span>>
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_assignbuffers.html#SLibAssignPrmBuffers">SLibAssignPrmBuffers</a>()</span>>
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatcommon.html#DumpExportedDataDefinition">DumpExportedDataDefinition</a>()</span>>
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatcommon.html#DumpExportFileUserCode">DumpExportFileUserCode</a>()</span>>
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/data_customdata.html#SLibDumpCustomClassData">SLibDumpCustomClassData</a>()</span>>
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#SLibDumpPublicServerInterfaces">SLibDumpPublicServerInterfaces</a>()</span>>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>temporary<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>support<span style="padding-left:9.5px"></span>timing<span style="padding-left:9.5px"></span>service<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>gen.<span style="padding-left:9.5px"></span>Will<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>removed<span style="padding-left:9.5px"></span>later.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>See<span style="padding-left:9.5px"></span>g2060510.
+</span> <br><span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibUsingTimingServices">SLibUsingTimingServices</a>()
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Write RTE")>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::BlockFcn = "Registration"
+ <br>&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/timingservicelib.html">timingservicelib.tlc</a>"
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/timingservicelib.html#SLibWriteToRTEFiles">SLibWriteToRTEFiles</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::BlockFcn = "Unknown"
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Write RTE")>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>=============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Optionally<span style="padding-left:9.5px"></span>generate<span style="padding-left:9.5px"></span>C++<span style="padding-left:9.5px"></span>class<span style="padding-left:9.5px"></span>interface
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>There<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>no<span style="padding-left:9.5px"></span>class<span style="padding-left:9.5px"></span>interface<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>reference<span style="padding-left:9.5px"></span>target
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Generate C++ class interface")>
+ <br><span class="tlc_if">%if</span> GenerateClassInterface
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertclassgeneration.html#FcnCPPGenerateDeclarations">FcnCPPGenerateDeclarations</a>()</span>>
+ <br><span class="tlc_endif">%endif</span>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Generate C++ class interface")>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Cache<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>params<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>.mat<span style="padding-left:9.5px"></span>file
+</span> <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/cacheglobalparams.html#GenAndCacheGlobalParamsInMatFile">GenAndCacheGlobalParamsInMatFile</a>()</span>>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Cache<span style="padding-left:9.5px"></span>reusable<span style="padding-left:9.5px"></span>library<span style="padding-left:9.5px"></span>subsystem<span style="padding-left:9.5px"></span>info,<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>it's<span style="padding-left:9.5px"></span>there
+</span> <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/cachereusablelibs.html#CacheReusableLibChecksums">CacheReusableLibChecksums</a>()</span>>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Cache<span style="padding-left:9.5px"></span>some<span style="padding-left:9.5px"></span>general<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>.mat<span style="padding-left:9.5px"></span>file
+</span> <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/cacheGeneralDataInMatInfoFile.html#CacheGeneralDataIntoMatInfoFile">CacheGeneralDataIntoMatInfoFile</a>()</span>>
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatwide.html#CheckForCtrlCInterrupt">CheckForCtrlCInterrupt</a>("TLCEvent::PostCPPClassInterface")>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>create<span style="padding-left:9.5px"></span>modelInterface<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>structure<span style="padding-left:9.5px"></span>containing<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>cross-target<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>applicable<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>reference<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>standalone<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>generation<span style="padding-left:9.5px"></span>targets
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>right-click<span style="padding-left:9.5px"></span>subsystem<span style="padding-left:9.5px"></span>builds<span style="padding-left:9.5px"></span>only<span style="padding-left:9.5px"></span>cache<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>required<span style="padding-left:9.5px"></span>data
+</span> <br><span class="tlc_assign">%assign</span> modelInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefinterface.html#SLibCreateModelInterface">SLibCreateModelInterface</a>()
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatmodelref.html#ModelrefHandleExportFileInfo">ModelrefHandleExportFileInfo</a>()</span>>
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatmodelref.html#ModelrefGenSfcnAndHandleConstPrmAndBIO">ModelrefGenSfcnAndHandleConstPrmAndBIO</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% add model reference specific data to the modelInterface</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefinterface.html#SLibAddModelReferenceModelInterface">SLibAddModelReferenceModelInterface</a>(modelInterface)>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceRTWTarget">IsModelReferenceRTWTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#CacheMdlRefExportedMdlInfoInBinfo">CacheMdlRefExportedMdlInfoInBinfo</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> externDataBuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Add typedefs that support the profiler</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Code profiling support</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsFunctionProfilingOn">SLibIsFunctionProfilingOn</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Support for CGIR profiling instrumentation</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prof_tlc.html">prof_tlc.tlc</a>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prof_tlc.html#SLibProfilerTypeDefs">SLibProfilerTypeDefs</a>()</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Classic profiling</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prof.html#SLibGenProfTypeDef">SLibGenProfTypeDef</a>()</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Add extern definitions that support the profiler</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prof.html#SLibGenProfGlbExtData">SLibGenProfGlbExtData</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> externDataBuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mdl_profiler_data_decl", externDataBuf)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_undef">%undef</span> externDataBuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuf 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prof.html#SLibGenProfGlbData">SLibGenProfGlbData</a>()</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuf
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mdl_profiler_data_defn", tmpBuf)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Undefine global variables</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_undef">%undef</span> tmpBuf
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>add<span style="padding-left:9.5px"></span>common<span style="padding-left:9.5px"></span>information<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>interface
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefinterface.html#SLibAddCommonModelInterface">SLibAddCommonModelInterface</a>(modelInterface)>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>add<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>settings<span style="padding-left:9.5px"></span>information<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>interface
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefinterface.html#SLibWriteModelSettings">SLibWriteModelSettings</a>(modelInterface)>
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>() 
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !Accelerator
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatexport.html">formatexport.tlc</a>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatexport.html#SLibFormatExport">SLibFormatExport</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatparam.html">formatparam.tlc</a>"
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatparam.html#SLibFormatParam">SLibFormatParam</a>()</span>>
+ <br><span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% The code above (inside "if") only works for non model reference target meaning</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% that we don't dump global coder group instances for model reference target</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% even though the instance definitions are cached already. This call ensures</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% we dump out these instances for model reference target as well.</span>
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatcommon.html#LibDumpGlobalCoderGroupInstancesToModelDotC">LibDumpGlobalCoderGroupInstancesToModelDotC</a>()</span>>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Dump<span style="padding-left:9.5px"></span>self<span style="padding-left:9.5px"></span>typedef<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>needed<span style="padding-left:9.5px"></span>-<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>done<span style="padding-left:9.5px"></span>later<span style="padding-left:9.5px"></span>than<span style="padding-left:9.5px"></span>usual<span style="padding-left:9.5px"></span>(SLibGenHeaderCache),<span style="padding-left:9.5px"></span>because
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>we<span style="padding-left:9.5px"></span>need<span style="padding-left:9.5px"></span>legacy<span style="padding-left:9.5px"></span>rtm<span style="padding-left:9.5px"></span>type<span style="padding-left:9.5px"></span>information<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>order<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>fully<span style="padding-left:9.5px"></span>construct<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>type<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>self
+</span> <br><span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetDoesSelfHasCoderDataGroup">SLibGetDoesSelfHasCoderDataGroup</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> selfCoderGroupIndex = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetSelfCoderDataGroupIndex">SLibGetSelfCoderDataGroupIndex</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Subsystem self</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> sysIdx = NumSystems
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonbodlib.html#SLibSystemHasOwnDataScope">SLibSystemHasOwnDataScope</a>(System[sysIdx]) || sysIdx >= <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> subsystemSelfBuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> subsysSelfFields = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#LibCacheSystemCoderDataGroupStructDef_Impl">LibCacheSystemCoderDataGroupStructDef_Impl</a>(sysIdx, selfCoderGroupIndex, subsystemSelfBuf, TLC_FALSE)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>subsysSelfFields</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> subsystemSelfBuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(::CompiledModel, "CoderGroupStructDefinitionsForTesting")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> subsystemSelfBuf = ::CompiledModel.CoderGroupStructDefinitionsForTesting + subsystemSelfBuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#LibEmitSystemGroupStructDefsForTesting">LibEmitSystemGroupStructDefsForTesting</a>(subsystemSelfBuf)>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% RTM</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !GenerateClassInterface
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> dataGroupStructDefForTesting
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> selfFields = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#LibCacheSystemCoderDataGroupStructDef_Impl">LibCacheSystemCoderDataGroupStructDef_Impl</a>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>(), selfCoderGroupIndex, dataGroupStructDefForTesting, TLC_TRUE)    
+ <br>&nbsp;&nbsp;%<<span>selfFields</span>>    
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> dataGroupStructDefForTesting
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% dump the dataGroupStructDefForTesting if needed</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(::CompiledModel, "CoderGroupStructDefinitionsForTesting")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataGroupStructDefForTesting = ::CompiledModel.CoderGroupStructDefinitionsForTesting + dataGroupStructDefForTesting
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#LibEmitSystemGroupStructDefsForTesting">LibEmitSystemGroupStructDefsForTesting</a>(dataGroupStructDefForTesting)>      
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatwide.html#CheckForCtrlCInterrupt">CheckForCtrlCInterrupt</a>("TLCEvent::PostCoderGroupDefinitions")>
+ <br>&nbsp; <br><span class="tlc_if">%if</span> GenerateClassInterface
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertclassgeneration.html#AddRTMToClassWhenNeeded">AddRTMToClassWhenNeeded</a>()</span>>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertclassgeneration.html#AddRTMInitWhenNeeded">AddRTMInitWhenNeeded</a>(modelInterface)>
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertclassgeneration.html#AddMdlRefTimingInfoWhenNeeded">AddMdlRefTimingInfoWhenNeeded</a>()</span>>
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertclassgeneration.html#AddCAPIMethodWhenNeeded">AddCAPIMethodWhenNeeded</a>()</span>>
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertclassgeneration.html#FcnGenerateCPPClassFiles">FcnGenerateCPPClassFiles</a>()</span>>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>deep<span style="padding-left:9.5px"></span>copy<span style="padding-left:9.5px"></span>since<span style="padding-left:9.5px"></span>aliases<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>saved<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>matfile
+</span> <br><span class="tlc_copyrecord">%copyrecord</span> deepCopiedModelInterface modelInterface
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>finally,<span style="padding-left:9.5px"></span>write<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>MAT<span style="padding-left:9.5px"></span>file
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#CacheModelrefInterfaceInMatInfoFile">CacheModelrefInterfaceInMatInfoFile</a>(Name, "addInterface", deepCopiedModelInterface)>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Optionally<span style="padding-left:9.5px"></span>dump<span style="padding-left:9.5px"></span>integer<span style="padding-left:9.5px"></span>only<span style="padding-left:9.5px"></span>warnings
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_if">%if</span> PurelyIntegerCode
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#SLibDumpIntegerOnlyWarning">SLibDumpIntegerOnlyWarning</a>()</span>>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Optionally<span style="padding-left:9.5px"></span>Generate<span style="padding-left:9.5px"></span>TestInterfaces
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Generate<span style="padding-left:9.5px"></span>test<span style="padding-left:9.5px"></span>driver<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>ERT<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>'GenerateTestInterfaces'<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>true.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Skip<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>Model<span style="padding-left:9.5px"></span>reference<span style="padding-left:9.5px"></span>target<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>accelerator<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>ERT<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>GRT<span style="padding-left:9.5px"></span>Interface
+</span> <br><span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>() 
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTTarget">SLibIsERTTarget</a>() &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ConfigSet.GenerateTestInterfaces &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;!(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>() || Accelerator || GenerateGRTWrapper)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Create Global Memory Map</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalmaplib.html#SLibMapData">SLibMapData</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibWriteToStandardOutput">LibWriteToStandardOutput</a>("### Generating system graphical API")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Create Subsystem Graphical Map</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertsystemgraphmaplib.html">ertsystemgraphmaplib.tlc</a>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpFcn = ::BlockFcn
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::BlockFcn = "TestInterface"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ConfigSet.GenerateTestInterfaces 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertsystemgraphmaplib.html#SLibCreateSystemGraphicalMap">SLibCreateSystemGraphicalMap</a>("all")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Generate example test driver/interface files</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">EXISTS</span>("CustomTestInterfaceFile")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertgentestinterface.html">ertgentestinterface.tlc</a>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> customFilePath = <span class="tlc_bifunc">FEVAL</span>("which", CustomTestInterfaceFile)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (<span class="tlc_bifunc">TYPE</span>(customFilePath) == "String") &amp;&amp; <span class="tlc_bifunc">FILE_EXISTS</span>(customFilePath)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_include">%include</span> customFilePath
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "/nCould not find the CustomTestInterfaceFile: " ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"'%<<span>CustomTestInterfaceFile</span>>'. This file must be on the MATLAB path."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportError">LibReportError</a>(errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> CGMODEL_ACCESS("CGModel.SerializeSystemGraphicalMapToCodeDescriptor")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> buildDir = <span class="tlc_bifunc">FEVAL</span>("rtwprivate", "rtwattic", "getBuildDir")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_matlab">%matlab</span> assignin("base", "graphmap", ::CompiledModel.SystemGraphicalMap)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_matlab">%matlab</span> evalin("base", "coder.internal.writeSystemGraphicalMapToCodeDescriptor('%<<span>buildDir</span>>', graphmap);")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_matlab">%matlab</span> evalin("base", "clear graphmap;")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::BlockFcn = tmpFcn
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmp = <span class="tlc_bifunc">REMOVEFIELD</span>(::CompiledModel, "SystemGraphicalMap")
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Optionally<span style="padding-left:9.5px"></span>Generate<span style="padding-left:9.5px"></span>CodeInfo<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>ERT<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>GRT<span style="padding-left:9.5px"></span>based<span style="padding-left:9.5px"></span>targets
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Skip<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>accelerator<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>top<span style="padding-left:9.5px"></span>models<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>classic<span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>interface<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>simstruct<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>based<span style="padding-left:9.5px"></span>targets
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Generate CodeInfo")>
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatwide.html#CheckForCtrlCInterrupt">CheckForCtrlCInterrupt</a>("TLCEvent::PostGenerateCodeInfo")>
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> unsupportedTarget =  ...
+ <br>&nbsp;&nbsp;(Accelerator || (::GRTInterface &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceRTWTarget">IsModelReferenceRTWTarget</a>()) || ...
+ <br>&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsSimstructBasedTarget">IsSimstructBasedTarget</a>())
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> modelRefPILFeature = (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>())
+ <br>&nbsp; <br><span class="tlc_if">%if</span> (!unsupportedTarget || modelRefPILFeature)
+ <br>&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codeinfo.html">codeinfo.tlc</a>"
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>())
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.GenerateCodeInterfaceReport = TLC_TRUE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Generate CodeInfo")>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>write<span style="padding-left:9.5px"></span>out<span style="padding-left:9.5px"></span>capi's<span style="padding-left:9.5px"></span>rtBlockSignals<span style="padding-left:9.5px"></span>structure<span style="padding-left:9.5px"></span>through<span style="padding-left:9.5px"></span>cpp
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_if">%if</span> RTWCAPI &amp;&amp; CGMODEL_ACCESS("CGModel.CAPIEmitMethod") == 2
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#SetCurrentUtilsIncludesIdx">SetCurrentUtilsIncludesIdx</a>("capi_src_util_incl")>
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capi.html#SLibWriteToCAPIFilesCpp">SLibWriteToCAPIFilesCpp</a>()</span>>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#SetCurrentUtilsIncludesIdx">SetCurrentUtilsIncludesIdx</a>("")>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Generate<span style="padding-left:9.5px"></span>ERT<span style="padding-left:9.5px"></span>S-Function<span style="padding-left:9.5px"></span>target<span style="padding-left:9.5px"></span>(if<span style="padding-left:9.5px"></span>required)
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTCodeFormat">SLibIsERTCodeFormat</a>() &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertlib.html#SLibErtSfunction">SLibErtSfunction</a>()</span>>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>() 
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> GenerateClassInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> groupFilter { /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Static TLC_TRUE /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dynamic TLC_TRUE /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AccessStandalone TLC_TRUE /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AccessThroughSelf TLC_FALSE /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exported TLC_TRUE /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Imported TLC_FALSE /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ModelData TLC_FALSE /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> defnsBuffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/datagrouplib.html#SLibDeclareCoderDataGroupInstances">SLibDeclareCoderDataGroupInstances</a>(::CompiledModel.System[<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()],"",groupFilter)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> defnsBuffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("data_DWork_defn", defnsBuffer)>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Generate the dwork for the model reference which can contain the</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% models DWork, BlockIO and rtModel.  </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#SLibModelReferenceGenerateDWork">SLibModelReferenceGenerateDWork</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>() 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#SLibWriteModelrefSFunctionMethods">SLibWriteModelrefSFunctionMethods</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootFileName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetRootSystemHeaderFileName">GetRootSystemHeaderFileName</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> opFile = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibDoesModelFileExist">SLibDoesModelFileExist</a>("SystemHeader", rootFileName)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">TYPE</span>(opFile) == "Scope" <span class="tlc_comment">%% file exists</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibGetModelFileIsEmpty">SLibGetModelFileIsEmpty</a>(opFile))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(opFile, "Filter", 1)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> opFile = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibDoesModelFileExist">SLibDoesModelFileExist</a>("SystemBody", rootFileName)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">TYPE</span>(opFile) == "Scope" <span class="tlc_comment">%% file exists</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibGetModelFileIsEmpty">SLibGetModelFileIsEmpty</a>(opFile))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(opFile, "Filter", 1)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>==========================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Run<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>based<span style="padding-left:9.5px"></span>TargetFcnLib<span style="padding-left:9.5px"></span>callbacks<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>second<span style="padding-left:9.5px"></span>time.<span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>will<span style="padding-left:9.5px"></span>catch<span style="padding-left:9.5px"></span>any
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>callbacks<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>need<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>invoked<span style="padding-left:9.5px"></span>due<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>TFL<span style="padding-left:9.5px"></span>queries<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>happen
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>after<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>first<span style="padding-left:9.5px"></span>set<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>callbacks<span style="padding-left:9.5px"></span>(specifically<span style="padding-left:9.5px"></span>initnonfinite)
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Run TLC based TFL callbacks 2nd time")>
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#SLibRunTFLCallbacks">SLibRunTFLCallbacks</a>()</span>>
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#SLibAddTFLTypeIncludes">SLibAddTFLTypeIncludes</a>()</span>>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Run TLC based TFL callbacks 2nd time")>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>==========================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Run<span style="padding-left:9.5px"></span>MATLAB-file<span style="padding-left:9.5px"></span>based<span style="padding-left:9.5px"></span>TargetFcnLib<span style="padding-left:9.5px"></span>callbacks
+</span> <br><span class="tlc_comment">%%
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Run MATLAB-file based TFL callbacks")>
+ <br><span class="tlc_assign">%assign</span> errmsgFromCB = <span class="tlc_bifunc">FEVAL</span>("rtwprivate","rtw_run_tfl_mcb", <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibGetModelName">LibGetModelName</a>())
+ <br><span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(errmsgFromCB)
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> errTxt
+ <br>&nbsp;&nbsp;%<<span>errmsgFromCB</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> errTxt
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportError">LibReportError</a>(errTxt)>
+ <br><span class="tlc_endif">%endif</span>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Run MATLAB-file based TFL callbacks")>
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatwide.html#CheckForCtrlCInterrupt">CheckForCtrlCInterrupt</a>("TLCEvent::PostTFLCallbacks")>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>=============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Write<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>according<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>templates
+</span> <br><span class="tlc_comment">%%
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Custom file processing")>
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfileprocesstemplate.html#SLibERTCustomFileProcessing">SLibERTCustomFileProcessing</a>()</span>>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Custom file processing")>
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibAssignCustomCodeTemplates">SLibAssignCustomCodeTemplates</a>()</span>>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Write code according to templates")>
+ <br><span class="tlc_if">%if</span> !<span class="tlc_bifunc">EXISTS</span>("CodeTemplateFile")
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertsourcetemplate.html#SLibERTWriteSource">SLibERTWriteSource</a>()</span>>
+ <br><span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Backward compatible override of templates</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Will be obsolete in the future.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> warnTxt = "You are using an obsolete ERT code template, which " ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"does not support all features of Embedded Coder.  " ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"For full compatibility, do not specify a CodeTemplateFile variable, " ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"and use the configuration set 'File customization template' option " ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"ERTCustomFileTemplate instead.  For an example, " ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"see MATLAB/toolbox/rtw/targets/ecoder/example_file_process.tlc.  The " ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"CodeTemplateFile option will be removed in a future release."
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibWriteToStandardOutput">LibWriteToStandardOutput</a>(warnTxt)>
+ <br>&nbsp;&nbsp;<span class="tlc_include">%include</span> "%<<span>CodeTemplateFile</span>>"
+ <br><span class="tlc_endif">%endif</span>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Write code according to templates")>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Free<span style="padding-left:9.5px"></span>globals<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>we<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>finished<span style="padding-left:9.5px"></span>using<span style="padding-left:9.5px"></span>them
+</span> <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibClearModelFileBuffers">LibClearModelFileBuffers</a>()</span>>
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatwide.html#CheckForCtrlCInterrupt">CheckForCtrlCInterrupt</a>("TLCEvent::PostCodeTemplates")>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Make<span style="padding-left:9.5px"></span>sure<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>outputs<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>mapped<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>correct<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>output
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>records.
+</span> <br><span class="tlc_assert">%assert</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_blkiolib.html#SLibVerifyBlockOutputPorts">SLibVerifyBlockOutputPorts</a>() == TLC_TRUE)
+ <br>&nbsp; <br><span class="tlc_if">%if</span> sfcnNoAccel
+ <br>&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sfcnmoduleinc.html">sfcnmoduleinc.tlc</a>"
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>=============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Create<span style="padding-left:9.5px"></span>modelsources.txt,<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>list<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>module<span style="padding-left:9.5px"></span>sources<span style="padding-left:9.5px"></span>cached<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>LibAddToModelSources
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Create modelsources.txt")>
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibCreateBuildSourcesTxtFile">SLibCreateBuildSourcesTxtFile</a>()</span>>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Create modelsources.txt")>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>=============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Clear<span style="padding-left:9.5px"></span>Type<span style="padding-left:9.5px"></span>Limit<span style="padding-left:9.5px"></span>Identifier<span style="padding-left:9.5px"></span>Replacement<span style="padding-left:9.5px"></span>Map.
+</span> <br><span class="tlc_assign">%assign</span> clearTlriMapSuccess = CLEAR_TYPE_LIMIT_ID_REPLACEMENT_MAP()
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>=============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Code<span style="padding-left:9.5px"></span>generation<span style="padding-left:9.5px"></span>complete
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_selectfile">%selectfile</span> STDOUT
+ <br><span class="tlc_if">%if</span> RTWVerbose
+ <br>### TLC code generation complete.
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span>  <span class="tlc_comment">%% _FORMATWIDE_</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatwide.html">formatwide.tlc</a>
+</span> <br></body></html>

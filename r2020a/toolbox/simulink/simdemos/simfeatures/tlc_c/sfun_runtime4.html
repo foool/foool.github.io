@@ -1,0 +1,49 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>File<span style="padding-left:9.5px"></span>:<span style="padding-left:9.5px"></span>sfun_runtime4.c
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:<span style="padding-left:9.5px"></span>Run-time<span style="padding-left:9.5px"></span>parameter<span style="padding-left:9.5px"></span>S-function<span style="padding-left:9.5px"></span>example.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1990-2009<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>S-function<span style="padding-left:9.5px"></span>accepts<span style="padding-left:9.5px"></span>1<span style="padding-left:9.5px"></span>input,<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>linear<span style="padding-left:9.5px"></span>force.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>acceleration<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>object<span style="padding-left:9.5px"></span>whose
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>volume<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>density<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>entered<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>S-function<span style="padding-left:9.5px"></span>parameters
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>first<span style="padding-left:9.5px"></span>parameter<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>object's<span style="padding-left:9.5px"></span>volume
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>second<span style="padding-left:9.5px"></span>parameter<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>object's<span style="padding-left:9.5px"></span>density
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_implements">%implements</span> "sfun_runtime4" "C"
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>mdlOutputs<span style="padding-left:9.5px"></span>=======================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Output<span style="padding-left:9.5px"></span>acceleration<span style="padding-left:9.5px"></span>calculated<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>input<span style="padding-left:9.5px"></span>force<span style="padding-left:9.5px"></span>divided<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>mass.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;/* %<<span>Type</span>> Block: %<<span>Name</span>> */
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> y = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a> (0, "", "", 0)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a> (0, "", "", 0)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mass = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameter">LibBlockParameter</a> (Mass, "", "", 0)
+ <br>&nbsp;&nbsp;%<<span>y</span>> = %<<span>u</span>> / %<<span>mass</span>>;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br></body></html>

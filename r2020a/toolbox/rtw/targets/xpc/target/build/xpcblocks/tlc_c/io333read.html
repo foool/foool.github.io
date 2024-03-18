@@ -1,0 +1,224 @@
+<html>
+<head>
+
+<style>
+p {color : black; font-family:courier; font-size: 80%;}
+body {line-height: 100%; font-family:courier;}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_function {color: green;}.tlc_endfunction {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}
+.tlc_bifunc {color: brown;}
+</style>
+
+</head>
+<body>
+%%   <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/io333read.html">io333read.tlc</a> - TLC file for reading data from FPGA
+ <br>%%
+ <br>%%   Copyright 2015-2016 The MathWorks, Inc.
+ <br>&nbsp; <br><span class="tlc_implements">%implements</span> io333read "C"
+ <br>&nbsp; <br><span class="tlc_function">%function</span> <a id="Start" class="tlc_func">Start</a>(block, system) Output
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;uint8_T *baseaddr;
+ <br>%%    uint8_T *busadptr;
+ <br>%%    uint32_T dmabuffer;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> offset = block.SFcnParamSettings.Offset
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> deviceindex = block.SFcnParamSettings.DeviceIndex
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> strobe = block.SFcnParamSettings.Strobe
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> datatype = block.SFcnParamSettings.Datatype
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portdim  = block.SFcnParamSettings.PortDim
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;baseaddr = (uint8_T *)io333GetAddress( %&lt;deviceindex&gt;, 2 );
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>( PCI_ADDR, "", "", 0)> = (void *)(baseaddr + %&lt;offset&gt;);
+ <br>%%    busadptr = (uint8_T *)io333GetAddress( %&lt;deviceindex&gt;, 0 );
+ <br>%%    %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>( BUSADPTR_ADDR, "", "", 0)> = (void *)busadptr;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> strobe != 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>( STROBE_ADDR, "", "", 0)> = (void *)(baseaddr + %&lt;strobe&gt;);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>( STROBE_ADDR, "", "", 0)> = (void *)0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>%%    %switch datatype
+ <br>%%        %case 0 %% double
+ <br>%%           %% will transfer 2 long ints for each double
+ <br>%%           %break
+ <br>%%        %case 1 %% single
+ <br>%%           %% will transfer 1 long int for each single
+ <br>%%           %break
+ <br>%%        %case 2 %% int8
+ <br>%%        %case 3 %% uint8
+ <br>%%        %case 8 %% boolean
+ <br>%%            dmabuffer = (int32_T)xpcAllocPhysicalMemory( %&lt;portdim&gt; );
+ <br>%%            %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>( DMA_ADDR, "", "", 0)> = (void *)dmabuffer;
+ <br>%%            %break
+ <br>%%        %case 4 %% int16
+ <br>%%        %case 5 %% uint16
+ <br>%%            dmabuffer = (int32_T)xpcAllocPhysicalMemory( 2 * %&lt;portdim&gt; );
+ <br>%%            %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>( DMA_ADDR, "", "", 0)> = (void *)dmabuffer;
+ <br>%%            %break
+ <br>%%        %case 6 %% int32
+ <br>%%        %case 7 %% uint32
+ <br>%%            dmabuffer = (int32_T)xpcAllocPhysicalMemory( 4 * %&lt;portdim&gt; );
+ <br>%%            %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>( DMA_ADDR, "", "", 0)> = (void *)dmabuffer;
+ <br>%%            %break
+ <br>%%    %endswitch
+ <br>}
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: BlockTypeSetup ===============================================
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="BlockTypeSetup" class="tlc_func">BlockTypeSetup</a>(block, system) void
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("xpctarget.h")&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("io333util.h")&gt;
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_function">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block, system) Output
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;/*------------ %&lt;Type&gt; Block: %&lt;Name&gt; ------------*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> offset = block.SFcnParamSettings.Offset
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> deviceindex = block.SFcnParamSettings.DeviceIndex
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> strobe = block.SFcnParamSettings.Strobe
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> datatype = block.SFcnParamSettings.Datatype
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portdim  = block.SFcnParamSettings.PortDim
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> boardtype = block.SFcnParamSettings.boardType
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;uint32_T iter = 0;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> strobe != 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;volatile uint32_T dummy = 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(uint32_T *)%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(STROBE_ADDR,"","",0)&gt; = dummy;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%% boardtype == 1 are the Virtex 5 boards.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% boardtype == 2 are Spartan 6
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% The Spartan 6 has a different DMA structure.  But DMA not implemented yet.
+ <br>&nbsp; <br>%% The Kintex7 will be different, but probably similar to the Spartan 6.
+ <br>%% DMA to the RAM, then let the FPGA copy to shadow registers in the FPGA
+ <br>%% memory space.  Finally strobe to achieve simultaneous update.  DMA control will be
+ <br>%% different than this code since no PLX chip.
+ <br>&nbsp; <br>%%    %if portdim > 3 && boardtype == 1 %% size cutoff for DMA to be faster than PIO, FPGA->PCI
+ <br>%%    {
+ <br>%%        volatile xPCFpgaPLX *plx = (xPCFpgaPLX *)%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(PLX_ADDR,"","",0)&gt;;
+ <br>%%        uint32_T ctr;
+ <br>%%
+ <br>%%        // pci address is the physical memory address
+ <br>%%        plx->dma0pci   = (uint32_T)%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(DMA_ADDR,"","",0)&gt;;
+ <br>%%        // local address is the offset into BAR2 space
+ <br>%%        plx->dma0local = %&lt;offset&gt;;
+ <br>%%        plx->dma0descriptor = 0xa;  // end of chain, local->pci (read)
+ <br>%%
+ <br>%%        %switch datatype
+ <br>%%            %case 1 %% int8
+ <br>%%            %case 2 %% uint8
+ <br>%%            %case 7 %% boolean
+ <br>%%                plx->dma0length = %&lt;portdim&gt;;
+ <br>%%                plx->dma0mode = 0x140;
+ <br>%%                %break
+ <br>%%            %case 3 %% int16
+ <br>%%            %case 4 %% uint16
+ <br>%%                plx->dma0length = %&lt;portdim&gt;*2;
+ <br>%%                plx->dma0mode = 0x141;
+ <br>%%                %break
+ <br>%%            %case 5 %% int32
+ <br>%%            %case 6 %% uint32
+ <br>%%                plx->dma0length = %&lt;portdim&gt;*4;
+ <br>%%                plx->dma0mode = 0x143;
+ <br>%%               %break
+ <br>%%        %endswitch
+ <br>%%
+ <br>%%        // Start the transfer and wait for completion
+ <br>%%        plx->dma0cmdstatus = 0x0B;    // clear int, enable and start
+ <br>%%        for( ctr = 0 ; ctr < 10000 ; ctr++ )
+ <br>%%        {
+ <br>%%            if( plx->dma0cmdstatus & 0x10 )
+ <br>%%                break;
+ <br>%%        }
+ <br>%%
+ <br>%%        // Copy the data from dmabuffer to the signal
+ <br>%%        %switch datatype
+ <br>%%            %case 0 %% double
+ <br>%%            %case 1 %% single
+ <br>%%                %break
+ <br>%%            %case 2 %% int8
+ <br>%%            %case 3 %% uint8
+ <br>%%            %case 8 %% boolean
+ <br>%%                {
+ <br>%%                    uint8_T *dmabuffer = (uint8_T *)%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(DMA_ADDR,"","",0)&gt;;
+ <br>%%                    // Copy the data from the DMA physical buffer
+ <br>%%                    for( ctr = 0 ; ctr < %&lt;portdim&gt; ; ctr++ )
+ <br>%%                    {
+ <br>%%                        ((uint8_T *)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(0, "", "", 0)>)[ctr] = dmabuffer[ctr];
+ <br>%%                    }
+ <br>%%                }
+ <br>%%                %break
+ <br>%%            %case 4 %% int16
+ <br>%%            %case 5 %% uint16
+ <br>%%                {
+ <br>%%                    uint16_T *dmabuffer = (uint16_T *)%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(DMA_ADDR,"","",0)&gt;;
+ <br>%%                    // Copy the data from the DMA physical buffer
+ <br>%%                    for( ctr = 0 ; ctr < %&lt;portdim&gt; ; ctr++ )
+ <br>%%                    {
+ <br>%%                        ((uint16_T *)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(0, "", "", 0)>)[ctr] = dmabuffer[ctr];
+ <br>%%                    }
+ <br>%%                }
+ <br>%%                %break
+ <br>%%            %case 6 %% int32
+ <br>%%            %case 7 %% uint32
+ <br>%%                {
+ <br>%%                    uint32_T *dmabuffer = (uint32_T *)%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(DMA_ADDR,"","",0)&gt;;
+ <br>%%                    // Copy the data from the DMA physical buffer
+ <br>%%                    for( ctr = 0 ; ctr < %&lt;portdim&gt; ; ctr++ )
+ <br>%%                    {
+ <br>%%                        ((uint32_T *)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(0, "", "", 0)>)[ctr] = dmabuffer[ctr];
+ <br>%%                    }
+ <br>%%                }
+ <br>%%               %break
+ <br>%%        %endswitch
+ <br>%%    }
+ <br>%%    %else
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> portdim > 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for( iter = 0 ; iter < %&lt;portdim&gt; ; iter++ )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_switch">%switch</span> datatype
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> 0 %% double precision float
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Until the FPGA actually uses double, I'm not sure if we will be
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% able to write a double directly, or need to write the two halves
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// For Double, use two uint32 copies, don't use the fpu
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((uint32_T *)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(0, "", "", 0)>)[2*iter] = ((uint32_T *)%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(PCI_ADDR,"","",0)&gt;)[2*iter];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((uint32_T *)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(0, "", "", 0)>)[2*iter+1] = ((uint32_T *)%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(PCI_ADDR,"","",0)&gt;)[2*iter+1];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> 1 %% single precision float
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// For Single, just use uint32 to copy
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((uint32_T *)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(0, "", "", 0)>)[iter] = ((uint32_T *)%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(PCI_ADDR,"","",0)&gt;)[iter];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>%%                %case 2 %% int8
+ <br>%%                    ((int8_T *)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(0, "", "", 0)>)[iter] = ((int8_T *)%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(PCI_ADDR,"","",0)&gt;)[iter];
+ <br>%%                    %break
+ <br>%%                %case 3 %% uint8
+ <br>%%                    ((uint8_T *)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(0, "", "", 0)>)[iter] = ((uint8_T *)%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(PCI_ADDR,"","",0)&gt;)[iter];
+ <br>%%                    %break
+ <br>%%                %case 4 %% int16
+ <br>%%                    ((int16_T *)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(0, "", "", 0)>)[iter] = ((int16_T *)%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(PCI_ADDR,"","",0)&gt;)[iter];
+ <br>%%                    %break
+ <br>%%                %case 5 %% uint16
+ <br>%%                    ((uint16_T *)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(0, "", "", 0)>)[iter] = ((uint16_T *)%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(PCI_ADDR,"","",0)&gt;)[iter];
+ <br>%%                    %break
+ <br>%%                %case 6 %% int32
+ <br>%%                    ((int32_T *)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(0, "", "", 0)>)[iter] = ((int32_T *)%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(PCI_ADDR,"","",0)&gt;)[iter];
+ <br>%%                    %break
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> 7 %% uint32
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((uint32_T *)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(0, "", "", 0)>)[iter] = ((uint32_T *)%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(PCI_ADDR,"","",0)&gt;)[iter];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>%%                %case 8 %% boolean
+ <br>%%                    ((uint8_T *)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(0, "", "", 0)>)[iter] = ((uint8_T *)%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(PCI_ADDR,"","",0)&gt;)[iter];
+ <br>%%                    %break
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> portdim > 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>%%    %endif
+ <br>}
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_function">%function</span> <a id="Terminate" class="tlc_func">Terminate</a>(block, system) Output
+ <br>{
+ <br>%%    /*------------ %&lt;Type&gt; Block: %&lt;Name&gt; ------------*/
+ <br>%%    void *dmabuffer = (void *)%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(DMA_ADDR,"","",0)&gt;;
+ <br>%%    if( dmabuffer != NULL )
+ <br>%%        xpcFreePhysicalMemory( dmabuffer );
+ <br>}
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br></body></html>

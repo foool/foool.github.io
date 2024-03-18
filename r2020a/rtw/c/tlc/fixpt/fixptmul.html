@@ -1,0 +1,69 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>contains<span style="padding-left:9.5px"></span>tlc<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>generation<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>fixed<span style="padding-left:9.5px"></span>point<span style="padding-left:9.5px"></span>multiplication
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2011<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FixPt_Multiply<span style="padding-left:9.5px"></span>==========================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Radix<span style="padding-left:9.5px"></span>Only<span style="padding-left:9.5px"></span>Multiplication<span style="padding-left:9.5px"></span>(Single<span style="padding-left:9.5px"></span>Chunk<span style="padding-left:9.5px"></span>Only)
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Vc<span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>Va<span style="padding-left:9.5px"></span>*<span style="padding-left:9.5px"></span>Vb
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Note<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>Stored<span style="padding-left:9.5px"></span>Integers<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>denoted<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>A,<span style="padding-left:9.5px"></span>B,<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>C
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>C<span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>2^(Ea+Eb-Ec)<span style="padding-left:9.5px"></span>*<span style="padding-left:9.5px"></span>A<span style="padding-left:9.5px"></span>*<span style="padding-left:9.5px"></span>B
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>records<span style="padding-left:9.5px"></span>C,<span style="padding-left:9.5px"></span>A,<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>B<span style="padding-left:9.5px"></span>must<span style="padding-left:9.5px"></span>contain
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>all<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>fixed<span style="padding-left:9.5px"></span>point<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>type<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>scaling<span style="padding-left:9.5px"></span>fields.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>They<span style="padding-left:9.5px"></span>must<span style="padding-left:9.5px"></span>also<span style="padding-left:9.5px"></span>contain<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>field<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>"Label"
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>In<span style="padding-left:9.5px"></span>C_Language<span style="padding-left:9.5px"></span>terms<span style="padding-left:9.5px"></span>cLabel<span style="padding-left:9.5px"></span>must<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>l-value.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>aLabel<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>bLabel<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>treated<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>read<span style="padding-left:9.5px"></span>only<span style="padding-left:9.5px"></span>and
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>they<span style="padding-left:9.5px"></span>must<span style="padding-left:9.5px"></span>provide<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>values<span style="padding-left:9.5px"></span>(stored<span style="padding-left:9.5px"></span>integers)<span style="padding-left:9.5px"></span>for
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>A<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>B.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Please<span style="padding-left:9.5px"></span>note<span style="padding-left:9.5px"></span>none<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>Labels<span style="padding-left:9.5px"></span>can<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>addresses.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Synopsis:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptmul.html#FixPt_Multiply">FixPt_Multiply</a>(C,A,B,roundMode,satMode)
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>C<span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>record<span style="padding-left:9.5px"></span>describing<span style="padding-left:9.5px"></span>output
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>A<span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>record<span style="padding-left:9.5px"></span>describing<span style="padding-left:9.5px"></span>input<span style="padding-left:9.5px"></span>1
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>B<span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>record<span style="padding-left:9.5px"></span>describing<span style="padding-left:9.5px"></span>input<span style="padding-left:9.5px"></span>2
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>roundMode<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>string<span style="padding-left:9.5px"></span>specifying<span style="padding-left:9.5px"></span>round<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>"Zero",<span style="padding-left:9.5px"></span>"Nearest",<span style="padding-left:9.5px"></span>etc.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>satMode<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>string<span style="padding-left:9.5px"></span>specifying<span style="padding-left:9.5px"></span>"Wrap"<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>"Saturate"<span style="padding-left:9.5px"></span>on<span style="padding-left:9.5px"></span>overflow
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FixPt_Multiply" class="tlc_func">FixPt_Multiply</a>(cLabel,cDT,aLabel,aDT,bLabel,bDT,roundMode,satMode) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixpterror.html#FixPt_WordLengthLimitationCheck">FixPt_WordLengthLimitationCheck</a>(aDT)>/
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixpterror.html#FixPt_WordLengthLimitationCheck">FixPt_WordLengthLimitationCheck</a>(bDT)>/
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixpterror.html#FixPt_WordLengthLimitationCheck">FixPt_WordLengthLimitationCheck</a>(cDT)>/
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vec = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptlib.html#FixPt_BinaryOp">FixPt_BinaryOp</a>("FixPtMul", cLabel, cDT, aLabel, aDT, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;bLabel, bDT, roundMode, satMode)
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;%<vec[2]>/
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br><span class="tlc_fkw">%endfunction</span>  <span class="tlc_comment">%% FixPt_Multiply</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptmul.html">fixptmul.tlc</a>
+</span> <br></body></html>

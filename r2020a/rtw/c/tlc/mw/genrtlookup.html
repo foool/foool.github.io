@@ -1,0 +1,1006 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>generating<span style="padding-left:9.5px"></span>rt_lookup<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>via<span style="padding-left:9.5px"></span>Target<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Library<span style="padding-left:9.5px"></span>(TFL).
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>2007-2018<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br>&nbsp; <br><span class="tlc_implements">%implements</span> "genrtlookup" "C"
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>rt_Lookup<span style="padding-left:9.5px"></span>====================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>GENERATE<span style="padding-left:9.5px"></span>entry<span style="padding-left:9.5px"></span>point<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>Target<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>Library<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>callbacks.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Creates<span style="padding-left:9.5px"></span>header<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>source<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>contents.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="rt_Lookup" class="tlc_func">rt_Lookup</a>(fctInfo,fileH,fileC) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Generate utility function if needed</span>
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html#local_rt_getlookupindex">local_rt_getlookupindex</a>()</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create header file contents</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* %<<span>fctInfo.FileName</span>>.h
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibCommonUtilHeaderInfo">SLibCommonUtilHeaderInfo</a>()</span>>/
+ <br>&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_banner", fileH, buf)>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;#include "%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibCoderTypesFilename">SLibCoderTypesFilename</a>()</span>>"
+ <br>&nbsp;&nbsp;#include "rt_look.h"
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_incl", fileH, buf)>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> msFcn = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetMemSecCategoryForUtilityFcn">SLibGetMemSecCategoryForUtilityFcn</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "rt_Lookup"
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenOpenExternCForCPP">FcnGenOpenExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragmaOnDecl">SLibGetFcnMemSecPragmaOnDecl</a>(fcnName, msFcn, "Pre")>/
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibStaticOrExternInFcnDecls">LibStaticOrExternInFcnDecls</a>()</span>>real_T <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html#rt_Lookup">rt_Lookup</a>(const real_T *x, int_T xlen, real_T u, const real_T *y);
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragmaOnDecl">SLibGetFcnMemSecPragmaOnDecl</a>(fcnName, msFcn, "Post")>/
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenCloseExternCForCPP">FcnGenCloseExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_decl", fileH, buf)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create source file contents</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* %<<span>fctInfo.FileName</span>>.%<<span>LangFileExt</span>>
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibCommonUtilHeaderInfo">SLibCommonUtilHeaderInfo</a>()</span>>/
+ <br>&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_banner", fileC, buf)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;#include "%<<span>fctInfo.FileName</span>>.h"
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_incl", fileC, buf)>  
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenOpenExternCForCPP">FcnGenOpenExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnReturns = "real_T"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = "const real_T *x, int_T xlen, real_T u, const real_T *y"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> functionSpecifier = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibStaticInFcnDecls">LibStaticInFcnDecls</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnAbstract = "1D lookup routine for data type of real_T."
+ <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> fcnRec {Name fcnName; Returns fcnReturns; Params fcnParams; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;Abstract fcnAbstract; Category "utility"; GeneratedBy "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html">genrtlookup.tlc</a>"}
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDumpFunctionBanner">SLibDumpFunctionBanner</a>(fcnRec)>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> fcnRec
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragma">SLibGetFcnMemSecPragma</a>(fcnName, msFcn, "Pre")>/
+ <br>&nbsp;&nbsp;%<<span>functionSpecifier</span>> %<<span>fcnReturns</span>> %<<span>fcnName</span>>(%<<span>fcnParams</span>>)
+ <br>&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T idx = rt_GetLookupIndex(x, xlen, u);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real_T num = y[idx+1] - y[idx];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real_T den = x[idx+1] - x[idx];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Due to the way the binary search is implemented
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in rt_look.c (rt_GetLookupIndex), den cannot be
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.  Equivalently, m cannot be inf or nan. */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real_T m = num/den;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return (y[idx] + (m * (u - x[idx])));
+ <br>&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragma">SLibGetFcnMemSecPragma</a>(fcnName, msFcn, "Post")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenCloseExternCForCPP">FcnGenCloseExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_fcn_defn", fileC, buf)>  
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>rt_Lookup32<span style="padding-left:9.5px"></span>==================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>GENERATE<span style="padding-left:9.5px"></span>entry<span style="padding-left:9.5px"></span>point<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>Target<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>Library<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>callbacks.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Creates<span style="padding-left:9.5px"></span>header<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>source<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>contents.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="rt_Lookup32" class="tlc_func">rt_Lookup32</a>(fctInfo,fileH,fileC) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Generate utility function if needed</span>
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html#local_rt_getlookupindex32">local_rt_getlookupindex32</a>()</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create header file contents</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* %<<span>fctInfo.FileName</span>>.h
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibCommonUtilHeaderInfo">SLibCommonUtilHeaderInfo</a>()</span>>/
+ <br>&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_banner", fileH, buf)>  
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;#include "%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibCoderTypesFilename">SLibCoderTypesFilename</a>()</span>>"
+ <br>&nbsp;&nbsp;#include "rt_look32.h"
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_incl", fileH, buf)>  
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> msFcn = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetMemSecCategoryForUtilityFcn">SLibGetMemSecCategoryForUtilityFcn</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "rt_Lookup32"
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenOpenExternCForCPP">FcnGenOpenExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragmaOnDecl">SLibGetFcnMemSecPragmaOnDecl</a>(fcnName, msFcn, "Pre")>/
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibStaticOrExternInFcnDecls">LibStaticOrExternInFcnDecls</a>()</span>>real32_T <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html#rt_Lookup32">rt_Lookup32</a>(const real32_T *x, int_T xlen, real32_T u, const real32_T *y);
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragmaOnDecl">SLibGetFcnMemSecPragmaOnDecl</a>(fcnName, msFcn, "Post")>/
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenCloseExternCForCPP">FcnGenCloseExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_decl", fileH, buf)>  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create source file contents</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* %<<span>fctInfo.FileName</span>>.%<<span>LangFileExt</span>>
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibCommonUtilHeaderInfo">SLibCommonUtilHeaderInfo</a>()</span>>/
+ <br>&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_banner", fileC, buf)>  
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;#include "%<<span>fctInfo.FileName</span>>.h"
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_incl", fileC, buf)>  
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenOpenExternCForCPP">FcnGenOpenExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnReturns = "real32_T"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = "const real32_T *x, int_T xlen, real32_T u, const real32_T *y"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> functionSpecifier = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibStaticInFcnDecls">LibStaticInFcnDecls</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnAbstract = "1D lookup routine for data type of real32_T."
+ <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> fcnRec {Name fcnName; Returns fcnReturns; Params fcnParams; Abstract fcnAbstract; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;Category "utility"; GeneratedBy "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html">genrtlookup.tlc</a>"}
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDumpFunctionBanner">SLibDumpFunctionBanner</a>(fcnRec)>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> fcnRec
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragma">SLibGetFcnMemSecPragma</a>(fcnName, msFcn, "Pre")>/
+ <br>&nbsp;&nbsp;%<<span>functionSpecifier</span>> %<<span>fcnReturns</span>> %<<span>fcnName</span>>(%<<span>fcnParams</span>>)
+ <br>&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T idx = rt_GetLookupIndex32(x, xlen, u);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real32_T num = y[idx+1] - y[idx];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real32_T den = x[idx+1] - x[idx];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Due to the way the binary search is implemented
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in rt_look.c (rt_GetLookupIndex), den cannot be
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.  Equivalently, m cannot be inf or nan. */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real32_T m = num/den;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return (y[idx] + m * (u - x[idx]));
+ <br>&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragma">SLibGetFcnMemSecPragma</a>(fcnName, msFcn, "Post")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenCloseExternCForCPP">FcnGenCloseExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_fcn_defn", fileC, buf)>  
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>rt_Lookup2D_General<span style="padding-left:9.5px"></span>==========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>GENERATE<span style="padding-left:9.5px"></span>entry<span style="padding-left:9.5px"></span>point<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>Target<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>Library<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>callbacks.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Creates<span style="padding-left:9.5px"></span>header<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>source<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>contents.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="rt_Lookup2D_General" class="tlc_func">rt_Lookup2D_General</a>(fctInfo,fileH,fileC) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Generate utility function if needed</span>
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html#local_rt_getlookupindex">local_rt_getlookupindex</a>()</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create header file contents</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* %<<span>fctInfo.FileName</span>>.h
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibCommonUtilHeaderInfo">SLibCommonUtilHeaderInfo</a>()</span>>/
+ <br>&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_banner", fileH, buf)>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;#include "%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibCoderTypesFilename">SLibCoderTypesFilename</a>()</span>>"
+ <br>&nbsp;&nbsp;#include "rt_look.h"
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_incl", fileH, buf)>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "rt_Lookup2D_General"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> msFcn = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetMemSecCategoryForUtilityFcn">SLibGetMemSecCategoryForUtilityFcn</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenOpenExternCForCPP">FcnGenOpenExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragmaOnDecl">SLibGetFcnMemSecPragmaOnDecl</a>(fcnName, msFcn, "Pre")>/
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibStaticOrExternInFcnDecls">LibStaticOrExternInFcnDecls</a>()</span>>real_T <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html#rt_Lookup2D_General">rt_Lookup2D_General</a> (const real_T *rowVals, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const int_T numRowVals,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const real_T *colVals, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const int_T numColVals,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const real_T *outputValues,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const real_T uX, const real_T uY,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const int_T colZeroIdx,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const ZeroTechnique colZeroTechnique,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const real_T *outputAtRowZero);                       
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragmaOnDecl">SLibGetFcnMemSecPragmaOnDecl</a>(fcnName, msFcn, "Post")>/
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenCloseExternCForCPP">FcnGenCloseExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_decl", fileH, buf)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create source file contents</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* %<<span>fctInfo.FileName</span>>.%<<span>LangFileExt</span>>
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibCommonUtilHeaderInfo">SLibCommonUtilHeaderInfo</a>()</span>>/
+ <br>&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_banner", fileC, buf)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;#include "%<<span>fctInfo.FileName</span>>.h"
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_incl", fileC, buf)>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenOpenExternCForCPP">FcnGenOpenExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnReturns = "real_T"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = ["const real_T *rowVals, const int_T numRowVals, ", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"const real_T *colVals, const int_T numColVals, ", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"const real_T *outputValues, ", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"const real_T uX, const real_T uY, ", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"const int_T colZeroIdx, ", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"const ZeroTechnique colZeroTechnique, ",...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"const real_T *outputAtRowZero"]
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> functionSpecifier = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibStaticInFcnDecls">LibStaticInFcnDecls</a>()
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnAbstract = "2D general lookup routine for data type of real_T"
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> fcnRec {Name fcnName; Returns fcnReturns; Params fcnParams; Abstract fcnAbstract; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Category "utility"; GeneratedBy "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html">genrtlookup.tlc</a>"}
+ <br>&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDumpFunctionBanner">SLibDumpFunctionBanner</a>(fcnRec)>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_undef">%undef</span> fcnRec
+ <br>&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragma">SLibGetFcnMemSecPragma</a>(fcnName, msFcn, "Pre")>/
+ <br>&nbsp;&nbsp;&nbsp;%<<span>functionSpecifier</span>> %<<span>fcnReturns</span>> %<<span>fcnName</span>>(%<fcnParams[0]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<fcnParams[1]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<fcnParams[2]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<fcnParams[3]> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<fcnParams[4]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<fcnParams[5]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<fcnParams[6]>)
+ <br>&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T yIdx;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real_T ylo, yhi;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real_T retValue;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (uY == 0.0) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yIdx = colZeroIdx;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yIdx = rt_GetLookupIndex(colVals,numColVals,uY);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ylo = colVals[yIdx];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yhi = colVals[yIdx+1];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (uX == 0.0) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real_T Zx0ylo, Zx0yhi;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Zx0ylo = outputAtRowZero[yIdx];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Zx0yhi = outputAtRowZero[yIdx+1];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (colZeroTechnique == NORMAL_INTERP) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = (INTERP(uY,ylo,yhi,Zx0ylo,Zx0yhi));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (uY != 0.0) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = (INTERP(uY,ylo,yhi,Zx0ylo,Zx0yhi));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (colZeroTechnique == AVERAGE_VALUE) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = (Zx0yhi + outputAtRowZero[yIdx+2])/2.0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* (colZeroTechnique == MIDDLE_VALUE) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = (outputAtRowZero[yIdx+2]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T xIdx;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real_T xlo, xhi, Zx0ylo, Zx0yhi;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xIdx = rt_GetLookupIndex(rowVals,numRowVals,uX);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xlo = rowVals[xIdx];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xhi = rowVals[xIdx+1];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Zx0ylo = INTERP(uX,xlo,xhi,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(outputValues +  xIdx    + numRowVals*yIdx),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(outputValues + (xIdx+1) + numRowVals*yIdx));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Zx0yhi = INTERP(uX,xlo,xhi,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(outputValues +  xIdx    + numRowVals*(yIdx+1)),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(outputValues + (xIdx+1) + numRowVals*(yIdx+1)));
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (colZeroTechnique == NORMAL_INTERP) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = (INTERP(uY,ylo,yhi,Zx0ylo,Zx0yhi));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (uY != 0.0) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = (INTERP(uY,ylo,yhi,Zx0ylo,Zx0yhi));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (colZeroTechnique == AVERAGE_VALUE) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real_T Zx0yvh = INTERP(uX,xlo,xhi,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(outputValues +  xIdx    + numRowVals*(yIdx+2)),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(outputValues + (xIdx+1) + numRowVals*(yIdx+2)));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = ((Zx0yhi+Zx0yvh)/2.0);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* (colZeroTechnique == MIDDLE_VALUE) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = (INTERP(uX,xlo,xhi,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(outputValues +  xIdx    + numRowVals*(yIdx+2)),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(outputValues + (xIdx+1) + numRowVals*(yIdx+2)) ));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return retValue;
+ <br>&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragma">SLibGetFcnMemSecPragma</a>(fcnName, msFcn, "Post")>/
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenCloseExternCForCPP">FcnGenCloseExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_fcn_defn", fileC, buf)>
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>rt_Lookup2D_Normal<span style="padding-left:9.5px"></span>===========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>GENERATE<span style="padding-left:9.5px"></span>entry<span style="padding-left:9.5px"></span>point<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>Target<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>Library<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>callbacks.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Creates<span style="padding-left:9.5px"></span>header<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>source<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>contents.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="rt_Lookup2D_Normal" class="tlc_func">rt_Lookup2D_Normal</a>(fctInfo,fileH,fileC) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Generate utility function if needed</span>
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html#local_rt_getlookupindex">local_rt_getlookupindex</a>()</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create header file contents</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* %<<span>fctInfo.FileName</span>>.h
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibCommonUtilHeaderInfo">SLibCommonUtilHeaderInfo</a>()</span>>/
+ <br>&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_banner", fileH, buf)>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;#include "%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibCoderTypesFilename">SLibCoderTypesFilename</a>()</span>>"
+ <br>&nbsp;&nbsp;#include "rt_look.h"
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_incl", fileH, buf)>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> msFcn = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetMemSecCategoryForUtilityFcn">SLibGetMemSecCategoryForUtilityFcn</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "rt_Lookup2D_Normal"
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenOpenExternCForCPP">FcnGenOpenExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragmaOnDecl">SLibGetFcnMemSecPragmaOnDecl</a>(fcnName, msFcn, "Pre")>/
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibStaticOrExternInFcnDecls">LibStaticOrExternInFcnDecls</a>()</span>>real_T <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html#rt_Lookup2D_Normal">rt_Lookup2D_Normal</a> (const real_T *xVals, const int_T numX,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const real_T *yVals, const int_T numY,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const real_T *zVals,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const real_T x, const real_T y);
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragmaOnDecl">SLibGetFcnMemSecPragmaOnDecl</a>(fcnName, msFcn, "Post")>/
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenCloseExternCForCPP">FcnGenCloseExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_decl", fileH, buf)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create source file contents</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* %<<span>fctInfo.FileName</span>>.%<<span>LangFileExt</span>>
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibCommonUtilHeaderInfo">SLibCommonUtilHeaderInfo</a>()</span>>/
+ <br>&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_banner", fileC, buf)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;#include "%<<span>fctInfo.FileName</span>>.h"
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_incl", fileC, buf)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenOpenExternCForCPP">FcnGenOpenExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnReturns = "real_T"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = ["const real_T *xVals, const int_T numX,", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"const real_T *yVals, const int_T numY,", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"const real_T *zVals,", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"const real_T x, const real_T y"]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> functionSpecifier = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibStaticInFcnDecls">LibStaticInFcnDecls</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnAbstract = "2D normal lookup routine for data type of real_T."
+ <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> fcnRec {Name fcnName; Returns fcnReturns; Params fcnParams; Abstract fcnAbstract; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;Category "utility"; GeneratedBy "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html">genrtlookup.tlc</a>"}
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDumpFunctionBanner">SLibDumpFunctionBanner</a>(fcnRec)>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> fcnRec
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragma">SLibGetFcnMemSecPragma</a>(fcnName, msFcn, "Pre")>/
+ <br>&nbsp;&nbsp;%<<span>functionSpecifier</span>> %<<span>fcnReturns</span>> %<<span>fcnName</span>>(%<fcnParams[0]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<fcnParams[1]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<fcnParams[2]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<fcnParams[3]>)
+ <br>&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T xIdx, yIdx;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real_T ylo, yhi;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real_T Zx0yhi, Zx0ylo, xlo, xhi;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real_T corner1, corner2;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xIdx = rt_GetLookupIndex(xVals,numX,x);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xlo = xVals[xIdx];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xhi = xVals[xIdx+1];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yIdx = rt_GetLookupIndex(yVals,numY,y);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ylo = yVals[yIdx];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yhi = yVals[yIdx+1];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corner1 = *(zVals +  xIdx    + (numX * yIdx));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corner2 = *(zVals + (xIdx+1) + (numX * yIdx));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Zx0ylo = INTERP(x, xlo, xhi, corner1, corner2);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corner1 = *(zVals +  xIdx    + (numX * (yIdx+1)));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corner2 = *(zVals + (xIdx+1) + (numX*(yIdx+1)));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Zx0yhi = INTERP(x, xlo, xhi, corner1, corner2);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return (INTERP(y,ylo,yhi,Zx0ylo,Zx0yhi));
+ <br>&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragma">SLibGetFcnMemSecPragma</a>(fcnName, msFcn, "Post")>/
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenCloseExternCForCPP">FcnGenCloseExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_fcn_defn", fileC, buf)>
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>rt_Lookup2D32_General=========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>GENERATE<span style="padding-left:9.5px"></span>entry<span style="padding-left:9.5px"></span>point<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>Target<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>Library<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>callbacks.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Creates<span style="padding-left:9.5px"></span>header<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>source<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>contents.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="rt_Lookup2D32_General" class="tlc_func">rt_Lookup2D32_General</a>(fctInfo,fileH,fileC) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Generate utility function if needed</span>
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html#local_rt_getlookupindex32">local_rt_getlookupindex32</a>()</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create header file contents</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* %<<span>fctInfo.FileName</span>>.h
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibCommonUtilHeaderInfo">SLibCommonUtilHeaderInfo</a>()</span>>/
+ <br>&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_banner", fileH, buf)>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;#include "%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibCoderTypesFilename">SLibCoderTypesFilename</a>()</span>>"
+ <br>&nbsp;&nbsp;#include "rt_look32.h"
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_incl", fileH, buf)>  
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> msFcn = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetMemSecCategoryForUtilityFcn">SLibGetMemSecCategoryForUtilityFcn</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "rt_Lookup2D32_General"
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenOpenExternCForCPP">FcnGenOpenExternCForCPP</a>()</span>>    
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragmaOnDecl">SLibGetFcnMemSecPragmaOnDecl</a>(fcnName, msFcn, "Pre")>/
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibStaticOrExternInFcnDecls">LibStaticOrExternInFcnDecls</a>()</span>>real32_T <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html#rt_Lookup2D32_General">rt_Lookup2D32_General</a> (const real32_T *rowVals, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const int_T numRowVals,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const real32_T *colVals, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const int_T numColVals,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const real32_T *outputValues,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const real32_T uX, const real32_T uY,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const int_T colZeroIdx,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const ZeroTechnique colZeroTechnique,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const real32_T *outputAtRowZero);
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragmaOnDecl">SLibGetFcnMemSecPragmaOnDecl</a>(fcnName, msFcn, "Post")>/
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenCloseExternCForCPP">FcnGenCloseExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_decl", fileH, buf)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create source file contents</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* %<<span>fctInfo.FileName</span>>.%<<span>LangFileExt</span>>
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibCommonUtilHeaderInfo">SLibCommonUtilHeaderInfo</a>()</span>>/
+ <br>&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_banner", fileC, buf)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;#include "%<<span>fctInfo.FileName</span>>.h"
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_incl", fileC, buf)>  
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenOpenExternCForCPP">FcnGenOpenExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnReturns = "real32_T"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = ["const real32_T *rowVals,", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"const int_T numRowVals,", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"const real32_T *colVals,", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"const int_T numColVals,", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"const real32_T *outputValues,", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"const real32_T uX, const real32_T uY,", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"const int_T colZeroIdx,", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"const ZeroTechnique colZeroTechnique,", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"const real32_T *outputAtRowZero"]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> functionSpecifier = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibStaticInFcnDecls">LibStaticInFcnDecls</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnAbstract = "2D general lookup routine for data type of real32_T"
+ <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> fcnRec {Name fcnName; Returns fcnReturns; Params fcnParams; Abstract fcnAbstract; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;Category "utility"; GeneratedBy "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html">genrtlookup.tlc</a>"}
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDumpFunctionBanner">SLibDumpFunctionBanner</a>(fcnRec)>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> fcnRec
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragma">SLibGetFcnMemSecPragma</a>(fcnName, msFcn, "Pre")>/
+ <br>&nbsp;&nbsp;%<<span>functionSpecifier</span>> %<<span>fcnReturns</span>> %<<span>fcnName</span>> (%<fcnParams[0]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<fcnParams[1]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<fcnParams[2]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<fcnParams[3]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<fcnParams[4]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<fcnParams[5]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<fcnParams[6]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<fcnParams[7]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<fcnParams[8]>)
+ <br>&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T yIdx = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real32_T ylo = 0.0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real32_T yhi = 0.0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real32_T retValue = 0.0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (uY == 0.0) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yIdx = colZeroIdx;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yIdx = rt_GetLookupIndex32(colVals,numColVals,uY);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ylo = colVals[yIdx];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yhi = colVals[yIdx+1];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (uX == 0.0) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real32_T Zx0ylo, Zx0yhi;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Zx0ylo = outputAtRowZero[yIdx];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Zx0yhi = outputAtRowZero[yIdx+1];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (colZeroTechnique == NORMAL_INTERP) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = (INTERP(uY,ylo,yhi,Zx0ylo,Zx0yhi));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (uY != 0.0) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = (INTERP(uY,ylo,yhi,Zx0ylo,Zx0yhi));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (colZeroTechnique == AVERAGE_VALUE) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = (Zx0yhi + outputAtRowZero[yIdx+2])/2.0F;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* (colZeroTechnique == MIDDLE_VALUE) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = (outputAtRowZero[yIdx+2]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T xIdx;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real32_T xlo, xhi, Zx0ylo, Zx0yhi;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xIdx = rt_GetLookupIndex32(rowVals,numRowVals,uX);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xlo = rowVals[xIdx];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xhi = rowVals[xIdx+1];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Zx0ylo = INTERP(uX,xlo,xhi,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(outputValues +  xIdx    + (numRowVals * yIdx)),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(outputValues + (xIdx+1) + (numRowVals * yIdx)));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Zx0yhi = INTERP(uX,xlo,xhi,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(outputValues +  xIdx    + (numRowVals * (yIdx+1))),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(outputValues + (xIdx+1) + (numRowVals * (yIdx+1))));
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (colZeroTechnique == NORMAL_INTERP) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = (INTERP(uY,ylo,yhi,Zx0ylo,Zx0yhi));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (uY != 0.0) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = (INTERP(uY,ylo,yhi,Zx0ylo,Zx0yhi));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (colZeroTechnique == AVERAGE_VALUE) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real32_T Zx0yvh = INTERP(uX,xlo,xhi,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(outputValues +  xIdx    + (numRowVals * (yIdx+2))),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(outputValues + (xIdx+1) + (numRowVals * (yIdx+2))));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = ((Zx0yhi+Zx0yvh)/2.0F);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* (colZeroTechnique == MIDDLE_VALUE) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = (INTERP(uX,xlo,xhi,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(outputValues +  xIdx    + (numRowVals*(yIdx+2))),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*(outputValues + (xIdx+1) + (numRowVals*(yIdx+2)))));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return retValue;
+ <br>&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragma">SLibGetFcnMemSecPragma</a>(fcnName, msFcn, "Post")>/
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenCloseExternCForCPP">FcnGenCloseExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_fcn_defn", fileC, buf)>
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>rt_Lookup2D32_Normal<span style="padding-left:9.5px"></span>=========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>GENERATE<span style="padding-left:9.5px"></span>entry<span style="padding-left:9.5px"></span>point<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>Target<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>Library<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>callbacks.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Creates<span style="padding-left:9.5px"></span>header<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>source<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>contents.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="rt_Lookup2D32_Normal" class="tlc_func">rt_Lookup2D32_Normal</a>(fctInfo,fileH,fileC) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Generate utility function if needed</span>
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html#local_rt_getlookupindex32">local_rt_getlookupindex32</a>()</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create header file contents</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* %<<span>fctInfo.FileName</span>>.h
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibCommonUtilHeaderInfo">SLibCommonUtilHeaderInfo</a>()</span>>/
+ <br>&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_banner", fileH, buf)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;#include "%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibCoderTypesFilename">SLibCoderTypesFilename</a>()</span>>"
+ <br>&nbsp;&nbsp;#include "rt_look32.h"
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_incl", fileH, buf)>  
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> msFcn = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetMemSecCategoryForUtilityFcn">SLibGetMemSecCategoryForUtilityFcn</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "rt_Lookup2D32_Normal"
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenOpenExternCForCPP">FcnGenOpenExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragmaOnDecl">SLibGetFcnMemSecPragmaOnDecl</a>(fcnName, msFcn, "Pre")>/
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibStaticOrExternInFcnDecls">LibStaticOrExternInFcnDecls</a>()</span>>real32_T <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html#rt_Lookup2D32_Normal">rt_Lookup2D32_Normal</a> (const real32_T *xVals, const int_T numX,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const real32_T *yVals, const int_T numY,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const real32_T *zVals,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const real32_T x, const real32_T y);
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragmaOnDecl">SLibGetFcnMemSecPragmaOnDecl</a>(fcnName, msFcn, "Post")>/
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenCloseExternCForCPP">FcnGenCloseExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_decl", fileH, buf)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create source file contents</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* %<<span>fctInfo.FileName</span>>.%<<span>LangFileExt</span>>
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibCommonUtilHeaderInfo">SLibCommonUtilHeaderInfo</a>()</span>>/
+ <br>&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_banner", fileC, buf)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;#include "%<<span>fctInfo.FileName</span>>.h"
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_incl", fileC, buf)>  
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenOpenExternCForCPP">FcnGenOpenExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnReturns = "real32_T"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = ["const real32_T *xVals, const int_T numX, ", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"const real32_T *yVals, const int_T numY, ", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"const real32_T *zVals, ", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"const real32_T x, const real32_T y"]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> functionSpecifier = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibStaticInFcnDecls">LibStaticInFcnDecls</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnAbstract = "2D normal lookup routine for data type of real32_T."
+ <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> fcnRec {Name fcnName; Returns fcnReturns; Params fcnParams; Abstract fcnAbstract; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Category "utility"; GeneratedBy "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html">genrtlookup.tlc</a>"}
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDumpFunctionBanner">SLibDumpFunctionBanner</a>(fcnRec)>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> fcnRec
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragma">SLibGetFcnMemSecPragma</a>(fcnName, msFcn, "Pre")>/
+ <br>&nbsp;&nbsp;%<<span>functionSpecifier</span>> %<<span>fcnReturns</span>> %<<span>fcnName</span>> (%<fcnParams[0]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<fcnParams[1]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<fcnParams[2]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<fcnParams[3]>)
+ <br>&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T xIdx, yIdx;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real32_T ylo, yhi;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real32_T Zx0yhi, Zx0ylo, xlo, xhi;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real32_T corner1, corner2;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xIdx = rt_GetLookupIndex32(xVals,numX,x);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xlo = xVals[xIdx];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xhi = xVals[xIdx+1];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yIdx = rt_GetLookupIndex32(yVals,numY,y);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ylo = yVals[yIdx];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yhi = yVals[yIdx+1];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corner1 = *(zVals +  xIdx    + (numX * yIdx));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corner2 = *(zVals + (xIdx+1) + (numX * yIdx));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Zx0ylo = INTERP(x, xlo, xhi, corner1, corner2);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corner1 = *(zVals +  xIdx    + (numX * (yIdx+1)));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;corner2 = *(zVals + (xIdx+1) + (numX * (yIdx+1)));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Zx0yhi = INTERP(x, xlo, xhi, corner1, corner2);
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return (INTERP(y,ylo,yhi,Zx0ylo,Zx0yhi));
+ <br>&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragma">SLibGetFcnMemSecPragma</a>(fcnName, msFcn, "Post")>/
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenCloseExternCForCPP">FcnGenCloseExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_fcn_defn", fileC, buf)>
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>local_rt_getlookupindex<span style="padding-left:9.5px"></span>======================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>GENERATE<span style="padding-left:9.5px"></span>rt_GetLookupIndex()<span style="padding-left:9.5px"></span>utility<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>needed<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html#rt_Lookup">rt_Lookup</a>(),<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html#rt_Lookup2D_Normal">rt_Lookup2D_Normal</a>()<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>rt_Lookup2D_general().
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="local_rt_getlookupindex" class="tlc_func">local_rt_getlookupindex</a>() <span class="tlc_fkw">void</span>
+ <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(<span class="tlc_bifunc">FEVAL</span>("strfind", ::CalledTflTlcCallbacks,"rt_look,"))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CalledTflTlcCallbacks = ::CalledTflTlcCallbacks + "rt_look,"
+ <br><span class="tlc_assign">%assign</span> fullPath = <span class="tlc_bifunc">FEVAL</span>("fullfile", GenUtilsPath, "rt_look")
+ <br><span class="tlc_assign">%assign</span> headerExists = <span class="tlc_bifunc">FEVAL</span>("exist","%<<span>fullPath</span>>.h")
+ <br><span class="tlc_assign">%assign</span> sourceExists = <span class="tlc_bifunc">FEVAL</span>("exist","%<<span>fullPath</span>>.%<<span>LangFileExt</span>>")
+ <br><span class="tlc_if">%if</span> !(headerExists &amp;&amp; sourceExists)
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create header and source file handles</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileH = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileRecForUtilCode">SLibGetFileRecForUtilCode</a>("util_hdr", "rt_look")
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibSetSourceFileOutputDirectory">LibSetSourceFileOutputDirectory</a>(fileH,GenUtilsPath)>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileC = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileRecForUtilCode">SLibGetFileRecForUtilCode</a>("util_src", "rt_look")
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibSetSourceFileOutputDirectory">LibSetSourceFileOutputDirectory</a>(fileC,GenUtilsPath)>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create header file contents</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* rt_look.h
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibCommonUtilHeaderInfo">SLibCommonUtilHeaderInfo</a>()</span>>/
+ <br>&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_banner", fileH, buf)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;#include "%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibCoderTypesFilename">SLibCoderTypesFilename</a>()</span>>"
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;#ifdef DOINTERPSEARCH
+ <br>&nbsp;&nbsp;#include <float.h>
+ <br>&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_incl", fileH, buf)> 
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> msFcn = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetMemSecCategoryForUtilityFcn">SLibGetMemSecCategoryForUtilityFcn</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "rt_GetLookupIndex"
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenOpenExternCForCPP">FcnGenOpenExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html#local_common_defs">local_common_defs</a>()</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragmaOnDecl">SLibGetFcnMemSecPragmaOnDecl</a>(fcnName, msFcn, "Pre")>/
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibStaticOrExternInFcnDecls">LibStaticOrExternInFcnDecls</a>()</span>>int_T rt_GetLookupIndex(const real_T *x, int_T xlen, real_T u) ;
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragmaOnDecl">SLibGetFcnMemSecPragmaOnDecl</a>(fcnName, msFcn, "Post")>/
+ <br>&nbsp; <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenCloseExternCForCPP">FcnGenCloseExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_decl", fileH, buf)>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create source file contents</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* rt_look.%<<span>LangFileExt</span>>
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibCommonUtilHeaderInfo">SLibCommonUtilHeaderInfo</a>()</span>>/
+ <br>&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_banner", fileC, buf)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;#include "rt_look.h"
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_incl", fileC, buf)>  
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenOpenExternCForCPP">FcnGenOpenExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnReturns = "int_T"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = "const real_T *x, int_T xlen, real_T u"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> functionSpecifier = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibStaticInFcnDecls">LibStaticInFcnDecls</a>() 
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> fcnAbstract
+ <br>Routine to get the index of the input from a table using binary or
+ <br>interpolation search.
+ <br>&nbsp; <br>Inputs:
+ <br>&nbsp;&nbsp;*x   : Pointer to table, x[0] ....x[xlen-1]
+ <br>&nbsp;&nbsp;xlen : Number of values in xtable
+ <br>&nbsp;&nbsp;u    : input value to look up
+ <br>&nbsp; <br>Output:
+ <br>&nbsp;&nbsp;idx  : the index into the table such that:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if u is negative
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x[idx] <= u < x[idx+1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x[idx] < u <= x[idx+1]
+ <br>&nbsp; <br>Interpolation Search: If the table contains a large number of nearly
+ <br>uniformly spaced entries, i.e., x[n] vs n is linear then the index
+ <br>corresponding to the input can be found in one shot using the linear
+ <br>interpolation formula. Therefore if you have a look-up table block with
+ <br>many data points, using interpolation search might speed up the code.
+ <br>Compile the generated code with the following flag:
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make_rtw OPTS=-DDOINTERPSEARCH
+ <br>&nbsp; <br>to enable interpolation search.
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> fcnAbstract
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> fcnRec {Name fcnName; Returns fcnReturns; Params fcnParams; Abstract fcnAbstract; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Category "utility"; GeneratedBy "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html">genrtlookup.tlc</a>"}
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDumpFunctionBanner">SLibDumpFunctionBanner</a>(fcnRec)>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> fcnRec
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragma">SLibGetFcnMemSecPragma</a>(fcnName, msFcn, "Pre")>/
+ <br>&nbsp;&nbsp;%<<span>functionSpecifier</span>> %<<span>fcnReturns</span>> %<<span>fcnName</span>>(%<<span>fcnParams</span>>)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int_T idx = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int_T bottom = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int_T top = xlen-1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int_T retValue = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;boolean_T returnStatus = 0U;
+ <br>#ifdef DOINTERPSEARCH
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;real_T offset = 0;
+ <br>#endif
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Deal with the extreme cases first:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*   if u <= x[bottom] then return idx = bottom
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*   if u >= x[top]    then return idx = top-1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (u <= x[bottom]) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = bottom;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;returnStatus = 1U;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else if (u >= x[top]) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = top-1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;returnStatus = 1U;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* else required to ensure safe programming, even *
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* if it's expected that it will never be reached */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (returnStatus == 0U) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (u < 0) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* For negative input find index such that: x[idx] <= u < x[idx+1] */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (;;) {
+ <br>&nbsp; <br>&nbsp;&nbsp;#ifdef DOINTERPSEARCH
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset = (u-x[bottom])/(x[top]-x[bottom]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;idx = bottom + (int_T)((top-bottom)*(offset-DBL_EPSILON));
+ <br>&nbsp;&nbsp;#else
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;idx = (bottom + top)/2;
+ <br>&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (u < x[idx]) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;top = idx - 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else if (u >= x[idx+1]) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bottom = idx + 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* we have x[idx] <= u < x[idx+1], return idx */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = idx;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* For non-negative input find index such that: x[idx] < u <= x[idx+1] */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (;;) {
+ <br>&nbsp;&nbsp;#ifdef DOINTERPSEARCH
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset = (u-x[bottom])/(x[top]-x[bottom]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;idx = bottom + (int_T)((top-bottom)*(offset-DBL_EPSILON));
+ <br>&nbsp;&nbsp;#else
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;idx = (bottom + top)/2;
+ <br>&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (u <= x[idx]) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;top = idx - 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else if (u > x[idx+1]) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bottom = idx + 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* we have x[idx] < u <= x[idx+1], return idx */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = idx;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return retValue;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragma">SLibGetFcnMemSecPragma</a>(fcnName, msFcn, "Post")>/
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenCloseExternCForCPP">FcnGenCloseExternCForCPP</a>()</span>>  
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_fcn_defn", fileC, buf)>
+ <br><span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibAddGeneratedFileToList">SLibAddGeneratedFileToList</a>("rt_look.h", "utility", "header","")>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibAddGeneratedFileToList">SLibAddGeneratedFileToList</a>("rt_look." + LangFileExt, "utility", "source","")>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>local_rt_getlookupindex32<span style="padding-left:9.5px"></span>======================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>GENERATE<span style="padding-left:9.5px"></span>rt_GetLookupIndex32()<span style="padding-left:9.5px"></span>utility<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>needed<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html#rt_Lookup">rt_Lookup</a>(),<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html#rt_Lookup2D_Normal">rt_Lookup2D_Normal</a>()<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>rt_Lookup2D_general().
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="local_rt_getlookupindex32" class="tlc_func">local_rt_getlookupindex32</a>() <span class="tlc_fkw">void</span>
+ <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(<span class="tlc_bifunc">FEVAL</span>("strfind", ::CalledTflTlcCallbacks,"rt_look32,"))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CalledTflTlcCallbacks = ::CalledTflTlcCallbacks + "rt_look32,"
+ <br><span class="tlc_assign">%assign</span> fullPath = <span class="tlc_bifunc">FEVAL</span>("fullfile", GenUtilsPath, "rt_look32")
+ <br><span class="tlc_assign">%assign</span> headerExists = <span class="tlc_bifunc">FEVAL</span>("exist","%<<span>fullPath</span>>.h")
+ <br><span class="tlc_assign">%assign</span> sourceExists = <span class="tlc_bifunc">FEVAL</span>("exist","%<<span>fullPath</span>>.%<<span>LangFileExt</span>>")
+ <br>&nbsp; <br><span class="tlc_if">%if</span> !(headerExists &amp;&amp; sourceExists)
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create header and source file handles</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileH = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibCreateSourceFile">LibCreateSourceFile</a>("Header","TFL callback","rt_look32")
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(fileH, "Group", "utility")>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibSetSourceFileOutputDirectory">LibSetSourceFileOutputDirectory</a>(fileH,GenUtilsPath)>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileC = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibCreateSourceFile">LibCreateSourceFile</a>("Source","TFL callback","rt_look32")
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(fileC, "Group", "utility")>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibSetSourceFileOutputDirectory">LibSetSourceFileOutputDirectory</a>(fileC,GenUtilsPath)>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibGetModelFileIsEmpty">SLibGetModelFileIsEmpty</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibGetModelFileIsEmpty">SLibGetModelFileIsEmpty</a></a>(fileH) || !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibGetModelFileIsEmpty">SLibGetModelFileIsEmpty</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibGetModelFileIsEmpty">SLibGetModelFileIsEmpty</a></a>(fileH)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Don't generate file buffers again when more the one TFL function uses them</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create header file contents</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* rt_look32.h
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibCommonUtilHeaderInfo">SLibCommonUtilHeaderInfo</a>()</span>>/
+ <br>&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_banner", fileH, buf)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;#include "%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibCoderTypesFilename">SLibCoderTypesFilename</a>()</span>>"
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;#ifdef DOINTERPSEARCH
+ <br>&nbsp;&nbsp;#include <float.h>
+ <br>&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_incl", fileH, buf)>     
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> msFcn = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetMemSecCategoryForUtilityFcn">SLibGetMemSecCategoryForUtilityFcn</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "rt_GetLookupIndex32"
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp; <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenOpenExternCForCPP">FcnGenOpenExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html#local_common_defs">local_common_defs</a>()</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragmaOnDecl">SLibGetFcnMemSecPragmaOnDecl</a>(fcnName, msFcn, "Pre")>/
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibStaticOrExternInFcnDecls">LibStaticOrExternInFcnDecls</a>()</span>>int_T rt_GetLookupIndex32(const real32_T *x, int_T xlen, real32_T u) ;
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragmaOnDecl">SLibGetFcnMemSecPragmaOnDecl</a>(fcnName, msFcn, "Post")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenCloseExternCForCPP">FcnGenCloseExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_hdr_decl", fileH, buf)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create source file contents</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* rt_look.%<<span>LangFileExt</span>>
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibCommonUtilHeaderInfo">SLibCommonUtilHeaderInfo</a>()</span>>/
+ <br>&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_banner", fileC, buf)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;#include "rt_look32.h"
+ <br>&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_incl", fileC, buf)>  
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenOpenExternCForCPP">FcnGenOpenExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnReturns = "int_T"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = "const real32_T *x, int_T xlen, real32_T u"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> functionSpecifier = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibStaticInFcnDecls">LibStaticInFcnDecls</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> fcnAbstract
+ <br>Routine to get the index of the input from a table using binary or
+ <br>interpolation search.
+ <br>&nbsp; <br>Inputs:
+ <br>&nbsp;&nbsp;*x   : Pointer to table, x[0] ....x[xlen-1]
+ <br>&nbsp;&nbsp;xlen : Number of values in xtable
+ <br>&nbsp;&nbsp;u    : input value to look up
+ <br>&nbsp; <br>Output:
+ <br>&nbsp;&nbsp;idx  : the index into the table such that:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if u is negative
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x[idx] <= u < x[idx+1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x[idx] < u <= x[idx+1]
+ <br>&nbsp; <br>Interpolation Search: If the table contains a large number of nearly
+ <br>uniformly spaced entries, i.e., x[n] vs n is linear then the index
+ <br>corresponding to the input can be found in one shot using the linear
+ <br>interpolation formula. Therefore if you have a look-up table block with
+ <br>many data points, using interpolation search might speed up the code.
+ <br>Compile the generated code with the following flag:
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make_rtw OPTS=-DDOINTERPSEARCH
+ <br>&nbsp; <br>to enable interpolation search.
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> fcnAbstract
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> fcnRec {Name fcnName; Returns fcnReturns; Params fcnParams; Abstract fcnAbstract; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Category "utility"; GeneratedBy "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtlookup.html">genrtlookup.tlc</a>"}
+ <br>&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDumpFunctionBanner">SLibDumpFunctionBanner</a>(fcnRec)>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_undef">%undef</span> fcnRec
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragma">SLibGetFcnMemSecPragma</a>(fcnName, msFcn, "Pre")>/
+ <br>&nbsp;&nbsp;%<<span>functionSpecifier</span>> %<<span>fcnReturns</span>> %<<span>fcnName</span>>(%<<span>fcnParams</span>>)
+ <br>&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T idx = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T bottom = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T top = xlen-1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T retValue = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boolean_T returnStatus = 0U;
+ <br>#ifdef DOINTERPSEARCH     
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real32_T offset = 0;
+ <br>#endif
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Deal with the extreme cases first:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*   if u <= x[bottom] then return idx = bottom
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*   if u >= x[top]    then return idx = top-1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (u <= x[bottom]) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = (bottom);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;returnStatus = 1U;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else if (u >= x[top]) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = (top-1);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;returnStatus = 1U;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* else required to ensure safe programming, even *
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* if it's expected that it will never be reached */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (returnStatus == 0U) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (u < 0) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* For negative input find index such that: x[idx] <= u < x[idx+1] */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (;;) {
+ <br>&nbsp;&nbsp;#ifdef DOINTERPSEARCH
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset = (u-x[bottom])/(x[top]-x[bottom]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;idx = bottom + (int_T)((top-bottom)*(offset-DBL_EPSILON));
+ <br>&nbsp;&nbsp;#else
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;idx = (bottom + top)/2;
+ <br>&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (u < x[idx]) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;top = idx - 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else if (u >= x[idx+1]) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bottom = idx + 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* we have x[idx] <= u < x[idx+1], return idx */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = (idx);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* For non-negative input find index such that: x[idx] < u <= x[idx+1] */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (;;) {
+ <br>&nbsp;&nbsp;#ifdef DOINTERPSEARCH
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offset = (u-x[bottom])/(x[top]-x[bottom]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;idx = bottom + (int_T)((top-bottom)*(offset-DBL_EPSILON));
+ <br>&nbsp;&nbsp;#else
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;idx = (bottom + top)/2;
+ <br>&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (u <= x[idx]) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;top = idx - 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else if (u > x[idx+1]) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bottom = idx + 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* we have x[idx] < u <= x[idx+1], return idx */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retValue = (idx);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return retValue;
+ <br>&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetFcnMemSecPragma">SLibGetFcnMemSecPragma</a>(fcnName, msFcn, "Post")>/
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenCloseExternCForCPP">FcnGenCloseExternCForCPP</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>("util_src_fcn_defn", fileC, buf)>
+ <br><span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibAddGeneratedFileToList">SLibAddGeneratedFileToList</a>("rt_look32.h", "utility", "header","")>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibAddGeneratedFileToList">SLibAddGeneratedFileToList</a>("rt_look32." + LangFileExt, "utility", "source","")>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>local_common_defs=============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Local<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>common<span style="padding-left:9.5px"></span>defines<span style="padding-left:9.5px"></span>needed<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>header<span style="padding-left:9.5px"></span>files.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="local_common_defs" class="tlc_func">local_common_defs</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;#ifndef INTERP
+ <br>&nbsp;&nbsp;# define INTERP(x,x1,x2,y1,y2) ( (y1)+(((y2) - (y1))/((x2) - (x1)))*((x)-(x1)) )
+ <br>&nbsp;&nbsp;#endif
+ <br>&nbsp; <br>&nbsp;&nbsp;#ifndef ZEROTECHNIQUE
+ <br>&nbsp;&nbsp;#define ZEROTECHNIQUE
+ <br>&nbsp;&nbsp;typedef enum {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;NORMAL_INTERP,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;AVERAGE_VALUE,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;MIDDLE_VALUE
+ <br>&nbsp;&nbsp;} ZeroTechnique;
+ <br>&nbsp;&nbsp;#endif
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br></body></html>

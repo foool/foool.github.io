@@ -1,0 +1,203 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>2009-2012<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br>&nbsp; <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br><span class="tlc_openfile">%openfile</span> h_file = "tlm/%<<span>tlmname</span>>_def.h"
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br>&nbsp; <br>#ifndef _%<<span>tlmname</span>>_def_
+ <br>#define _%<<span>tlmname</span>>_def_
+ <br>&nbsp; <br>#include "%<<span>rtwname</span>>.h"
+ <br>&nbsp; <br>%<<span>tlmg_memap_buf_const</span>>
+ <br>&nbsp; <br>#endif /* _%<<span>tlmname</span>>_def_ */
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br><span class="tlc_closefile">%closefile</span> h_file
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIndentFile">SLibIndentFile</a>("tlm/%<<span>tlmname</span>>_def.h","")>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br><span class="tlc_openfile">%openfile</span> h_file = "tlm/%<<span>tlmname</span>>.h"
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br>&nbsp; <br>#ifndef _%<<span>tlmname</span>>_
+ <br>#define _%<<span>tlmname</span>>_
+ <br>&nbsp; <br>#include "tlm.h"
+ <br>#include "tlm_utils/simple_target_socket.h"
+ <br>#include "tlm_utils/tlm_quantumkeeper.h"
+ <br>#include "tlm_utils/peq_with_get.h"
+ <br>#include "%<<span>rtwname</span>>.h"
+ <br>#include "%<<span>tlmname</span>>_def.h"
+ <br>#include "mw_support.h"
+ <br>#include "mw_backdoorcfg_if.h"
+ <br>&nbsp; <br>using namespace  std;
+ <br>&nbsp; <br>class %<<span>tlmname</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;: public sc_core::sc_module, public mw_backdoorcfg_IF               
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;public:
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;enum eModeType
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MANUAL,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AUTO
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;};
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;SC_HAS_PROCESS(%<<span>tlmname</span>>);
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmname</span>>( sc_core::sc_module_name   module_name, eTimingType DefaultTiming = TIMED, eModeType InputDefaultMode = AUTO, eModeType OutputDefaultMode = AUTO);
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;~%<<span>tlmname</span>>(void);
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmg_memap_public_decl</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmg_irq_decl</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;virtual void SetTimingParam(eTimingType Type){m_current_timing = Type;};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;virtual eTimingType GetTimingParam(void){return m_current_timing;};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp; <br>&nbsp;&nbsp;protected:
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%Memory Map Declaration</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmg_memap_private_decl</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmg_info.RTMStruct.DataType</span>>* %<<span>tlmg_info.RTMStruct.Name</span>>;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%Processing Declaration</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmg_process_decl</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;tlm_utils::peq_with_get<const bool> m_trigint;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const bool m_trig, m_ack;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;void intMethod (void);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;void reg_init(void);
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tlmg_info.InStruct.NumPorts > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmg_info.InStruct.DataType</span>> m_input_reg;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tlmg_info.OutStruct.NumPorts > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmg_info.OutStruct.DataType</span>> m_output_reg;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tlmg_info.ParamStruct.NumPorts > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmg_info.ParamStruct.DataType</span>> m_param_reg;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;const sc_core::sc_time m_FirstWriteTimeData()               {return sc_core::sc_time(%<<span>tlmg_config.tlmgFirstWriteTimeInput</span>>, sc_core::SC_NS);};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const sc_core::sc_time m_SubsequentWritesInBurstTimeData()    {return sc_core::sc_time(%<<span>tlmg_config.tlmgSubsequentWritesInBurstTimeInput</span>>, sc_core::SC_NS);};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const sc_core::sc_time m_FirstReadTimeData()                   {return sc_core::sc_time(%<<span>tlmg_config.tlmgFirstReadTimeOutput</span>>, sc_core::SC_NS);};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const sc_core::sc_time m_SubsequentReadsInBurstTimeData()     {return sc_core::sc_time(%<<span>tlmg_config.tlmgSubsequentReadsInBurstTimeOutput</span>>, sc_core::SC_NS);};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const sc_core::sc_time m_FirstWriteTimeCtrl()                 {return sc_core::sc_time(%<<span>tlmg_config.tlmgFirstWriteTimeCtrl</span>>, sc_core::SC_NS);};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const sc_core::sc_time m_SubsequentWritesInBurstTimeCtrl()    {return sc_core::sc_time(%<<span>tlmg_config.tlmgSubsequentWritesInBurstTimeCtrl</span>>, sc_core::SC_NS);};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const sc_core::sc_time m_FirstReadTimeCtrl()                   {return sc_core::sc_time(%<<span>tlmg_config.tlmgFirstReadTimeCtrl</span>>, sc_core::SC_NS);};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const sc_core::sc_time m_SubsequentReadsInBurstTimeCtrl()      {return sc_core::sc_time(%<<span>tlmg_config.tlmgSubsequentReadsInBurstTimeCtrl</span>>, sc_core::SC_NS);};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const sc_core::sc_time m_AlgorithmProcessingTime()            {return sc_core::sc_time(%<<span>tlmg_config.tlmgAlgorithmProcessingTime</span>>, sc_core::SC_NS);};
+ <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgProcessingType,"Periodic SystemC Thread")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const sc_core::sc_time m_ThreadPeriod()                       {return sc_core::sc_time(%<<span>tlmg_info.PortRate</span>>, sc_core::SC_SEC);};
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;uint32_T m_comstat_reg;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;uint32_T m_testset_reg;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;eTimingType m_current_timing;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;eModeType m_input_default_mode;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;eModeType m_output_default_mode;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;inline sc_core::sc_time AssertDelay(sc_core::sc_time delay) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{return (m_current_timing==UNTIMED)?sc_core::SC_ZERO_TIME:delay;};
+ <br>&nbsp; <br>};
+ <br>&nbsp; <br>#endif /* _%<<span>tlmname</span>>_ */
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br><span class="tlc_closefile">%closefile</span> h_file
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIndentFile">SLibIndentFile</a>("tlm/%<<span>tlmname</span>>.h","")>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br><span class="tlc_openfile">%openfile</span> cpp_file = "tlm/%<<span>tlmname</span>>.cpp"
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br>&nbsp; <br>#include "%<<span>tlmname</span>>.h"
+ <br>#include <string.h>
+ <br>&nbsp; <br>#ifndef RT_MEMORY_ALLOCATION_ERROR_DEF
+ <br>#define RT_MEMORY_ALLOCATION_ERROR_DEF
+ <br>const char *RT_MEMORY_ALLOCATION_ERROR = "memory allocation error";
+ <br>#endif
+ <br>&nbsp; <br>using namespace  std;
+ <br>&nbsp; <br>%<<span>tlmname</span>>::%<<span>tlmname</span>>( sc_core::sc_module_name module_name, eTimingType DefaultTiming, eModeType InputDefaultMode, eModeType OutputDefaultMode)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;: sc_module(module_name),
+ <br>&nbsp;&nbsp;%<<span>tlmg_memap_public_ctor</span>>
+ <br>&nbsp;&nbsp;%<<span>tlmg_irq_ctor</span>>
+ <br>&nbsp;&nbsp;%<<span>tlmg_memap_private_ctor</span>>
+ <br>&nbsp;&nbsp;%<<span>tlmg_process_ctor</span>>
+ <br>&nbsp;&nbsp;m_trigint("trigint"),
+ <br>&nbsp;&nbsp;m_trig(true), m_ack(false),
+ <br>&nbsp;&nbsp;m_current_timing(DefaultTiming),
+ <br>&nbsp;&nbsp;m_input_default_mode(InputDefaultMode),
+ <br>&nbsp;&nbsp;m_output_default_mode(OutputDefaultMode)
+ <br>{
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmg_info.RTMStruct.Name</span>> = %<<span>tlmg_info.AllocateFcn.Name</span>>();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmg_info.InitializeFcn.Name</span>>(%<<span>tlmg_info.RTMStruct.Name</span>>);
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmg_irq_init</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reg_init();
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SC_METHOD(intMethod);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sensitive << m_trigint.get_event();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dont_initialize();
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%Memory Map Initialization</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmg_memap_init</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%Processing Initialization</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmg_process_init</span>>
+ <br>&nbsp; <br>}
+ <br>&nbsp; <br>%<<span>tlmname</span>>::~%<<span>tlmname</span>>(void)
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmg_info.TerminateFcn.Name</span>>(%<<span>tlmg_info.RTMStruct.Name</span>>);
+ <br>}
+ <br>&nbsp; <br><span class="tlc_comment">%%Memory<span style="padding-left:9.5px"></span>Map<span style="padding-left:9.5px"></span>Implementation
+</span> <br>%<<span>tlmg_memap_impl</span>>
+ <br>&nbsp; <br><span class="tlc_comment">%%Processing<span style="padding-left:9.5px"></span>Implementation
+</span> <br>%<<span>tlmg_process_impl</span>>
+ <br>&nbsp; <br>void %<<span>tlmname</span>>::intMethod (void)
+ <br>{
+ <br>&nbsp;&nbsp;const bool* val;
+ <br>&nbsp;&nbsp;while(NULL!=(val=m_trigint.get_next_transaction()))
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if(*val) //trigger interrupt
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> loopId1 = tlmg_memap.PortNum 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tlmg_memap.PortList[loopId1].ReadAccess
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tlmg_memap.PortList[loopId1].IsOutput
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<tlmg_memap.PortList[loopId1].PortName>.write(m_output_reg.%<tlmg_memap.PortList[loopId1].MW.OutputName>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tlmg_memap.PortList[loopId1].IsParam
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<tlmg_memap.PortList[loopId1].PortName>.write(m_param_reg.%<tlmg_memap.PortList[loopId1].MW.ParamName>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_comstat_reg |= INT_STAT_BIT_MASK;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmg_irq_trigger</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if(!*val) //acknowledge interrupt
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_comstat_reg &amp;= ~INT_STAT_BIT_MASK;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmg_irq_ack</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;}
+ <br>}
+ <br>&nbsp; <br>void %<<span>tlmname</span>>::reg_init(void)
+ <br>{
+ <br>&nbsp;&nbsp;m_trigint.cancel_all();
+ <br>&nbsp;&nbsp;m_trigint.notify(m_ack,sc_core::SC_ZERO_TIME);
+ <br>&nbsp;&nbsp;m_testset_reg = 0;
+ <br>&nbsp;&nbsp;m_comstat_reg = 0;
+ <br><span class="tlc_if">%if</span> tlmg_info.InStruct.NumPorts > 0
+ <br>&nbsp;&nbsp;memset(&amp;m_input_reg,0,sizeof(%<<span>tlmg_info.InStruct.DataType</span>>));
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_if">%if</span> tlmg_info.OutStruct.NumPorts > 0
+ <br>&nbsp;&nbsp;memset(&amp;m_output_reg,0,sizeof(%<<span>tlmg_info.OutStruct.DataType</span>>));
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_if">%if</span> tlmg_info.ParamStruct.NumPorts > 0
+ <br>&nbsp;&nbsp;memcpy(&amp;m_param_reg,&amp;%<<span>tlmg_info.ParamStruct.Name</span>>,sizeof(%<<span>tlmg_info.ParamStruct.DataType</span>>));
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;m_comstat_reg |= INBUF_EMPTY_BIT_MASK;
+ <br>&nbsp;&nbsp;m_comstat_reg |= OUTBUF_EMPTY_BIT_MASK;
+ <br>&nbsp;&nbsp;m_comstat_reg = (m_input_default_mode == AUTO)? (m_comstat_reg | INPUT_AUTMOD_BIT_MASK):m_comstat_reg ;
+ <br>&nbsp;&nbsp;m_comstat_reg = (m_output_default_mode == AUTO)? (m_comstat_reg | OUTPUT_AUTMOD_BIT_MASK):m_comstat_reg ;
+ <br>}
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br><span class="tlc_closefile">%closefile</span> cpp_file
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIndentFile">SLibIndentFile</a>("tlm/%<<span>tlmname</span>>.cpp","")>
+ <br></body></html>

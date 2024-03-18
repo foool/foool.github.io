@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        /* ----------- Global settings ----------- */
+
+        :root {
+            --whiteGray: rgba(250, 250, 250, 1);
+            --lightestGray: rgba(248, 248, 248, 1);
+            --lighterGray: rgba(242, 242, 242, 1);
+            --lightGray: rgba(218, 218, 218, 1);
+            --mediumGray: rgba(153, 153, 153, 1);
+            --darkGray: rgba(175, 175, 175, 1);
+            --darkerGray: rgba(102, 102, 102, 1);
+            --darkestGray: rgba(66, 66, 66, 1);
+            --diffColor: rgba(250, 230, 213, 1);
+            --resultGreen: rgba(0, 176, 91, 1);
+            --resultRed: rgba(255, 0, 0, 1);
+            --resultOrange: rgba(255, 115, 0, 1);
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            padding-right: 35px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--lightestGray);
+            border: 1px solid var(--lighterGray);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--mediumGray);
+            border-radius: 10px;
+            visibility: hidden;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--darkestGray);
+            visibility: visible;
+        }
+
+        .unselectable {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* ----------- Container styles ----------- */
+
+        .top-level {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--darkGray);
+            background-color: var(--lightestGray);
+        }
+
+        .main-title {
+            display: flex;
+            flex-direction: row;
+            padding: 7px;
+            border-bottom: 1px solid var(--darkGray);
+        }
+
+        .report-title {
+            flex: 1;
+            margin-top: auto;
+            font: normal 16px arial;
+            color: black;
+        }
+
+        .report-date {
+            flex: 1;
+            margin-top: auto;
+            font: italic 14px arial;
+            color: black;
+            text-align: right;
+        }
+
+        .results {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .data {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            border-right: 1px solid var(--darkGray);
+        }
+
+        .signals {
+            flex: 1;
+            border-bottom: 1px solid var(--darkGray);
+            background-color: var(--lightestGray);
+        }
+
+        .sig-title {
+            padding: 5px 0px 5px 5px;
+            font: normal 13px arial;
+            color: black;
+            text-align: left;
+            background-color: var(--lighterGray);
+            border-bottom: 1px solid var(--darkGray);
+        }
+
+        .sig-header {
+            border-bottom: 1px solid var(--darkGray);
+        }
+
+        .sig-data {
+            background-color: var(--lightestGray);
+            max-height: 200px;
+            min-height: 100px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            scrollbar-color: var(--mediumGray) var(--lightestGray);
+            scrollbar-width: thin;
+        }
+
+        .properties {
+            flex: 1;
+        }
+
+        .prop-title {
+            padding: 5px 0px 5px 5px;
+            font: normal 13px arial;
+            color: black;
+            text-align: left;
+            border-bottom: 1px solid var(--darkGray);
+            background-color: var(--lighterGray);
+        }
+
+        .prop-header {
+            border-bottom: 1px solid var(--darkGray);
+        }
+
+        .prop-data {
+            max-height: 300px;
+            min-height: 100px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            scrollbar-color: var(--mediumGray) var(--lightestGray);
+            scrollbar-width: thin;
+        }
+
+        .visuals {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--whiteGray);
+        }
+
+        /* ----------- Table styles ----------- */
+
+        .cmpr-tbl-common, .prop-tbl-common {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .formFilt {
+            align-self: right;
+        }
+
+        img {
+            max-width: 100%;
+            min-width: 400px;
+            max-height: 600px;
+            width: fit-content;
+            height: fit-content;
+        }
+
+        .cmpr-tbl-bdy-content {
+            border-bottom: solid 1px var(--lightGray);
+        }
+
+        .cmpr-status-common {
+            height: 14px;
+            width: 14px;
+            color: white;
+            border-radius: 50%;
+            display: inline-block;
+            text-align: center;
+            font: normal 11px/16px arial;
+        }
+
+        .cmpr-status-matched {
+            font: normal 11px/16px arial;
+            background-color: var(--resultGreen);
+        }
+
+        .cmpr-status-failed {
+            font: normal 11px/16px arial;
+            background-color: var(--resultRed);
+        }
+
+        .cmpr-status-unaligned {
+            font: bold 12px/12px arial;
+            background-color: var(--resultOrange);
+        }
+
+        .cmpr-cell-bdy, .cmpr-cell-hdr {
+            width: 20%;
+        }
+
+        .common-cell-border:not(:last-child) {
+            border-right: solid 1px var(--lightGray);
+        }
+
+        .common-cell {
+            padding: 6px;
+            text-align: left;
+            max-width: 100px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .cmpr-cell-hdr, .prop-cell-hdr-hrz {
+            color: var(--mediumGray);
+            font: normal 9px arial;
+            text-transform: uppercase;
+            background-color: var(--lightestGray);
+        }
+
+        .prop-cell-hdr-hrz {
+            padding: 3px;
+            width: 35%;
+            text-align: left;
+        }
+
+        .prop-cell-hdr-blnk {
+            padding: 3px;
+            width: 30%;
+        }
+
+        .cmpr-row, .prop-row {
+            font: normal 12px arial;
+        }
+
+        .cmpr-row-selected {
+            color: white;
+            font: normal 12px arial;
+            background-color: var(--darkerGray);
+        }
+
+        .prop-cell {
+            font: normal 12px arial;
+            color: var(--darkerGray);
+            width: 35%;
+            background-color: var(--whiteGray);
+        }
+
+        .prop-cell-diff {
+            font: normal 12px arial;
+            color: var(--darkerGray);
+            width: 35%;
+            background-color: var(--diffColor);
+        }
+
+        .prop-cell-hdr-vrt {
+            font: normal 12px arial;
+            color: var(--darkestGray);
+            width: 30%;
+            background-color: var(--whiteGray);
+        }
+
+        .prop-cell-hdr-vrt-diff {
+            font: bold 12px arial;
+            color: var(--darkestGray);
+            background-color: var(--whiteGray);
+        }
+
+        .line-base, .line-cmpr {
+            width: 100px;
+            border: 3px solid var(--lightestGray);
+        }
+    </style>
+
+    <title></title>
+</head>
+
+<body>
+    <script type="text/javascript" src="js/cmprImageData.js"></script>
+    <script type="text/javascript" src="js/cmprReportData.js"></script>
+    <script type="text/javascript" src="js/cmprJsonData.js"></script>
+    <script type="text/javascript">
+        let defaultSignal = 0;
+        let currentSignal = 0;
+
+        window.onload = () => {
+            const localJSON = getJSON();
+            myMain(localJSON);
+            document.addEventListener("keydown", function (event) {
+                if ((event.key === "ArrowDown") ||
+                    (event.key === "ArrowUp") ||
+                    (event.key === " ")) {
+                    event.preventDefault();
+                }
+                if (!event.repeat) {
+                    if (event.key === "ArrowDown") {
+                        currentSignal = Math.min(currentSignal + 1, localJSON.length - 1);
+                        rowClickDisplay(currentSignal);
+                        moveIntoView(false);
+                    } else if (event.key === "ArrowUp") {
+                        currentSignal = Math.max(currentSignal - 1, 0);
+                        rowClickDisplay(currentSignal);
+                        moveIntoView(true);
+                    }
+                }
+            });
+        };
+
+        let metaData = getMetaData();
+
+        const propertyNames = metaData.PropertyNames;
+
+        const propertyVariables = ['SignalName', 'SignalDescription', 'LineColor',
+            'OverrideGlobalTol', 'AbsTol', 'RelTol', 'TimeTol',
+            'Units', 'SigDataType', 'SigSampleTime', 'Run', 'AlignBy', 'Model', 'BlockName',
+            'BlockPath', 'Port', 'Dimensions', 'Channel', 'InterpMethod',
+            'SyncMethod', 'TimeSeriesRoot', 'TimeSource', 'DataSource'];
+
+        function myMain(passedData) {
+            setReportTitleDate();
+            makeComparisonTable(passedData);
+            makePropertiesTable();
+            if (isValidDataSet(passedData)) {
+                fillPropertiesTable(defaultSignal);
+                dispImage(defaultSignal);
+            }
+            highlightRow(defaultSignal);
+        }
+
+        function moveIntoView(align) {
+            let elem = document.querySelector(".cmpr-row-selected");
+            let prnt = document.querySelector(".sig-data");
+            let elemRect = elem.getBoundingClientRect();
+            let prntRect = prnt.getBoundingClientRect();
+            if (elemRect.top < prntRect.top || elemRect.bottom > prntRect.bottom ||
+                elemRect.right > prntRect.right || elemRect.left < prntRect.left) {
+                elem.scrollIntoView(align);
+            }
+        }
+
+        function setReportTitleDate() {
+            document.title = metaData.TabTitle;
+            const reportTitle = document.getElementById('report-title');
+            reportTitle.innerHTML = metaData.ReportTitle;
+            let n = new Date();
+            let y = n.getFullYear();
+            let m = n.getMonth() + 1;
+            let d = n.getDate();
+            document.getElementById("report-date").innerHTML = m + "/" + d + "/" + y;
+        }
+
+        function makeComparisonTable(cmprData) {
+            const tableBody = document.getElementById('cmpr-tbl-bdy-content');
+            const tableHead = document.getElementById('cmpr-tbl-hdr-content');
+            const cmprTitle = document.getElementById('sig-title');
+            cmprTitle.innerHTML = metaData.ComparisonLabel;
+
+            let colHeaders = metaData.ColumnHeaders;
+
+            const colNames = ['SignalName1', 'AbsTol1', 'RelTol1', 'MaxDifference', 'Result',
+                'SignalName2', 'BlockPath1', 'BlockPath2', 'DataSource1', 'DataSource2',
+                'BlockName1', 'BlockName2', 'SignalDescription1', 'SyncMethod1',
+                'InterpMethod1', 'Run1', 'Run2', 'AlignBy1', 'Channel1', 'Channel2',
+                'Model1', 'Model2', 'Dimensions1', 'Dimensions2', 'TimeSeriesRoot1',
+                'TimeSeriesRoot2', 'TimeSource1', 'TimeSource2', 'LineColor1', 'LineColor2',
+                'LineDashed1', 'LineDashed2', 'Port1', 'Port2', 'Units1', 'Units2',
+                'SigDataType1', 'SigDataType2', 'SigSampleTime1', 'SigSampleTime2', 'TimeTol1',
+                'OverrideGlobalTol1'];
+
+            let th, tr, td;
+            const colDispNum = 5;
+            tr = document.createElement('tr');
+            tr.setAttribute('class', 'rowComparisonsHead');
+            for (let colIndex = 0; colIndex < colDispNum; colIndex++) {
+                th = document.createElement('th');
+                th.setAttribute('class', 'cmpr-cell-hdr common-cell unselectable');
+                tr.appendChild(th);
+                th.innerHTML = colHeaders[colIndex];
+            }
+            tableHead.appendChild(tr);
+
+            const compareFailStr =
+                '<span class="cmpr-status-common cmpr-status-failed" ' +
+                'title="' + metaData.UnmatchedTip + '">&#10006</span>';
+
+            const compareUnalignedStr =
+                '<span class="cmpr-status-common cmpr-status-unaligned" ' +
+                'title="' + metaData.UnalignedTip + '">&#8211</span>';
+
+            const comparePassStr =
+                '<span class="cmpr-status-common cmpr-status-matched" ' +
+                'title="' + metaData.MatchedTip + '">&#10004</span>';
+
+            cmprData.forEach(function (row, index) {
+                tr = document.createElement('tr');
+                tr.setAttribute('class', 'cmpr-row');
+                if (isValidDataSet(cmprData)) {
+                    tr.addEventListener('click', rowClickDisplay.bind(tr, index));
+                }
+                for (let colIndex = 0; colIndex < colDispNum; colIndex++) {
+                    td = document.createElement('td');
+                    tr.appendChild(td);
+                    let name = colNames[colIndex];
+                    if (isValidDataSet(cmprData)) {
+                        switch (name) {
+                            case "MaxDifference":
+                                td.setAttribute('class', 'cmpr-cell-bdy common-cell common-cell-border');
+                                td.innerHTML = parseFloat(row[name]).toFixed(2);
+                                break;
+                            case "Result":
+                                td.setAttribute('class', 'cmpr-cell-bdy common-cell common-cell-border unselectable');
+                                if (row[name] === "WithinTolerance") {
+                                    td.innerHTML = comparePassStr;
+                                } else if (row[name] === "Unaligned") {
+                                    td.innerHTML = compareUnalignedStr;
+                                } else {
+                                    td.innerHTML = compareFailStr;
+                                }
+                                break;
+                            default:
+                                td.setAttribute('class', 'cmpr-cell-bdy common-cell common-cell-border');
+                                td.innerHTML = row[name];
+                        }
+                    } else {
+                        td.setAttribute('class', 'cmpr-cell-bdy common-cell common-cell-border unselectable');
+                        td.innerHTML = row[name];
+                    }
+                }
+                tableBody.appendChild(tr);
+            });
+
+        }
+
+        function rowClickDisplay(signalInd) {
+            currentSignal = signalInd;
+            dispImage(signalInd);
+            fillPropertiesTable(signalInd);
+            highlightRow(signalInd);
+        }
+
+        function highlightRow(signalInd) {
+            const tableBody = document.getElementById('cmpr-tbl-bdy-content');
+            let curRow = tableBody.rows[signalInd];
+            let prevRow = tableBody.rows[defaultSignal];
+            curRow.setAttribute('class', 'cmpr-row-selected');
+            if (prevRow !== curRow) {
+                prevRow.setAttribute('class', 'cmpr-row');
+                defaultSignal = signalInd;
+            }
+        }
+
+        function makePropertiesTable() {
+            const propertiesTblBody = document.getElementById('prop-tbl-bdy-content');
+            const propTitle = document.getElementById('prop-title');
+            propTitle.innerHTML = metaData.PropertiesLabel;
+            const propHeaderBase = document.getElementById('prop-tbl-hdr-content').rows[0].cells[1];
+            const propHeaderComp = document.getElementById('prop-tbl-hdr-content').rows[0].cells[2];
+            propHeaderBase.innerHTML = metaData.BaselineLabel;
+            propHeaderComp.innerHTML = metaData.CompareToLabel;
+            let tr;
+            let numCols = 3;
+            for (let rowIndex = 0; rowIndex < propertyNames.length; rowIndex++) {
+                tr = document.createElement('tr');
+                for (let colIndex = 0; colIndex < numCols; colIndex++) {
+                    let td = document.createElement('td');
+                    tr.appendChild(td);
+                    if (colIndex === 0) {
+                        td.innerHTML = propertyNames[rowIndex];
+                        td.setAttribute('class', 'prop-cell-hdr-vrt common-cell common-cell-border');
+                    } else {
+                        td.setAttribute('class', 'prop-cell common-cell common-cell-border');
+                        let cellIdStr = propertyVariables[rowIndex] + colIndex;
+                        if (cellIdStr === "LineColor1") {
+                            let strVal = '<div class="line-base"></div>';
+                            td.innerHTML = strVal;
+                        } else if (cellIdStr === "LineColor2") {
+                            let strVal = '<div class="line-cmpr"></div>';
+                            td.innerHTML = strVal;
+                        } else {
+                            td.innerHTML = '';
+                        }
+                        td.setAttribute('id', cellIdStr);
+                    }
+                }
+                tr.setAttribute('class', 'divTableRow');
+                propertiesTblBody.appendChild(tr);
+            }
+        }
+
+        function fillPropertiesTable(signalInd) {
+            const jsonData = getJSON();
+            for (let rowIndex = 0; rowIndex < propertyVariables.length; rowIndex++) {
+                let rowIndexOffset = rowIndex + 1;
+                let cellIdStr = propertyVariables[rowIndex];
+                let myCellH = document.querySelector("#properties tbody tr:nth-child(" + rowIndexOffset + ") td[class^='prop-cell-hdr-vrt']");
+                const cellIdStr1 = cellIdStr + 1;
+                const cellIdStr2 = cellIdStr + 2;
+                const cellData1 = jsonData[signalInd][cellIdStr1];
+                const cellData2 = jsonData[signalInd][cellIdStr2];
+                const myCell1 = document.getElementById(cellIdStr1);
+                const myCell2 = document.getElementById(cellIdStr2);
+                switch (cellIdStr) {
+                    case "LineColor":
+                        const rgbPct1 = "rgb(" +
+                            ((cellData1[0] * 100).toFixed(2)) + '%, ' +
+                            ((cellData1[1] * 100).toFixed(2)) + '%, ' +
+                            ((cellData1[2] * 100).toFixed(2)) + '%)';
+                        const lineStyle1 = getLineStyle(jsonData[signalInd].LineDashed1);
+                        document.getElementsByClassName("line-base")[0].style =
+                            'border-color: ' + rgbPct1 + ';' + 'border-style: ' + lineStyle1 + ';';
+                        const rgbPct2 = "rgb(" +
+                            ((cellData2[0] * 100).toFixed(2)) + '%, ' +
+                            ((cellData2[1] * 100).toFixed(2)) + '%, ' +
+                            ((cellData2[2] * 100).toFixed(2)) + '%)';
+                        const lineStyle2 = getLineStyle(jsonData[signalInd].LineDashed2);
+                        document.getElementsByClassName("line-cmpr")[0].style =
+                            'border-color: ' + rgbPct2 + ';' + 'border-style: ' + lineStyle2 + ';';
+                        break;
+                    case "Channel":
+                        myCell1.innerHTML = cellData1;
+                        myCell2.innerHTML = cellData2;
+                        if (arrayCompare(cellData1, cellData2)) {
+                            myCell1.className = 'prop-cell common-cell common-cell-border';
+                            myCell2.className = 'prop-cell common-cell common-cell-border';
+                            myCellH.className = 'prop-cell-hdr-vrt common-cell common-cell-border';
+                        } else {
+                            myCell1.className = 'prop-cell-diff common-cell common-cell-border';
+                            myCell2.className = 'prop-cell-diff common-cell common-cell-border';
+                            myCellH.className = 'prop-cell-hdr-vrt-diff common-cell common-cell-border';
+                        }
+                        break;
+                    default:
+                        myCell1.innerHTML = cellData1;
+                        myCell2.innerHTML = cellData2;
+                        if (cellData1 === cellData2) {
+                            myCell1.className = 'prop-cell common-cell common-cell-border';
+                            myCell2.className = 'prop-cell common-cell common-cell-border';
+                            myCellH.className = 'prop-cell-hdr-vrt common-cell common-cell-border';
+                        } else {
+                            myCell1.className = 'prop-cell-diff common-cell common-cell-border';
+                            myCell2.className = 'prop-cell-diff common-cell common-cell-border';
+                            myCellH.className = 'prop-cell-hdr-vrt-diff common-cell common-cell-border';
+                        }
+                }
+            }
+        }
+
+        function dispImage(imgVal) {
+            const imageBody = document.getElementById('visuals');
+            const image = new Image();
+            const imgSelect = getImage(imgVal + 1);
+            image.src = imgSelect.Data;
+            image.id = 'cmprPlot';
+            while (imageBody.firstChild) {
+                imageBody.removeChild(imageBody.firstChild);
+            }
+            imageBody.appendChild(image);
+        }
+
+        function isValidDataSet(cmprData) {
+            let validFlag = cmprData[0].Index !== 0;
+            return validFlag;
+        }
+
+        function getLineStyle(lineSymbol) {
+            switch (lineSymbol) {
+                case '-':
+                    return 'solid';
+                case '--':
+                    return 'dashed';
+                case ':':
+                    return 'dotted';
+                case '-.':
+                    return 'dashed';
+                default:
+                    return 'solid';
+            }
+        }
+
+        function arrayCompare(arrayOne, arrayTwo) {
+            if (arrayOne.length !== arrayTwo.length) {
+                return false;
+            }
+            for (var i in arrayOne) {
+                if (arrayOne[i] instanceof Array && arrayTwo[i] instanceof Array) {
+                    if (!arrayCompare(arrayOne[i], arrayTwo[i])) {
+                        return false;
+                    }
+                }
+                else if (arrayOne[i] !== arrayTwo[i]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+
+    <div class="top-level">
+        <div id="main-title" class="main-title">
+            <div id="report-title" class="report-title"></div>
+            <div id="report-date" class="report-date"></div>
+        </div>
+        <div id="results" class="results">
+            <div id="data" class="data">
+                <div id="signals" class="signals">
+                    <div id="sig-title" class="sig-title"></div>
+                    <div class="sig-header">
+                        <table class="cmpr-tbl-common">
+                            <thead id="cmpr-tbl-hdr-content" class="cmpr-tbl-hdr-content"></thead>
+                        </table>
+                    </div>
+                    <div class="sig-data">
+                        <table id="cmpr-sig-tbl" class="cmpr-tbl-common">
+                            <tbody id="cmpr-tbl-bdy-content" class="cmpr-tbl-bdy-content"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="properties" class="properties">
+                    <div id="prop-title" class="prop-title"></div>
+                    <div class="prop-header">
+                        <table class="prop-tbl-common">
+                            <thead id="prop-tbl-hdr-content" class="prop-tbl-hdr-content">
+                                <tr class="prop-row">
+                                    <th class="prop-cell-hdr-blnk"></th>
+                                    <th class="prop-cell-hdr-hrz"></th>
+                                    <th class="prop-cell-hdr-hrz"></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="prop-data">
+                        <table class="prop-tbl-common">
+                            <tbody id="prop-tbl-bdy-content" class="prop-tbl-bdy-content"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="visuals" class="visuals"></div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,114 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>File:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/blocks/sb2sl/tlc_c/sblogexp.html">sblogexp.tlc</a>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>defines<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>set<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>logical<span style="padding-left:9.5px"></span>expressions<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>assigned<span style="padding-left:9.5px"></span>to
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>vector.<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>inputs<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>set<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>equations<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>time,<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>input<span style="padding-left:9.5px"></span>vector<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>optional<span style="padding-left:9.5px"></span>parameter<span style="padding-left:9.5px"></span>vector.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Initial<span style="padding-left:9.5px"></span>coding<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>A<span style="padding-left:9.5px"></span>S<span style="padding-left:9.5px"></span>Bozin
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1997-2013<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_implements">%implements</span> sblogexp "C"
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>BlockTypeSetup<span style="padding-left:9.5px"></span>===================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Place<span style="padding-left:9.5px"></span>include<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>prototype<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>model's<span style="padding-left:9.5px"></span>header<span style="padding-left:9.5px"></span>file
+</span> <br><span class="tlc_fkw">%function</span> <a id="BlockTypeSetup" class="tlc_func">BlockTypeSetup</a>(block, system) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibAddToStaticSources">SLibAddToStaticSources</a>("sbpowdi.c")>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> externC = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibExternInFcnDecls">LibExternInFcnDecls</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::GenCPP
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> externC = "extern /"C/""
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buffer
+ <br>&nbsp;&nbsp;#ifndef POWDI_DEFINE
+ <br>&nbsp;&nbsp;extern real_T powdi(real_T x, int_T n);
+ <br>&nbsp;&nbsp;#define POWDI_DEFINE
+ <br>&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buffer
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibCacheFunctionPrototype">LibCacheFunctionPrototype</a>(buffer)>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Start<span style="padding-left:9.5px"></span>============================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Initialize<span style="padding-left:9.5px"></span>parameters
+</span> <br><span class="tlc_fkw">%function</span> <a id="Start" class="tlc_func">Start</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sfcnName = ParamSettings.FunctionName
+ <br>&nbsp;&nbsp;/* Logical Expression Block */
+ <br>&nbsp;&nbsp;/* %<<span>Type</span>> Block: (%<<span>sfcnName</span>>): %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibParentMaskBlockName">LibParentMaskBlockName</a>(block)> */
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> info = SFcnParamSettings.logInfo
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numParams = info[2]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> iniParams = SFcnParamSettings.iniParams
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Assign parameters */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = numParams
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(logParams, "", "", idx)> = %<iniParams[idx]>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Outputs<span style="padding-left:9.5px"></span>==========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sfcnName = ParamSettings.FunctionName
+ <br>&nbsp;&nbsp;/* Logical Expression Block */
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;/* %<<span>Type</span>> Block: (%<<span>sfcnName</span>>): %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibParentMaskBlockName">LibParentMaskBlockName</a>(block)> */
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> info = SFcnParamSettings.logInfo
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ninputs = info[0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> noutputs = info[1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nparams = info[2]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cStatements = SFcnParamSettings.cStatements
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nstatements = <span class="tlc_bifunc">SIZE</span>(SFcnParamSettings.cStatements, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> timeComponent = SFcnParamSettings.timeComponent
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = %<<span>nstatements</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> statement = "%<cStatements[idx]>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> statement = <span class="tlc_bifunc">FEVAL</span>("strrep",statement,"^",",")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> uidx = ninputs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> uiToken = "@u%<ninputs-uidx>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ui = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0,"","",ninputs-uidx-1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> statement = <span class="tlc_bifunc">FEVAL</span>("strrep",statement,uiToken,ui)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> yidx = noutputs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> yiToken = "@y%<noutputs-yidx>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> yi = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0,"","",noutputs-yidx-1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> statement = <span class="tlc_bifunc">FEVAL</span>("strrep",statement,yiToken,yi)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> pidx = nparams
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> piToken = "@p%<nparams-pidx>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pi = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(logParams, "", "", nparams-pidx-1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> statement = <span class="tlc_bifunc">FEVAL</span>("strrep",statement,piToken,pi)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> timeComponent
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tiToken = "@t"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ti = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibGetT">LibGetT</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> statement = <span class="tlc_bifunc">FEVAL</span>("strrep",statement,tiToken,ti)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>statement</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;}
+ <br><span class="tlc_fkw">%endfunction</span>  <span class="tlc_comment">%% Outputs</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Terminate<span style="padding-left:9.5px"></span>========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Terminate" class="tlc_func">Terminate</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment"><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/blocks/sb2sl/tlc_c/sblogexp.html">sblogexp.tlc</a></span></span> <br></body></html>

@@ -1,0 +1,527 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+*<span class="tlc_comment">%% </span>
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2010<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Scope<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>target<span style="padding-left:9.5px"></span>file.<span style="padding-left:9.5px"></span>For<span style="padding-left:9.5px"></span>use<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>standard<span style="padding-left:9.5px"></span>.mat<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>logging.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_implements">%implements</span> * "C"
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>BlockInstanceSetup<span style="padding-left:9.5px"></span>=========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Define<span style="padding-left:9.5px"></span>over-ride<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>type<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>PWork<span style="padding-left:9.5px"></span>structure<span style="padding-left:9.5px"></span>when<span style="padding-left:9.5px"></span>logging<span style="padding-left:9.5px"></span>to
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>structure
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="BlockInstanceSetup" class="tlc_func">BlockInstanceSetup</a>(block, system) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/block_api.html#LibBlockSetIsExpressionCompliant">LibBlockSetIsExpressionCompliant</a>(block)>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("ParamSettings.IsERTMobileTarget") &amp;&amp; ParamSettings.IsERTMobileTarget
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ParamSettings.MobileTargetDevice == 1 <span class="tlc_comment">%% iOS</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#SLibAddToCommonIncludes">SLibAddToCommonIncludes</a>("driver_ios_plot.h")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> ParamSettings.MobileTargetDevice == 2 <span class="tlc_comment">%% Android</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#SLibAddToCommonIncludes">SLibAddToCommonIncludes</a>("driver_android_plot.h")>   
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% BlockInstanceSetup</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SetupRuntimeResources<span style="padding-left:9.5px"></span>=============================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>scope<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>configured<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>save<span style="padding-left:9.5px"></span>it's<span style="padding-left:9.5px"></span>data,<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>we<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>using<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>standard<span style="padding-left:9.5px"></span>.mat<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>logging<span style="padding-left:9.5px"></span>then<span style="padding-left:9.5px"></span>write<span style="padding-left:9.5px"></span>out<span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>create<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>data
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>logging<span style="padding-left:9.5px"></span>variable.<span style="padding-left:9.5px"></span>In<span style="padding-left:9.5px"></span>addition,<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>scope<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>constant<span style="padding-left:9.5px"></span>then<span style="padding-left:9.5px"></span>we
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>need<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>log<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>once<span style="padding-left:9.5px"></span>here.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SetupRuntimeResources" class="tlc_func">SetupRuntimeResources</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeQ     = "static "
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> CodeFormat == "S-Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> warnTxt = "Scope blocks not currently supported for S-Function " ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"code format.  Block disabled."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportWarning">LibBlockReportWarning</a>(block, warnTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span>  ( TargetType == "RT" || isRSim ) ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp; MatFileLogging != 0 ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp; ParamSettings.SaveToWorkspace == "yes" ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp; !ParamSettings.IsERTMobileTarget ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp; NumDataInputPorts > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> name           = ParamSettings.SaveName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> maxDataPoints  = ParamSettings.MaxDataPoints[0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> decimation     = ParamSettings.Decimation[0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> logVar         = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(LoggedData, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ts             = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockSampleTime">LibBlockSampleTime</a>(block)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nulldef = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetNullDefinitionFromTfl">SLibGetNullDefinitionFromTfl</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ParamSettings.DataFormat == "Array"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsDataTypeLogSupported">LibIsDataTypeLogSupported</a>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalDataTypeId">LibBlockInputSignalDataTypeId</a>(0), TLC_TRUE)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nCols = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordWidth">LibGetRecordWidth</a>(DataInputPort) + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cmplx          = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalIsComplex">LibBlockInputSignalIsComplex</a>(0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T numCols = %<<span>nCols</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Scope only supports fixed-size signal logging,</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% so set the currSigDims and currSigDimsSize to NULL, </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% and set the logValDimsStat to NO_LOGVALDIMS</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/logsup.html#SLibGenLogVarCreate">SLibGenLogVarCreate</a>(logVar, name, "SS_DOUBLE", 0, cmplx, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0, nCols, 1, "(int_T *)&amp;numCols", "NO_LOGVALDIMS", nulldef, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nulldef, maxDataPoints, decimation, ts, 1)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (%<<span>logVar</span>> == %<<span>nulldef</span>>) return;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% DataFormat is Structure</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numLoggedSignals = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Setup variables to be filled in below</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataTypeStr  = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> widthStr     = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numDimsStr   = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimsStr      = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> preprocessingFcnPtrsStr = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currDimsStr  = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> labelStr     = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> plotStyleStr = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> titleStr     = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> titleLenStr  = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> frameBasedStr = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Setup Variable Dimensions related variables</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hasVarDims           = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isVarDimsStr         = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currSigDimsInitStr   = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currSigDimsSetStr    = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currSigDimsSizeStr   = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currSigDimsSize      = ConfigSet.TargetBitPerInt/8
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currSigDimsSizeComma = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Setup constant helper variables</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> qt = "/""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Setup helper variables to be filled in after first time through</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comma      = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cr         = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> plotStyleComma = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> plotStyleIdx = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> offset = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> alreadyInitCurrDimsStr = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> alreadyInitNullCurrDimsStr = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = NumDataInputPorts
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Check for signals to be skipped</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeId = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalDataTypeId">LibBlockInputSignalDataTypeId</a>(idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsDataTypeLogSupported">LibIsDataTypeLogSupported</a>(dTypeId, TLC_TRUE) == TLC_FALSE)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> warnTxt = "Unable to log data for input %<idx+1> " ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"because MAT-File logging is not supported for " ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"data type '%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeNameFromId">LibGetDataTypeNameFromId</a>(dTypeId)>'."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportWarning">LibBlockReportWarning</a>(block, warnTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Data Types</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsBuiltInDataType">LibIsBuiltInDataType</a>(dTypeId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeId = tSS_DOUBLE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeEnum = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeEnumFromId">LibGetDataTypeEnumFromId</a>(dTypeId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataTypeStr = dataTypeStr + comma + dTypeEnum
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cmplx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalIsComplex">LibBlockInputSignalIsComplex</a>(idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Signal Dimensions</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width    = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalWidth">LibBlockInputSignalWidth</a>(idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numDims  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalNumDimensions">LibBlockInputSignalNumDimensions</a>(idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dims     = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalDimensions">LibBlockInputSignalDimensions</a>(idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> widthStr   = widthStr   + comma + "%<<span>width</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numDimsStr = numDimsStr + comma + "%<<span>numDims</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimsStr    = dimsStr    + comma + "%<dims[0]>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> dimIdx = numDims-1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimsStr  = dimsStr + ", " + "%<dims[dimIdx+1]>"         
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> preprocessingFcnPtrsStr = preprocessingFcnPtrsStr + comma + nulldef
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> dimIdx = numDims-1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> preprocessingFcnPtrsStr = preprocessingFcnPtrsStr + ", " + nulldef
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("ParamSettings.FrameData")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> frameBased = ParamSettings.FrameData[idx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> frameBasedStr = frameBasedStr + comma + "%<<span>frameBased</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Labels</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("ParamSettings.AxesLabels")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evalstr     = "ParamSettings.AxesLabels.axes%<idx+1>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> label       = <span class="tlc_bifunc">STRING</span>(%<<span>evalstr</span>>)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> labelStr    = labelStr + comma + cr + qt + label + qt
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Plot styles</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> tmpIdx = width
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isDisc = ParamSettings.PlotStyles[plotStyleIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> plotStyleStr = plotStyleStr + plotStyleComma + "%<<span>isDisc</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% End of loop tasks (plot style loop)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> plotStyleIdx = plotStyleIdx+1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> plotStyleComma = ", "
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Titles</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("ParamSettings.AxesTitles")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evalstr     = "ParamSettings.AxesTitles.axes%<idx+1>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> title       = <span class="tlc_bifunc">STRING</span>(%<<span>evalstr</span>>)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> title != ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> titleStr    = titleStr + title
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> titleLenStr = titleLenStr + comma + "%<<span class="tlc_bifunc">SIZE</span>(title,1)>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Is Variable Dimensions</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isVarDims = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibGetIsInputPortVarDims">LibGetIsInputPortVarDims</a>(idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isVarDimsStr = isVarDimsStr  + comma + "%<<span>isVarDims</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (numDims == 1) &amp;&amp; (NumDataInputPorts == 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isVarDims
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hasVarDims = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currDimsStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#SLibGetCurrentInputPortDimensions">SLibGetCurrentInputPortDimensions</a>(idx, 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currDimsStr = "rt_ScopeSignalWidths[0]"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currSigDimsInitStr = "%<<span>typeQ</span>> void *rt_ScopeCurrSigDims[] ={%<<span>nulldef</span>>};"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currSigDimsSetStr = "rt_ScopeCurrSigDims[0] = &amp;%<<span>currDimsStr</span>>; /n"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currSigDimsSizeStr = %<<span>currSigDimsSize</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> alreadyInitCurrDimsStr == 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currSigDimsInitStr = "%<<span>typeQ</span>> void *rt_ScopeCurrSigDims[] = {"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> alreadyInitCurrDimsStr = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> dimsIdx = numDims
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currSigDimsSizeStr = currSigDimsSizeStr + currSigDimsSizeComma + "%<<span>currSigDimsSize</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currSigDimsSizeComma = ", "
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> alreadyInitNullCurrDimsStr             
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% only place the "," if string already contains "NULL"</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currSigDimsInitStr = currSigDimsInitStr + ", "
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currSigDimsInitStr = currSigDimsInitStr + nulldef
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> alreadyInitNullCurrDimsStr = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isVarDims
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hasVarDims = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currDimsStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#SLibGetCurrentInputPortDimensions">SLibGetCurrentInputPortDimensions</a>(idx, dimsIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currDimsStr = "rt_ScopeSignalWidths[0]"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>           
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> aux = %<<span>dimsIdx</span>>+%<<span>offset</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currSigDimsSetStr = currSigDimsSetStr + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"rt_ScopeCurrSigDims[%<<span>aux</span>>] = &amp;%<<span>currDimsStr</span>>; /n"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> offset = offset + %<<span>numDims</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% End of loop tasks (main loop)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numLoggedSignals = numLoggedSignals+1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comma = ", "
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cr = "/n"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> alreadyInitCurrDimsStr
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currSigDimsInitStr = currSigDimsInitStr + "};"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>      
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> numLoggedSignals == 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ParamSettings.SaveToWorkspace = "no"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RTWLogSignalInfo rt_ScopeSignalInfo;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> cmplx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>typeQ</span>> int_T  rt_ScopeComplexSignals[]       = {%<<span>cmplx</span>>};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>typeQ</span>> int_T  rt_ScopeSignalWidths[]        = {%<<span>widthStr</span>>};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>typeQ</span>> int_T  rt_ScopeSignalNumDimensions[] = {%<<span>numDimsStr</span>>};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>typeQ</span>> int_T  rt_ScopeSignalDimensions[]    = {%<<span>dimsStr</span>>};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>currSigDimsInitStr</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>typeQ</span>> int_T  rt_ScopeCurrSigDimsSize[]     = {%<<span>currSigDimsSizeStr</span>>};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>typeQ</span>> const char_T *rt_ScopeSignalLabels[] = {%<<span>labelStr</span>>};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>typeQ</span>> char_T rt_ScopeSignalTitles[]        = "%<<span>titleStr</span>>";
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>typeQ</span>> int_T  rt_ScopeSignalTitleLengths[]  = {%<<span>titleLenStr</span>>};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>typeQ</span>> boolean_T rt_ScopeSignalIsVarDims[]  = {%<<span>isVarDimsStr</span>>}; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(plotStyleStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>typeQ</span>> int_T  rt_ScopeSignalPlotStyles[]  = {%<<span>plotStyleStr</span>>};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BuiltInDTypeId dTypes[%<<span>numLoggedSignals</span>>] = {%<<span>dataTypeStr</span>>};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockPath = <span class="tlc_bifunc">STRING</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibGetBlockPath">LibGetBlockPath</a>(block))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>typeQ</span>> char_T rt_ScopeBlockName[]          = "%<<span>blockPath</span>>";
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(frameBasedStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>typeQ</span>> int_T rt_ScopeFrameData[] = {%<<span>frameBasedStr</span>>}; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>typeQ</span>> RTWPreprocessingFcnPtr rt_ScopeSignalLoggingPreprocessingFcnPtrs[] =/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>preprocessingFcnPtrsStr</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> hasVarDims == 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* set currSigDims field */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>currSigDimsSetStr</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.numSignals       = %<<span>numLoggedSignals</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.numCols          = rt_ScopeSignalWidths;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.numDims          = rt_ScopeSignalNumDimensions;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.dims             = rt_ScopeSignalDimensions;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.isVarDims        = rt_ScopeSignalIsVarDims;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.currSigDims      = rt_ScopeCurrSigDims; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.currSigDimsSize  = rt_ScopeCurrSigDimsSize;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.dataTypes        = dTypes;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> cmplx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.complexSignals   = rt_ScopeComplexSignals;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.complexSignals   = %<<span>nulldef</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(frameBasedStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.frameData      = rt_ScopeFrameData;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.frameData      = %<<span>nulldef</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.preprocessingPtrs = rt_ScopeSignalLoggingPreprocessingFcnPtrs;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.labels.cptr      = rt_ScopeSignalLabels;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.titles           = rt_ScopeSignalTitles;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.titleLengths     = rt_ScopeSignalTitleLengths;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(plotStyleStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.plotStyles     = rt_ScopeSignalPlotStyles;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.plotStyles     = %<<span>nulldef</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.blockNames.cptr  = %<<span>nulldef</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.stateNames.cptr  = %<<span>nulldef</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.crossMdlRef      = %<<span>nulldef</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_ScopeSignalInfo.dataTypeConvert  = %<<span>nulldef</span>>;
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> logTime  = (ParamSettings.DataFormat == "StructureWithTime")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/logsup.html#SLibGenStructLogVarCreate">SLibGenStructLogVarCreate</a>(logVar, name, logTime, maxDataPoints, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;decimation, ts, "&amp;rt_ScopeSignalInfo", "rt_ScopeBlockName")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (%<<span>logVar</span>> == %<<span>nulldef</span>>) return;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span>  <span class="tlc_bifunc">EXISTS</span>("ParamSettings.IsERTMobileTarget" ) &amp;&amp; ParamSettings.IsERTMobileTarget 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> scopeID = ParamSettings.MobileTargetID
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mobileScopeProps = <span class="tlc_bifunc">STRING</span>(ParamSettings.MobileScopeProperties)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> block.PortBasedSampleTimes == "yes"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sampleTimeStr = "%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPortSampleTime">LibBlockPortSampleTime</a>(0)>" 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> pIdx = NumDataInputPorts-1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sampleTimeStr = sampleTimeStr + "," + "%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPortSampleTime">LibBlockPortSampleTime</a>(pIdx+1)>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockSampleTimeStr = "%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockSampleTime">LibBlockSampleTime</a>(block)>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sampleTimeStr = "%<<span>blockSampleTimeStr</span>>" 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> pIdx = NumDataInputPorts-1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sampleTimeStr = sampleTimeStr + "," + "%<<span>blockSampleTimeStr</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const char* mobileScopeProperties%<<span>scopeID</span>> = "%<<span>mobileScopeProps</span>>";
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T numInputPortsScope%<<span>scopeID</span>> = %<<span>NumDataInputPorts</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T scope%<<span>scopeID</span>>ID = %<<span>ParamSettings.MobileTargetID</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real32_T sampleTimes%<<span>scopeID</span>>[%<<span>NumDataInputPorts</span>>] = {%<<span>sampleTimeStr</span>>};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INITIALIZE_PLOT(scope%<<span>scopeID</span>>ID,numInputPortsScope%<<span>scopeID</span>>,mobileScopeProperties%<<span>scopeID</span>>,sampleTimes%<<span>scopeID</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* End of %<<span>Type</span>>: '%<<span>Name</span>>' */ 
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SetupRuntimeResources</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Outputs<span style="padding-left:9.5px"></span>===========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>scope<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>configured<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>save<span style="padding-left:9.5px"></span>it's<span style="padding-left:9.5px"></span>data,<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>constant,<span style="padding-left:9.5px"></span>and
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>we<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>using<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>standard<span style="padding-left:9.5px"></span>.mat<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>logging<span style="padding-left:9.5px"></span>then<span style="padding-left:9.5px"></span>write<span style="padding-left:9.5px"></span>out<span style="padding-left:9.5px"></span>a
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>log<span style="padding-left:9.5px"></span>data.<span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>sample<span style="padding-left:9.5px"></span>time<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>scope<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>triggered,<span style="padding-left:9.5px"></span>then
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>we<span style="padding-left:9.5px"></span>log<span style="padding-left:9.5px"></span>whenever<span style="padding-left:9.5px"></span>we<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>called,<span style="padding-left:9.5px"></span>otherwise<span style="padding-left:9.5px"></span>we<span style="padding-left:9.5px"></span>log<span style="padding-left:9.5px"></span>only<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>major<span style="padding-left:9.5px"></span>time
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>steps.<span style="padding-left:9.5px"></span>Constant<span style="padding-left:9.5px"></span>sample<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>handled<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>Start<span style="padding-left:9.5px"></span>function.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span>  (TargetType == "RT" || isRSim) ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp; MatFileLogging != 0  ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp; CodeFormat != "S-Function"...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp; ParamSettings.SaveToWorkspace == "yes" ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp; !ParamSettings.IsERTMobileTarget ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp; NumDataInputPorts > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> matrixFormat = (ParamSettings.DataFormat == "Array")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> matrixFormat
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsDataTypeLogSupported">LibIsDataTypeLogSupported</a>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalDataTypeId">LibBlockInputSignalDataTypeId</a>(0), TLC_TRUE)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isRSimWithSolverModule
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("LogOutput")>) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTCodeFormat">SLibIsERTCodeFormat</a>()) &amp;&amp; (NumContStates > 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMIs">RTMIs</a>("MajorTimeStep")>) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> uWidth = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordWidth">LibGetRecordWidth</a>(DataInputPort[0]) + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cmplx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalIsComplex">LibBlockInputSignalIsComplex</a>(0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !cmplx        
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real_T u[%<<span>uWidth</span>>];    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u[0] = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/des_util.html#checkAndGetDESEngTimeSource">checkAndGetDESEngTimeSource</a>(block)>;        
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>        
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;creal_T u[%<<span>uWidth</span>>];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u[0].re = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/des_util.html#checkAndGetDESEngTimeSource">checkAndGetDESEngTimeSource</a>(block)>; u[0].im = 0.0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sigDataType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalDataTypeId">LibBlockInputSignalDataTypeId</a>(0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> logDataType = tSS_DOUBLE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalWidth">LibBlockInputSignalWidth</a>(0)+1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsBuiltInDataType">LibIsBuiltInDataType</a>(sigDataType)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rollVars = ["U"]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_roll">%roll</span> idx = RollRegions, lcv = RollThreshold, block, "Roller", rollVars
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u[%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptlib.html#FixPt_IndexStruct">FixPt_IndexStruct</a>(width, "", lcv, idx+1)>] = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0,"",lcv,idx)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endroll">%endroll</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real_T *pU = &amp;u[1];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rollVars = ["U"]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_roll">%roll</span> idx = RollRegions, lcv = RollThreshold, block, "Roller", rollVars
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outputLbl = "(*pU)"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> inputLbl = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0,"",lcv,idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> convertBetweenFcn = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibConvertBetweenTLCFcnName">LibConvertBetweenTLCFcnName</a>(sigDataType)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibConvertBetweenTLCFcnFile">LibConvertBetweenTLCFcnFile</a>(sigDataType) != ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_include">%include</span> "%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibConvertBetweenTLCFcnFile">LibConvertBetweenTLCFcnFile</a>(sigDataType)>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> status = %<<span>convertBetweenFcn</span>> ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(logDataType, sigDataType, inputLbl, "", outputLbl)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> status != 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%START_ASSERT</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> logDataTypeName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeNameFromId">LibGetDataTypeNameFromId</a>(tSS_DOUBLE)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Error: funcion %<<span>convertBetweenFcn</span>> doesn't support " ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"converting the input signal to type %<<span>logDataTypeName</span>>."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportFatalError">LibBlockReportFatalError</a>(block, errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%END_ASSERT</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pU++;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endroll">%endroll</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> logVar = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(LoggedData, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isVarDims = 0 <span class="tlc_comment">%% Scope only support fixed-size signal logging</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/logsup.html#SLibGenLogVarUpdate">SLibGenLogVarUpdate</a>(logVar, "u", isVarDims)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isRSimWithSolverModule
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span> <span class="tlc_comment">%% structure format</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isRSimWithSolverModule
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("LogOutput")>)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTCodeFormat">SLibIsERTCodeFormat</a>()) &amp;&amp; (NumContStates > 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMIs">RTMIs</a>("MajorTimeStep")>)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StructLogVar *svar = (StructLogVar *)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(LoggedData, "", "", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LogVar       *var  = svar->signals.values;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ParamSettings.DataFormat == "StructureWithTime"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* time */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double locTime = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/des_util.html#checkAndGetDESEngTimeSource">checkAndGetDESEngTimeSource</a>(block)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% even if the signal is vardims time has to be hardcoded to be fixed dims</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isVarDims = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/logsup.html#SLibGenLogVarUpdate">SLibGenLogVarUpdate</a>("svar->time", "&amp;locTime", isVarDims)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* signals */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> pIdx = NumDataInputPorts
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sigDataType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalDataTypeId">LibBlockInputSignalDataTypeId</a>(pIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsDataTypeLogSupported">LibIsDataTypeLogSupported</a>(sigDataType, TLC_TRUE) == TLC_FALSE)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> logDataType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibSigToLogDataType">SLibSigToLogDataType</a>(sigDataType, tSS_DOUBLE)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cmplx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalIsComplex">LibBlockInputSignalIsComplex</a>(pIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !cmplx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> logDataTypeName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeNameFromId">LibGetDataTypeNameFromId</a>(logDataType)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> logDataTypeName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeComplexNameFromId">LibGetDataTypeComplexNameFromId</a>(logDataType)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalWidth">LibBlockInputSignalWidth</a>(pIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>logDataTypeName</span>> up%<<span>pIdx</span>>[%<<span>width</span>>];
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> DataInputPort[pIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rollRegion = RollRegions
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsBuiltInDataType">LibIsBuiltInDataType</a>(sigDataType)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_roll">%roll</span> idx = rollRegion, lcv = RollThreshold, block, "FlatRoller", ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> uPtr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(pIdx,"","",idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rollWidth = <span class="tlc_bifunc">ROLL_ITERATIONS</span>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> rollWidth > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numBytes = "%<<span>rollWidth</span>>*sizeof(%<<span>logDataTypeName</span>>)"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(void) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMemFcnCall">LibGenMemFcnCall</a>("memcpy", "&amp;up%<<span>pIdx</span>>[%<<span>idx</span>>]", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uPtr, numBytes)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up%<<span>pIdx</span>>[%<<span>idx</span>>] = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(pIdx,"","",idx)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endroll">%endroll</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rollVars = ["u%<<span>pIdx</span>>"]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_roll">%roll</span> idx = rollRegion, lcv = RollThreshold, block, "Roller", rollVars
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outputLbl = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rolllib.html#LibGetIndexedElement">LibGetIndexedElement</a>("up%<<span>pIdx</span>>","",lcv,idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> inputLbl = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(pIdx,"",lcv,idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> convertBetweenFcn = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibConvertBetweenTLCFcnName">LibConvertBetweenTLCFcnName</a>(sigDataType)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibConvertBetweenTLCFcnFile">LibConvertBetweenTLCFcnFile</a>(sigDataType) != ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_include">%include</span> "%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibConvertBetweenTLCFcnFile">LibConvertBetweenTLCFcnFile</a>(sigDataType)>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> status = %<<span>convertBetweenFcn</span>> ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(logDataType, sigDataType, inputLbl, "", outputLbl)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> status != 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%START_ASSERT</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> logDataTypeName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeNameFromId">LibGetDataTypeNameFromId</a>(tSS_DOUBLE)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Error: funcion %<<span>convertBetweenFcn</span>> doesn't support " ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"converting the input signal to type %<<span>logDataTypeName</span>>."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportFatalError">LibBlockReportFatalError</a>(block, errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%END_ASSERT</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endroll">%endroll</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isVarDims = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibGetIsInputPortVarDims">LibGetIsInputPortVarDims</a>(pIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/logsup.html#SLibGenLogVarUpdate">SLibGenLogVarUpdate</a>("var", "up%<<span>pIdx</span>>", isVarDims)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> pIdx < NumDataInputPorts-1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var = var->next;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <span class="tlc_bifunc">EXISTS</span>("ParamSettings.IsERTMobileTarget" ) &amp;&amp; ParamSettings.IsERTMobileTarget
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Call plotting routine for a mobile target */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/scope_mobile.html">scope_mobile.tlc</a>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* End of %<<span>Type</span>>: '%<<span>Name</span>>' */
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> Accelerator
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Call into Simulink for Scope */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/accellib.html#SLibCallBlockInSimulink">SLibCallBlockInSimulink</a>(system, block, "SS_CALL_MDL_OUTPUTS")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% Outputs</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/scope.html">scope.tlc</a>
+</span> <br></body></html>

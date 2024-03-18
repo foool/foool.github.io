@@ -1,0 +1,232 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2017<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Library<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>support<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>logging
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_LOGSUP_") == 0
+ <br><span class="tlc_assign">%assign</span> _LOGSUP_ = 1
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGenLogVarCreate<span style="padding-left:9.5px"></span>===============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Generate<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>creating<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>log<span style="padding-left:9.5px"></span>variable
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGenLogVarCreate" class="tlc_func">SLibGenLogVarCreate</a>(lv, name, dType, log, cmplx, frame, nCols, ...
+ <br>&nbsp;&nbsp;nDims, dims, logValDimsStat, currSigDims, currSigDimsSize, maxRows, ...
+ <br>&nbsp;&nbsp;decim, ts, appendToLogVarsList) Output
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>())
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tstart = 0.0
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isRSimWithSolverModule
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tstart = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("TStart")
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stepSize = 0.0
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !isRSimWithSolverModule <span class="tlc_comment">%% assert !IsModelReferenceTarget</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTCodeFormat">SLibIsERTCodeFormat</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stepSize = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("StepSize0")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stepSize = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("StepSize")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;%<<span>lv</span>> = %<<span>tCreateLogVar</span>>(
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdldefs.html#RTMGetLoggingObject">RTMGetLoggingObject</a>()</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tstart</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("TFinal")>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>stepSize</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#GetRTMErrorStatusPtr">GetRTMErrorStatusPtr</a>()</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>name</span>>",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dType</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>log</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>cmplx</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>frame</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>nCols</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>nDims</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dims</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>logValDimsStat</span>>,             
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>currSigDims</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>currSigDimsSize</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>maxRows</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>decim</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>ts</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>appendToLogVarsList</span>>);
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGenLogVarCreate</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibGenLogVarCreateWithConvert" class="tlc_func">SLibGenLogVarCreateWithConvert</a>(lv, name, dType, convert, log, cmplx, frame, nCols, ...
+ <br>&nbsp;&nbsp;nDims, dims, logValDimsStat, currSigDims, currSigDimsSize, maxRows, decim, ts, ...
+ <br>&nbsp;&nbsp;appendToLogVarsList) Output
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>())
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tstart = 0.0
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isRSimWithSolverModule
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tstart = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("TStart")
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stepSize = 0.0
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !isRSimWithSolverModule <span class="tlc_comment">%% assert !IsModelReferenceTarget</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTCodeFormat">SLibIsERTCodeFormat</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stepSize = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("StepSize0")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stepSize = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("StepSize")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;%<<span>lv</span>> = %<<span>tCreateLogVarWithConvert</span>>(
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdldefs.html#RTMGetLoggingObject">RTMGetLoggingObject</a>()</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tstart</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("TFinal")>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>stepSize</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#GetRTMErrorStatusPtr">GetRTMErrorStatusPtr</a>()</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>name</span>>",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dType</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>convert</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>log</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>cmplx</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>frame</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>nCols</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>nDims</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dims</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>logValDimsStat</span>>,             
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>currSigDims</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>currSigDimsSize</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>maxRows</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>decim</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>ts</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>appendToLogVarsList</span>>);
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGenLogVarCreateWithConvert</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGenStructLogVarCreate<span style="padding-left:9.5px"></span>=========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Generate<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>creating<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>struct<span style="padding-left:9.5px"></span>log<span style="padding-left:9.5px"></span>variable
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGenStructLogVarCreate" class="tlc_func">SLibGenStructLogVarCreate</a>(lv, name, logTime, maxRows, decim, ts, ...
+ <br>&nbsp;&nbsp;sigInfo, bName) Output
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>())
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tstart = 0.0
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isRSimWithSolverModule
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tstart = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("TStart")
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stepSize = 0.0
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !isRSimWithSolverModule  <span class="tlc_comment">%% assert !IsModelReferenceTarget</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTCodeFormat">SLibIsERTCodeFormat</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stepSize = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("StepSize0")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stepSize = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("StepSize")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;%<<span>lv</span>> = %<<span>tCreateStructLogVar</span>>(
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdldefs.html#RTMGetLoggingObject">RTMGetLoggingObject</a>()</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tstart</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("TFinal")>, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>stepSize</span>>, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#GetRTMErrorStatusPtr">GetRTMErrorStatusPtr</a>()</span>>, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>name</span>>", 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>logTime</span>>, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>maxRows</span>>, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>decim</span>>, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>ts</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>sigInfo</span>>, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>bName</span>>);
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGenStructLogVarCreate</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGenLogVarUpdate<span style="padding-left:9.5px"></span>===============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Generate<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>updating<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>log<span style="padding-left:9.5px"></span>variable
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGenLogVarUpdate" class="tlc_func">SLibGenLogVarUpdate</a>(logVar, inpPtr, isVarDims) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;%<<span>tUpdateLogVar</span>>((LogVar *)%<<span>logVar</span>>, %<<span>inpPtr</span>>, %<<span>isVarDims</span>>);
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGenLogVarUpdate</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGenStructLogVarUpdate<span style="padding-left:9.5px"></span>=========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Generate<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>updating<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>log<span style="padding-left:9.5px"></span>variable
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGenStructLogVarUpdate" class="tlc_func">SLibGenStructLogVarUpdate</a>(logVar, tPtr, inpPtr) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;%<<span>tUpdateStructLogVar</span>>((StructLogVar *)%<<span>logVar</span>>, %<<span>tPtr</span>>, %<<span>inpPtr</span>>);
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGenStructLogVarUpdate</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGenTXYLogVarUpdate<span style="padding-left:9.5px"></span>============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Generate<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>updating<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>log<span style="padding-left:9.5px"></span>variable
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGenTXYLogVarUpdate" class="tlc_func">SLibGenTXYLogVarUpdate</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% For separate output/update functions case, rt_UpdateTXYLogVars call will be</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% made in main.c(or .cpp). So for C++ Encapsulated code generation, the main</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% program must access rtwLogInfo field of RTM via C++ object's member function.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> GenerateClassInterface &amp;&amp; !::IncludeLoggingInstrumentation
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> loggingObject = "%<<span>CPPObjectName</span>>.getRTM()->rtwLogInfo"
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> loggingObject = "%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdldefs.html#RTMGetLoggingObject">RTMGetLoggingObject</a>()</span>>"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tPtr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmspecmacs.html#RTMSpecAccsGetTPtr">RTMSpecAccsGetTPtr</a>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib.html#RTMGetRTModelRecShell">RTMGetRTModelRecShell</a>().TPtr,<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetModelSS">RTMGetModelSS</a>())
+ <br>&nbsp;&nbsp;rt_UpdateTXYLogVars(%<<span>loggingObject</span>>, %<<span>tPtr</span>>);
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGenTXYLogVarUpdate</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGenLoggingStart<span style="padding-left:9.5px"></span>===============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Generate<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>starting<span style="padding-left:9.5px"></span>logging
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGenLoggingStart" class="tlc_func">SLibGenLoggingStart</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.RTWStatesLogging
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;rt_FillStateSigInfoFromMMI(%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdldefs.html#RTMGetLoggingObject">RTMGetLoggingObject</a>()</span>>,%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#GetRTMErrorStatusPtr">GetRTMErrorStatusPtr</a>()</span>>);
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tstart = 0.0
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isRSimWithSolverModule
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tstart = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>("TStart")
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;rt_StartDataLoggingWithStartTime(%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdldefs.html#RTMGetLoggingObject">RTMGetLoggingObject</a>()</span>>, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tstart</span>>, %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a></a>("TFinal")>, %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGet">RTMGet</a></a>("StepSize0")>, %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#GetRTMErrorStatusPtr">GetRTMErrorStatusPtr</a>()</span>>);
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGenLoggingStart</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGenLoggingStop<span style="padding-left:9.5px"></span>================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Generate<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>stopping<span style="padding-left:9.5px"></span>logging
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGenLoggingStop" class="tlc_func">SLibGenLoggingStop</a>(file) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% rt_CleanUpForStateLogWithMMI, rt_CleanUpForSigLogWithMMI and rt_StopDataLogging</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% calls will be made in main.c(or .cpp). So for C++ Encapsulated code generation, </span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% the main program must access rtwLogInfo field of RTM via C++ object's member </span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% function.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> GenerateClassInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> loggingObject = "%<<span>CPPObjectName</span>>.getRTM()->rtwLogInfo"
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> loggingObject = "%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdldefs.html#RTMGetLoggingObject">RTMGetLoggingObject</a>()</span>>"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.RTWStatesLogging
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;rt_CleanUpForStateLogWithMMI(%<<span>loggingObject</span>>);
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;rt_StopDataLogging(%<<span>file</span>>, %<<span>loggingObject</span>>);
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGenLoggingStop</span>
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span> <span class="tlc_comment">%% _LOGSUP_</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/logsup.html">logsup.tlc</a>
+</span> <br></body></html>

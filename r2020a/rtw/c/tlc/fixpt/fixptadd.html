@@ -1,0 +1,208 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>contains<span style="padding-left:9.5px"></span>tlc<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>generation<span style="padding-left:9.5px"></span>of
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>fixed<span style="padding-left:9.5px"></span>point<span style="padding-left:9.5px"></span>addition,<span style="padding-left:9.5px"></span>subtraction.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2011<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FixPt_Accumulate<span style="padding-left:9.5px"></span>==========================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Fixed<span style="padding-left:9.5px"></span>Point<span style="padding-left:9.5px"></span>Accumulation
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Vc<span style="padding-left:9.5px"></span>+=<span style="padding-left:9.5px"></span>Vb<span style="padding-left:9.5px"></span>or
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Vc<span style="padding-left:9.5px"></span>-=<span style="padding-left:9.5px"></span>Vb
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Synopsis:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptadd.html#FixPt_Accumulate">FixPt_Accumulate</a>(C,B,roundMode,satMode,doAdd)
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>cLabel<span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>string<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>gives<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>lvalue
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>cDT<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>type
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>bLabel<span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>string<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>gives<span style="padding-left:9.5px"></span>input<span style="padding-left:9.5px"></span>rvalue
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>bDT<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>input<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>type
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>roundMode<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>string<span style="padding-left:9.5px"></span>specifying<span style="padding-left:9.5px"></span>round<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>"Zero",<span style="padding-left:9.5px"></span>"Nearest",<span style="padding-left:9.5px"></span>etc.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>satMode<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>string<span style="padding-left:9.5px"></span>specifying<span style="padding-left:9.5px"></span>"Wrap"<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>"Saturate"<span style="padding-left:9.5px"></span>on<span style="padding-left:9.5px"></span>overflow
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>doAdd<span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>boolean<span style="padding-left:9.5px"></span>0<span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>subtraction,<span style="padding-left:9.5px"></span>otherwise<span style="padding-left:9.5px"></span>addition
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>It<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>required<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>input<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>have<span style="padding-left:9.5px"></span>identical<span style="padding-left:9.5px"></span>storage<span style="padding-left:9.5px"></span>types,
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>identical<span style="padding-left:9.5px"></span>scaling,<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>zero<span style="padding-left:9.5px"></span>biases
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>because<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>these<span style="padding-left:9.5px"></span>requirements<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>formulas<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Stored<span style="padding-left:9.5px"></span>Integers<span style="padding-left:9.5px"></span>(not<span style="padding-left:9.5px"></span>counting<span style="padding-left:9.5px"></span>saturation)<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>trivial
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>C<span style="padding-left:9.5px"></span>+=<span style="padding-left:9.5px"></span>B<span style="padding-left:9.5px"></span>or
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>C<span style="padding-left:9.5px"></span>-=<span style="padding-left:9.5px"></span>B
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FixPt_Accumulate" class="tlc_func">FixPt_Accumulate</a>(cLabel,cDT,bLabel,bDT,satMode,doAdd) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptlib.html#FixPt_DataTypeIsFloat">FixPt_DataTypeIsFloat</a>(cDT)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixpterror.html#FixPt_FloatingPointNotSupported">FixPt_FloatingPointNotSupported</a>(bDT)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Check that storage types and scaling are identical</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% and biases are zero</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (bDT.Bias != 0) || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(cDT.RequiredBits != bDT.RequiredBits) || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(cDT.IsSigned   != bDT.IsSigned  ) || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptlib.html#FixPt_FracSlopesSame">FixPt_FracSlopesSame</a>(cDT.FracSlope, bDT.FracSlope ) || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(cDT.FixedExp   != bDT.FixedExp  )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%START_ASSERT</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("FixPt_Accumulate: Incompatible Input and Output Data Types.")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%END_ASSERT</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> doAdd
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> opStr = "FixPtAdd"
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> opStr = "FixPtSubtract"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%  </span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixpterror.html#FixPt_WordLengthLimitationCheck">FixPt_WordLengthLimitationCheck</a>(cDT)>/
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixpterror.html#FixPt_WordLengthLimitationCheck">FixPt_WordLengthLimitationCheck</a>(bDT)>/
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vec = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptlib.html#FixPt_BinaryOp">FixPt_BinaryOp</a>(opStr, cLabel, cDT, cLabel, cDT, bLabel, bDT, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"Simplest", satMode)
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;%<vec[2]>/
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br><span class="tlc_fkw">%endfunction</span>  <span class="tlc_comment">%% FixPt_Accumulate</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FixPt_AccumPos<span style="padding-left:9.5px"></span>==========================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Fixed<span style="padding-left:9.5px"></span>Point<span style="padding-left:9.5px"></span>Positive<span style="padding-left:9.5px"></span>Accumulation
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Vc<span style="padding-left:9.5px"></span>+=<span style="padding-left:9.5px"></span>Vb
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>See<span style="padding-left:9.5px"></span>FixPt_Accumulation<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>more<span style="padding-left:9.5px"></span>details
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FixPt_AccumPos" class="tlc_func">FixPt_AccumPos</a>(cLabel,cDT,bLabel,bDT,satMode) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptadd.html#FixPt_Accumulate">FixPt_Accumulate</a>(cLabel,cDT,bLabel,bDT,satMode,1)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br><span class="tlc_fkw">%endfunction</span>  <span class="tlc_comment">%% FixPt_AccumPos</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FixPt_AccumNeg<span style="padding-left:9.5px"></span>==========================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Fixed<span style="padding-left:9.5px"></span>Point<span style="padding-left:9.5px"></span>Negative<span style="padding-left:9.5px"></span>Accumulation
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Vc<span style="padding-left:9.5px"></span>+=<span style="padding-left:9.5px"></span>Vb
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>See<span style="padding-left:9.5px"></span>FixPt_Accumulation<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>more<span style="padding-left:9.5px"></span>details
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FixPt_AccumNeg" class="tlc_func">FixPt_AccumNeg</a>(cLabel,cDT,bLabel,bDT,satMode) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptadd.html#FixPt_Accumulate">FixPt_Accumulate</a>(cLabel,cDT,bLabel,bDT,satMode,0)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br><span class="tlc_fkw">%endfunction</span>  <span class="tlc_comment">%% FixPt_AccumPos</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FixPt_Accumulate_Easy<span style="padding-left:9.5px"></span>==========================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Fixed<span style="padding-left:9.5px"></span>Point<span style="padding-left:9.5px"></span>Accumulation
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Vc<span style="padding-left:9.5px"></span>+=<span style="padding-left:9.5px"></span>Vb
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>EASY<span style="padding-left:9.5px"></span>version<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>FixPt_Accumulate
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Handles<span style="padding-left:9.5px"></span>all<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>types<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>all<span style="padding-left:9.5px"></span>scalings.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>needed<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>always<span style="padding-left:9.5px"></span>does<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>conversion<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>b's<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>type<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>scaling
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>c's<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>type<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>scaling.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>It<span style="padding-left:9.5px"></span>also<span style="padding-left:9.5px"></span>declares<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>local<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>to
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>handle<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>cast<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>needed.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>reason<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>use<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>"hard"<span style="padding-left:9.5px"></span>version<span style="padding-left:9.5px"></span>FixPt_Accumulate<span style="padding-left:9.5px"></span>instead<span style="padding-left:9.5px"></span>of
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>easy<span style="padding-left:9.5px"></span>version<span style="padding-left:9.5px"></span>would<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>move<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>casts<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>declarations<span style="padding-left:9.5px"></span>outside
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>more<span style="padding-left:9.5px"></span>efficient<span style="padding-left:9.5px"></span>and/or<span style="padding-left:9.5px"></span>readable<span style="padding-left:9.5px"></span>location<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>code.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FixPt_Accumulate_Easy" class="tlc_func">FixPt_Accumulate_Easy</a>(cLabel,cDT,bLabel,bDT,roundMode,satMode,doAdd) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% create Bias Free version of output Data Type</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_copyrecord">%copyrecord</span> cNoBiasDT cDT
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cNoBiasDT.Bias = 0.0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castInLabel = "castIn_Accumulate"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> gutsOfAdd
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castInWasUsed = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% cast input to outputs data type</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% add or subtract input from output</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVecStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptcast.html#FixPt_Fix2Fix">FixPt_Fix2Fix</a>(castInLabel,cNoBiasDT,...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bLabel,     bDT,...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;roundMode,satMode)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">SIZE</span>(retVecStr,1) == 3
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptadd.html#FixPt_Accumulate">FixPt_Accumulate</a>(cLabel,      cNoBiasDT,...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retVecStr[1],cNoBiasDT,...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;satMode,doAdd)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castInWasUsed = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptadd.html#FixPt_Accumulate">FixPt_Accumulate</a>(cLabel,     cNoBiasDT,...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;castInLabel,cNoBiasDT,...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;satMode,doAdd)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> gutsOfAdd
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> castInWasUsed
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>cNoBiasDT.NativeType</span>> %<<span>castInLabel</span>>;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>gutsOfAdd</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>gutsOfAdd</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br><span class="tlc_fkw">%endfunction</span>  <span class="tlc_comment">%% FixPt_Accumulate_Easy</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FixPt_AccumPos_Easy<span style="padding-left:9.5px"></span>==========================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Fixed<span style="padding-left:9.5px"></span>Point<span style="padding-left:9.5px"></span>Positive<span style="padding-left:9.5px"></span>Accumulation
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Vc<span style="padding-left:9.5px"></span>+=<span style="padding-left:9.5px"></span>Vb
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>See<span style="padding-left:9.5px"></span>FixPt_Accumulation_Easy<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>more<span style="padding-left:9.5px"></span>details
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FixPt_AccumPos_Easy" class="tlc_func">FixPt_AccumPos_Easy</a>(cLabel,cDT,bLabel,bDT,roundMode,satMode) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptadd.html#FixPt_Accumulate_Easy">FixPt_Accumulate_Easy</a>(cLabel,cDT,bLabel,bDT,roundMode,satMode,1)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br><span class="tlc_fkw">%endfunction</span>  <span class="tlc_comment">%% FixPt_AccumPos_Easy</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FixPt_AccumNeg_Easy<span style="padding-left:9.5px"></span>==========================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Fixed<span style="padding-left:9.5px"></span>Point<span style="padding-left:9.5px"></span>Negative<span style="padding-left:9.5px"></span>Accumulation
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Vc<span style="padding-left:9.5px"></span>+=<span style="padding-left:9.5px"></span>Vb
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>See<span style="padding-left:9.5px"></span>FixPt_Accumulation_Easy<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>more<span style="padding-left:9.5px"></span>details
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FixPt_AccumNeg_Easy" class="tlc_func">FixPt_AccumNeg_Easy</a>(cLabel,cDT,bLabel,bDT,roundMode,satMode) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptadd.html#FixPt_Accumulate_Easy">FixPt_Accumulate_Easy</a>(cLabel,cDT,bLabel,bDT,roundMode,satMode,0)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br><span class="tlc_fkw">%endfunction</span>  <span class="tlc_comment">%% FixPt_AccumPos_Easy</span>
+ <br></body></html>

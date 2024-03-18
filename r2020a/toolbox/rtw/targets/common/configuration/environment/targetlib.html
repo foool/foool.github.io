@@ -1,0 +1,114 @@
+<html>
+<head>
+
+<style>
+p {color : black; font-family:courier; font-size: 80%;}
+body {line-height: 100%; font-family:courier;}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_function {color: green;}.tlc_endfunction {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}
+.tlc_bifunc {color: brown;}
+</style>
+
+</head>
+<body>
+%% File: <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/common/configuration/environment/targetlib.html">targetlib.tlc</a>
+ <br>%%
+ <br>%% Abstract:
+ <br>%%   Library functions for code generation with an Embedded Target
+ <br>%%
+ <br>%% 
+ <br>%% 
+ <br>%%
+ <br>%% Copyright 2001-2010 The MathWorks, Inc.
+ <br>&nbsp; <br>%% Function: SLibCodeGenForSim ================================================
+ <br>%% Abstract:
+ <br>%%   Code generation for simulation for:
+ <br>%%   - Accelerator
+ <br>%%   - CodeFormat=="S-Function"
+ <br>%%   - CodeGenForPIL
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="SLibCodeGenForSim" class="tlc_func">SLibCodeGenForSim</a>() void
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (Accelerator)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> 1
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> (CodeFormat=="S-Function")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> 1
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> ((<span class="tlc_bifunc">EXISTS</span>("CodeGenForPIL")) && (CodeGenForPIL==1))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> 1
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> 0
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%%
+ <br>%% Function SLibArrayFEVAL ================================================
+ <br>%% 
+ <br>%% Abstract:
+ <br>%%    Allow FEVAL to MATLAB with multiple return values
+ <br>%%
+ <br>%%    Arguments:
+ <br>%% 
+ <br>%%    fname - the name of the MATLAB fcn to call.
+ <br>%%    nout - the number of output arguments required from the MATLAB fcn.
+ <br>%%    arrayArgs - an array containing the input arguments to the MATLAB fcn.
+ <br>%%
+ <br>%%    Returns: 
+ <br>%%
+ <br>%%    An array containing the requested output arguments from the MATLAB fcn call.
+ <br>%%
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="SLibArrayFEVAL" class="tlc_func">SLibArrayFEVAL</a>(fname, nout, arrayArgs) 
+ <br>&nbsp;&nbsp;&nbsp;%% variable length argument list is in arrayArgs
+ <br>&nbsp;&nbsp;&nbsp;%% unwind it for the call to FEVAL
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vararglist = ""
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> arrayArg = <span class="tlc_bifunc">SIZE</span>(arrayArgs, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> arrayArg == 0 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vararglist = "arrayArgs[%&lt;arrayArg&gt;]"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vararglist = "%&lt;vararglist&gt;, arrayArgs[%&lt;arrayArg&gt;]"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;%% use standard FEVAL to call the cellarrayfeval.m helper function
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> result = <span class="tlc_bifunc">FEVAL</span>("cellarrayfeval", fname, nout, %&lt;vararglist&gt;)
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> result
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br>%% 
+ <br>%% Function SLibSafeFEVAL ===================================================
+ <br>%%
+ <br>%% Abstract:
+ <br>%%    FEVAL to MATLAB, throwing any MATLAB error that occurs as a hard TLC error.
+ <br>%%
+ <br>%% Arguments:
+ <br>%%
+ <br>%% fname - the name of the MATLAB fcn to call
+ <br>%% arrayArgs - an array containing the input arguments to the MATLAB fcn
+ <br>%%
+ <br>%% Returns:
+ <br>%%
+ <br>%% The FEVAL result
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="SLibSafeFEVAL" class="tlc_func">SLibSafeFEVAL</a>(fname, arrayArgs)
+ <br>&nbsp;&nbsp;&nbsp;%% variable length argument list is in arrayArgs
+ <br>&nbsp;&nbsp;&nbsp;%% unwind it for the call to FEVAL
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vararglist = ""
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> arrayArg = <span class="tlc_bifunc">SIZE</span>(arrayArgs, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> arrayArg == 0 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vararglist = "arrayArgs[%&lt;arrayArg&gt;]"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vararglist = "%&lt;vararglist&gt;, arrayArgs[%&lt;arrayArg&gt;]"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;%% store current MATLAB error status
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> err_old = <span class="tlc_bifunc">FEVAL</span>("lasterr")
+ <br>&nbsp;&nbsp;&nbsp;%% clear MATLAB error status
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_matlab">%matlab</span> lasterr("")
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;%% Make the FEVAL
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> result = <span class="tlc_bifunc">FEVAL</span>(fname, %&lt;vararglist&gt;)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;%% get new MATLAB error status
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> err = <span class="tlc_bifunc">FEVAL</span>("lasterr")
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/obsoletelib.html#LibIsEmpty">LibIsEmpty</a>(err)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_exit">%exit</span> %&lt;err&gt;
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;%% restore MATLAB error status
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_matlab">%matlab</span> lasterr(err_old)
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> result
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br></body></html>

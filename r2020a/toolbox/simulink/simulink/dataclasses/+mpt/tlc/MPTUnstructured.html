@@ -1,0 +1,152 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2018<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Target<span style="padding-left:9.5px"></span>language<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>C
+</span> <br><span class="tlc_implements">%implements</span> * "C"
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(ConfigSet.EnableCustomComments, 1) &amp; <span class="tlc_bifunc">ISFIELD</span>(ConfigSet,"CustomCommentsFcn")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> CusCommFile = ConfigSet.CustomCommentsFcn
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> CusCommFcn = <span class="tlc_bifunc">FEVAL</span>("strtok",CusCommFile,".")
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(CusCommFcn)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> CusCommTLCFile = CusCommFcn + ".tlc"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">FILE_EXISTS</span>(CusCommTLCFile)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_include">%include</span> "%<<span>CusCommTLCFile</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> temp = "fileparts(which('%<<span>CusCommTLCFile</span>>'))"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> filePath = <span class="tlc_bifunc">FEVAL</span>("eval", temp)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(filePath)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addincludepath">%addincludepath</span> filePath
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_include">%include</span> "%<<span>CusCommTLCFile</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%=============================================================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="GetCustomComments" class="tlc_func">GetCustomComments</a>(record,request) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br><span class="tlc_assign">%assign</span> comment1 = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(ConfigSet,"CustomCommentsFcn") 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> CusCommFile = ConfigSet.CustomCommentsFcn
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> CusCommFile = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> CusCommFcn = <span class="tlc_bifunc">FEVAL</span>("strtok",CusCommFile,".")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> temp = "fileparts(which('%<<span>CusCommFile</span>>'))"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mfilePath = <span class="tlc_bifunc">FEVAL</span>("eval", temp)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(CusCommFcn)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> CusCommTLCFile = CusCommFcn + ".tlc"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> CusCommMFile = CusCommFcn + ".m"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(CusCommFile,CusCommTLCFile) &amp; <span class="tlc_bifunc">FILE_EXISTS</span>(CusCommTLCFile) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comment1 = UserCustomComments(record,CompiledModel.Name,request)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <span class="tlc_bifunc">ISEQUAL</span>(CusCommFile,CusCommMFile) &amp; !<span class="tlc_bifunc">ISEMPTY</span>(mfilePath) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comment1 = <span class="tlc_bifunc">FEVAL</span>(CusCommFcn,id,CompiledModel.Name,request)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <span class="tlc_bifunc">FILE_EXISTS</span>(CusCommTLCFile) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comment1 = UserCustomComments(record,CompiledModel.Name,request)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> !<span class="tlc_bifunc">ISEMPTY</span>(mfilePath)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comment1 = <span class="tlc_bifunc">FEVAL</span>(CusCommFcn,id,CompiledModel.Name,request)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Error: %<<span>CusCommFile</span>> is an undefined file for" +...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" Custom Comments. Please check if it is on the MATLAB path."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>(errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Error: Custom comments is turned on. A Custom comments" +...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" function needs to be specified."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>(errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(comment1, 0)
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%% Something wrong in Custom comments file</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comment1 = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Calling custom comments function error for '%<<span>id</span>>'." +...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" No custom comment is placed in generated code."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportWarning">LibReportWarning</a>(errTxt)>
+ <br><span class="tlc_elseif">%elseif</span> <span class="tlc_bifunc">ISEQUAL</span>(comment1,[])
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%% custom comments are empty </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comment1 = ""
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_return">%return</span> comment1
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br><span class="tlc_comment">%%=============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>DataAccess<span style="padding-left:9.5px"></span>=========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>DataAccess<span style="padding-left:9.5px"></span>provides<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>API<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>requesting<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>fragments<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>other
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>information<span style="padding-left:9.5px"></span>corresponding<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>custom<span style="padding-left:9.5px"></span>storage<span style="padding-left:9.5px"></span>class.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="DataAccess" class="tlc_func">DataAccess</a>(record, request, idx, reim) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> request
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "declComment"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "defnComment"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comments = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibDataAccessInSpecificTLC">LibDataAccessInSpecificTLC</a>("Simulink", "<a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/Unstructured.html">Unstructured.tlc</a>", record, request, idx, reim)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <span class="tlc_bifunc">ISEMPTY</span>(comments[0])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%% Set custom comments into first element in comments vector</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(ConfigSet.EnableCustomComments,1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> customComments = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+mpt/tlc/MPTUnstructured.html#GetCustomComments">GetCustomComments</a>(record,request)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comments = ["%<<span>customComments</span>>", "%<comments[1]>", "%<comments[2]>"]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> comments
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "declare"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "define"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "contents"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "address"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "initialize"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "layout"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibDataAccessInSpecificTLC">LibDataAccessInSpecificTLC</a>("Simulink", "<a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/Unstructured.html">Unstructured.tlc</a>", record, request, idx, reim)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% You should invoke LibDefaultCustomStorageUnknownClassAccessType</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% for unrecognized requests.  It gracefully errors for unhandled</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% critical cases, and supplies safe defaults for unhandled</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% noncritical requests.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibDefaultCustomStorageUnknownDataAccessType">LibDefaultCustomStorageUnknownDataAccessType</a>(record, request, idx, reim)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>ClassAccess<span style="padding-left:9.5px"></span>========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>ClassAccess<span style="padding-left:9.5px"></span>provides<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>API<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>requesting<span style="padding-left:9.5px"></span>information<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>actions
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>corresponding<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>custom<span style="padding-left:9.5px"></span>storage<span style="padding-left:9.5px"></span>class.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="ClassAccess" class="tlc_func">ClassAccess</a>(record, request) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cscDefn = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetCSCDefForCSC">SLibGetCSCDefForCSC</a>(record)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> request  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "setup"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibCheckForUndefinedImportedMacros">SLibCheckForUndefinedImportedMacros</a>(record)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "comment"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "typeComment"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "declComment"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "defnComment"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibClassAccessInSpecificTLC">LibClassAccessInSpecificTLC</a>("Simulink", "<a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/Unstructured.html">Unstructured.tlc</a>", record, request)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% You should invoke LibDefaultCustomStorageUnknownClassAccessType</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% for unrecognized requests.  It gracefully errors for unhandled</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% critical cases, and supplies safe defaults for unhandled</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% noncritical requests.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibDefaultCustomStorageUnknownClassAccessType">LibDefaultCustomStorageUnknownClassAccessType</a>(record, request)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+mpt/tlc/MPTUnstructured.html">MPTUnstructured.tlc</a>
+</span> <br></body></html>

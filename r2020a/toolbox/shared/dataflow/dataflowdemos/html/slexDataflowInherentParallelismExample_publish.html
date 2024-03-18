@@ -1,0 +1,186 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Using Dataflow to Take Advantage of Inherent Parallelism in Models</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-05-01"><meta name="DC.source" content="slexDataflowInherentParallelismExample_publish.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Using Dataflow to Take Advantage of Inherent Parallelism in Models</h1><!--introduction--><p>This example uses dataflow, a data-driven domain in Simulink, to take advantage of inherent parallelism in the system and run the audio processing system simulation multithreaded. This example shows how to beamform signals received by an array of microphones to extract a desired speech signal in a noisy environment.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">About Dataflow</a></li><li><a href="#2">Acoustic Beamforming</a></li><li><a href="#3">Inherent Parallelism</a></li><li><a href="#4">Multithreaded Simulation</a></li><li><a href="#5">Thread Allocation Results</a></li><li><a href="#6">Summary</a></li></ul></div><h2 id="1">About Dataflow</h2><p>With dataflow, blocks inside the domain execute based on arrival of data as opposed to Simulink's sample time, and models are automatically partitioned into concurrent threads that accelerate simulation and increase data throughput. For an introduction to dataflow see the <a href="matlab:web(fullfile(matlabroot,'toolbox','shared','dataflow','dataflowdemos','html','slexDataflowIntroductionExample_publish.html'))">Introduction to Dataflow for Multithreading in Simulink</a> example. To take advantage of the dataflow domain, hence multithreaded simulation, your model or section of your model must only have discrete-time blocks. Using Dataflow Subsystems we can delineate the region of the model where dataflow semantics, as opposed to Simulink's sample time, is used to sort and execute blocks. Moreover, you cannot have blocks that access time, require a Simulink solver, or do not support code generation. Signals inside the Dataflow Subsystem don't have a sample time associated with them. Signals output from the Dataflow Subsystem will be associated with the sample time of the signal before it entered the Dataflow Subsystem. All the blocks inside the Dataflow Subsystem form a dataflow region in the model.</p><h2 id="2">Acoustic Beamforming</h2><p>This example shows acoustic beamforming using a uniform linear array (ULA) of microphones. The model simulates the reception of three audio signals from different directions on a 10-element uniformly spaced linear microphone array. After the addition of thermal noise at the receiver, beamforming is applied for different source angles and the result is played on a sound device. The audio source that needs to be played in the audio player can be selected using the dialog from the "Select Source" block. This example shows how Simulink automatically partitions the dataflow part of the model to take advantage of inherent parallelism in the system and run the audio processing system simulation multithreaded.</p><img vspace="5" hspace="5" src="slexDataflowInherentParallelismExample_publish_01.png" alt=""> <h2 id="3">Inherent Parallelism</h2><p>There is lots of inherent parallelism in this model since the three "Frost Beamformer" blocks can run independently. But all the beamformer blocks are data dependent on "Microphone Array" and "Receiver Preamp" blocks. Adding pipeline delays would remove this dependency and increase concurrency for this model. You can analyze this by using the Dataflow Multithreading Analysis app. You can open this app by double-clicking on the Dataflow Multithreading Analysis App block in the model. In this app you can view the speedup that can be achieved for different delay values by choosing the menu option "Analysis-&gt;Performance Tradeoff-&gt;Speedup &amp; Threads vs. Delays". The app shows that for 0 delays the estimated speedup that can be obtained is about 2.8x. This is possible because the 3 "Frost Beamformer" blocks are computationally intensive as well as they can run independently. Dataflow can partition this model and gain nearly 3x performance improvement by scheduling the 3 "Frost Beamformer" blocks to run in 3 different threads. The app also shows that we can get increased concurrency and thereby speedup by increasing the pipeline delay to 1. This is because introducing a pipeline delay after "Receiver Preamp" block will break the data dependency of the "Frost Beamformer" blocks on their sources, thereby enabling "Microphone Array" and "Receiver Preamp" blocks to be moved into a separate thread. The estimated speedup increases to 3.1x after adding this pipeline delay.</p><img vspace="5" hspace="5" src="slexDataflowInherentParallelismExample_publish_02.png" alt=""> <h2 id="4">Multithreaded Simulation</h2><p>The dataflow region in the model enabled Simulink to automatically partition the model by extracting inherent parallelism and placing the computationally intensive "Frost Beamformer" blocks in separate threads. When you simulate this model it runs using multiple threads. The audio player plays one of the three audio sources depending on the source selected using the "Select Source" block.</p><h2 id="5">Thread Allocation Results</h2><p>Different threads used by the model can be seen by turning thread highlighting "on" using the menu option "Display-&gt;Highlight Dataflow Threads" in the model. For this model 4 different threads are used. These are shown using 4 different colors in the model. In this example, all of the 3 "Frost Beamformer" blocks run in different threads, while the "Microphone Array" and the "Receiver Preamp" blocks run in the same thread. The Thread Legend window can be used to selectively highlight only some threads for inspecting the model.</p><p><img vspace="5" hspace="5" src="slexDataflowInherentParallelismExampleHighlightThreadsPix.png" alt=""> </p><img vspace="5" hspace="5" src="slexDataflowInherentParallelismExample_publish_03.png" alt=""> <h2 id="6">Summary</h2><p>This example shows how an audio processing system simulation model can use dataflow to automatically partition the data-driven part of the model into concurrent execution threads and run the model using multiple threads. This example shows an estimated speedup of 3.1x over single-threaded simulation using 4 threads. The Dataflow Multithreading Analysis app shows how different blocks are scheduled to run in parallel and how introducing pipeline delays between blocks breaks data dependency between blocks and increases concurrency. Note that depending on the desktop computer system and the processor you are using, the numbers and visualization showed could be different when you run the same model in your computer. These numbers and analysis were published on a Windows desktop computer with Intel&reg; Xeon&reg; CPU E5-1650 v3 @ 3.4 GHz 6 Cores 12 Threads processor.</p><p class="footer">Copyright 2016-2017 The MathWorks, Inc.<br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Using Dataflow to Take Advantage of Inherent Parallelism in Models
+% This example uses dataflow, a data-driven domain in Simulink, to take
+% advantage of inherent parallelism in the system and run the audio
+% processing system simulation multithreaded. This example shows how to
+% beamform signals received by an array of microphones to extract a desired
+% speech signal in a noisy environment.
+
+% Copyright 2016-2017 The MathWorks, Inc.
+
+%% About Dataflow
+% With dataflow, blocks inside the domain execute based on arrival of data
+% as opposed to Simulink's sample time, and models are automatically
+% partitioned into concurrent threads that accelerate simulation and
+% increase data throughput. For an introduction to dataflow see the
+% <matlab:web(fullfile(matlabroot,'toolbox','shared','dataflow','dataflowdemos','html','slexDataflowIntroductionExample_publish.html'))
+% Introduction to Dataflow for Multithreading in Simulink> example. To take
+% advantage of the dataflow domain, hence multithreaded simulation, your
+% model or section of your model must only have discrete-time blocks. Using
+% Dataflow Subsystems we can delineate the region of the model where
+% dataflow semantics, as opposed to Simulink's sample time, is used to sort
+% and execute blocks. Moreover, you cannot have blocks that access time,
+% require a Simulink solver, or do not support code generation. Signals
+% inside the Dataflow Subsystem don't have a sample time associated with
+% them. Signals output from the Dataflow Subsystem will be associated with
+% the sample time of the signal before it entered the Dataflow Subsystem.
+% All the blocks inside the Dataflow Subsystem form a dataflow region in
+% the model.
+
+%% Acoustic Beamforming
+% This example shows acoustic beamforming using a uniform linear array
+% (ULA) of microphones. The model simulates the reception of three audio
+% signals from different directions on a 10-element uniformly spaced linear
+% microphone array. After the addition of thermal noise at the receiver,
+% beamforming is applied for different source angles and the result is
+% played on a sound device. The audio source that needs to be played in the
+% audio player can be selected using the dialog from the "Select Source"
+% block. This example shows how Simulink automatically partitions the
+% dataflow part of the model to take advantage of inherent parallelism in
+% the system and run the audio processing system simulation multithreaded.
+model_name = 'slexDataflowInherentParallelismExample';
+open_system(model_name);
+
+%% Inherent Parallelism
+% There is lots of inherent parallelism in this model since the three
+% "Frost Beamformer" blocks can run independently. But all the beamformer
+% blocks are data dependent on "Microphone Array" and "Receiver Preamp"
+% blocks. Adding pipeline delays would remove this dependency and increase
+% concurrency for this model. You can analyze this by using the Dataflow
+% Multithreading Analysis app. You can open this app by double-clicking on
+% the Dataflow Multithreading Analysis App block in the model. In this app
+% you can view the speedup that can be achieved for different delay values
+% by choosing the menu option "Analysis->Performance Tradeoff->Speedup &
+% Threads vs. Delays". The app shows that for 0 delays the estimated
+% speedup that can be obtained is about 2.8x. This is possible because the
+% 3 "Frost Beamformer" blocks are computationally intensive as well as they
+% can run independently. Dataflow can partition this model and gain nearly
+% 3x performance improvement by scheduling the 3 "Frost Beamformer" blocks
+% to run in 3 different threads. The app also shows that we can get
+% increased concurrency and thereby speedup by increasing the pipeline
+% delay to 1. This is because introducing a pipeline delay after "Receiver
+% Preamp" block will break the data dependency of the "Frost Beamformer"
+% blocks on their sources, thereby enabling "Microphone Array" and
+% "Receiver Preamp" blocks to be moved into a separate thread. The
+% estimated speedup increases to 3.1x after adding this pipeline delay.
+set_param(model_name, 'SimulationCommand', 'Update');
+close all;
+dataflow.internal.visuals.openBlockVisual(model_name,struct(...
+    'AnalysisType',1,'ScreenScaling',[60 400 750 650],'BackGround','white'));
+
+%% Multithreaded Simulation
+% The dataflow region in the model enabled Simulink to automatically
+% partition the model by extracting inherent parallelism and placing the
+% computationally intensive "Frost Beamformer" blocks in separate threads.
+% When you simulate this model it runs using multiple threads. The audio
+% player plays one of the three audio sources depending on the source
+% selected using the "Select Source" block.
+sim(model_name,'StopTime','10');
+
+%% Thread Allocation Results
+% Different threads used by the model can be seen by turning thread
+% highlighting "on" using the menu option "Display->Highlight Dataflow
+% Threads" in the model. For this model 4 different threads are used. These
+% are shown using 4 different colors in the model. In this example, all of
+% the 3 "Frost Beamformer" blocks run in different threads, while the
+% "Microphone Array" and the "Receiver Preamp" blocks run in the same
+% thread. The Thread Legend window can be used to selectively highlight
+% only some threads for inspecting the model.
+%
+% <<slexDataflowInherentParallelismExampleHighlightThreadsPix.png>>
+%
+set_param(model_name, 'HighlightDataflowThreads', 'on');
+set_param(model_name, 'SimulationCommand', 'Update');
+print('-dpng',['-s' model_name], [model_name 'HighlightThreadsPix.png']);
+
+%% Summary
+% This example shows how an audio processing system simulation model can
+% use dataflow to automatically partition the data-driven part of the model
+% into concurrent execution threads and run the model using multiple
+% threads. This example shows an estimated speedup of 3.1x over
+% single-threaded simulation using 4 threads. The Dataflow Multithreading
+% Analysis app shows how different blocks are scheduled to run in parallel
+% and how introducing pipeline delays between blocks breaks data dependency
+% between blocks and increases concurrency. Note that depending on the
+% desktop computer system and the processor you are using, the numbers and
+% visualization showed could be different when you run the same model in
+% your computer. These numbers and analysis were published on a Windows
+% desktop computer with Intel(R) Xeon(R) CPU E5-1650 v3 @ 3.4 GHz 6 Cores
+% 12 Threads processor.
+
+close_system(model_name, 0);
+
+% LocalWords:  multithreaded beamform dataflowdemos slex Multithreading
+% LocalWords:  Beamforming beamforming Beamformer beamformer Tradeoff dpng Xeon
+
+##### SOURCE END #####
+--></body></html>

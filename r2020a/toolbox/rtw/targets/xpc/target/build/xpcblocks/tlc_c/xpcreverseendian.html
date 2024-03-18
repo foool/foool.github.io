@@ -1,0 +1,103 @@
+<html>
+<head>
+
+<style>
+p {color : black; font-family:courier; font-size: 80%;}
+body {line-height: 100%; font-family:courier;}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_function {color: green;}.tlc_endfunction {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}
+.tlc_bifunc {color: brown;}
+</style>
+
+</head>
+<body>
+%% Abstract:
+ <br>%%      TLC file for xPC Target Byte Reversal block
+ <br>%%
+ <br>%% Copyright 1996-2005 The MathWorks, Inc.
+ <br>%%  
+ <br>&nbsp; <br><span class="tlc_implements">%implements</span> xpcreverseendian "C"
+ <br>&nbsp; <br>%% Make the preprocessor declarations.
+ <br><span class="tlc_function">%function</span> <a id="BlockTypeSetup" class="tlc_func">BlockTypeSetup</a>(block, system) void
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buffer
+ <br>&nbsp; <br>&nbsp;&nbsp;/* Used to reverse endianness */
+ <br>&nbsp;&nbsp;#define SWAP16(x) (((x) >> 8) | (((x) & 0xff) << 8))
+ <br>&nbsp;&nbsp;#define SWAP32(x) (SWAP16((x) >> 16) | (SWAP16((x) & 0xffff) << 16))
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buffer
+ <br>&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibCacheDefine">LibCacheDefine</a>(buffer)&gt;
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_function">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block,system) Output
+ <br>&nbsp; <br>&nbsp;&nbsp;/* ReverseEndian: %&lt;block.Name&gt; */
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> which = block.SFcnParamSettings.Width1Input
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">SIZE</span>(which, 1)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* 1 byte-wide input datatypes */
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;%% Simple memcpy will do for these
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> i = <span class="tlc_bifunc">SIZE</span>(which, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(void) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMemFcnCall">LibGenMemFcnCall</a>("memcpy", <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(which[i], "", "", 0), ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(which[i], "", "", 0), ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordWidth">LibGetRecordWidth</a>(block.DataInputPort[which[i]]))>;
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;%%
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> which = block.SFcnParamSettings.Width2Input
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">SIZE</span>(which, 1)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* 2 byte-wide input datatypes */
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> i = <span class="tlc_bifunc">SIZE</span>(which, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rv    = ["", ""]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rv[0] = <span class="tlc_bifunc">SPRINTF</span>("u%d", which[i])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rv[1] = <span class="tlc_bifunc">SPRINTF</span>("y%d", which[i])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rr = block.DataInputPort[which[i]].RollRegions
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_roll">%roll</span> sigIdx = rr, lcv = RollThreshold, block, "Roller", rv
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isp = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(which[i], "", lcv, sigIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> osp = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(which[i], "", lcv, sigIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((uint16_T *)%&lt;osp&gt;)[0] =
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SWAP16(((uint16_T *)%&lt;isp&gt;)[0]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endroll">%endroll</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;%%
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> which = block.SFcnParamSettings.Width4Input
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">SIZE</span>(which, 1)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* 4 byte-wide input datatypes */
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> i = <span class="tlc_bifunc">SIZE</span>(which, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rv = ["", ""]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rv[0] = <span class="tlc_bifunc">SPRINTF</span>("u%d", which[i])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rv[1] = <span class="tlc_bifunc">SPRINTF</span>("y%d", which[i])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rr = block.DataInputPort[which[i]].RollRegions
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_roll">%roll</span> sigIdx = rr, lcv = RollThreshold, block, "Roller", rv
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isp = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(which[i], "", lcv, sigIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> osp = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(which[i], "", lcv, sigIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((uint32_T *)%&lt;osp&gt;)[0] =
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SWAP32(((uint32_T *)%&lt;isp&gt;)[0]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endroll">%endroll</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;%%
+ <br>&nbsp;&nbsp;%%
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> which = block.SFcnParamSettings.Width8Input
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">SIZE</span>(which, 1)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* 8 byte-wide input datatypes */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Pointers need to be declared only once for all such inputs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32_T *tmpy, *tmpu;
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> i = <span class="tlc_bifunc">SIZE</span>(which, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rv = ["", ""]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rv[0] = <span class="tlc_bifunc">SPRINTF</span>("u%d", which[i])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rv[1] = <span class="tlc_bifunc">SPRINTF</span>("y%d", which[i])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rr = block.DataInputPort[which[i]].RollRegions
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_roll">%roll</span> sigIdx = rr, lcv = RollThreshold, block, "Roller", rv
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isp = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(which[i], "", lcv, sigIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> osp = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(which[i], "", lcv, sigIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpy = (uint32_T *)%&lt;osp&gt;;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpu = (uint32_T *)%&lt;isp&gt;;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpy[1] = SWAP32(tmpu[0]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpy[0] = SWAP32(tmpu[1]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endroll">%endroll</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">SIZE</span>(which, 1)
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;%%
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br></body></html>

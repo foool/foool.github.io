@@ -1,0 +1,250 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>creates<span style="padding-left:9.5px"></span>model_sf_reg.h<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>Accelerator<span style="padding-left:9.5px"></span>target.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2016<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_ACCELREG_") == 0
+ <br><span class="tlc_assign">%assign</span> _ACCELREG_ = 1
+ <br>&nbsp; <br><span class="tlc_realformat">%realformat</span> "CONCISE"
+ <br>&nbsp; <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Non-finites
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_openfile">%openfile</span> tmpBuffer
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibRealNonFinitesRequired">SLibRealNonFinitesRequired</a>()
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMathFcnCall">LibGenMathFcnCall</a>("initnonfinite", <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#FcnGetDataTypeIdFromName">FcnGetDataTypeIdFromName</a>("double"), ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"sizeof(real_T)", "")>;/
+ <br><span class="tlc_endif">%endif</span>
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibDumpNonFiniteAssignmentCache">LibDumpNonFiniteAssignmentCache</a>()</span>>
+ <br><span class="tlc_closefile">%closefile</span> tmpBuffer
+ <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> nonFinitesBuffer
+ <br><span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(tmpBuffer)
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;/* non-finites */
+ <br>&nbsp;&nbsp;%<<span>tmpBuffer</span>>/
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_closefile">%closefile</span> nonFinitesBuffer
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>==========================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Dump<span style="padding-left:9.5px"></span>buffers<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>output
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> tmpBuf
+ <br>#define CodeFormat S-Function
+ <br>#define AccDefine1 Accelerator_S-Function
+ <br><span class="tlc_closefile">%closefile</span> tmpBuf
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mdl_src_define", tmpBuf)>
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(::CompiledModel, "NumDataTransfers") &amp;&amp; ::CompiledModel.NumDataTransfers > 0
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuf
+ <br>&nbsp;&nbsp;#define MDL_DATA_TRANSFER_READ_WRITE
+ <br>&nbsp;&nbsp;#define MDL_DATA_TRANSFER_INIT
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mdl_src_define", tmpBuf)>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_with">%with</span> ::CompiledModel
+ <br><span class="tlc_assign">%assign</span> paramTuningTid = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibTidOfParameterChangeEvent">SLibTidOfParameterChangeEvent</a>()
+ <br><span class="tlc_assign">%assign</span> rootSystem = System[NumSystems-1]
+ <br><span class="tlc_if">%if</span> paramTuningTid >= 0 &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonbodlib.html#LibSystemFcnIsEmptyHelper">LibSystemFcnIsEmptyHelper</a>(rootSystem,"Output",paramTuningTid)
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuf  
+ <br>&nbsp;&nbsp;#include "simtarget/slAccSfcnBridge.h"
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mdl_src_userTop", tmpBuf)>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endwith">%endwith</span>
+ <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> tmpBuf
+ <br>#include <stdio.h>
+ <br>#include "slexec_vm_simstruct_bridge.h"
+ <br>#include "slexec_vm_zc_functions.h"
+ <br>#include "slexec_vm_lookup_functions.h"
+ <br>#include "slsv_diagnostic_codegen_c_api.h"
+ <br>#include "simtarget/slSimTgtMdlrefSfcnBridge.h"
+ <br><span class="tlc_closefile">%closefile</span> tmpBuf
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mdl_src_incl", tmpBuf)>
+ <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> fcnsBuf
+ <br><span class="tlc_assign">%assign</span> fcnAbstract = "Function to initialize sizes"
+ <br><span class="tlc_assign">%assign</span> fcnName = "mdlInitializeSizes"
+ <br><span class="tlc_assign">%assign</span> fcnReturns = "static void"
+ <br><span class="tlc_assign">%assign</span> fcnParams = "SimStruct *%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetModelSS">RTMGetModelSS</a>()</span>>"
+ <br><span class="tlc_createrecord">%createrecord</span> fcnRec {Name fcnName; Returns fcnReturns; Params fcnParams; Abstract fcnAbstract; ...
+ <br>&nbsp;&nbsp;Category "model"; GeneratedBy "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/accelreg.html">accelreg.tlc</a>"; Type "Initialize"}
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>MdlInitializeSizes
+</span> <br><span class="tlc_comment">%%
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDumpFunctionBanner">SLibDumpFunctionBanner</a>(fcnRec)>
+ <br><span class="tlc_undef">%undef</span> fcnRec
+ <br>%<<span>fcnReturns</span>> %<<span>fcnName</span>>(%<<span>fcnParams</span>>)
+ <br>{
+ <br>&nbsp; <br>&nbsp;&nbsp;/* checksum */
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMSetIdxed">RTMSetIdxed</a>("ChecksumVal", 0, ModelChecksum[0])>;
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMSetIdxed">RTMSetIdxed</a>("ChecksumVal", 1, ModelChecksum[1])>;
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMSetIdxed">RTMSetIdxed</a>("ChecksumVal", 2, ModelChecksum[2])>;
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMSetIdxed">RTMSetIdxed</a>("ChecksumVal", 3, ModelChecksum[3])>;
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;{ 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* First check to see if this is the sample verion of Simulink used 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* to generate this file. If not force a rebuild and return. */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mxArray *slVerStructMat = NULL;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mxArray *slStrMat = mxCreateString("simulink");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char slVerChar[10];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int status = mexCallMATLAB(1,&amp;slVerStructMat,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1,&amp;slStrMat,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ver");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(status == 0) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mxArray * slVerMat = mxGetField(slVerStructMat,0,"Version");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(slVerMat == NULL) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status = 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;status = mxGetString(slVerMat, slVerChar, 10);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}      
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mxDestroyArray(slStrMat);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mxDestroyArray(slVerStructMat);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if((status == 1) || (strcmp(slVerChar,"%<<span>SimulinkVersion</span>>") != 0)) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} 
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;/* options */
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMSet">RTMSet</a>("Options", "SS_OPTION_EXCEPTION_FREE_CODE")>;
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ! <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_dworklib.html#LibDWorkStructIsEmpty">LibDWorkStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Accelerator check memory map size match for DWork */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (ssGetSizeofDWork(S) != sizeof(%<::tDWorkType>)) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ssSetErrorStatus(S,"Unexpected error: Internal DWork sizes do "
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"not match for accelerator mex file.");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_blkiolib.html#LibBlockIOStructIsEmpty">LibBlockIOStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Accelerator check memory map size match for BlockIO */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (ssGetSizeofGlobalBlockIO(S) != sizeof(%<::tBlockIOType>)) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ssSetErrorStatus(S,"Unexpected error: Internal BlockIO sizes do "
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"not match for accelerator mex file.");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalInputsStructIsEmpty">LibExternalInputsStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Accelerator check memory map size match for ExternalInputs */
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;if (ssGetSizeofU(S) != sizeof(%<::tInputType>)) { 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static char msg[256];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf(msg,"Unexpected error: Internal ExternalInputs sizes do "
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"not match for accelerator mex file.");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ssSetErrorStatus(S,msg);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalOutputsStructIsEmpty">LibExternalOutputsStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Accelerator check memory map size match for ExternalOutputs */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (ssGetSizeofY(S) != sizeof(%<::tOutputType>)) { 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static char msg[256];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf(msg,"Unexpected error: Internal ExternalOutputs sizes do "
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"not match for accelerator mex file.");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Parameters</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_simulinkglobal.html#LibParametersStructIsEmpty">LibParametersStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Accelerator check memory map size match for Parameters */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int ssSizeofParams;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ssGetSizeofParams(S,&amp;ssSizeofParams);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (ssSizeofParams != sizeof(%<::tParametersType>)) { 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static char msg[256];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf(msg,"Unexpected error: Internal Parameters sizes do "
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"not match for accelerator mex file.");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* model parameters */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;_ssSetModelRtp(%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetModelSS">RTMGetModelSS</a>()</span>>, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(real_T *) &amp;%<::tDefaultParameters>);
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Invariant Block Outputs</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_blkiolib.html#LibConstBlockIOStructIsEmpty">LibConstBlockIOStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* constant block I/O */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;_ssSetConstBlockIO(%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetModelSS">RTMGetModelSS</a>()</span>>, &amp;%<::tInvariantSignals>);
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Mass Matrix Offsets</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Protected with C if-statement, as we could execute this code (to get checksum)</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% while somebody added/removed blocks with MassMatrix. In that case, the old </span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% MassMatrixPr pointers (stored on DWorks) are no longer valid and accessing them</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% would cause seg-v. We assure here that at least the DWork type cast is safe.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (::CompiledModel.ModelIsLinearlyImplicit == "yes")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (ssGetSizeofDWork(S) == sizeof(%<::tDWorkType>)) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonbodlib.html#FcnGenInitMassMatrixPrInRoot">FcnGenInitMassMatrixPrInRoot</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}  /* else, error condition has been set already */
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<span>nonFinitesBuffer</span>>/
+ <br>}
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> fcnAbstract = "mdlInitializeSampleTimes function (used to set up function-call connections)"
+ <br><span class="tlc_assign">%assign</span> fcnName = "mdlInitializeSampleTimes"
+ <br><span class="tlc_assign">%assign</span> fcnReturns = "static void"
+ <br><span class="tlc_assign">%assign</span> fcnParams = "SimStruct *%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetModelSS">RTMGetModelSS</a>()</span>>"
+ <br><span class="tlc_createrecord">%createrecord</span> fcnRec {Name fcnName; Returns fcnReturns; Params fcnParams; Abstract fcnAbstract; ...
+ <br>&nbsp;&nbsp;Category "model"; GeneratedBy "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/accelreg.html">accelreg.tlc</a>"; Type "Initialize"}
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>MdlInitializeSampleTimes
+</span> <br><span class="tlc_comment">%%
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDumpFunctionBanner">SLibDumpFunctionBanner</a>(fcnRec)>
+ <br><span class="tlc_undef">%undef</span> fcnRec
+ <br>%<<span>fcnReturns</span>> %<<span>fcnName</span>>(%<<span>fcnParams</span>>) { 
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Set up the function call subsystem pointers</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> baseSysIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> Accelerator 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#LibIsSystemField">LibIsSystemField</a>(System[baseSysIdx], "FcnCallSubsystemPtrs")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#LibGetSystemField">LibGetSystemField</a>(System[baseSysIdx], "FcnCallSubsystemPtrs")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> ::CompiledModel
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> paramTuningTid = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibTidOfParameterChangeEvent">SLibTidOfParameterChangeEvent</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootSystem = System[NumSystems-1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> paramTuningTid >= 0 &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonbodlib.html#LibSystemFcnIsEmptyHelper">LibSystemFcnIsEmptyHelper</a>(rootSystem,"Output",paramTuningTid)       
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slAccRegPrmChangeFcn(S, mdlOutputsTID%<<span>paramTuningTid</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>}
+ <br>&nbsp; <br><span class="tlc_if">%if</span>(CGMODEL_ACCESS("CGModel.AcceleratorExpandedSystemFcns") == 0)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnAbstract = "Empty mdlTerminate function (never called)"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "mdlTerminate"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnReturns = "static void"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = "SimStruct *S"
+ <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> fcnRec {Name fcnName; Returns fcnReturns; Params fcnParams; Abstract fcnAbstract; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;Category "model"; GeneratedBy "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/accelreg.html">accelreg.tlc</a>"; Type "Terminate"}
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% ============================================================================</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% MdlTerminate</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDumpFunctionBanner">SLibDumpFunctionBanner</a>(fcnRec)>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> fcnRec
+ <br>&nbsp;&nbsp;%<<span>fcnReturns</span>> %<<span>fcnName</span>>(%<<span>fcnParams</span>>) { }
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>/* MATLAB MEX Glue */
+ <br>#include "simulink.c"
+ <br><span class="tlc_closefile">%closefile</span> fcnsBuf
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mdl_fcn_defn", fcnsBuf)>
+ <br>&nbsp; <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span> <span class="tlc_comment">%% _ACCELREG_</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/accelreg.html">accelreg.tlc</a>
+</span> <br>&nbsp; <br></body></html>

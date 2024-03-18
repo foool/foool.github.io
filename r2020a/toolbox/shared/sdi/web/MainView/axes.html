@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="-1">
+    <title>Axes</title>
+    <!-- Copyright 2012-2013 The MathWorks, Inc. -->
+    <!-- Axes Release HTML file -->
+    
+    <!-- Include web widget required css files -->
+    <!-- CSS : implied media="all" -->
+    <link rel="stylesheet" href="release/css/webwidget.dojo.css"/>
+    <link rel="stylesheet" href="release/css/webwidget.css"/>
+    <!--[if IE 9]>
+        <link href="release/css/overrides_ie9.css" rel="stylesheet" type="text/css"/>
+    <![endif]-->
+    
+    <!-- Custom CSS Imports -->
+    <link rel="stylesheet" type="text/css" href="release/SDI2/css/sdi.css" />
+    <link rel="stylesheet" type="text/css" href="release/SDI2/css/sditoolstrip.css" />
+    <link rel="stylesheet" type="text/css" href="release/SDI2/css/axesWidget.css" />
+    <link rel="stylesheet" type="text/css" href="release/SDI2/css/contextMenu.css" />
+    <link rel="stylesheet" type="text/css" href="release/SDI2/css/generatedCss.css"/>
+</head>
+<body class="tundra">
+    <div id='axesBorderContainer'></div>
+    <script src="release/SDI2/dojoConfig-release-global.js"></script>
+    <!-- Include dojo release build -->
+    <script type="text/javascript" src="release/dojo/dojo.js"></script>
+    <script type="text/javascript"> 
+        var grid;
+        var GRIDLABELS = {};
+        
+        // Require browser compatibility check lib
+        require(["SDI2/browsercheck"], function () {
+            // Require browser compatibility check module, which will run the checks
+            require(["mw-browser-utils/BrowserCheck"], function () {
+                // If the browser compatibility check passes, require in the web widget lib
+                require(["SDI2/SDI2"], function () {
+                    // Load in application code
+                    require([
+                        "dojo/domReady",
+                        "dojo/_base/window",                        
+                        "mw-facade/MatlabFacade",
+                        "AxesView/Application",                        
+                        "SDI2/Helper",
+                        "SDI2/QeTestingMode"
+                     ], function(
+                        ready,
+                        win,
+                        MatlabFacade,
+                        Application,
+                        Helper,
+                        QeTestingMode) {
+                        ready(function() {   
+                            //Checking to see if mode is set to testing
+                            if(Helper.getParameterByName("qeTestingMode") === "true") {
+                                QeTestingMode.isEnabled = true;
+                            }
+                            var facade = new MatlabFacade();
+                            Application.setup(facade);
+                            // Create the axes
+                            Application.createAxes(win.body(), {rows: 1, cols: 1});
+                        });
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+<!-- LocalWords:  motw dom jp
+-->

@@ -1,0 +1,68 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+&nbsp; <br><span class="tlc_comment">%%========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>File<span style="padding-left:9.5px"></span>:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/dumpcodemetrics.html">dumpcodemetrics.tlc</a>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%========================================================
+</span> <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_DUMPCODEMETRICS_") == 0
+ <br><span class="tlc_assign">%assign</span> _DUMPCODEMETRICS_ = 1
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="addToBackupCodeMetrics" class="tlc_func">addToBackupCodeMetrics</a>(system, CGIRFcnName, newFcnName, tid) <span class="tlc_fkw">Output</span>
+ <br><span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEQUAL</span>(::CompiledModel.ConfigSet.GenerateCodeMetricsReport, 1) || <span class="tlc_bifunc">CGMODEL_ACCESS</span>("CGModel.PolySpaceForCodeMetrics") != 2 
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_assign">%assign</span> module = ::CompiledModel.RTWCGModules.RTWCGModule[system.CGIRModuleIdx]
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>assert<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>check
+</span> <br><span class="tlc_if">%if</span> !<span class="tlc_bifunc">EXISTS</span>(module.TLCFileName)
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_assign">%assign</span> fcnFileName = system.SystemFileName
+ <br><span class="tlc_assign">%assign</span> tlcFileName = module.TLCFileName + "_" + CGIRFcnName
+ <br><span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEQUAL</span>(tid, "")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tlcFileName = tlcFileName + "_TID"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tlcFileName = tlcFileName + <span class="tlc_bifunc">STRING</span>(tid)
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_if">%if</span> ::CompiledModel.ConfigSet.TargetLang == "C"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnFileName = fcnFileName + ".c"
+ <br><span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_openfile">%openfile</span> fileName = "useBackupCodeMetrics.m", "a"
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Set<span style="padding-left:9.5px"></span>new<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>name
+</span> <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(system.Type, "root")
+ <br>info.FcnInfo(TLCFileNameToFcnIdxMap('%<<span>tlcFileName</span>>')).Name = '%<<span>newFcnName</span>>';
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Set<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>idx<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>function
+</span> <br>if (~isKey(fileNameToFileIdxMap, '%<<span>fcnFileName</span>>'))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;tempFileInfo = struct('Name', '%<<span>fcnFileName</span>>', ...  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;'Idx', numel(info.FileInfo) + 1, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;'IncludedIdx', zeros(0, 1, 'uint32'), 'IsIncludedFile', 0, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;'IsSystemFile', 0, 'NumCommentLines', 0, 'NumTotalLines', 0, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;'NumCodeLines', 0);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;info.FileInfo = [info.FileInfo, tempFileInfo];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;fileNameToFileIdxMap('%<<span>fcnFileName</span>>') = numel(info.FileInfo);
+ <br>end
+ <br>info.FcnInfo(TLCFileNameToFcnIdxMap('%<<span>tlcFileName</span>>')).FileIdx = ...
+ <br>fileNameToFileIdxMap('%<<span>fcnFileName</span>>');
+ <br><span class="tlc_closefile">%closefile</span> fileName
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br><span class="tlc_endif">%endif</span> <span class="tlc_comment">%%_DUMPCODEMETRICS_</span>
+ <br></body></html>

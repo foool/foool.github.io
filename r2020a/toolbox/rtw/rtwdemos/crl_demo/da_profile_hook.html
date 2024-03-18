@@ -1,0 +1,232 @@
+<html>
+<head>
+
+<style>
+p {color : black; font-family:courier; font-size: 80%;}
+body {line-height: 100%; font-family:courier;}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_function {color: green;}.tlc_endfunction {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}
+.tlc_bifunc {color: brown;}
+</style>
+
+</head>
+<body>
+<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_GRTPROF_") == 0
+ <br><span class="tlc_assign">%assign</span> _GRTPROF_ = 1
+ <br>&nbsp; <br><span class="tlc_implements">%implements</span> ProfilerType "C"
+ <br>&nbsp; <br>%% Function: ProfilerHeaders ============================================
+ <br><span class="tlc_function">%function</span> <a id="ProfilerHeaders" class="tlc_func">ProfilerHeaders</a>(profRec) void
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> compName = <span class="tlc_bifunc">FEVAL</span>("computer")
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> compName == "GLNX86" || compName == "GLNXA64"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ["stdio.h", "unistd.h", "sys/times.h", "sys/types.h"]
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> compName == "MAC" || compName == "MACI" || compName == "MACI64"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ["mach/mach_time.h", "stdio.h", "unistd.h", "sys/times.h", "sys/types.h"]
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> compName == "PCWIN" || compName == "PCWIN64"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ["stdio.h", "windows.h", "process.h", "time.h"]
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> compName == "SOL2" || compName == "SOL64"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ["stdio.h", "sys/times.h"]
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_error">%error</span> "The code generation profiling demo does not run on this platform."
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: ProfilerTypeDefs ============================================
+ <br><span class="tlc_function">%function</span> <a id="ProfilerTypeDefs" class="tlc_func">ProfilerTypeDefs</a> (ProfRec) void
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuff
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> compName = <span class="tlc_bifunc">FEVAL</span>("computer")
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> CompiledModel.ConfigSet.IsERTTarget == TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> compName == "GLNX86" || compName == "PCWIN" || compName == "PCWIN64" || compName == "GLNXA64" || compName == "MAC" || compName == "MACI" || compName == "MACI64" || compName == "SOL2" || compName == "SOL64"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#ifndef INT64_T
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# if defined(__ia64__)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#  define INT64_T long
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# elif defined(_MSC_VER) || (defined(__BORLANDC__) && __BORLANDC__ >= 0x530) /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|| (defined(__WATCOMC__)  && __WATCOMC__  >= 1100)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#  define INT64_T __int64
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# elif defined(__GNUC__) || defined(TMW_ENABLE_INT64) || defined(__sun)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#  define INT64_T long long
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# endif
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define int64_T INT64_T
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#ifndef uint64_T
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# if defined(__ia64__)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#  define uint64_T unsigned long
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# elif defined(_MSC_VER) || (defined(__BORLANDC__) && __BORLANDC__ >= 0x530) /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|| (defined(__WATCOMC__)  && __WATCOMC__  >= 1100)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#  define uint64_T unsigned __int64
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# elif defined(__GNUC__) || defined(TMW_ENABLE_INT64) || defined(__sun)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#  define uint64_T unsigned long long
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# endif
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;#ifdef _MSC_VER
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#  define uint64_to_double(u) (((u) > _I64_MAX) ? /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(double)(__int64)((u) - _I64_MAX) + (double)_I64_MAX : /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(double)(__int64)(u))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#else
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#  define uint64_to_double(u) ((double)(u))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;/* Profiling helper functions */
+ <br>&nbsp;&nbsp;extern int64_T pentium_cyclecount(void); 
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuff
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> tmpBuff
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: ProfilerGlobalData ============================================
+ <br><span class="tlc_function">%function</span> <a id="ProfilerGlobalData" class="tlc_func">ProfilerGlobalData</a> (ProfRec, system) void  
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuff
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> system.Type == "root"  
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> compName = <span class="tlc_bifunc">FEVAL</span>("computer")
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> compName == "GLNX86"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Define Pentium CPU cycle counting function */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int64_T pentium_cyclecount(void) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int64_T count;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;__asm__ volatile ("rdtsc" : "=A" (count));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return (count);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> compName == "GLNXA64"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Define Pentium CPU cycle counting function */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int64_T pentium_cyclecount(void) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;union {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int64_T big;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int32_T lo;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int32_T hi;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} small;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} count;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;__asm__ volatile ("rdtsc" : "=a" (count.small.lo), "=d" (count.small.hi));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return (count.big);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> compName == "MAC" || compName == "MACI" || compName == "MACI64"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int64_T cputime_stamp(void)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* For 32-bit applications that want to use 64-bit instructions, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* one may use gcc -fast -mpowerpc64 -c <filename>.c
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static double scale = 0.0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (0.0 == scale) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mach_timebase_info_data_t info;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mach_timebase_info(&info);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scale = info.numer / info.denom;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return (int64_T)(mach_absolute_time() * scale);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> compName == "SOL2" || compName == "SOL64"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int64_T cputime_stamp(void)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return (int64_T)gethrtime();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> compName == "PCWIN64"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int64_T pentium_cyclecount(void) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return __rdtsc();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> compName == "PCWIN"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#ifndef __LCC__
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int64_T pentium_cyclecount(void) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;__asm rdtsc
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#else
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;double cputime(void)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Use QueryPerformanceFrequency to conver to second. 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LARGE_INTEGER count;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;QueryPerformanceCounter (&count);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return((double)count.QuadPart);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuff
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> tmpBuff
+ <br>&nbsp; <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>%% Function: ProfilerSystemDecls ============================================
+ <br><span class="tlc_function">%function</span> <a id="ProfilerSystemDecls" class="tlc_func">ProfilerSystemDecls</a>(ProfRec, system, fcn) void
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/rtwdemos/crl_demo/da_profile_hook.html#EmitProfilingCodeForSystem">EmitProfilingCodeForSystem</a>(system.Name)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> 
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> compName = <span class="tlc_bifunc">FEVAL</span>("computer")
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> fcn == "Output" ||  fcn == "Update" || "OutputUpdate" || "Derivatives"
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuff
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;/* Create start and end variables for profiler */
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> compName == "PCWIN"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#ifndef __LCC__
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int64_T start = 0; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int64_T end   = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#else
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;double start = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;double end   = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int64_T start = 0; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int64_T end   = 0;
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuff
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> tmpBuff
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: ProfilerSystemStart ============================================
+ <br><span class="tlc_function">%function</span> <a id="ProfilerSystemStart" class="tlc_func">ProfilerSystemStart</a>(ProfRec, system, fcn) void
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/rtwdemos/crl_demo/da_profile_hook.html#EmitProfilingCodeForSystem">EmitProfilingCodeForSystem</a>(system.Name)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> 
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> compName = <span class="tlc_bifunc">FEVAL</span>("computer")
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> fcn == "Output" ||  fcn == "Update" || "OutputUpdate" || "Derivatives"
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuff
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;/* Start the profiler */
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> compName == "PCWIN"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#ifndef __LCC__
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;start = pentium_cyclecount();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#else
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;start = cputime();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> compName == "MAC" || compName == "MACI" || compName == "MACI64" || compName == "SOL2" || compName == "SOL64"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;start = cputime_stamp();
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;start = pentium_cyclecount();
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuff
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> tmpBuff
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: ProfilerSystemFinish ============================================
+ <br><span class="tlc_function">%function</span> <a id="ProfilerSystemFinish" class="tlc_func">ProfilerSystemFinish</a>(ProfRec, system, fcn) void  
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/rtwdemos/crl_demo/da_profile_hook.html#EmitProfilingCodeForSystem">EmitProfilingCodeForSystem</a>(system.Name)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> 
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuff 
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> compName = <span class="tlc_bifunc">FEVAL</span>("computer")
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> fcn == "Output" ||  fcn == "Update" || "OutputUpdate" || "Derivatives"
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> compName == "PCWIN"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#ifndef __LCC__
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;end = pentium_cyclecount(); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#else
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;end = cputime();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> compName == "MAC" || compName == "MACI" || compName == "MACI64" || compName == "SOL2" || compName == "SOL64"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;end = cputime_stamp();
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;end = pentium_cyclecount();
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span> 
+ <br>&nbsp;&nbsp;T += end - start;
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuff
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> tmpBuff
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: ProfilerSystemTerminate ========================================
+ <br><span class="tlc_function">%function</span> <a id="ProfilerSystemTerminate" class="tlc_func">ProfilerSystemTerminate</a>(ProfRec, system) void
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: EmitProfilingCodeForSystem ========================================
+ <br><span class="tlc_function">%function</span> <a id="EmitProfilingCodeForSystem" class="tlc_func">EmitProfilingCodeForSystem</a>(sysName) void
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> sysName == "<Root>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> names = <span class="tlc_bifunc">SYSNAME</span>(sysName)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> names[1] == "ALGORITHM"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_TRUE
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>&nbsp; <br></body></html>

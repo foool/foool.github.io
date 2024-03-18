@@ -1,0 +1,149 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>2019<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>library<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>contains<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>related<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>timing<span style="padding-left:9.5px"></span>services
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_TIMINGSERVICELIB_") == 0
+ <br><span class="tlc_assign">%assign</span> _TIMINGSERVICELIB_ = 1
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibWriteToRTEFiles" class="tlc_func">SLibWriteToRTEFiles</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_realformat">%realformat</span> "CONCISE"
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibUsingTimingServices">SLibUsingTimingServices</a>())
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Put necessary includes in model.c(pp) file</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> HeaderFile = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibGetRTEHeaderFileName">LibGetRTEHeaderFileName</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> SourceFile = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibGetRTESourceFileName">LibGetRTESourceFileName</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> includesBuf  
+ <br>&nbsp;&nbsp;#include "%<<span>HeaderFile</span>>.h"
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> includesBuf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("baseMdl_src_incl", includesBuf)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Put necessary includes in ert_main file</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mainSrc_incl", includesBuf)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Generate model_rte.c  </span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpRTE_C_Includes
+ <br>&nbsp;&nbsp;#include "%<<span>HeaderFile</span>>.h"
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpRTE_C_Includes  
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpRTE_C_Defn
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> baseRate = ::CompiledModel.BaseStepSize
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> clockTick = "{"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> clockRes = "{"
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> tid = NumSampleTimes
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> clockTick = clockTick + "0"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> clockStepRatio = <span class="tlc_bifunc">CAST</span>("Number", %<SampleTime[tid].ClockTickStepSize>)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> clockRes = clockRes + "%<<span>clockStepRatio</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tid < NumSampleTimes - 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> clockTick = clockTick + ", "
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> clockRes = clockRes + ", "
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> clockTick = clockTick + "}"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> clockRes = clockRes + "}"
+ <br>&nbsp;&nbsp;RTE_TimingService_T RTE_TimingService_private = {    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>baseRate</span>>,    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>clockTick</span>>,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>clockRes</span>>
+ <br>&nbsp;&nbsp;};  
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpRTE_C_Defn
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpRTE_Fcn_Body
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;real_T getBaseRate()
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return RTE_TimingService_private.baseRate;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> clockTick_DType   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeNameFromId">LibGetDataTypeNameFromId</a>(tSS_UINT32)
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<span>clockTick_DType</span>> getClockTick(int_T tid)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return RTE_TimingService_private.clockTick[tid];
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;real_T getClockResolution(int_T tid)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return RTE_TimingService_private.baseRate *
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RTE_TimingService_private.clockStepSizeRatio[tid];
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpRTE_Fcn_Body
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> FileName  = SourceFile + ".c"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> FileType  = "source"
+ <br>&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibWriteToStandardOutput">LibWriteToStandardOutput</a>("### Writing %<<span>FileType</span>> file %<<span>FileName</span>>")>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> outputFile = FileName    
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* %<<span>FileName</span>>
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibCommonHeaderInfo">SLibCommonHeaderInfo</a>()</span>>/
+ <br>&nbsp;&nbsp;*/
+ <br>&nbsp; <br>&nbsp;&nbsp;%<<span>tmpRTE_C_Includes</span>>/
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<span>tmpRTE_C_Defn</span>>/
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<span>tmpRTE_Fcn_Body</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;/* EOF: %<<span>FileName</span>> */
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> outputFile
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Set the filter to 1, to prevent re-writing to disk</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rteCFile = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileRecForCode">SLibGetFileRecForCode</a>("mdl_rte_src")
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(rteCFile, "Filter", 1)>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibAddGeneratedFileToList">SLibAddGeneratedFileToList</a>(FileName,"interface","source","")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Generate model_rte.h</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpRTE_H_Includes
+ <br>&nbsp;&nbsp;#include "rtwtypes.h"
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpRTE_H_Includes
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpRTE_H_Typedef  
+ <br>&nbsp;&nbsp;struct tag_RTE_TimingService_T {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;real_T baseRate;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> NumSampleTimes > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> clockTick_DType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeNameFromId">LibGetDataTypeNameFromId</a>(tSS_UINT32)      
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>clockTick_DType</span>> clockTick[%<<span>NumSampleTimes</span>>];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T clockStepSizeRatio[%<<span>NumSampleTimes</span>>];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;};
+ <br>&nbsp; <br>&nbsp;&nbsp;typedef struct tag_RTE_TimingService_T RTE_TimingService_T;
+ <br>&nbsp;&nbsp;extern RTE_TimingService_T RTE_TimingService_private;
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpRTE_H_Typedef
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> clockTick_DType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeNameFromId">LibGetDataTypeNameFromId</a>(tSS_UINT32)
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpRTE_H_Extern  
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;extern real_T getBaseRate();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;extern %<<span>clockTick_DType</span>> getClockTick(int_T tid);
+ <br>&nbsp;&nbsp;extern real_T getClockResolution(int_T tid);
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpRTE_H_Extern
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Write model_rte.h directly to disk.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rteHFile = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileRecForCode">SLibGetFileRecForCode</a>("mdl_rte_hdr")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hFileIdx = rteHFile.Index
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> FileName = "%<<span>HeaderFile</span>>.h"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> FileType = "header"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> FileTag  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibGetModelFileTag">LibGetModelFileTag</a>(hFileIdx)
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibWriteToStandardOutput">LibWriteToStandardOutput</a>("### Writing %<<span>FileType</span>> file %<<span>FileName</span>>")>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> outputFile = FileName
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* %<<span>FileName</span>>
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibCommonHeaderInfo">SLibCommonHeaderInfo</a>()</span>>/
+ <br>&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;#ifndef RTW_HEADER_%<<span>FileTag</span>>
+ <br>&nbsp;&nbsp;#define RTW_HEADER_%<<span>FileTag</span>>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<span>tmpRTE_H_Includes</span>>/
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<span>tmpRTE_H_Typedef</span>>/
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<span>tmpRTE_H_Extern</span>>/
+ <br>&nbsp; <br>&nbsp;&nbsp;#endif /* RTW_HEADER_%<<span>FileTag</span>> */
+ <br>&nbsp; <br>&nbsp;&nbsp;/* EOF: %<<span>FileName</span>> */
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> outputFile
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(rteHFile, "Filter", 1)>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibAddGeneratedFileToList">SLibAddGeneratedFileToList</a>(FileName,"interface","header","")>
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span> 
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span><span class="tlc_comment">%%  _TIMINGSERVICELIB__</span>
+ <br></body></html>

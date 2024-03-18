@@ -1,0 +1,290 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>2009-2010<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> mktbglnx_file = "tlm_tb/makefile.gnu"
+ <br>&nbsp; <br>###############################################################################
+ <br>### VP Component Makefile for %<<span>tbname</span>>
+ <br>###############################################################################
+ <br>&nbsp; <br>####### Files
+ <br>&nbsp; <br>HEADERS =    include/mw_support_tb.h include/%<<span>tbname</span>>_def.h include/%<<span>tbname</span>>.h
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>SOURCES =    src/mw_support_tb.cpp src/%<<span>tbname</span>>.cpp src/%<<span>tbname</span>>_main.cpp
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>OBJECTS =    obj/mw_support_tb.o obj/%<<span>tbname</span>>.o obj/%<<span>tbname</span>>_main.o
+ <br>&nbsp; <br>STATICLIB     =    ../%<<span>tlmname</span>>/lib/lib%<<span>tlmname</span>>.a ../%<<span>rtwname</span>>/lib/lib%<<span>rtwname</span>>.a
+ <br>&nbsp;&nbsp; <br>EXEC        =    %<<span>tbname</span>>.exe
+ <br>&nbsp; <br>####### Tools
+ <br>&nbsp; <br>AS        =    as
+ <br>CC        =    gcc
+ <br>CXX        =    gcc
+ <br>LD        =    gcc
+ <br>AR        =    ar
+ <br>RANLIB    =    ranlib
+ <br>MAKE    = make
+ <br>&nbsp; <br>####### Inc path
+ <br>&nbsp; <br>SYSTEMC_INCPATH =    '%<<span>tlmg_config.tlmgSystemCIncludePath</span>>'
+ <br>TLM_INCPATH     =    '%<<span>tlmg_config.tlmgTLMIncludePath</span>>'
+ <br>MATLAB_INCPATH  = '%<<span>tlmg_config.tlmgMatlabIncludePath</span>>'
+ <br>&nbsp; <br>####### Lib path
+ <br>&nbsp; <br>SYSTEMC_LIBPATH =    '%<<span>tlmg_config.tlmgSystemCLibPath</span>>'
+ <br>MATLAB_LIBPATH =  '%<<span>tlmg_config.tlmgMatlabLibPathGlnx</span>>'
+ <br>MATLAB_LIBPATH2 = '%<<span>tlmg_config.tlmgMatlabLibPathGlnx2</span>>'
+ <br>&nbsp; <br>SYSTEMC_LIBNAME = '%<<span>tlmg_config.tlmgSystemCLibName</span>>'
+ <br>&nbsp; <br>####### Include, Lib
+ <br>&nbsp; <br>INCDIR        = -I ./include -I '../%<<span>tlmname</span>>/include' -I '../%<<span>rtwname</span>>/include' -I '../%<<span>rtwname</span>>/utils' -I $(SYSTEMC_INCPATH) -I $(TLM_INCPATH) -I $(MATLAB_INCPATH)
+ <br>LIBDIR        = -L $(MATLAB_LIBPATH) -Wl,-rpath $(MATLAB_LIBPATH) -Wl,-rpath $(MATLAB_LIBPATH2)
+ <br>LIBS        = $(STATICLIB) $(SYSTEMC_LIBPATH)/$(SYSTEMC_LIBNAME) -lmat -lmx
+ <br>&nbsp; <br>SC_OPTION    = -D SC_INCLUDE_DYNAMIC_PROCESSES
+ <br>&nbsp; <br>LOG_OPTION  =   -DTLMG_CURR_VERBOSITY=%<<span>tlmg_config.tlmgTbVerbosity</span>>
+ <br>&nbsp; <br>####### Flags
+ <br>&nbsp; <br>ASFLAGS        =
+ <br>CFLAGS        =    $(OPT_CXXFLAGS) $(EXTRA_CXXFLAGS) -DRT -DUSE_RTMODEL -Wall $(INCDIR) $(SC_OPTION) $(LOG_OPTION)
+ <br>CXXFLAGS    =    $(OPT_CXXFLAGS) $(EXTRA_CXXFLAGS) -DRT -DUSE_RTMODEL -Wall -Wno-deprecated $(INCDIR) $(SC_OPTION) $(LOG_OPTION)
+ <br>LDFLAGS        =    $(LIBDIR) -Wl,--start-group $(LIBS) -Wl,--end-group -lpthread -lm -lstdc++ 
+ <br>ARFLAGS     =    cru
+ <br>&nbsp; <br>####### Implicit rules
+ <br>&nbsp; <br>.SUFFIXES: .cpp .cxx .cc .C .c .s
+ <br>&nbsp; <br>%<"obj/%.o: src/%.s">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(AS) $(ASFLAGS) -o $@ $<
+ <br>&nbsp; <br>%<"obj/%.o: src/%.cpp">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(CXX) -c $(CXXFLAGS)  -o $@ $<
+ <br>&nbsp; <br>%<"obj/%.o: src/%.cxx">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(CXX) -c $(CXXFLAGS)  -o $@ $<
+ <br>&nbsp; <br>%<"obj/%.o: src/%.cc">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(CXX) -c $(CXXFLAGS)  -o $@ $<
+ <br>&nbsp; <br>%<"obj/%.o: src/%.C">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(CXX) -c $(CXXFLAGS)  -o $@ $<
+ <br>&nbsp; <br>%<"obj/%.o: src/%.c">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(CC) -c $(CFLAGS)  -o $@ $<
+ <br>&nbsp; <br>####### Targets
+ <br>all:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(MAKE) -f makefile.gnu all-am OPT_CXXFLAGS="-O3"
+ <br>&nbsp; <br>all-debug:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(MAKE) -f makefile.gnu all-am OPT_CXXFLAGS="-g"
+ <br>&nbsp; <br>relink:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(MAKE) -f makefile.gnu relink-am OPT_CXXFLAGS="-O3"
+ <br>&nbsp; <br>relink-debug:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(MAKE) -f makefile.gnu relink-am OPT_CXXFLAGS="-g"
+ <br>&nbsp; <br>all-am: dep $(EXEC)
+ <br>&nbsp; <br>dep:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;cd ../%<<span>tlmname</span>>; $(MAKE) -f makefile.gnu all-am
+ <br>&nbsp; <br>$(EXEC): $(OBJECTS) $(STATICLIB)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(LD) $(OBJECTS) $(LDFLAGS) -o $(EXEC)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;@echo "-- Build %<<span>tbname</span>>.exe completed --"    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;@echo ""
+ <br>&nbsp; <br>relink-am:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;rm -f $(EXEC)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(MAKE) -f makefile.gnu all-am
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>clean:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;cd ../%<<span>tlmname</span>>; $(MAKE) -f makefile.gnu clean
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;rm -f $(OBJECTS) $(EXEC)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;@echo "-- Clean %<<span>tbname</span>> completed --"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;@echo ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>####### Compile dependencies
+ <br>&nbsp; <br>$(OBJECTS): $(HEADERS)
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_closefile">%closefile</span> mktbglnx_file 
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> mktbwin_file = "tlm_tb/makefile.mk"
+ <br>&nbsp; <br>###############################################################################
+ <br>### VP Component Makefile for %<<span>tbname</span>>
+ <br>###############################################################################
+ <br>&nbsp; <br>####### Files
+ <br>&nbsp; <br>HEADERS =    include/mw_support_tb.h include/%<<span>tbname</span>>_def.h include/%<<span>tbname</span>>.h
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>SOURCES =    src/mw_support_tb.cpp src/%<<span>tbname</span>>.cpp src/%<<span>tbname</span>>_main.cpp
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>OBJECTS =    obj/mw_support_tb.obj obj/%<<span>tbname</span>>.obj obj/%<<span>tbname</span>>_main.obj
+ <br>&nbsp; <br>STATICLIB     =    ../%<<span>tlmname</span>>/lib/%<<span>tlmname</span>>.lib ../%<<span>rtwname</span>>/lib/%<<span>rtwname</span>>.lib
+ <br>&nbsp; <br>EXEC        =    %<<span>tbname</span>>.exe
+ <br>&nbsp; <br>####### Tools
+ <br>&nbsp; <br>AS        =    ml.exe
+ <br>CC        =    cl.exe
+ <br>CXX        =    cl.exe
+ <br>LD        =    link.exe
+ <br>AR        =    lib.exe
+ <br>MAKE  = nmake.exe
+ <br>&nbsp; <br>####### Inc path
+ <br>&nbsp; <br>SYSTEMC_INCPATH =    "%<<span>tlmg_config.tlmgSystemCIncludePath</span>>"
+ <br>TLM_INCPATH     =    "%<<span>tlmg_config.tlmgTLMIncludePath</span>>"
+ <br>MATLAB_INCPATH  =   "%<<span>tlmg_config.tlmgMatlabIncludePath</span>>"
+ <br>&nbsp; <br>####### Lib path
+ <br>&nbsp; <br>SYSTEMC_LIBPATH =    "%<<span>tlmg_config.tlmgSystemCLibPath</span>>"
+ <br>MATLAB_LIBPATH =   "%<<span>tlmg_config.tlmgMatlabLibPathWin</span>>"
+ <br>MATLAB_LIBPATH2 = 
+ <br>&nbsp; <br>SYSTEMC_LIBNAME = "%<<span>tlmg_config.tlmgSystemCLibName</span>>"
+ <br>&nbsp; <br>####### Include, Lib
+ <br>&nbsp; <br>INCDIR        = /I "./include" /I "../%<<span>tlmname</span>>/include" /I "../%<<span>rtwname</span>>/include" /I "../%<<span>rtwname</span>>/utils" /I $(SYSTEMC_INCPATH) /I $(TLM_INCPATH) /I $(MATLAB_INCPATH)
+ <br>LIBDIR        = /LIBPATH:$(SYSTEMC_LIBPATH) /LIBPATH:$(MATLAB_LIBPATH)
+ <br>LIBS        = $(STATICLIB) $(SYSTEMC_LIBNAME) libmat.lib libmx.lib libeng.lib 
+ <br>&nbsp; <br>SC_OPTION    = /D SC_INCLUDE_DYNAMIC_PROCESSES
+ <br>&nbsp; <br>LOG_OPTION  =   /D TLMG_CURR_VERBOSITY=%<<span>tlmg_config.tlmgTbVerbosity</span>>
+ <br>&nbsp; <br>####### Flags
+ <br>&nbsp; <br>ASFLAGS        =
+ <br>CFLAGS        =    $(OPT_CXXFLAGS) /Fd"./obj/%<<span>tbname</span>>.pdb" $(EXTRA_CXXFLAGS) /D "RT" /D "USE_RTMODEL" /D "%<<span>tlmg_config.tlmgWinDef</span>>" /D "_CONSOLE" /D "_CRT_SECURE_NO_WARNINGS" /D "_UNICODE" /D "UNICODE" $(INCDIR) $(SC_OPTION) $(LOG_OPTION) /nologo /FD /EHsc /W3 /TP /wd4244 /wd4267 /vmg 
+ <br>CXXFLAGS    =    $(OPT_CXXFLAGS) /Fd"./obj/%<<span>tbname</span>>.pdb" $(EXTRA_CXXFLAGS) /D "RT" /D "USE_RTMODEL" /D "%<<span>tlmg_config.tlmgWinDef</span>>" /D "_CONSOLE" /D "_CRT_SECURE_NO_WARNINGS" /D "_UNICODE" /D "UNICODE" $(INCDIR) $(SC_OPTION) $(LOG_OPTION) /nologo /FD /EHsc /W3 /TP /wd4244 /wd4267 /vmg
+ <br>LDFLAGS        =    $(LIBDIR) /nologo /INCREMENTAL $(OPT_LDFLAGS) /SUBSYSTEM:CONSOLE /MACHINE:%<<span>tlmg_config.tlmgWinMachine</span>> $(LIBS) /PDB:"./obj/%<<span>tbname</span>>.pdb"
+ <br>ARFLAGS     =    /nologo /subsystem:console
+ <br>&nbsp; <br>####### Implicit rules
+ <br>&nbsp; <br>.SUFFIXES: .cpp .cxx .cc .C .c .asm
+ <br>&nbsp; <br>{src/}.asm{obj/}.obj:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(AS) /c $(ASFLAGS) /Fo$@ $<
+ <br>&nbsp; <br>{src/}.cpp{obj/}.obj:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(CXX) /c $(CXXFLAGS) /Fo$@ $<
+ <br>&nbsp; <br>{src/}.cxx{obj/}.obj:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(CXX) /c $(CXXFLAGS) /Fo$@ $<
+ <br>&nbsp; <br>{src/}.cc{obj/}.obj:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(CXX) /c $(CXXFLAGS) /Fo$@ $<
+ <br>&nbsp; <br>{src/}.C{obj/}.obj:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(CXX) /c $(CXXFLAGS) /Fo$@ $<
+ <br>&nbsp; <br>{src/}.c{obj/}.obj:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(CC) /c $(CFLAGS) /Fo$@ $<
+ <br>&nbsp; <br>####### Targets
+ <br>all:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(MAKE) /nologo /f makefile.mk all-am OPT_CXXFLAGS="/O2 /MT /D _NDEBUG" OPT_LDFLAGS=""
+ <br>&nbsp; <br>all-debug:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(MAKE) /nologo /f makefile.mk all-am OPT_CXXFLAGS="/Od /RTC1 /Zi /MTd /D _DEBUG" OPT_LDFLAGS="/DEBUG"
+ <br>&nbsp; <br>relink:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(MAKE) /nologo /f makefile.mk relink-am OPT_CXXFLAGS="/O2 /MT /D _NDEBUG" OPT_LDFLAGS=""
+ <br>&nbsp; <br>relink-debug:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(MAKE) /nologo /f makefile.mk relink-am OPT_CXXFLAGS="/Od /RTC1 /Zi /MTd /D _DEBUG" OPT_LDFLAGS="/DEBUG"
+ <br>&nbsp; <br>all-am: dep $(EXEC)
+ <br>&nbsp; <br>dep:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;cd ../%<<span>tlmname</span>> &amp;&amp; $(MAKE) /nologo /f makefile.mk all-am
+ <br>&nbsp;&nbsp;&nbsp; <br>$(EXEC): $(OBJECTS) $(STATICLIB)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(LD) $(OBJECTS) $(LDFLAGS) /out:$(EXEC)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;@echo "-- Build %<<span>tbname</span>>.exe completed --"    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;@echo ""
+ <br>&nbsp; <br>relink-am:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;del /f $(EXEC) %<<span>tbname</span>>.ilk
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;$(MAKE) /f makefile.mk all-am
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>clean:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;cd ../%<<span>tlmname</span>> &amp;&amp; $(MAKE) /nologo /f makefile.mk clean
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;del /f $(OBJECTS) obj/%<<span>tbname</span>>.idb obj/%<<span>tbname</span>>.pdb $(EXEC) %<<span>tbname</span>>.ilk 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;@echo "-- Clean %<<span>tbname</span>> completed --"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;@echo ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>####### Compile dependencies
+ <br>&nbsp; <br>$(OBJECTS): $(HEADERS)
+ <br>&nbsp; <br><span class="tlc_closefile">%closefile</span> mktbwin_file 
+ <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> projtbwin_file = "tlm_tb/%<<span>tbname</span>>.vcproj"
+ <br><span class="tlc_comment">%%
+</span> <br><?xml version="1.0" encoding="Windows-1252"?>
+ <br><VisualStudioProject
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ProjectType="Visual C++"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;Version="8.00"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;Name="%<<span>tbname</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ProjectGUID="{}"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;Keyword="MakeFileProj"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<Platforms>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Platform
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name="%<<span>tlmg_config.tlmgWinPlatform</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;</Platforms>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<ToolFiles>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;</ToolFiles>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<Configurations>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Configuration
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name="Release|%<<span>tlmg_config.tlmgWinPlatform</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OutputDirectory="./"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IntermediateDirectory="./obj/"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ConfigurationType="0"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BuildLogFile="./obj/BuildLog.htm"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Tool
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name="VCNMakeTool"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BuildCommandLine="nmake -f makefile.mk all"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ReBuildCommandLine="nmake -f makefile.mk clean all"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CleanCommandLine="nmake -f makefile.mk clean"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Output="%<<span>tbname</span>>.exe"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PreprocessorDefinitions=""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IncludeSearchPath=""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ForcedIncludes=""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AssemblySearchPath=""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ForcedUsingAssemblies=""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CompileAsManaged=""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Configuration>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Configuration
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name="Debug|%<<span>tlmg_config.tlmgWinPlatform</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OutputDirectory="./"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IntermediateDirectory="./obj/"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ConfigurationType="0"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BuildLogFile="./obj/BuildLog.htm"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Tool
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name="VCNMakeTool"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BuildCommandLine="nmake -f makefile.mk all-debug"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ReBuildCommandLine="nmake -f makefile.mk clean all-debug"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CleanCommandLine="nmake -f makefile.mk clean"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Output="%<<span>tbname</span>>.exe"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PreprocessorDefinitions=""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IncludeSearchPath=""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ForcedIncludes=""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AssemblySearchPath=""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ForcedUsingAssemblies=""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CompileAsManaged=""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Configuration>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;</Configurations>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<References>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;</References>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<Files>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Filter
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name="Source Files"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UniqueIdentifier="{}"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<File
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RelativePath="./src/mw_support_tb.cpp"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</File>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<File
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RelativePath="./src/%<<span>tbname</span>>_main.cpp"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</File>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<File
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RelativePath="./src/%<<span>tbname</span>>.cpp"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</File>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Filter>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Filter
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name="Header Files"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Filter="h;hpp;hxx;hm;inl;inc;xsd"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UniqueIdentifier="{}"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<File
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RelativePath="./include/mw_support_tb.h"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</File>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<File
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RelativePath="./include/%<<span>tbname</span>>_def.h"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</File>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<File
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RelativePath="./include/%<<span>tbname</span>>.h"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</File>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Filter>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;</Files>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<Globals>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;</Globals>
+ <br></VisualStudioProject>
+ <br>&nbsp; <br><span class="tlc_closefile">%closefile</span> projtbwin_file
+ <br></body></html>

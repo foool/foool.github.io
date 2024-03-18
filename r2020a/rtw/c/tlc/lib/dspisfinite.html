@@ -1,0 +1,100 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dspisfinite.html">dspisfinite.tlc</a><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1995-2015<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_DSPISFINITELIB_") == 0
+ <br><span class="tlc_assign">%assign</span> _DSPISFINITELIB_ = 1
+ <br>&nbsp; <br><span class="tlc_if">%if</span> !<span class="tlc_bifunc">EXISTS</span>("dspIsFiniteUtils")
+ <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> dspIsFiniteUtils { ...
+ <br>&nbsp;&nbsp;NothingMacro 1}
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="dspIsFinite" class="tlc_func">dspIsFinite</a>(dTypeIdentifier, val) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ((dTypeIdentifier == "D") || (dTypeIdentifier == "Z"))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> utilityName = "dspIsFinite"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeLabel = "double"
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> utilityName = "dspIsFinite32"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeLabel = "float"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Register utility name in the Shared Code Manager</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/block_private_api.html#SLibInBlockScope">SLibInBlockScope</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> block = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/block_private_api.html#SLibGetCurrentBlock">SLibGetCurrentBlock</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> block = ""
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> utilityName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibRegisterSharedUtility">SLibRegisterSharedUtility</a>(block, utilityName)
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#FcnTrackSharedUtilHeaderFileUsage">FcnTrackSharedUtilHeaderFileUsage</a>(utilityName + ".h", TLC_FALSE)>
+ <br>&nbsp;&nbsp;%<<span>utilityName</span>>(%<<span>val</span>>)
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !(<span class="tlc_bifunc">ISFIELD</span>(dspIsFiniteUtils, utilityName))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cache_sharedutils_lib.html#LibPushEmptyStackSharedUtils">LibPushEmptyStackSharedUtils</a>()</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% register utility </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpRet = <span class="tlc_bifunc">SETFIELD</span>(dspIsFiniteUtils,utilityName,1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% utility function prototype</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> funcDeclarationRoot = "int_T %<<span>utilityName</span>>(%<<span>dTypeLabel</span>> x)"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> funcProto
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>funcDeclarationRoot</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> funcProto
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% utility definition</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> utilityDef
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>funcDeclarationRoot</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (dTypeIdentifier == "D") | (dTypeIdentifier == "Z")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int32_T hx[2];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;memcpy(hx,&amp;x,2*sizeof(int32_T));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dspendian.html#dspIsLittleEndian">dspIsLittleEndian</a>()</span>>) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return (int32_T) (((uint32_T)(( hx[1] &amp; 0x7fffffff)-0x7ff00000)>>31) != 0);  /* Little Endian */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return (int32_T) (((uint32_T)(( hx[0] &amp; 0x7fffffff)-0x7ff00000)>>31) != 0); /* Big Endian */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int32_T hx;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;memcpy(&amp;hx,&amp;x,sizeof(int32_T));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return (int32_T) ((uint32_T)((hx &amp; 0x7fffffff) - 0x7f800000) >> 31 != 0);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> utilityDef
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cache_sharedutils_lib.html#SLibAddMathIncludeForUtilsSourceCode">SLibAddMathIncludeForUtilsSourceCode</a>(utilityDef)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cache_sharedutils_lib.html#SLibDumpUtilsSourceCodeAndCacheFunctionPrototype">SLibDumpUtilsSourceCodeAndCacheFunctionPrototype</a>(utilityName,funcProto,utilityDef)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> GSUStackBuf = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cache_sharedutils_lib.html#LibPopStackSharedUtilsIncludes">LibPopStackSharedUtilsIncludes</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% </span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp; <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% dspIsFinite</span>
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span> <span class="tlc_comment">%% _DSPISFINITELIB_</span>
+ <br>&nbsp;&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dspisfinite.html">dspisfinite.tlc</a>
+</span> <br></body></html>

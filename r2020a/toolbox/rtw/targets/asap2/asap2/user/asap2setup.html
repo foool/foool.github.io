@@ -1,0 +1,63 @@
+<html>
+<head>
+
+<style>
+p {color : black; font-family:courier; font-size: 80%;}
+body {line-height: 100%; font-family:courier;}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_function {color: green;}.tlc_endfunction {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}
+.tlc_bifunc {color: brown;}
+</style>
+
+</head>
+<body>
+%% 
+ <br>%%  
+ <br>%% 
+ <br>%%
+ <br>%% Copyright 1994-2011 The MathWorks, Inc.
+ <br>%%
+ <br>%% Abstract: ASAP2 setup file.
+ <br>%% - Define global variables to be used in ASAP2 generation process.
+ <br>%% - Include necessary user-defined TLC files.
+ <br>%%
+ <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br>%% Define global variables:
+ <br>%% ------------------------
+ <br><span class="tlc_assign">%assign</span> ASAP2FileName               = "%&lt;CompiledModel.Name&gt;.a2l"
+ <br><span class="tlc_assign">%assign</span> ASAP2ProjectName            = "ProjectName"
+ <br><span class="tlc_assign">%assign</span> ASAP2ProjectComment         = "Project Comment Goes Here"      
+ <br><span class="tlc_assign">%assign</span> ASAP2ModuleName             = "ModuleName"
+ <br><span class="tlc_assign">%assign</span> ASAP2ModuleComment          = "Module Comment Goes Here"
+ <br><span class="tlc_assign">%assign</span> ASAP2MOD_COMMON_Comment     = "Mod Common Comment Here"
+ <br><span class="tlc_assign">%assign</span> ASAP2NumberFormat           = "%0.6"
+ <br><span class="tlc_assign">%assign</span> ASAP2HeaderName             = "Header Name Goes Here"
+ <br><span class="tlc_assign">%assign</span> ASAP2ModParComment          = "MOD PAR Comment Goes Here"
+ <br><span class="tlc_assign">%assign</span> ASAP2CompuMethodName_Prefix = "%&lt;CompiledModel.Name&gt;_"
+ <br><span class="tlc_assign">%assign</span> ASAP2GenNoCompuMethod       = TLC_FALSE
+ <br><span class="tlc_assign">%assign</span> ASAP2EnableTestPoints       = TLC_TRUE
+ <br><span class="tlc_assign">%assign</span> ASAP2EnableRootLevelIO      = TLC_FALSE
+ <br><span class="tlc_assign">%assign</span> ASAP2EnableMatrixDim        = TLC_TRUE
+ <br>&nbsp; <br>&nbsp; <br>%% Configurations:
+ <br>%% ---------------
+ <br>%% BYTE_ORDER:          (Motorola="MSB_FIRST" / Intel="MSB_LAST")
+ <br>%% Get BYTE_ORDER from model configset (ConfigSet.TargetEndianess)
+ <br>%%  BigEndian      ->  MSB_FIRST              (*)
+ <br>%%  LittleEndian   ->  LSB_FIRST (MSB_LAST)   
+ <br>&nbsp; <br>%%%assign ASAP2BYTE_ORDER     = "MSB_FIRST"      %% old
+ <br><span class="tlc_if">%if</span>  CompiledModel.ConfigSet.TargetEndianess == "LittleEndian"
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ASAP2BYTE_ORDER =  "MSB_LAST" 
+ <br><span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;%% other cases: Unspecified, BigEndian
+ <br>&nbsp;&nbsp;&nbsp;%% The default
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ASAP2BYTE_ORDER = "MSB_FIRST"    
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>%% Include user-defined TLC files:
+ <br>%% -------------------------------
+ <br><span class="tlc_addincludepath">%addincludepath</span> "."
+ <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/asap2/asap2/user/asap2userlib.html">asap2userlib.tlc</a>"
+ <br><span class="tlc_addincludepath">%addincludepath</span> "./templates"
+ <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/asap2/asap2/user/templates/asap2scalar.html">asap2scalar.tlc</a>"
+ <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/asap2/asap2/user/templates/asap2lookup1d.html">asap2lookup1d.tlc</a>"
+ <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/asap2/asap2/user/templates/asap2lookup2d.html">asap2lookup2d.tlc</a>"
+ <br>&nbsp; <br></body></html>

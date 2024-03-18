@@ -1,0 +1,840 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2020<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Description:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>library<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>contains<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>caching<span style="padding-left:9.5px"></span>special<span style="padding-left:9.5px"></span>block
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>various<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>files.
+</span> <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_CACHELIB_") == 0
+ <br><span class="tlc_assign">%assign</span> _CACHELIB_ = 1
+ <br>&nbsp; <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/codecache_api.html">codecache_api.tlc</a>"
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("ExternsCache", "")>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("SourceCodeCache", "")>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("NonFiniteParamAssignmentsCache", "")>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("NonFiniteBlockIOAssignmentsCache", "")>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("FunctionPrototypesCache", "")>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("DefinesCache", "")>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("IncludesCache", "")>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("TypedefsCache", "")>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("GlobalPrmDataCache", "")>
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> tempVar = tempRec {NumBlocks 0}
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("IntegerOnlyWarningCache", tempRec)>
+ <br><span class="tlc_undef">%undef</span> tempVar
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("NumFiles", 0)>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibTrapCacheAssert<span style="padding-left:9.5px"></span>================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>LibTrapCacheAssert<span style="padding-left:9.5px"></span>determines<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>access<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>cache<span style="padding-left:9.5px"></span>variable
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>valid<span style="padding-left:9.5px"></span>(i.e.<span style="padding-left:9.5px"></span>cacheVar<span style="padding-left:9.5px"></span>should<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>Number).<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>access<span style="padding-left:9.5px"></span>is
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>generates<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>error,<span style="padding-left:9.5px"></span>prints<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>TLC
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>stack<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>exits.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibTrapCacheAssert" class="tlc_func">LibTrapCacheAssert</a>(cacheVar) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">TYPE</span>(cacheVar) == "Number"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> assertTxt
+ <br>&nbsp; <br>&nbsp; <br>Attempt to access a cache variable prior to calling its cache /
+ <br>generation function.
+ <br>&nbsp; <br>The current cache:
+ <br>&nbsp; <br>%<<span>cacheVar</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> assertTxt
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>(assertTxt)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_assign">%assign</span> ResetGlobalsErrorString = "#error A TLC Global was used after it was reset. To avoid this error, set the TLC variable 'ResetTLCGlobalsAfterUse' to 0."
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibResetTLCGlobal<span style="padding-left:9.5px"></span>================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Reset<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>globals<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>either<span style="padding-left:9.5px"></span>at<span style="padding-left:9.5px"></span>root<span style="padding-left:9.5px"></span>level<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>name<span style="padding-left:9.5px"></span>space<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>field
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>::CompiledModel<span style="padding-left:9.5px"></span>record.<span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>controlled<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>flag
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>'ResetTLCGlobalsAfterUse'.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibResetTLCGlobal" class="tlc_func">SLibResetTLCGlobal</a>(name) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ResetTLCGlobalsAfterUse
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(::CompiledModel, name)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.%<<span>name</span>> = ResetGlobalsErrorString + name
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <span class="tlc_bifunc">EXISTS</span>(name)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> %<<span>name</span>> = ResetGlobalsErrorString + name
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibCacheNonFiniteConstBIOAssignment<span style="padding-left:9.5px"></span>==============================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>SLibCacheNonFiniteConstBIOAssignment<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>cache<span style="padding-left:9.5px"></span>assignments<span style="padding-left:9.5px"></span>which
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>need<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>placed<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>registration<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>because<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>non-finite<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>initialization.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>That<span style="padding-left:9.5px"></span>is,<span style="padding-left:9.5px"></span>rtInfs,<span style="padding-left:9.5px"></span>rtNaNs,<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>rtMinusInfs<span style="padding-left:9.5px"></span>parameters<span style="padding-left:9.5px"></span>are
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>initialized<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>zero<span style="padding-left:9.5px"></span>until<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>registration<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>called,<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>re-initializing<span style="padding-left:9.5px"></span>them<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>their<span style="padding-left:9.5px"></span>appropriate<span style="padding-left:9.5px"></span>value.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Each<span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>appends<span style="padding-left:9.5px"></span>your<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>existing<span style="padding-left:9.5px"></span>cache<span style="padding-left:9.5px"></span>buffer.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Arguments:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>sysIdx:<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>generate<span style="padding-left:9.5px"></span>initialization
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>instIdx:<span style="padding-left:9.5px"></span>instance<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>system.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>buffer:<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Buffer<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>cached<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>placement<span style="padding-left:9.5px"></span>inside<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>model's
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>registration<span style="padding-left:9.5px"></span>function.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Example:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%openfile<span style="padding-left:9.5px"></span>buffer
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>rtP.block.param_1<span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibRealNonFinite">LibRealNonFinite</a>(inf)>;
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>rtP.block.param_i<span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibRealNonFinite">LibRealNonFinite</a>(nan)>;
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>rtP.block.param_n<span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibRealNonFinite">LibRealNonFinite</a>(-inf)>;
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%closefile<span style="padding-left:9.5px"></span>buffer
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#SLibCacheNonFiniteConstBIOAssignment">SLibCacheNonFiniteConstBIOAssignment</a>(sysIdx,buffer)>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibCacheNonFiniteConstBIOAssignment" class="tlc_func">SLibCacheNonFiniteConstBIOAssignment</a>(sysIdx, instIdx, buffer) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% The root system may have an instance index of -1, map it back to 0</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> instIdx = (instIdx == -1) ? 0 : instIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysIdx = System[sysIdx].StandaloneParentSysIdx[instIdx]
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> sysIdx != -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#LibAddToSystemField">LibAddToSystemField</a>(System[sysIdx],"CachedNonFiniteBlockIOAssignments",buffer)>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Cache in model initialization</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.NonFiniteBlockIOAssignmentsCache = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.NonFiniteBlockIOAssignmentsCache + buffer
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibCacheNonFiniteParamAssignment<span style="padding-left:9.5px"></span>==================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>SLibCacheNonFiniteParamAssignment<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>used<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>cache<span style="padding-left:9.5px"></span>run-time<span style="padding-left:9.5px"></span>parameter
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>nonfinite<span style="padding-left:9.5px"></span>initialization.<span style="padding-left:9.5px"></span>Parameters<span style="padding-left:9.5px"></span>can<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>shared<span style="padding-left:9.5px"></span>across<span style="padding-left:9.5px"></span>systems<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>are
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>required<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>initialize<span style="padding-left:9.5px"></span>nonfinites<span style="padding-left:9.5px"></span>they<span style="padding-left:9.5px"></span>use<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>their<span style="padding-left:9.5px"></span>initialization<span style="padding-left:9.5px"></span>function.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Each<span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>appends<span style="padding-left:9.5px"></span>your<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>existing<span style="padding-left:9.5px"></span>cache<span style="padding-left:9.5px"></span>buffer.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Arguments:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>mdlParam:<span style="padding-left:9.5px"></span>ModelParamter<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>nonfinite<span style="padding-left:9.5px"></span>initialization<span style="padding-left:9.5px"></span>code
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>buffer:<span style="padding-left:9.5px"></span>Code<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>cached
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibCacheNonFiniteParamAssignment" class="tlc_func">SLibCacheNonFiniteParamAssignment</a>(mdlParam, buffer) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">SIZE</span>(mdlParam.ReferencedBy,0) == 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Single reference, initialize with standalone subsystem</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysIdx = mdlParam.OwnerSysIdx[0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% The root system may have an instance index of -1, map it back to 0</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> instIdx = (mdlParam.OwnerSysIdx[1] == -1) ? 0 : mdlParam.OwnerSysIdx[1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysIdx = ::CompiledModel.System[sysIdx].StandaloneParentSysIdx[instIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> sysIdx != -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#LibAddToSystemField">LibAddToSystemField</a>(System[sysIdx],"CachedNonFiniteParamAssignments",buffer)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Cache in model initialization</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.NonFiniteParamAssignmentsCache = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.NonFiniteParamAssignmentsCache + buffer
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibDumpNonFiniteAssignmentCache<span style="padding-left:9.5px"></span>===================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>LibDumpNonFiniteAssignmentCache<span style="padding-left:9.5px"></span>dumps<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>non-finite<span style="padding-left:9.5px"></span>assignments<span style="padding-left:9.5px"></span>cache
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>buffer.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibDumpNonFiniteAssignmentCache" class="tlc_func">LibDumpNonFiniteAssignmentCache</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% See Also:</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%      LibCacheNonFiniteAssignment</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Dump Standalone subsystem nonfinite assignments</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> sysIdx = NumSystems
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> System[sysIdx].StandaloneSubsystem
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> buffer = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#LibGetSystemField">LibGetSystemField</a>(System[sysIdx], "CachedNonFiniteParamAssignments") + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#LibGetSystemField">LibGetSystemField</a>(System[sysIdx], "CachedNonFiniteBlockIOAssignments")
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(buffer)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> nonfiniteBuffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* non-finite (run-time) assignments */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>buffer</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> nonfiniteBuffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#LibAddToSystemField">LibAddToSystemField</a>(System[sysIdx],"CachedInitializeDataBody", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nonfiniteBuffer)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Also dump root model nonfinite assignments, initialize function is called</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% separately.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> buffer = ::CompiledModel.NonFiniteParamAssignmentsCache + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.NonFiniteBlockIOAssignmentsCache
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (!<span class="tlc_bifunc">WHITE_SPACE</span>(buffer))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* non-finite (run-time) assignments */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>buffer</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>DocFunction{Code<span style="padding-left:9.5px"></span>Configuration<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span>LibCacheFunctionPrototype<span style="padding-left:9.5px"></span>========
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>LibCacheFunctionPrototype<span style="padding-left:9.5px"></span>should<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>inside<span style="padding-left:9.5px"></span>BlockTypeSetup
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>cache<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>prototype.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Each<span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>appends
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>your<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>existing<span style="padding-left:9.5px"></span>cache<span style="padding-left:9.5px"></span>buffer.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>prototypes<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>placed
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>inside<span style="padding-left:9.5px"></span>model_private.h
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Example:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%openfile<span style="padding-left:9.5px"></span>buffer
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>extern<span style="padding-left:9.5px"></span>int_T<span style="padding-left:9.5px"></span>fun1(real_T<span style="padding-left:9.5px"></span>x);
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>extern<span style="padding-left:9.5px"></span>real_T<span style="padding-left:9.5px"></span>fun2(real_T<span style="padding-left:9.5px"></span>y,<span style="padding-left:9.5px"></span>int_T<span style="padding-left:9.5px"></span>i);
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%closefile<span style="padding-left:9.5px"></span>buffer
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibCacheFunctionPrototype">LibCacheFunctionPrototype</a>(buffer)>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibCacheFunctionPrototype" class="tlc_func">LibCacheFunctionPrototype</a>(buffer) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span>(CGMODEL_ACCESS("CGModel.TLCServerBlockOperationsInCPP"))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/codecache_api.html#LibCacheFunctionPrototypeBuffer">LibCacheFunctionPrototypeBuffer</a>(buffer)>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.FunctionPrototypesCache = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.FunctionPrototypesCache + buffer
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibDumpFunctionPrototypesCache<span style="padding-left:9.5px"></span>====================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Place<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>cached<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>prototypes<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>stream.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibDumpFunctionPrototypesCache" class="tlc_func">LibDumpFunctionPrototypesCache</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(FunctionPrototypesCache)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>FunctionPrototypesCache</span>>/
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#SLibResetTLCGlobal">SLibResetTLCGlobal</a>("FunctionPrototypesCache")>/
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>DocFunction{Code<span style="padding-left:9.5px"></span>Configuration<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span>LibCacheDefine<span style="padding-left:9.5px"></span>===================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Each<span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>appends<span style="padding-left:9.5px"></span>your<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>existing<span style="padding-left:9.5px"></span>cache
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>buffer.<span style="padding-left:9.5px"></span>For<span style="padding-left:9.5px"></span>blocks,<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>generally<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>BlockTypeSetup.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>For<span style="padding-left:9.5px"></span>C,<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>caches<span style="padding-left:9.5px"></span>#define<span style="padding-left:9.5px"></span>statements<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>inclusion<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>model_private.h<span style="padding-left:9.5px"></span>(or<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>model.c<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>packaging<span style="padding-left:9.5px"></span>format<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>set<span style="padding-left:9.5px"></span>to
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>compact).
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>LibCacheDefine<span style="padding-left:9.5px"></span>should<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>inside<span style="padding-left:9.5px"></span>BlockTypeSetup<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>cache<span style="padding-left:9.5px"></span>a
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>#define<span style="padding-left:9.5px"></span>statement.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Each<span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>appends<span style="padding-left:9.5px"></span>your<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>to
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>existing<span style="padding-left:9.5px"></span>cache<span style="padding-left:9.5px"></span>buffer.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>#define<span style="padding-left:9.5px"></span>statements<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>placed<span style="padding-left:9.5px"></span>inside<span style="padding-left:9.5px"></span>model_private.h<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>model.c.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Example:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%openfile<span style="padding-left:9.5px"></span>buffer
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>#define<span style="padding-left:9.5px"></span>INTERP(x,x1,x2,y1,y2)<span style="padding-left:9.5px"></span>(<span style="padding-left:9.5px"></span>y1+((y2<span style="padding-left:9.5px"></span>-<span style="padding-left:9.5px"></span>y1)/(x2<span style="padding-left:9.5px"></span>-<span style="padding-left:9.5px"></span>x1))*(x-x1)<span style="padding-left:9.5px"></span>)
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>#define<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>that
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%closefile<span style="padding-left:9.5px"></span>buffer
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibCacheDefine">LibCacheDefine</a>(buffer)>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibCacheDefine" class="tlc_func">LibCacheDefine</a>(buffer) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.DefinesCache = ::CompiledModel.DefinesCache + buffer
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>we're<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>codegen<span style="padding-left:9.5px"></span>context<span style="padding-left:9.5px"></span>build,<span style="padding-left:9.5px"></span>we'll<span style="padding-left:9.5px"></span>throw<span style="padding-left:9.5px"></span>away<span style="padding-left:9.5px"></span>model.h<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>model_private.h,<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Whatever<span style="padding-left:9.5px"></span>defines<span style="padding-left:9.5px"></span>were<span style="padding-left:9.5px"></span>cached<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>files<span style="padding-left:9.5px"></span>should<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>redirected<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>subsystem.h
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnCacheSFunctionDefinesToRLS" class="tlc_func">FcnCacheSFunctionDefinesToRLS</a>(buffer) <span class="tlc_fkw">void</span>  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !CGMODEL_ACCESS("CGModel.isCodeGenContextBuild")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysIdx = CGMODEL_ACCESS("CGModel.getCUTSysIdx")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> system = ::CompiledModel.System[sysIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Cache the extern decl in subsystem.h</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheSystemCodeToFile">SLibCacheSystemCodeToFile</a>("sys_hdr_incl", system, buffer)>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibDumpDefinesCache<span style="padding-left:9.5px"></span>===============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Place<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>cached<span style="padding-left:9.5px"></span>defines<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>stream.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibDumpDefinesCache" class="tlc_func">LibDumpDefinesCache</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(DefinesCache)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>DefinesCache</span>>/
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#SLibResetTLCGlobal">SLibResetTLCGlobal</a>("DefinesCache")>/
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="FcnScanForDuplicateIncludes" class="tlc_func">FcnScanForDuplicateIncludes</a>(incFileName) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> duplicate = 0
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = ::CompiledModel.NumNonSharedPathHeaders
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (::CompiledModel.NonSharedPathHeaders[idx] == incFileName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> duplicate = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = ::CompiledModel.NumNonSharedLocalHeaders
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (::CompiledModel.NonSharedLocalHeaders[idx] == incFileName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> duplicate = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = ::CompiledModel.NumSysPathHeaders
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (::CompiledModel.SysPathHeaders[idx] == incFileName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> duplicate = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = ::CompiledModel.NumSysLocalHeaders
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (::CompiledModel.SysLocalHeaders[idx] == incFileName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> duplicate = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = ::CompiledModel.NumBlockPathHeaders
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (::CompiledModel.BlockPathHeaders[idx] == incFileName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> duplicate = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = ::CompiledModel.NumBlockLocalHeaders
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (::CompiledModel.BlockLocalHeaders[idx] == incFileName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> duplicate = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> duplicate
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>DocFunction{Code<span style="padding-left:9.5px"></span>Configuration<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span>LibAddToCommonIncludes<span style="padding-left:9.5px"></span>==========
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Adds<span style="padding-left:9.5px"></span>items<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>unique-ified<span style="padding-left:9.5px"></span>list<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>#include/package<span style="padding-left:9.5px"></span>spec<span style="padding-left:9.5px"></span>items.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Should<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>methods<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>specify<span style="padding-left:9.5px"></span>generation<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>#include<span style="padding-left:9.5px"></span>statements<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>model.h.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Specify<span style="padding-left:9.5px"></span>locals<span style="padding-left:9.5px"></span>bare,<span style="padding-left:9.5px"></span>"myinclude.h",
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>include<span style="padding-left:9.5px"></span>path<span style="padding-left:9.5px"></span>files<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>specified<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>braces,<span style="padding-left:9.5px"></span>"<sysinclude.h>".<span style="padding-left:9.5px"></span>Each<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>adds<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>list<span style="padding-left:9.5px"></span>only<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>already
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>there.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><math.h><span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>"math.h"<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>considered<span style="padding-left:9.5px"></span>different<span style="padding-left:9.5px"></span>files<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>purpose<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>uniqueness.<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>#include<span style="padding-left:9.5px"></span>statements<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>placed<span style="padding-left:9.5px"></span>inside
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>model.h.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Example:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("tpu332lib.h")>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibAddToCommonIncludes" class="tlc_func">LibAddToCommonIncludes</a>(incFileName) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% ignore empties</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> incFileName == ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% block may not exist if this is called from any other place other than the BlockTypeSetup</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% TopTester: test/toolbox/simulink/blocks/sb2sl/tsb2slmdlref.m -testspec:lvlOne_MdlRef</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/block_private_api.html#SLibInBlockScope">SLibInBlockScope</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> block = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/block_private_api.html#SLibGetCurrentBlock">SLibGetCurrentBlock</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkType = block.Type   
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> block.Type == "S-Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkType = ParamSettings.FunctionName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> block.Type == "M-S-Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkType = ParamSettings.MFile
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% scan for duplicates, add if not on any list</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> duplicate = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#FcnScanForDuplicateIncludes">FcnScanForDuplicateIncludes</a>(incFileName)
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (!duplicate)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> incFileName[0] == "<"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.BlockPathHeaders = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.BlockPathHeaders + incFileName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.NumBlockPathHeaders = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.NumBlockPathHeaders + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.BlockLocalHeaders = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.BlockLocalHeaders + incFileName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.NumBlockLocalHeaders = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.NumBlockLocalHeaders + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#FcnAddSfuncHeaderToRLSIncludes">FcnAddSfuncHeaderToRLSIncludes</a>(incFileName)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FcnAddSfuncHeaderToRLSIncludes<span style="padding-left:9.5px"></span>==========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>RLS<span style="padding-left:9.5px"></span>contains<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>S-function,<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>includes<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>S-functions's
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>header<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>RLS<span style="padding-left:9.5px"></span>header
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnAddSfuncHeaderToRLSIncludes" class="tlc_func">FcnAddSfuncHeaderToRLSIncludes</a>(incFileName) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>(::CurrentSFcnBlockName) &amp;&amp; (::CurrentSFcnBlockName != "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockName = ::CurrentSFcnBlockName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numRLS =  CGMODEL_ACCESS("CGModel.getNumRLSFromSfuncMap",blockName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = numRLS
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%Set the module</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysIdx = <span class="tlc_bifunc">CGMODEL_ACCESS</span>("CGModel.getRLSSysIdxFromSfuncMap",blockName, <span class="tlc_bifunc">STRING</span>(idx))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> origModuleIdx = ::CurrentModuleIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CurrentModuleIdx = System[sysIdx].CGIRModuleIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Shared types will cause redundant includes</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> containsSharedTypes = <span class="tlc_bifunc">ISFIELD</span>(System[sysIdx], "IncludedSharedDataTypes") &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#FcnAddHeaderHelper">FcnAddHeaderHelper</a>(incFileName, System[sysIdx].IncludedSharedDataTypes)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !containsSharedTypes &amp;&amp; ::CompiledModel.GenUtilsSrcInSharedLocation == 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#FcnTrackHeaderFileUsage">FcnTrackHeaderFileUsage</a>(incFileName,TLC_FALSE, TLC_FALSE)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%Unset the module</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CurrentModuleIdx = origModuleIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% If we're in a codegen context build, we need to redirect the #includes </span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% that were intended for model.h and model_private.h to subsystem.h</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !CGMODEL_ACCESS("CGModel.isCodeGenContextBuild")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysIdx = CGMODEL_ACCESS("CGModel.getCUTSysIdx")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> system = ::CompiledModel.System[sysIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Cache the extern decl in subsystem.h</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> incFileBuffer
+ <br>&nbsp;&nbsp;#include "%<<span>incFileName</span>>"
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> incFileBuffer
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheSystemCodeToFile">SLibCacheSystemCodeToFile</a>("sys_hdr_incl", system, incFileBuffer)>
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Helper<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>addSfuncHeaderToRLSIncludes
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnAddHeaderHelper" class="tlc_func">FcnAddHeaderHelper</a>(incFileName, buffer) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = <span class="tlc_bifunc">SIZE</span>(buffer,1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> buffer[idx] == "/"" + incFileName + "/"" || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buffer[idx] == "<" + incFileName + ">"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibAddToCommonIncludes<span style="padding-left:9.5px"></span>==========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Adds<span style="padding-left:9.5px"></span>items<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>unique-ified<span style="padding-left:9.5px"></span>list<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>#include/package<span style="padding-left:9.5px"></span>spec<span style="padding-left:9.5px"></span>items.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Should<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>non-block<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>methods<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>specify<span style="padding-left:9.5px"></span>generation<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>#include<span style="padding-left:9.5px"></span>statements.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Local<span style="padding-left:9.5px"></span>includes<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>specified<span style="padding-left:9.5px"></span>bare,<span style="padding-left:9.5px"></span>"myinclude.h",
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>include<span style="padding-left:9.5px"></span>path<span style="padding-left:9.5px"></span>files<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>specified<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>braces,<span style="padding-left:9.5px"></span>"<sysinclude.h>".<span style="padding-left:9.5px"></span>Each<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>adds<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>list<span style="padding-left:9.5px"></span>only<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>already
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>there.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><math.h><span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>"math.h"<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>considered<span style="padding-left:9.5px"></span>different<span style="padding-left:9.5px"></span>files<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>purpose<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>uniqueness.<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>#include<span style="padding-left:9.5px"></span>statements<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>placed<span style="padding-left:9.5px"></span>inside
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>model.h.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>"S"<span style="padding-left:9.5px"></span>version<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>adding<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>common<span style="padding-left:9.5px"></span>includes<span style="padding-left:9.5px"></span>adds<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>include<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>above<span style="padding-left:9.5px"></span>all<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>files<span style="padding-left:9.5px"></span>added<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>LibAddToCommonIncludes,<span style="padding-left:9.5px"></span>but<span style="padding-left:9.5px"></span>below<span style="padding-left:9.5px"></span>any
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>filenames<span style="padding-left:9.5px"></span>already<span style="padding-left:9.5px"></span>added<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Example:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#SLibAddToCommonIncludes">SLibAddToCommonIncludes</a>("<assert.h>")>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibAddToCommonIncludes" class="tlc_func">SLibAddToCommonIncludes</a>(incFileName) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% ignore empties</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> incFileName == ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% scan for duplicates, add if not on any list</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> duplicate = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#FcnScanForDuplicateIncludes">FcnScanForDuplicateIncludes</a>(incFileName)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (!duplicate)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> incFileName[0] == "<"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.SysPathHeaders = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.SysPathHeaders + incFileName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.NumSysPathHeaders = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.NumSysPathHeaders + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.SysLocalHeaders = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.SysLocalHeaders + incFileName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.NumSysLocalHeaders = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.NumSysLocalHeaders + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibAddToNonSharedIncludes<span style="padding-left:9.5px"></span>===================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>like<span style="padding-left:9.5px"></span>SLibAddToCommonIncludes,<span style="padding-left:9.5px"></span>but<span style="padding-left:9.5px"></span>files<span style="padding-left:9.5px"></span>added<span style="padding-left:9.5px"></span>with
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>will<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>included<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>subsystems<span style="padding-left:9.5px"></span>that
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>reused<span style="padding-left:9.5px"></span>across<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>builds.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Example:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#SLibAddToNonSharedIncludes">SLibAddToNonSharedIncludes</a>("<assert.h>")>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibAddToNonSharedIncludes" class="tlc_func">SLibAddToNonSharedIncludes</a>(incFileName) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% ignore empties</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> incFileName == ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% scan for duplicates, add if not on any list</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> duplicate = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#FcnScanForDuplicateIncludes">FcnScanForDuplicateIncludes</a>(incFileName)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (!duplicate)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> incFileName[0] == "<"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.NonSharedPathHeaders = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.NonSharedPathHeaders + incFileName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.NumNonSharedPathHeaders = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.NumNonSharedPathHeaders + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.NonSharedLocalHeaders = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.NonSharedLocalHeaders + incFileName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.NumNonSharedLocalHeaders = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.NumNonSharedLocalHeaders + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibDumpCommonIncludes<span style="padding-left:9.5px"></span>============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Call<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>once<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>within<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>target's<span style="padding-left:9.5px"></span>___hdr.tlc<span style="padding-left:9.5px"></span>file
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>generate<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>accumulated<span style="padding-left:9.5px"></span>includes<span style="padding-left:9.5px"></span>specified<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>target,<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>format,<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>all<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>blocks.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibDumpCommonIncludes" class="tlc_func">SLibDumpCommonIncludes</a>(system) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isSFcn = (CodeFormat == "S-Function")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> inclBuff = ""
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isRLS = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/system_private_api.html#LibSystemIsReusedLibraryFcn">LibSystemIsReusedLibraryFcn</a>(system)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isRLS
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ifndefName = Name
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> inclBuff
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !CGMODEL_ACCESS("CGModel.RemoveCommonIncludesGuards")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#ifndef %<<span>ifndefName</span>>_COMMON_INCLUDES_
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;# define %<<span>ifndefName</span>>_COMMON_INCLUDES_
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = ::CompiledModel.NumSysPathHeaders
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> incFileName = ::CompiledModel.SysPathHeaders[idx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#include %<<span>incFileName</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = ::CompiledModel.NumNonSharedPathHeaders
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> incFileName = ::CompiledModel.NonSharedPathHeaders[idx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#include %<<span>incFileName</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = ::CompiledModel.NumBlockPathHeaders
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> incFileName = ::CompiledModel.BlockPathHeaders[idx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#include %<<span>incFileName</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isSFcn 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#LibSFcnPreSimstrucDefines">LibSFcnPreSimstrucDefines</a>(system)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = ::CompiledModel.NumSysLocalHeaders
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> incFileName = ::CompiledModel.SysLocalHeaders[idx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#include %<"/"%<<span>incFileName</span>>/"">
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(::ConfigSet.InferredTypesCompatibility, TLC_TRUE) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% &amp;&amp; !<span class="tlc_bifunc">ISEQUAL</span>(::ConfigSet.SupportNonInlinedSFcns, TLC_TRUE)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#define __TMWTYPES__ /* Inferred types compatibility mode */
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = ::CompiledModel.NumNonSharedLocalHeaders
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> incFileName = ::CompiledModel.NonSharedLocalHeaders[idx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#include %<"/"%<<span>incFileName</span>>/"">
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = ::CompiledModel.NumBlockLocalHeaders
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> incFileName = ::CompiledModel.BlockLocalHeaders[idx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileVarCond = CGMODEL_ACCESS("FileRepository.getFileVariantCondition",incFileName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(fileVarCond)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<SLibIfVariantConditionForm16b(fileVarCond)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;#include %<"/"%<<span>incFileName</span>>/"">
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(fileVarCond)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<SLibEndIfVariantConditionForm16b(fileVarCond)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span> 
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isSFcn
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#LibSFcnPostSimstrucDefines">LibSFcnPostSimstrucDefines</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span> 
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !CGMODEL_ACCESS("CGModel.RemoveCommonIncludesGuards")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#endif /* %<<span>ifndefName</span>>_COMMON_INCLUDES_ */
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> inclBuff  
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> inclBuff
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>DocFunction{Code<span style="padding-left:9.5px"></span>Configuration<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span>LibCacheIncludes<span style="padding-left:9.5px"></span>=================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>LibCacheIncludes<span style="padding-left:9.5px"></span>should<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>inside<span style="padding-left:9.5px"></span>BlockTypeSetup<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>cache
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>#include<span style="padding-left:9.5px"></span>statements.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Each<span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>appends<span style="padding-left:9.5px"></span>your<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>to
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>existing<span style="padding-left:9.5px"></span>cache<span style="padding-left:9.5px"></span>buffer.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>#include<span style="padding-left:9.5px"></span>statements<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>placed<span style="padding-left:9.5px"></span>inside
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>model_private.h.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Example:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%openfile<span style="padding-left:9.5px"></span>buffer
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>#include<span style="padding-left:9.5px"></span>"myfile.h"
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%closefile<span style="padding-left:9.5px"></span>buffer
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibCacheIncludes">LibCacheIncludes</a>(buffer)>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibCacheIncludes" class="tlc_func">LibCacheIncludes</a>(buffer) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.IncludesCache = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.IncludesCache + buffer
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibDumpIncludesCache<span style="padding-left:9.5px"></span>==============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Place<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>cached<span style="padding-left:9.5px"></span>includes<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>stream.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibDumpIncludesCache" class="tlc_func">LibDumpIncludesCache</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(IncludesCache)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>IncludesCache</span>>/
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#SLibResetTLCGlobal">SLibResetTLCGlobal</a>("IncludesCache")>/
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>DocFunction{Code<span style="padding-left:9.5px"></span>Configuration<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span>LibCacheTypedefs<span style="padding-left:9.5px"></span>=================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>LibCacheTypedefs<span style="padding-left:9.5px"></span>should<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>inside<span style="padding-left:9.5px"></span>BlockTypeSetup<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>cache
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>typedef<span style="padding-left:9.5px"></span>declarations.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Each<span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>appends<span style="padding-left:9.5px"></span>your<span style="padding-left:9.5px"></span>buffer
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>existing<span style="padding-left:9.5px"></span>cache<span style="padding-left:9.5px"></span>buffer.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>typedef<span style="padding-left:9.5px"></span>statements<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>placed
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>inside<span style="padding-left:9.5px"></span>model.h.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Example:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%openfile<span style="padding-left:9.5px"></span>buffer
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>typedef<span style="padding-left:9.5px"></span>foo<span style="padding-left:9.5px"></span>bar;
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%closefile<span style="padding-left:9.5px"></span>buffer
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibCacheTypedefs">LibCacheTypedefs</a>(buffer)>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibCacheTypedefs" class="tlc_func">LibCacheTypedefs</a>(buffer) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.TypedefsCache = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.TypedefsCache + buffer
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibDumpTypedefsCache<span style="padding-left:9.5px"></span>==============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Place<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>cached<span style="padding-left:9.5px"></span>typedefs<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>stream.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibDumpTypedefsCache" class="tlc_func">LibDumpTypedefsCache</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(TypedefsCache)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "/n%<<span>TypedefsCache</span>>"
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>DocFunction{Code<span style="padding-left:9.5px"></span>Configuration<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span>LibCacheExtern<span style="padding-left:9.5px"></span>===================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>LibCacheExtern<span style="padding-left:9.5px"></span>should<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>inside<span style="padding-left:9.5px"></span>BlockTypeSetup<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>cache<span style="padding-left:9.5px"></span>an
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>extern<span style="padding-left:9.5px"></span>statement.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Each<span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>appends<span style="padding-left:9.5px"></span>your<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>to
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>existing<span style="padding-left:9.5px"></span>cache<span style="padding-left:9.5px"></span>buffer.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>extern<span style="padding-left:9.5px"></span>statements<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>placed<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>model_private.h.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>A<span style="padding-left:9.5px"></span>C<span style="padding-left:9.5px"></span>example:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%openfile<span style="padding-left:9.5px"></span>buffer
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>extern<span style="padding-left:9.5px"></span>real_T<span style="padding-left:9.5px"></span>mydata;
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%closefile<span style="padding-left:9.5px"></span>buffer
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibCacheExtern">LibCacheExtern</a>(buffer)>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibCacheExtern" class="tlc_func">LibCacheExtern</a>(buffer) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.ExternsCache = ::CompiledModel.ExternsCache + buffer
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#FcnCacheSFunctionExternDeclToRLS">FcnCacheSFunctionExternDeclToRLS</a>(buffer)>;
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>we're<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>codegen<span style="padding-left:9.5px"></span>context<span style="padding-left:9.5px"></span>build,<span style="padding-left:9.5px"></span>we<span style="padding-left:9.5px"></span>need<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>redirect<span style="padding-left:9.5px"></span>all<span style="padding-left:9.5px"></span>extern<span style="padding-left:9.5px"></span>decl
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>were<span style="padding-left:9.5px"></span>intended<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>model.h<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>model_private.h<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>subsystem.h
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnCacheSFunctionExternDeclToRLS" class="tlc_func">FcnCacheSFunctionExternDeclToRLS</a>(buffer) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !CGMODEL_ACCESS("CGModel.isCodeGenContextBuild")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysIdx = CGMODEL_ACCESS("CGModel.getCUTSysIdx")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> system = ::CompiledModel.System[sysIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Cache the extern decl in subsystem.h</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheSystemCodeToFile">SLibCacheSystemCodeToFile</a>("sys_standalone_extern_data_decl", system, buffer)>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibDumpExternsCache<span style="padding-left:9.5px"></span>===============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Place<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>cached<span style="padding-left:9.5px"></span>externs<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>stream.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibDumpExternsCache" class="tlc_func">LibDumpExternsCache</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(ExternsCache)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>ExternsCache</span>>/
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#SLibResetTLCGlobal">SLibResetTLCGlobal</a>("ExternsCache")>/
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibCacheSourceCode<span style="padding-left:9.5px"></span>===============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>should<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>inside<span style="padding-left:9.5px"></span>BlockInstanceSetup<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>cache
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>source<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>at<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>top<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>model.c.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>added<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>existing
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>cache<span style="padding-left:9.5px"></span>buffer.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Example:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%openfile<span style="padding-left:9.5px"></span>buffer
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>void<span style="padding-left:9.5px"></span>myfunc(int<span style="padding-left:9.5px"></span>i)<span style="padding-left:9.5px"></span>{
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>i++;
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>}
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%closefile<span style="padding-left:9.5px"></span>buffer
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#SLibCacheSourceCode">SLibCacheSourceCode</a>(buffer)>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibCacheSourceCode" class="tlc_func">SLibCacheSourceCode</a>(buffer) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.SourceCodeCache = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.SourceCodeCache + buffer
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibDumpSourceCodeCache<span style="padding-left:9.5px"></span>==========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Dump<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>source<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>was<span style="padding-left:9.5px"></span>cached<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>either<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#SLibCacheSourceCode">SLibCacheSourceCode</a>()
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToFile">LibAddToFile</a>().
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibDumpSourceCodeCache" class="tlc_func">SLibDumpSourceCodeCache</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Dump any source code from SLibCacheSourceCode</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(SourceCodeCache)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>SourceCodeCache</span>>/
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#SLibResetTLCGlobal">SLibResetTLCGlobal</a>("SourceCodeCache")>/
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create(dump) any files from LibAddtoFiles</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = ::CompiledModel.NumFiles
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> file = ::CompiledModel.Files.Name[idx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<::CompiledModel.Files.File[idx]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> file
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibAddGeneratedFileToList">SLibAddGeneratedFileToList</a>(::CompiledModel.Files.Name[idx] ,"other","other","")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ResetTLCGlobalsAfterUse
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.Files.File[idx] = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibCacheGlobalPrmData<span style="padding-left:9.5px"></span>=============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>LibCacheGlobalPrmData<span style="padding-left:9.5px"></span>should<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>inside<span style="padding-left:9.5px"></span>BlockInstanceSetup
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>cache<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>parameter<span style="padding-left:9.5px"></span>data.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Each<span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>appends<span style="padding-left:9.5px"></span>your<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>existing<span style="padding-left:9.5px"></span>cache<span style="padding-left:9.5px"></span>buffer.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>data
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>placed<span style="padding-left:9.5px"></span>inside<span style="padding-left:9.5px"></span>model.c.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Note<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>only<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>model.c<span style="padding-left:9.5px"></span>will
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>able<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>see<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>data.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>For<span style="padding-left:9.5px"></span>other<span style="padding-left:9.5px"></span>files<span style="padding-left:9.5px"></span>(ie<span style="padding-left:9.5px"></span>subsystem<span style="padding-left:9.5px"></span>files)<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>see
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>data,<span style="padding-left:9.5px"></span>you<span style="padding-left:9.5px"></span>must<span style="padding-left:9.5px"></span>extern<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>model_private.h<span style="padding-left:9.5px"></span>file.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Example:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%openfile<span style="padding-left:9.5px"></span>buffer
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>real_T<span style="padding-left:9.5px"></span>A[]<span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>{1.0,<span style="padding-left:9.5px"></span>0.0,<span style="padding-left:9.5px"></span>0.0<span style="padding-left:9.5px"></span>};
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%closefile<span style="padding-left:9.5px"></span>buffer
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibCacheGlobalPrmData">LibCacheGlobalPrmData</a>(buffer)>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibCacheGlobalPrmData" class="tlc_func">LibCacheGlobalPrmData</a>(buffer) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> UsingMalloc
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> errTxt
+ <br>Attempting to declare global parameter data using TLC function
+ <br>LibCacheGlobalPrmData.
+ <br>&nbsp; <br>Declaring global parameter data is not consistent with dynamic ...
+ <br>memory allocation.  Perhaps you should create the data in the ...
+ <br>block's start function.
+ <br>&nbsp; <br>For example, assume a block requires constant and non-constant ...
+ <br>data.  The block creates the data in the start function and stores ...
+ <br>the location of the data in its PWork.  References to the data ...
+ <br>outside the start function are realized via the block PWork.
+ <br>&nbsp; <br>%<"%function <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/blocks/sb2sl/tlc_c/sbalgexp.html#Start">Start</a>(block, system) Output">
+ <br>&nbsp;&nbsp;/* initialize data (containing non-finites) */
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;static real_T nonFiniteData[] = { 1.0, 0.0, 27.2, 0.0 };
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;nonFiniteData[1] = %<"%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibRealNonFinite">LibRealNonFinite</a>(inf)>">;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;nonFiniteData[3] = %<"%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibRealNonFinite">LibRealNonFinite</a>(nan)>">;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<"%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(ConstNonFiniteData,"","",0)> = ">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;nonFiniteData[0];
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;/* initialize data (all finite) */
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;static const real_T finiteData[] = { 1.0, 12.0, 27.2, 45.0 };
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<"%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(ConstFiniteData,"","",0)> =">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;finiteData[0];
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;/* allocate memory for non-constant data */
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;SomeDataType *data;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;data = (SomeDataType *) malloc(sizeof(SomeDataType));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;VALIDATE_MEMORY(%<"%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetModelSS">RTMGetModelSS</a>()</span>>">, data);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<"%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>(NonConstData,"","",0)> = data;">
+ <br>&nbsp;&nbsp;}
+ <br>%<"%endfunction">
+ <br>&nbsp; <br>Note that static data is only declared with the "const" keyword if ...
+ <br>the data does not contain non-finites since rtInf, rtMinusInf, and ...
+ <br>rtNaN are not initialized until run time.
+ <br>&nbsp; <br>Also note that the TLC references ConstNonFiniteData, ConstFiniteData, ...
+ <br>and NonConstData are made possible with either the TLC function ...
+ <br>LibDefinePWork or with the S-function's mdlRTW function.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> errTxt
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibReportErrorWithId">SLibReportErrorWithId</a>("RTW:tlc:GenericMsg", errTxt)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.GlobalPrmDataCache = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.GlobalPrmDataCache + buffer
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibDumpGlobalPrmDataCache<span style="padding-left:9.5px"></span>=========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Place<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>cached<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>parameter<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>stream.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibDumpGlobalPrmDataCache" class="tlc_func">LibDumpGlobalPrmDataCache</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(GlobalPrmDataCache)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>GlobalPrmDataCache</span>>/
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#SLibResetTLCGlobal">SLibResetTLCGlobal</a>("GlobalPrmDataCache")>/
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibCacheIntegerOnlyWarning<span style="padding-left:9.5px"></span>=======================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>LibBlock*<span style="padding-left:9.5px"></span>routines<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>cache<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>use<span style="padding-left:9.5px"></span>of
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>non-integer<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>inputs/outputs,<span style="padding-left:9.5px"></span>parameters,<span style="padding-left:9.5px"></span>states
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>work<span style="padding-left:9.5px"></span>vectors.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Arguments:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>name:<span style="padding-left:9.5px"></span>Name<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>block
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>component:<span style="padding-left:9.5px"></span>String<span style="padding-left:9.5px"></span>describing<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>part<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>is
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>declaring<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>non-integer.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibCacheIntegerOnlyWarning" class="tlc_func">SLibCacheIntegerOnlyWarning</a>(name,component) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> foundBlock = 0
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = IntegerOnlyWarningCache.NumBlocks
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> IntegerOnlyWarningCache.Block[idx].Name == name
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> foundBlock = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> result = <span class="tlc_bifunc">FEVAL</span>("findstr", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.IntegerOnlyWarningCache.Block[idx].Component, component)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">SIZE</span>(result,0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.IntegerOnlyWarningCache.Block[idx].Component = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IntegerOnlyWarningCache.Block[idx].Component + " %<<span>component</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !foundBlock
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpVar = Block/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;Name         name;/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;Component    component/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.IntegerOnlyWarningCache = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IntegerOnlyWarningCache + Block
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_undef">%undef</span> tmpVar
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.IntegerOnlyWarningCache.NumBlocks = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IntegerOnlyWarningCache.NumBlocks + 1
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibDumpIntegerOnlyWarning<span style="padding-left:9.5px"></span>========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>dumps<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>warnings<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>float-point<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>were
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>cached<span style="padding-left:9.5px"></span>using<span style="padding-left:9.5px"></span>SLibCacheIntegerOnlyWarning.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibDumpIntegerOnlyWarning" class="tlc_func">SLibDumpIntegerOnlyWarning</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> IntegerOnlyWarningCache.NumBlocks > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> warnTxt
+ <br>&nbsp; <br>The following blocks contain non-integer data but the Integer Code Only
+ <br>option is selected.  You should replace/correct the blocks or uncheck
+ <br>Integer Code Only via the Code Generation Options dialog.
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> IntegerOnlyWarningCache.NumBlocks > 25
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> loop = 20
+ <br>Total of %<<span>IntegerOnlyWarningCache.NumBlocks</span>> Blocks, only listing first 20.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> loop = IntegerOnlyWarningCache.NumBlocks
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>Block (details) :
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = loop
+ <br>%<IntegerOnlyWarningCache.Block[idx].Name>  ...
+ <br>(%<IntegerOnlyWarningCache.Block[idx].Component>)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> warnTxt
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_selectfile">%selectfile</span> STDOUT
+ <br>%<<span>warnTxt</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibReportWarningWithIdAndArgs">SLibReportWarningWithIdAndArgs</a>("RTW:tlc:GenericWarn", warnTxt)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetFieldSet<span style="padding-left:9.5px"></span>========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>We<span style="padding-left:9.5px"></span>have<span style="padding-left:9.5px"></span>places<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>where<span style="padding-left:9.5px"></span>we<span style="padding-left:9.5px"></span>assert<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>field<span style="padding-left:9.5px"></span>exists<span style="padding-left:9.5px"></span>or
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>doesn't<span style="padding-left:9.5px"></span>exist<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>ensure<span style="padding-left:9.5px"></span>another<span style="padding-left:9.5px"></span>utility<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>been<span style="padding-left:9.5px"></span>called.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>intended<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>give<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>same<span style="padding-left:9.5px"></span>functionality<span style="padding-left:9.5px"></span>when
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>default<span style="padding-left:9.5px"></span>values<span style="padding-left:9.5px"></span>exist,<span style="padding-left:9.5px"></span>thus<span style="padding-left:9.5px"></span>rendering<span style="padding-left:9.5px"></span>ISFIELD<span style="padding-left:9.5px"></span>useless.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibGetFieldSet" class="tlc_func">LibGetFieldSet</a>(scope, fieldName) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ConfigSet.TLCAssert
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">ISFIELD</span>(scope, "FieldSet" + fieldName)
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> 1
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetFieldSet<span style="padding-left:9.5px"></span>========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>See<span style="padding-left:9.5px"></span>LibGetFieldSet
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibSetFieldSet" class="tlc_func">LibSetFieldSet</a>(scope, fieldName) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ConfigSet.TLCAssert
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(scope, "FieldSet" + fieldName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> scope FieldSet%<<span>fieldName</span>> 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span> <span class="tlc_comment">%% _CACHELIB_</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html">cachelib.tlc</a>
+</span> <br></body></html>

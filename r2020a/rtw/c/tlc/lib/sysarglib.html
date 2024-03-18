@@ -1,0 +1,501 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2019<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_assign">%assign</span> ::SystemFcnsForArgAccess = []
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibAccessCanPrmArg================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>mark<span style="padding-left:9.5px"></span>systems<span style="padding-left:9.5px"></span>hStruct<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>canonical<span style="padding-left:9.5px"></span>parameter<span style="padding-left:9.5px"></span>argument
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>accessed<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>specific<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>function.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibAccessCanPrmArg" class="tlc_func">LibAccessCanPrmArg</a>(sysIdx, canPrmIdx, global) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hstIdx = System[sysIdx].HStructDeclSystemIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> canPrm = System[hstIdx].Interface.CanonicalPrmArgDef[canPrmIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> global == "Global"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibAccessArgHelper">SLibAccessArgHelper</a>(canPrm, global,System[sysIdx].CurrentTID)>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibAccessArgHelper">SLibAccessArgHelper</a>(canPrm, "",System[sysIdx].CurrentTID)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibSetGlobalSysFcnsForArgAccess<span style="padding-left:9.5px"></span>==================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>sets<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>SystemFcnsForArgAccess.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>When<span style="padding-left:9.5px"></span>we<span style="padding-left:9.5px"></span>generate<span style="padding-left:9.5px"></span>code,<span style="padding-left:9.5px"></span>LibAccessArg,<span style="padding-left:9.5px"></span>marks<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>argument<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>all<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>specified<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>variable.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibSetGlobalSysFcnsForArgAccess" class="tlc_func">LibSetGlobalSysFcnsForArgAccess</a>(sysFcns) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::SystemFcnsForArgAccess = sysFcns
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetSysFcnsForArgAccess<span style="padding-left:9.5px"></span>========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>list<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>must<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>marked.
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibGetGlobalSysFcnsForArgAccess" class="tlc_func">LibGetGlobalSysFcnsForArgAccess</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcns = ""
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">SIZE</span>(::SystemFcnsForArgAccess,1) == 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcns = ["%<::BlockFcn>"]
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcns = ::SystemFcnsForArgAccess
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(<span class="tlc_bifunc">SIZE</span>(sysFcns, 1) > 0)
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> sysFcns
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>LibAccessThisSysFcnArg<span style="padding-left:9.5px"></span>==========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Mark<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>argument<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>been<span style="padding-left:9.5px"></span>accessed<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>specified<span style="padding-left:9.5px"></span>sysFcn.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibAccessThisSysFcnArg" class="tlc_func">LibAccessThisSysFcnArg</a>(arg, sysFcn, global) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibAccessThisSysFcnArgHelper">SLibAccessThisSysFcnArgHelper</a>(arg, sysFcn, global, <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#FcnGetCurrentAccessTid">FcnGetCurrentAccessTid</a>(), TLC_TRUE)>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGetFcnArgIdxFromArgSrc<span style="padding-left:9.5px"></span>========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>argument<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>give<span style="padding-left:9.5px"></span>module<span style="padding-left:9.5px"></span>index,<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>and
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>argument<span style="padding-left:9.5px"></span>source<span style="padding-left:9.5px"></span>(e.g.<span style="padding-left:9.5px"></span>"RTM").
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetFcnArgIdxFromArgSrc" class="tlc_func">SLibGetFcnArgIdxFromArgSrc</a>(aModuleIdx, aFcnIdx, aArgSrc) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> thisFcn = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.RTWCGModules.RTWCGModule[aModuleIdx].Function[aFcnIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% fast taylored code path for the precomputed argument indicies</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> aArgSrc
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "RTM"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> thisFcn.SimStructArgIndex
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "CPI"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> thisFcn.CPIArgIndex
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "TID"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> thisFcn.TIDArgIndex
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> argIdx=thisFcn.NumArgs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> thisFcn.ArgSource[argIdx] == aArgSrc
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> argIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> -1
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGetFcnArgIdxFromArgSrc<span style="padding-left:9.5px"></span>========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Marks<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>CG<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>argument<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>accessed<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>give<span style="padding-left:9.5px"></span>module<span style="padding-left:9.5px"></span>index,
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>argument<span style="padding-left:9.5px"></span>source<span style="padding-left:9.5px"></span>(e.g.<span style="padding-left:9.5px"></span>"RTM").
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibAccessFcnArg" class="tlc_func">SLibAccessFcnArg</a>(aModuleIdx, aFcnIdx, aArgSrc, global) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> argIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibGetFcnArgIdxFromArgSrc">SLibGetFcnArgIdxFromArgSrc</a>(aModuleIdx, aFcnIdx, aArgSrc)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> argIdx > -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> global == "Global"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#SLibCG_GlobalAccessArg">SLibCG_GlobalAccessArg</a>(aModuleIdx, aFcnIdx, argIdx)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#SLibCG_AccessArg">SLibCG_AccessArg</a>(aModuleIdx, aFcnIdx, argIdx)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibAccessThisSysFcnArgHelper" class="tlc_func">SLibAccessThisSysFcnArgHelper</a>(arg, sysFcn, global, accessTid, accessFcnArg) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> sysFcn == "Unknown"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("Encountered 'Unknown' arg")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> accessFcnArg &amp;&amp; ::CurrentModuleIdx > -1 &amp;&amp; ::CurrentFunctionIdx > -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibAccessFcnArg">SLibAccessFcnArg</a>(::CurrentModuleIdx, ::CurrentFunctionIdx, arg.ArgSrc, global)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% For async TID's in model reference, only mark the argument</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% as accessed by the TID so we don't get extra arugments for </span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% non-rate grouping discrete rates.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#SLibIsModelRefAsyncTID">SLibIsModelRefAsyncTID</a>(accessTid) &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibNonInlinedModelWideEventTID">SLibNonInlinedModelWideEventTID</a>(accessTid)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(arg, global + sysFcn + "Accessed")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> arg %<<span>global</span>>%<<span>sysFcn</span>>Accessed TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">TYPE</span>(accessTid) == "Number" &amp;&amp; accessTid >= 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibAccessSysFcnArgByTID">SLibAccessSysFcnArgByTID</a>(arg, sysFcn, global,accessTid)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(arg, global + sysFcn  + "AccessedbyTID")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> arg %<<span>global</span>>%<<span>sysFcn</span>>AccessedbyTID [-1]
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> global == "Global"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(arg, "GlobalAccessed")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> arg GlobalAccessed TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibAccessArgHelper<span style="padding-left:9.5px"></span>===============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>For<span style="padding-left:9.5px"></span>each<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>SystemFcnsForArgAccess,<span style="padding-left:9.5px"></span>mark<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>arg<span style="padding-left:9.5px"></span>accessed.
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibAccessArgHelper" class="tlc_func">SLibAccessArgHelper</a>(arg, global,accessTid) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcns = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#LibGetGlobalSysFcnsForArgAccess">LibGetGlobalSysFcnsForArgAccess</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> i = <span class="tlc_bifunc">SIZE</span>(sysFcns, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibIsPeriodicRateGrouping">SLibIsPeriodicRateGrouping</a>() || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsExplicitTaskingExportFcnRateGrouping">SLibIsExplicitTaskingExportFcnRateGrouping</a>(sysFcns[i], accessTid) || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#SLibIsModelRefAsyncTID">SLibIsModelRefAsyncTID</a>(accessTid) || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibNonInlinedModelWideEventTID">SLibNonInlinedModelWideEventTID</a>(accessTid)) ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp; <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibSystemFcnIsRateGroupType">SLibSystemFcnIsRateGroupType</a>(sysFcns[i])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibAccessThisSysFcnArgHelper">SLibAccessThisSysFcnArgHelper</a>(arg, sysFcns[i], global,accessTid,TLC_TRUE)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibAccessThisSysFcnArgHelper">SLibAccessThisSysFcnArgHelper</a>(arg, sysFcns[i], global,"",TLC_TRUE)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_fkw">%function</span> <a id="FcnGetCurrentAccessTid" class="tlc_func">FcnGetCurrentAccessTid</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">TYPE</span>(::GlobalCurrentTID) == "Number"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ::GlobalCurrentTID
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> accessTid = ""
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>(CurrentTID) &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">TYPE</span>(CurrentTID) == "Number" &amp;&amp; CurrentTID >= 0 &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibIsPeriodicRateGrouping">SLibIsPeriodicRateGrouping</a>() || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAsynchronousTriggeredTID">LibAsynchronousTriggeredTID</a>(CurrentTID))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> accessTid = CurrentTID
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> accessTid
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibAccessArg<span style="padding-left:9.5px"></span>======================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>marks<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>arg<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>accessed<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>functions
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>LibGetGlobalSysFcnForArgAccess
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibAccessArg" class="tlc_func">LibAccessArg</a>(arg) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibAccessArgHelper">SLibAccessArgHelper</a>(arg, "",<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#FcnGetCurrentAccessTid">FcnGetCurrentAccessTid</a>())>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="LibAccessArgTID" class="tlc_func">LibAccessArgTID</a>(arg,tid) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">TYPE</span>(tid) != "Number"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibAccessArgHelper">SLibAccessArgHelper</a>(arg, "",<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#FcnGetCurrentAccessTid">FcnGetCurrentAccessTid</a>())>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibAccessArgHelper">SLibAccessArgHelper</a>(arg, "",tid)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibAddTIDtoArgAccessTIDList<span style="padding-left:9.5px"></span>=====================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>add<span style="padding-left:9.5px"></span>tid<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>TIDList<span style="padding-left:9.5px"></span>access<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>arg
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibAddTIDtoAccessTIDList" class="tlc_func">SLibAddTIDtoAccessTIDList</a>(arg,sysFcn, global,tid) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> sysFcn == "Unknown"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("Encountered 'Unknown' arg")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% For async TID's in model reference, only mark the argument</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% as accessed by the TID so we don't get extra arugments for </span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% non-rate grouping discrete rates.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(arg, sysFcn + "Accessed") &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#SLibIsModelRefAsyncTID">SLibIsModelRefAsyncTID</a>(tid) &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibNonInlinedModelWideEventTID">SLibNonInlinedModelWideEventTID</a>(tid)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> arg %<<span>sysFcn</span>>Accessed TLC_TRUE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">TYPE</span>(tid) != "Vector"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tid = [%<<span>tid</span>>]
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(arg, global + sysFcn + "AccessedbyTID")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> arg %<<span>global</span>>%<<span>sysFcn</span>>AccessedbyTID tid
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> oldAccessTID = <span class="tlc_bifunc">GETFIELD</span>(arg, global + sysFcn + "AccessedbyTID")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> temp = oldAccessTID
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx0 = <span class="tlc_bifunc">SIZE</span>(tid,1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tid[idx0], -1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% if -1 is not a valid tid in</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% AccessTIDList. </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isNewAccessTID = TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx1 = <span class="tlc_bifunc">SIZE</span>(oldAccessTID,1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tid[idx0], oldAccessTID[idx1])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isNewAccessTID = TLC_FALSE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isNewAccessTID
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> temp = temp + tid[idx0] 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span class="tlc_bifunc">SETFIELD</span>(arg, global + sysFcn + "AccessedbyTID", temp)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibAccessSysFcnArgByTID<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>marks<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>argument<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>accessed<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>TID<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>function.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Global
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>string<span style="padding-left:9.5px"></span>which<span style="padding-left:9.5px"></span>signifies<span style="padding-left:9.5px"></span>whether<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>local<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>variable.
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibAccessSysFcnArgByTID" class="tlc_func">SLibAccessSysFcnArgByTID</a>(arg,sysFcn,global,accessTid) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (sysFcn == "Output" || sysFcn== "Update" ||...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sysFcn== "RootUpdate" || sysFcn== "OutputUpdate" || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/partitiongroupinglib.html#SLibContFcnPartitionGrouping">SLibContFcnPartitionGrouping</a>(sysFcn))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibAddTIDtoAccessTIDList">SLibAddTIDtoAccessTIDList</a>(arg,sysFcn,global,accessTid)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FcnArgIsNeededHelper<span style="padding-left:9.5px"></span>=============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Helper<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>determine<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>argument<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>been<span style="padding-left:9.5px"></span>accessed<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>needed<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>prototype,<span style="padding-left:9.5px"></span>regardless<span style="padding-left:9.5px"></span>what<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>TID<span style="padding-left:9.5px"></span>accesses<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>arg.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnArgIsNeededHelper" class="tlc_func">FcnArgIsNeededHelper</a>(arg, sysFcn, global) 
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> sysFcn == "Unknown"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("Unknown function argument")>
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> sysFcn == "Output" 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">ISFIELD</span>(arg, global + "OutputAccessed") || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(arg, global + "OutputUpdateAccessed")
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> sysFcn == "OutputUpdate"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">ISFIELD</span>(arg, global + "OutputAccessed") || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(arg, global + "OutputUpdateAccessed") || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(arg, global + "RootUpdateAccessed")   || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(arg, global + "UpdateAccessed")
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> sysFcn == "Start"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">ISFIELD</span>(arg, global + "StartAccessed")
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> sysFcn == "Registration" &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">ISFIELD</span>(arg, global + "RegistrationAccessed")    || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(arg, global + "ModelInitializeAccessed") || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(arg, global + "StartAccessed")           || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(arg, global + "InitializeAccessed")      || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(arg, global + "SystemInitializeAccessed")|| ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(arg, global + "EnableAccessed")
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> sysFcn == "RegistrationAndStart"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">ISFIELD</span>(arg, global + "RegistrationAccessed") || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(arg, global + "StartAccessed") || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(arg, global + "EnableAccessed") || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(arg, global + "InitializeAccessed") || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(arg, global + "SystemInitializeAccessed")
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> sysFcn == "UpdateContStates"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">ISFIELD</span>(arg, global + "OutputAccessed")       || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(arg, global + "OutputUpdateAccessed") || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(arg, global + "UpdateAccessed")       || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(arg, global + "RootUpdateAccessed")   || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(arg, global + "DerivativeAccessed")
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> sysFcn == "RootUpdate"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> NumContStates > 0 &amp;&amp; (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTCodeFormat">SLibIsERTCodeFormat</a>())
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">ISFIELD</span>(arg, global + "RootUpdateAccessed") || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(arg, global + "UpdateAccessed")     || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(arg, global + "OutputAccessed")     || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(arg, global + "DerivativeAccessed")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">ISFIELD</span>(arg, global + "RootUpdateAccessed") || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(arg, global + "UpdateAccessed")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> sysFcn == "Update"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">ISFIELD</span>(arg, global + "UpdateAccessed")
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">ISFIELD</span>(arg, global + sysFcn + "Accessed")
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FcnArgIsNeeded<span style="padding-left:9.5px"></span>===================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>true<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>needed.
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnArgIsNeeded" class="tlc_func">FcnArgIsNeeded</a>(arg)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#FcnArgIsNeededHelper">FcnArgIsNeededHelper</a>(arg, ::BlockFcn, "")
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retVal
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_fkw">%function</span> <a id="MergeAccessedTidArrays" class="tlc_func">MergeAccessedTidArrays</a>(accTid1,accTid2) 
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = <span class="tlc_bifunc">SIZE</span>(accTid2,1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> accTid1 = accTid1 + accTid2[idx]
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> accTid1
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="FcnArgIsAccessedByTID" class="tlc_func">FcnArgIsAccessedByTID</a>(arg, sysFcn, tid, global, aIsAccessedBySysFcn) 
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEQUAL</span>(tid,"") &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(sysFcn == "Output" || sysFcn== "Update" ||...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sysFcn== "RootUpdate" || sysFcn== "OutputUpdate")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> accessedTID = []
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> sysFcn== "Update" || sysFcn== "RootUpdate"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Update fcn</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(arg, global + "UpdateAccessedbyTID")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> accessedTID = <span class="tlc_bifunc">GETFIELD</span>(arg, global + "UpdateAccessedbyTID")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> sysFcn== "RootUpdate" 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(arg, global + "RootUpdateAccessedbyTID")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> accessedTID = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#MergeAccessedTidArrays">MergeAccessedTidArrays</a>(accessedTID,...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">GETFIELD</span>(arg, global + "RootUpdateAccessedbyTID"))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(arg, global + "OutputAccessedbyTID") &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(NumContStates > 0) &amp;&amp; (tid == 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> accessedTID = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#MergeAccessedTidArrays">MergeAccessedTidArrays</a>(accessedTID,...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">GETFIELD</span>(arg, global + "OutputAccessedbyTID"))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(accessedTID)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Output or OutputUpdate fcn</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(arg, global + "OutputAccessedbyTID") 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> accessedTID = <span class="tlc_bifunc">GETFIELD</span>(arg, global + "OutputAccessedbyTID")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(arg, global + "OutputUpdateAccessedbyTID")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> accessedTID = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#MergeAccessedTidArrays">MergeAccessedTidArrays</a>(accessedTID,...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">GETFIELD</span>(arg, global + "OutputUpdateAccessedbyTID"))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% OutputUpdate fcn needs have arg accessed by update fcn</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> sysFcn== "OutputUpdate"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(arg, global + "UpdateAccessedbyTID") 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> accessedTID = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#MergeAccessedTidArrays">MergeAccessedTidArrays</a>(accessedTID,...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">GETFIELD</span>(arg, global + "UpdateAccessedbyTID"))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(arg, global + "RootUpdateAccessedbyTID")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> accessedTID = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#MergeAccessedTidArrays">MergeAccessedTidArrays</a>(accessedTID,...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">GETFIELD</span>(arg, global + "RootUpdateAccessedbyTID"))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Async TID's are always rate-grouped, so they should explicitly</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% check if their TID was accessed, and shouldn't treat -1 as</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% always accessed. </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (<span class="tlc_bifunc">SIZE</span>(accessedTID,1) > 0) &amp;&amp; <span class="tlc_bifunc">ISEQUAL</span>(accessedTID[0],-1) &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#SLibIsModelRefAsyncTID">SLibIsModelRefAsyncTID</a>(tid) &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibModelWideEventTID">SLibModelWideEventTID</a>(tid)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = <span class="tlc_bifunc">SIZE</span>(accessedTID,1) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(accessedTID[idx],tid) || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="tlc_bifunc">ISEQUAL</span>(accessedTID[idx],-1) &amp;&amp; !SLibIsModelRefAsync<span class="tlc_bifunc">TID</span>(tid) &amp;&amp; !SLibModelWideEvent<span class="tlc_bifunc">TID</span>(tid))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> aIsAccessedBySysFcn
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FcnArgIsNeededForTIDHelper<span style="padding-left:9.5px"></span>=======================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Helper<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>determine<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>argument<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>been<span style="padding-left:9.5px"></span>accessed<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>needed<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>prototype<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>specific<span style="padding-left:9.5px"></span>TID.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnArgIsNeededForTIDHelper" class="tlc_func">FcnArgIsNeededForTIDHelper</a>(arg, sysFcn, tid,global) 
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#SLibIsModelRefAsyncTID">SLibIsModelRefAsyncTID</a>(tid) || !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibSystemFcnIsRateGroupType">SLibSystemFcnIsRateGroupType</a>(sysFcn)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#FcnArgIsNeededHelper">FcnArgIsNeededHelper</a>(arg, sysFcn, global)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ((!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibIsPeriodicRateGrouping">SLibIsPeriodicRateGrouping</a>() &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibModelWideEventTID">SLibModelWideEventTID</a>(tid) &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsExplicitTaskingExportFcnRateGrouping">SLibIsExplicitTaskingExportFcnRateGrouping</a>(sysFcn, tid)) || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibSystemFcnIsRateGroupType">SLibSystemFcnIsRateGroupType</a>(sysFcn))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#FcnArgIsAccessedByTID">FcnArgIsAccessedByTID</a>(arg, sysFcn, tid, global, TLC_TRUE)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#FcnArgIsAccessedByTID">FcnArgIsAccessedByTID</a>(arg, sysFcn, tid, global, TLC_FALSE)
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FcnArgNeededHelper<span style="padding-left:9.5px"></span>================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Helper<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>determine<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>argument<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>been<span style="padding-left:9.5px"></span>accessed<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>needed<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>prototype.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnArgNeededHelper" class="tlc_func">FcnArgNeededHelper</a>(arg, sysFcn, tid,isPeriodicRateGrouping,global)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isPeriodicRateGrouping || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#SLibIsModelRefAsyncTID">SLibIsModelRefAsyncTID</a>(tid) || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsReusableExportFcn">SLibIsReusableExportFcn</a>() || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibModelWideEventTID">SLibModelWideEventTID</a>(tid)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(SolverType, "FixedStep") &amp;&amp; FixedStepOpts.TID01EQ &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="tlc_bifunc">ISEQUAL</span>(tid, 0) || <span class="tlc_bifunc">ISEQUAL</span>(tid, 1))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% tid == 0, return true if arg needed for tid 0 or tid 1.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% tid == 1, return false.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">ISEQUAL</span>(tid, 0) &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#FcnArgIsNeededForTIDHelper">FcnArgIsNeededForTIDHelper</a>(arg, sysFcn, 0, global) || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#FcnArgIsNeededForTIDHelper">FcnArgIsNeededForTIDHelper</a>(arg, sysFcn, 1, global))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#FcnArgIsNeededForTIDHelper">FcnArgIsNeededForTIDHelper</a>(arg, sysFcn, tid, global)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibSystemFcnIsRateGroupType">SLibSystemFcnIsRateGroupType</a>(sysFcn)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> tidIdx = NumRuntimeExportedRates
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#FcnArgIsNeededForTIDHelper">FcnArgIsNeededForTIDHelper</a>(arg, sysFcn, tidIdx, global) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#FcnArgIsNeededHelper">FcnArgIsNeededHelper</a>(arg, sysFcn, global)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FcnArgNeeded<span style="padding-left:9.5px"></span>======================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Determines<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>argument<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>been<span style="padding-left:9.5px"></span>accessed<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>needed<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>prototype.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnArgNeeded" class="tlc_func">FcnArgNeeded</a>(arg, tid, isPeriodicRateGrouping) 
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#FcnArgNeededHelper">FcnArgNeededHelper</a>(arg, ::BlockFcn, tid, isPeriodicRateGrouping, "")
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SysFcnArgNeeded<span style="padding-left:9.5px"></span>===================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Determines<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>systems<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>argument<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>been<span style="padding-left:9.5px"></span>accessed<span style="padding-left:9.5px"></span>and
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>needed<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>prototype<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>specific<span style="padding-left:9.5px"></span>TID.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SysFcnArgNeeded" class="tlc_func">SysFcnArgNeeded</a>(sysFcn, arg, tid, isPeriodicRateGrouping) 
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#FcnArgNeededHelper">FcnArgNeededHelper</a>(arg, sysFcn, tid, isPeriodicRateGrouping, "")
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibCopyArgAccessedFlags<span style="padding-left:9.5px"></span>==========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>copies<span style="padding-left:9.5px"></span>all<span style="padding-left:9.5px"></span>accessed<span style="padding-left:9.5px"></span>argument<span style="padding-left:9.5px"></span>flags<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>source<span style="padding-left:9.5px"></span>function
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>type<span style="padding-left:9.5px"></span>(e.g<span style="padding-left:9.5px"></span>"Initialize")<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>current<span style="padding-left:9.5px"></span>Interface<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>destination<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>type<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>original<span style="padding-left:9.5px"></span>interface<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>passed<span style="padding-left:9.5px"></span>in.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>We<span style="padding-left:9.5px"></span>do<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>both<span style="padding-left:9.5px"></span>normal<span style="padding-left:9.5px"></span>arguments,<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>globals<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>handling
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>nonreused<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>inside<span style="padding-left:9.5px"></span>reused<span style="padding-left:9.5px"></span>functions.
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibCopyArgAccessedFlags" class="tlc_func">SLibCopyArgAccessedFlags</a>(callerSysIdx, srcFcnType, destFcnType, accessTid, isScalableMRSys) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibCopyArgAccessedFlagsHelper">SLibCopyArgAccessedFlagsHelper</a>(callerSysIdx, srcFcnType, destFcnType, "", accessTid, isScalableMRSys)>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibCopyArgAccessedFlagsHelper">SLibCopyArgAccessedFlagsHelper</a>(callerSysIdx, srcFcnType, destFcnType, "Global",accessTid, isScalableMRSys)>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibCopyArgAccessedFlags<span style="padding-left:9.5px"></span>==========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>See<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>help<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>SLibCopyArgAccessedFlags<span style="padding-left:9.5px"></span>above.
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibCopyArgAccessedFlagsHelper" class="tlc_func">SLibCopyArgAccessedFlagsHelper</a>(callerSysIdx, srcFcnType, destFcnType, global,accessTid, isScalableMRSys) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currBlkFcn = ::BlockFcn
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::BlockFcn = srcFcnType
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> callerInterface = System[System[callerSysIdx].HStructDeclSystemIdx].Interface
+ <br>&nbsp;&nbsp;<span class="tlc_with">%with</span> callerInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> argIdx=NumCanonicalInputArgDefs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibCopyAccessedFlagForThisArg">SLibCopyAccessedFlagForThisArg</a>(CanonicalInputArgDef[argIdx], ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;srcFcnType, destFcnType, global,accessTid)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> argIdx=NumCanonicalOutputArgDefs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibCopyAccessedFlagForThisArg">SLibCopyAccessedFlagForThisArg</a>(CanonicalOutputArgDef[argIdx], ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;srcFcnType,destFcnType, global,accessTid)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> argIdx=NumCanonicalPrmArgDefs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibCopyAccessedFlagForThisArg">SLibCopyAccessedFlagForThisArg</a>(CanonicalPrmArgDef[argIdx], ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;srcFcnType, destFcnType, global,accessTid)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> argIdx = NumCanonicalDWorkArgDefs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibCopyAccessedFlagForThisArg">SLibCopyAccessedFlagForThisArg</a>(CanonicalDWorkArgDef[argIdx],...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;srcFcnType, destFcnType, global,accessTid)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !isScalableMRSys
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibCopyAccessedFlagForThisArg">SLibCopyAccessedFlagForThisArg</a>(BlockIOArgDef,srcFcnType, destFcnType, global,accessTid)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibCopyAccessedFlagForThisArg">SLibCopyAccessedFlagForThisArg</a>(RTMArgDef,srcFcnType, destFcnType, global,accessTid)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibCopyAccessedFlagForThisArg">SLibCopyAccessedFlagForThisArg</a>(ConstBlockIOArgDef,srcFcnType, destFcnType, global,accessTid)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibCopyAccessedFlagForThisArg">SLibCopyAccessedFlagForThisArg</a>(DWorkArgDef,srcFcnType, destFcnType, global,accessTid)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibCopyAccessedFlagForThisArg">SLibCopyAccessedFlagForThisArg</a>(ParameterArgDef,srcFcnType, destFcnType, global,accessTid)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibCopyAccessedFlagForThisArg">SLibCopyAccessedFlagForThisArg</a>(ZCEventArgDef,srcFcnType, destFcnType, global,accessTid)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibCopyAccessedFlagForThisArg">SLibCopyAccessedFlagForThisArg</a>(ZCSVArgDef,srcFcnType, destFcnType, global,accessTid)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibCopyAccessedFlagForThisArg">SLibCopyAccessedFlagForThisArg</a>(ContStatesArgDef,srcFcnType, destFcnType, global,accessTid)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibCopyAccessedFlagForThisArg">SLibCopyAccessedFlagForThisArg</a>(ContStatesDerivativeArgDef,srcFcnType, destFcnType, global,accessTid)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibCopyAccessedFlagForThisArg">SLibCopyAccessedFlagForThisArg</a>(ContStatesDisabledArgDef,srcFcnType, destFcnType, global,accessTid)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibCopyAccessedFlagForThisArg">SLibCopyAccessedFlagForThisArg</a>(ContStatesAbsoluteToleranceArgDef,srcFcnType, destFcnType, global,accessTid)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibCopyAccessedFlagForThisArg">SLibCopyAccessedFlagForThisArg</a>(ContStatesPerturbMinArgDef,srcFcnType, destFcnType, global,accessTid)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibCopyAccessedFlagForThisArg">SLibCopyAccessedFlagForThisArg</a>(ContStatesPerturbMaxArgDef,srcFcnType, destFcnType, global,accessTid)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> gIdx = ::CompiledModel.NumCoderDataGroups
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> argDef = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnGetGroupArgDef">FcnGetGroupArgDef</a>(gIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibCopyAccessedFlagForThisArg">SLibCopyAccessedFlagForThisArg</a>(argDef, srcFcnType, destFcnType, global,accessTid)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::BlockFcn = currBlkFcn
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibCopyAccessedFlagForThisArg" class="tlc_func">SLibCopyAccessedFlagForThisArg</a>(arg,srcFcnType,destFcnType,global,accessTid) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#FcnArgIsNeededForTIDHelper">FcnArgIsNeededForTIDHelper</a>(arg, srcFcnType, accessTid, global)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibAccessThisSysFcnArgHelper">SLibAccessThisSysFcnArgHelper</a>(arg, destFcnType, global, accessTid,TLC_TRUE)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br></body></html>

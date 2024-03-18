@@ -1,0 +1,608 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>reference<span style="padding-left:9.5px"></span>blocks.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2019<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br>&nbsp; <br><span class="tlc_implements">%implements</span> "ModelReference" "C"
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="BlockInstanceSetup" class="tlc_func">BlockInstanceSetup</a>(block,system) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/block_api.html#LibBlockSetCustomStorageComplianceLevel">LibBlockSetCustomStorageComplianceLevel</a>(block,2)>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibMarkNonFiniteAccessed<span style="padding-left:9.5px"></span>=========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>none<span style="padding-left:9.5px"></span>finite<span style="padding-left:9.5px"></span>libarary<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>notify<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>model
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>none<span style="padding-left:9.5px"></span>finite<span style="padding-left:9.5px"></span>values<span style="padding-left:9.5px"></span>have<span style="padding-left:9.5px"></span>been<span style="padding-left:9.5px"></span>accessed<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>must<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>declared<span style="padding-left:9.5px"></span>and
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>initialized.
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibMarkNonFiniteAccessed" class="tlc_func">LibMarkNonFiniteAccessed</a>(block) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nonFinite= blockInterface.NonFiniteInfo
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> infIdx      = 0
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> minusInfIdx = 1
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nanIdx      = 2
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> nonFinite[infIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dummyInf = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibRealNonFinite">LibRealNonFinite</a>("inf")
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> nonFinite[minusInfIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dummyMInf = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibRealNonFinite">LibRealNonFinite</a>("-inf")
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> nonFinite[nanIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dummyNan = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibRealNonFinite">LibRealNonFinite</a>("nan")
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>ModelBlockCallOutputUpdateWithInitStatusGuard<span style="padding-left:9.5px"></span>=====================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Generates<span style="padding-left:9.5px"></span>initialize<span style="padding-left:9.5px"></span>status<span style="padding-left:9.5px"></span>guard<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>necessary<span style="padding-left:9.5px"></span>before<span style="padding-left:9.5px"></span>calling<span style="padding-left:9.5px"></span>periodic
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>update<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>Model<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>periodic<span style="padding-left:9.5px"></span>event<span style="padding-left:9.5px"></span>port<span style="padding-left:9.5px"></span>and
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>referencing<span style="padding-left:9.5px"></span>rate-based<span style="padding-left:9.5px"></span>model.
+</span> <br><span class="tlc_fkw">%function</span> <a id="ModelBlockCallOutputUpdateWithInitStatusGuard" class="tlc_func">ModelBlockCallOutputUpdateWithInitStatusGuard</a>( ...
+ <br>&nbsp;&nbsp;block, system, sysFcn, tidInChildModel, tidInParentModel, forSingleTasking) Output
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(sysFcn == "Output" || sysFcn == "Update" || sysFcn == "OutputUpdate")
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefHasMdlPeriodicPort">GetModelrefHasMdlPeriodicPort</a>(block) &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibParameterChangeEventTID">SLibParameterChangeEventTID</a>(tidInParentModel)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> useInitStatusGuard = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;block.ParamSettings.UseInitStatusGuardForPeriodicOutputUpdate &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(forSingleTasking || !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibNonInlinedModelWideEventTID">SLibNonInlinedModelWideEventTID</a>(tidInParentModel))
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> useInitStatusGuard
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStatDWorkIdx = block.ParamSettings.InitStatusDWorkIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(initStatDWorkIdx != -1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(block.DWork[initStatDWorkIdx],"","",0)> == 1U) {
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelBlockCallFunction">ModelBlockCallFunction</a>(block, system, sysFcn, tidInChildModel)>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> useInitStatusGuard
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>ModelRefTidGuard<span style="padding-left:9.5px"></span>=================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Generates<span style="padding-left:9.5px"></span>TID<span style="padding-left:9.5px"></span>guard<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>reference<span style="padding-left:9.5px"></span>blocks.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>used
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>both<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>update<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>functions.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>We<span style="padding-left:9.5px"></span>only<span style="padding-left:9.5px"></span>generate<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>guard
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>Model<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>multi-rate<span style="padding-left:9.5px"></span>(constant<span style="padding-left:9.5px"></span>TID<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>included),<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>parent<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>single-tasking.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="ModelRefTidGuard" class="tlc_func">ModelRefTidGuard</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidGuard = ""
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> orOperator = ""
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> noGuardNeeded = TLC_FALSE 
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> multTIDs = TLC_FALSE
+ <br>&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> LibTriggered<span class="tlc_bifunc">TID</span>(TID) || <span class="tlc_bifunc">ISEQUAL</span>(TID, "constant") || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAsynchronousTriggeredTID">LibAsynchronousTriggeredTID</a>(TID) || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibIsPeriodicRateGrouping">SLibIsPeriodicRateGrouping</a>() || <span class="tlc_bifunc">SIZE</span>(TID,1) == 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> noGuardNeeded = TLC_TRUE
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(<span class="tlc_bifunc">TYPE</span>(TID) == "Vector")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> tidIdx = <span class="tlc_bifunc">SIZE</span>(TID, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> TID[tidIdx] == -2 <span class="tlc_comment">%% ContantTid</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibModelWideEventTID">SLibModelWideEventTID</a>(TID[tidIdx])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidString = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#LibIsSampleHit">LibIsSampleHit</a>(TID[tidIdx])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tidString == "1"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> noGuardNeeded = TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> multTIDs = !<span class="tlc_bifunc">ISEMPTY</span>(tidGuard)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidGuard = tidGuard + "%<<span>orOperator</span>>%<<span>tidString</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> orOperator = " || "
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Check if we really have multiple TIDs</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !multTIDs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> noGuardNeeded = TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> (noGuardNeeded) ? "" : tidGuard
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% ModelRefTidGuard</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>GenerateModelRefTIDInfo<span style="padding-left:9.5px"></span>==========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Generates<span style="padding-left:9.5px"></span>TID<span style="padding-left:9.5px"></span>guard<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>TID<span style="padding-left:9.5px"></span>map<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>reference<span style="padding-left:9.5px"></span>blocks.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="GenerateModelRefTIDInfo" class="tlc_func">GenerateModelRefTIDInfo</a>(block, sysFcn)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> res = ["","",""]
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Generate the TID guard if necessary (multirate w/ no rate grouping)</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidGuard = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelRefTidGuard">ModelRefTidGuard</a>()
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> needsTID = !Accelerator &amp;&amp; <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#GetModelRefFcnNeedsTID">GetModelRefFcnNeedsTID</a>(block, sysFcn)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidOpen = ""
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (tidGuard != "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidOpen = "if (%<<span>tidGuard</span>>) {"
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> needsTID
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidOpen = "{"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% If the model reference block has TID as an argument, then we</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% need to map the parent blocks TID to the child TID.  For example,</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% If the parent has 3 sample times [0, 1, 2] and the referenced model</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% has 2 sample times, [1 2].  Then we need to map the parent's TID</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% [1 2] to [0 1] for the referenced model.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% We store the original TID in tmpTID because other blocks may need it.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidMap = ""
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> needsTID
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> TIDBuffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tid = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibTID">LibTID</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> else = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int tmpTID = %<<span>tid</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> tidIdx = <span class="tlc_bifunc">SIZE</span>(TID,1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>else</span>> if (%<TID[tidIdx]> == tmpTID) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tid</span>> = %<<span>tidIdx</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> else = "else"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> TIDBuffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidMap = TIDBuffer
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Reset the TID variable to tmpTID if necessary</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidClose = ""
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> needsTID
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tidCloseBuffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tid</span>> = tmpTID;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tidCloseBuffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidClose = tidCloseBuffer
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> (tidGuard != "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidClose = "}"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> res[0] = tidOpen
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> res[1] = tidMap
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> res[2] = tidClose
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> res
+ <br><span class="tlc_fkw">%endfunction</span>  <span class="tlc_comment">%%GenerateModelRefTIDInfo</span>
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_fkw">%function</span> <a id="mdlrefIsPortConstantSampleTime" class="tlc_func">mdlrefIsPortConstantSampleTime</a>(block, port)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span>(<span class="tlc_bifunc">ISEQUAL</span>(block.TID, "constant"))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_TRUE
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span>(<span class="tlc_bifunc">ISEQUAL</span>(block.TID, "triggered"))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retValue = ((! <span class="tlc_bifunc">ISEMPTY</span>(block.TriggeredBlockConstantSampleTimePorts)) &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(block.TriggeredBlockConstantSampleTimePorts[port] == 1))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> retValue
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> block.PortBasedSampleTimes == "yes"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retValue = (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalSampleTimeIndex">LibBlockOutputSignalSampleTimeIndex</a>(port) == -2)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retValue = TLC_FALSE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> retValue
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SetupRuntimeResources" class="tlc_func">SetupRuntimeResources</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcn = "SetupRuntimeResources" 
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block) 
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(blockInterface, "%<<span>sysFcn</span>>Fcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelBlockCallFunction">ModelBlockCallFunction</a>(block, system, sysFcn, "")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(block.ParamSettings, "InitStatusDWorkIdx")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStatDWorkIdx = block.ParamSettings.InitStatusDWorkIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(initStatDWorkIdx != -1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(block.DWork[initStatDWorkIdx],"","",0)> = 0U;
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(block.ParamSettings, "InitRestoreDataDWorkIdx")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> restoreDataDWorkIdx = block.ParamSettings.InitRestoreDataDWorkIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(restoreDataDWorkIdx != -1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#SLibModelBlockRTMAllocateInParent">SLibModelBlockRTMAllocateInParent</a>(block, blockInterface)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtmArg = block.Identifier
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;memcpy((void *) &amp;(%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(block.DWork[restoreDataDWorkIdx],"","",0)>.rtm),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(void *) &amp;(%<<span>rtmArg</span>>), sizeof(%<<span>rtmArg</span>>));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;memcpy((void *) &amp;(%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(block.DWork[restoreDataDWorkIdx],"","",0)>),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(void *) &amp;(%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(block.DWork[0],"","",0)>), 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sizeof(%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(block.DWork[0],"","",0)>));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> blockInterface.HasPrivateDWork
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mdlName = block.ParamSettings.ReferencedModelName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#SLibGetCreateInitRestoreDataFcnNameForModel">SLibGetCreateInitRestoreDataFcnNameForModel</a>(mdlName)>();
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="CleanupRuntimeResources" class="tlc_func">CleanupRuntimeResources</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcn = "CleanupRuntimeResources" 
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block) 
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(blockInterface, "%<<span>sysFcn</span>>Fcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelBlockCallFunction">ModelBlockCallFunction</a>(block, system, sysFcn, "")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> blockInterface.HasPrivateDWork
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mdlName = block.ParamSettings.ReferencedModelName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#SLibGetDestroyInitRestoreDataFcnNameForModel">SLibGetDestroyInitRestoreDataFcnNameForModel</a>(mdlName)>();
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Start<span style="padding-left:9.5px"></span>============================================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Start" class="tlc_func">Start</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> Accelerator
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Start function is executed in Simulink</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(0)
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> !<span class="tlc_bifunc">ISFIELD</span>(block.ParamSettings, "InitStatusDWorkIdx")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#LibMarkNonFiniteAccessed">LibMarkNonFiniteAccessed</a>(block)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcn = "Start"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(blockInterface, "%<<span>sysFcn</span>>Fcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#GetFunctionStr">GetFunctionStr</a>(block, sysFcn, 0, "", 0, "")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% For ports with constant sample time that are imported,</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% we need to set the initial value</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> portIdx = block.NumDataOutputPorts
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% See if the port has a constant sample time</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#mdlrefIsPortConstantSampleTime">mdlrefIsPortConstantSampleTime</a>(block, portIdx))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> storageClass = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalStorageClass">LibBlockOutputSignalStorageClass</a>(portIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (<span class="tlc_bifunc">ISEQUAL</span>(storageClass, "ImportedExtern") || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISEQUAL</span>(storageClass, "ImportedExternPointer"))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> op = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#FcnGetOutputPortRecord">FcnGetOutputPortRecord</a>(portIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> bo = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#SLibGetSourceRecord">SLibGetSourceRecord</a>(op, 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% It must also have an initial value</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ! <span class="tlc_bifunc">ISEMPTY</span>(bo.InitialValue)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(bo)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonreglib.html#FcnInitDataInitialValue">FcnInitDataInitialValue</a>(bo, id)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>InitializeConditions<span style="padding-left:9.5px"></span>=============================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="InitializeConditions" class="tlc_func">InitializeConditions</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcn = "Initialize"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(blockInterface, "%<<span>sysFcn</span>>Fcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelBlockCallFunction">ModelBlockCallFunction</a>(block, system, sysFcn, "")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SystemInitialize<span style="padding-left:9.5px"></span>==================================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SystemInitialize" class="tlc_func">SystemInitialize</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcn = "SystemInitialize"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(blockInterface, "%<<span>sysFcn</span>>Fcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelBlockCallFunction">ModelBlockCallFunction</a>(block, system, sysFcn, "")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SystemReset<span style="padding-left:9.5px"></span>=======================================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SystemReset" class="tlc_func">SystemReset</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcn = "SystemReset"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(blockInterface, "%<<span>sysFcn</span>>Fcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelBlockCallFunction">ModelBlockCallFunction</a>(block, system, sysFcn, "")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Enable<span style="padding-left:9.5px"></span>============================================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Enable" class="tlc_func">Enable</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcn = "Enable"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(blockInterface, "%<<span>sysFcn</span>>Fcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelBlockCallFunction">ModelBlockCallFunction</a>(block, system, sysFcn, "")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Disable<span style="padding-left:9.5px"></span>============================================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Disable" class="tlc_func">Disable</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcn = "Disable"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(blockInterface, "%<<span>sysFcn</span>>Fcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelBlockCallFunction">ModelBlockCallFunction</a>(block, system, sysFcn, "")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>ModelRefBlockHasFcn<span style="padding-left:9.5px"></span>===========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Description:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>For<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>reference<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>SingleTasking,<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>return<span style="padding-left:9.5px"></span>true<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>%<<span>fcnType</span>>Fcn<span style="padding-left:9.5px"></span>field.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>For<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>reference<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>Multitasking,<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>tid<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>number,<span style="padding-left:9.5px"></span>return<span style="padding-left:9.5px"></span>true<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%<<span>fcnType</span>><span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>tid.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>tid<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>number,<span style="padding-left:9.5px"></span>return<span style="padding-left:9.5px"></span>true<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>block
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>%<<span>fcnType</span>><span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>its
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>tids
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="ModelRefBlockHasFcn" class="tlc_func">ModelRefBlockHasFcn</a>(block, fcnType, tid)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_with">%with</span> block
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !blockInterface.RateGrouped
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">TYPE</span>(tid) == "Number"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> tidIdx = NumSampleTimes
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> localTid = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#MapParentTID2ChildTID">MapParentTID2ChildTID</a>(block, tidIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (localTid == tid) &amp;&amp; <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibNonInlinedModelWideEventTID">SLibNonInlinedModelWideEventTID</a>(tidIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">ISFIELD</span>(blockInterface, "%<<span>fcnType</span>>TID%<<span>localTid</span>>Fcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = <span class="tlc_bifunc">ISFIELD</span>(blockInterface, "%<<span>fcnType</span>>Fcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">TYPE</span>(tid) == "Number"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = <span class="tlc_bifunc">ISFIELD</span>(blockInterface, "%<<span>fcnType</span>>TID%<<span>tid</span>>Fcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> tidIdx = NumSampleTimes
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibSynchronousTID">SLibSynchronousTID</a>(tidIdx) || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibNonInlinedModelWideEventTID">SLibNonInlinedModelWideEventTID</a>(tidIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> localTid = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#MapParentTID2ChildTID">MapParentTID2ChildTID</a>(block, tidIdx)  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> localTid >= 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(blockInterface, "%<<span>fcnType</span>>TID%<<span>localTid</span>>Fcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retVal
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>ModelBlockCallFunction<span style="padding-left:9.5px"></span>============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Call<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>given<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>referenced<span style="padding-left:9.5px"></span>model.
+</span> <br><span class="tlc_fkw">%function</span> <a id="ModelBlockCallFunction" class="tlc_func">ModelBlockCallFunction</a>(block, system, sysFcn, localTid) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> Accelerator
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Call into Simulink */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> sysFcn == "SystemInitialize"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/accellib.html#SLibCallMdlRefSystemInitializeInSimulink">SLibCallMdlRefSystemInitializeInSimulink</a>(system, block)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> sysFcn == "SystemReset"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/accellib.html#SLibCallMdlRefSystemResetInSimulink">SLibCallMdlRefSystemResetInSimulink</a>(system, block)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> accFunction = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetAcceleratorStringForFunction">GetAcceleratorStringForFunction</a>(sysFcn)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/accellib.html#SLibCallBlockInSimulink">SLibCallBlockInSimulink</a>(system, block, accFunction)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#GetFunctionStr">GetFunctionStr</a>(block, sysFcn, 0, localTid, 0, "")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Outputs<span style="padding-left:9.5px"></span>==========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>will<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>single<span style="padding-left:9.5px"></span>tasking.<span style="padding-left:9.5px"></span>Otherwise,<span style="padding-left:9.5px"></span>OutputsForTID
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>will<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>called.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block)
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_with">%with</span> block
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !blockInterface.RateGrouped || Accelerator
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelRefBlockHasFcn">ModelRefBlockHasFcn</a>(block,"Output","") 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcn = "Output"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelRefBlockHasFcn">ModelRefBlockHasFcn</a>(block,"OutputUpdate","")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcn = "OutputUpdate"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> res = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#GenerateModelRefTIDInfo">GenerateModelRefTIDInfo</a>(block, "%<<span>sysFcn</span>>Fcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidOpen = res[0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidMap = res[1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidClose = res[2]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tidOpen</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tidMap</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelBlockCallOutputUpdateWithInitStatusGuard">ModelBlockCallOutputUpdateWithInitStatusGuard</a>( ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;block, system, sysFcn, "", "", TLC_TRUE)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tidClose</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% parent is single tasking, but unit is multitasking,</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Parent calls output fcn for each synchronous TID one by one. </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> tidIdx = NumSampleTimes
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibSynchronousTID">SLibSynchronousTID</a>(tidIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidString = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#LibIsSampleHit">LibIsSampleHit</a>(tidIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tidString == "1"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simdemos/simfeatures/tlc_c/sfun_multirate.html#OutputsForTID">OutputsForTID</a>(block,system,tidIdx)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simdemos/simfeatures/tlc_c/sfun_multirate.html#OutputsForTID">OutputsForTID</a>(block,system,tidIdx)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(tmpBuf)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (%<<span>tidString</span>>) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tmpBuf</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>OutputsForTID<span style="padding-left:9.5px"></span>===========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>multitasking<span style="padding-left:9.5px"></span>tasking.<span style="padding-left:9.5px"></span>Otherwise,<span style="padding-left:9.5px"></span>Outputs
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>will<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>called.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="OutputsForTID" class="tlc_func">OutputsForTID</a>(block, system, tid) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% If it a single-rate parameter, the block function we call is Outputs, not OutputsTID#</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (<span class="tlc_bifunc">SIZE</span>(TID,1) == 1 &amp;&amp; <span class="tlc_bifunc">ISEQUAL</span>(TID, tid) &amp;&amp; SLibParameterChangeEvent<span class="tlc_bifunc">TID</span>(tid))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/blocks/sb2sl/tlc_c/sb1varpoly.html#Outputs">Outputs</a>(block, system)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block)
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidInChildModel = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#MapParentTID2ChildTID">MapParentTID2ChildTID</a>(block, tid)  
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% We should directly call any async function-calls,</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% not use the OutputsForTID interface, unless it's an Init/Reset/Term call</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#ModelBlockHasAsyncInput">ModelBlockHasAsyncInput</a>(tid, block) || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibInitResetTermEventTID">SLibInitResetTermEventTID</a>(tid)
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> tidInChildModel >= 0 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelRefBlockHasFcn">ModelRefBlockHasFcn</a>(block,"Output",tidInChildModel) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcn = "Output"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelRefBlockHasFcn">ModelRefBlockHasFcn</a>(block,"OutputUpdate",tidInChildModel)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcn = "OutputUpdate"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelBlockCallOutputUpdateWithInitStatusGuard">ModelBlockCallOutputUpdateWithInitStatusGuard</a>( ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;block, system, sysFcn, tidInChildModel, tid, TLC_FALSE)>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Update<span style="padding-left:9.5px"></span>===========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>single<span style="padding-left:9.5px"></span>tasking.<span style="padding-left:9.5px"></span>Otherwise,<span style="padding-left:9.5px"></span>UpdateForTID
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>will<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>called.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="Update" class="tlc_func">Update</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block)
+ <br>&nbsp;&nbsp;<span class="tlc_with">%with</span> block
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !blockInterface.RateGrouped || Accelerator
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Parents and units are single tasking</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% generate none rate grouping code</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelRefBlockHasFcn">ModelRefBlockHasFcn</a>(block,"Update","")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> res = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#GenerateModelRefTIDInfo">GenerateModelRefTIDInfo</a>(block, "UpdateFcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidOpen = res[0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidMap = res[1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidClose = res[2]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tidOpen</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tidMap</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelBlockCallOutputUpdateWithInitStatusGuard">ModelBlockCallOutputUpdateWithInitStatusGuard</a>( ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;block, system, "Update", "", "", TLC_TRUE)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tidClose</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Parent single tasking, but unit is multitasking,</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% code of unit is rate grouped. </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Parent calls update fcn for each TID one by one</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> tidIdx = NumSampleTimes
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibSynchronousTID">SLibSynchronousTID</a>(tidIdx) || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibNonInlinedModelWideEventTID">SLibNonInlinedModelWideEventTID</a>(tidIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidString = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#LibIsSampleHit">LibIsSampleHit</a>(tidIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tidString == "1"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#UpdateForTID">UpdateForTID</a>(block,system,tidIdx)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#UpdateForTID">UpdateForTID</a>(block,system,tidIdx)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(tmpBuf)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (%<<span>tidString</span>>) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tmpBuf</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span> 
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>UpdateForTID<span style="padding-left:9.5px"></span>===========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>multitasking<span style="padding-left:9.5px"></span>tasking.<span style="padding-left:9.5px"></span>Otherwise,<span style="padding-left:9.5px"></span>Update
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>will<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>called.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="UpdateForTID" class="tlc_func">UpdateForTID</a>(block, system, tid) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% If it a single-rate parameter, the block function we call is Update, not UpdateTID#</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (<span class="tlc_bifunc">SIZE</span>(TID,1) == 1 &amp;&amp; <span class="tlc_bifunc">ISEQUAL</span>(TID, tid) &amp;&amp; SLibParameterChangeEvent<span class="tlc_bifunc">TID</span>(tid))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/fixedandfloat/tlc_c/sfix_fir.html#Update">Update</a>(block, system)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> localTid = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#MapParentTID2ChildTID">MapParentTID2ChildTID</a>(block, tid)
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% We should directly call any async function-calls,</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% not use the OutputsForTID interface</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#ModelBlockHasAsyncInput">ModelBlockHasAsyncInput</a>(tid, block)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> localTid < 0 || !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelRefBlockHasFcn">ModelRefBlockHasFcn</a>(block,"Update",localTid)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelBlockCallOutputUpdateWithInitStatusGuard">ModelBlockCallOutputUpdateWithInitStatusGuard</a>( ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;block, system, "Update", localTid, tid, TLC_FALSE)>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SetDims<span style="padding-left:9.5px"></span>============================================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SetDims" class="tlc_func">SetDims</a>(block, system, oIdx, rIdx) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcn = "SetDims"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(blockInterface, "%<<span>sysFcn</span>>Fcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> Accelerator
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Call into Simulink for MEX-version of S-function */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/accellib.html#SLibCallSFcnSetDimsInSimulink">SLibCallSFcnSetDimsInSimulink</a>(system, block, oIdx, rIdx)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outAndRuleIdx = ["%<<span>oIdx</span>>", "%<<span>rIdx</span>>"]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#GetSetDimsFunctionStr">GetSetDimsFunctionStr</a>(outAndRuleIdx, block, sysFcn, 0, "", 0, "")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FinalizeAllDims<span style="padding-left:9.5px"></span>============================================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FinalizeAllDims" class="tlc_func">FinalizeAllDims</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcn = "FinalizeDims"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(blockInterface, "%<<span>sysFcn</span>>Fcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelBlockCallFunction">ModelBlockCallFunction</a>(block, system, sysFcn, "")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>ZeroCrossings<span style="padding-left:9.5px"></span>====================================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="ZeroCrossings" class="tlc_func">ZeroCrossings</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcn = "ZeroCrossing"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(blockInterface, "%<<span>sysFcn</span>>Fcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelBlockCallFunction">ModelBlockCallFunction</a>(block, system, sysFcn, "")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Projection<span style="padding-left:9.5px"></span>====================================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Projection" class="tlc_func">Projection</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcn = "Projection"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(blockInterface, "%<<span>sysFcn</span>>Fcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelBlockCallFunction">ModelBlockCallFunction</a>(block, system, sysFcn, "")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Derivatives<span style="padding-left:9.5px"></span>======================================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Derivatives" class="tlc_func">Derivatives</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcn = "Derivative"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(blockInterface, "%<<span>sysFcn</span>>Fcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelBlockCallFunction">ModelBlockCallFunction</a>(block, system, sysFcn, "")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>ForcingFunction<span style="padding-left:9.5px"></span>============================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="ForcingFunction" class="tlc_func">ForcingFunction</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcn = "ForcingFunction"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block)
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(blockInterface, "%<<span>sysFcn</span>>Fcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelBlockCallFunction">ModelBlockCallFunction</a>(block, system, sysFcn, "")>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/private/sfunwiz_template.html#Derivatives">Derivatives</a>(block,system)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>MassMatrix<span style="padding-left:9.5px"></span>============================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="MassMatrix" class="tlc_func">MassMatrix</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcn = "MassMatrix"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(blockInterface, "%<<span>sysFcn</span>>Fcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (::CompiledModel.ModelIsLinearlyImplicit == "yes")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelBlockCallFunction">ModelBlockCallFunction</a>(block, system, sysFcn, "")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>    
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Terminate<span style="padding-left:9.5px"></span>========================================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Terminate" class="tlc_func">Terminate</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysFcn = "Terminate"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(block.ParamSettings, "InitStatusDWorkIdx")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStatDWorkIdx = block.ParamSettings.InitStatusDWorkIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(initStatDWorkIdx != -1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(block.DWork[initStatDWorkIdx],"","",0)> == 1U) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#CallModelBlockTerminatePortFunction">CallModelBlockTerminatePortFunction</a>(block, blockInterface, "")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <span class="tlc_bifunc">ISFIELD</span>(blockInterface, "%<<span>sysFcn</span>>Fcn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> termInfo = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelWideEventFcnInfo">GetModelWideEventFcnInfo</a>(blockInterface, "PowerDownEvent", "")  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> termInfo.eventTid != -1 &amp;&amp; !<span class="tlc_bifunc">ISEMPTY</span>(termInfo.fcnName) &amp;&amp; ::isRAccel
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#SLibCallModelBlockFunction">SLibCallModelBlockFunction</a>([], block, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"OutputFcn", blockInterface, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">GETFIELD</span>(blockInterface, termInfo.fcnName), 0, termInfo.eventTid, 0, "")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html#ModelBlockCallFunction">ModelBlockCallFunction</a>(block, system, sysFcn, "")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> 
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/modelref.html">modelref.tlc</a>
+</span> <br></body></html>

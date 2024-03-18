@@ -1,0 +1,191 @@
+<html>
+<head>
+
+<style>
+p {color : black; font-family:courier; font-size: 80%;}
+body {line-height: 100%; font-family:courier;}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_function {color: green;}.tlc_endfunction {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}
+.tlc_bifunc {color: brown;}
+</style>
+
+</head>
+<body>
+%% 
+ <br>%%
+ <br>%%
+ <br>%% Copyright 2009-2014 The MathWorks, Inc.
+ <br>%%
+ <br>%% Abstract: AUTOSAR Client Operation block tlc functions
+ <br>%%
+ <br>%%
+ <br>&nbsp; <br><span class="tlc_implements">%implements</span> "sfun_autosar_clientop" "C"
+ <br>&nbsp; <br>%% Function: FcnGetMatrixIOStripExtraParentheses ==============================
+ <br>%%
+ <br>%% Recursively strip the outter most '(' and ')'
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="FcnGetMatrixIOStripExtraParentheses" class="tlc_func">FcnGetMatrixIOStripExtraParentheses</a>(signalAddr)
+ <br>&nbsp;&nbsp;%% If the input is empty then return
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(signalAddr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> signalAddr
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%% See if there are parentheses around the expression, if so remove the
+ <br>&nbsp;&nbsp;%% outermost pair and call self recursively. Otherwise return input.
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpMatch = <span class="tlc_bifunc">FEVAL</span>("regexp", signalAddr, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"^//((.+)//)$", "tokens")
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(tmpMatch)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> signalAddr = tmpMatch[0][0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/sfun_autosar_clientop.html#FcnGetMatrixIOStripExtraParentheses">FcnGetMatrixIOStripExtraParentheses</a>(signalAddr)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> signalAddr
+ <br><span class="tlc_endfunction">%endfunction</span> %% FcnGetMatrixIOStripExtraParentheses
+ <br>&nbsp; <br>&nbsp; <br>%% Function: FcnGetMatrixIOConvertAddrToLValue ================================
+ <br>%%
+ <br>%% Converts a r-value pointer to a l-value pointer. 
+ <br>%% If signalAddr is of the form &(signal[0]) convert it to signal.
+ <br>%% If signalAddr is of the form &signal[0] convert it to signal.
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="FcnGetMatrixIOConvertAddrToLValue" class="tlc_func">FcnGetMatrixIOConvertAddrToLValue</a>(signalAddr)
+ <br>&nbsp;&nbsp;%% First strip extra '(' and ')'
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> signalAddr = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/sfun_autosar_clientop.html#FcnGetMatrixIOStripExtraParentheses">FcnGetMatrixIOStripExtraParentheses</a>(signalAddr)
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%% Detect &(signal[0]) case and convert to l-value.
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpMatch = <span class="tlc_bifunc">FEVAL</span>("regexp", signalAddr, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"^//&//((.+)//[0//]//)$", "tokens")
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(tmpMatch)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> tmpMatch[0][0]
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%% Detect &signal[0] case and convert to l-value.
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpMatch = <span class="tlc_bifunc">FEVAL</span>("regexp", signalAddr, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"^//&(.+)//[0//]$", "tokens")
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(tmpMatch)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> tmpMatch[0][0]
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> signalAddr
+ <br><span class="tlc_endfunction">%endfunction</span> %% FcnGetMatrixIOConvertAddrToLValue
+ <br>&nbsp; <br>&nbsp; <br>%% Function: FcnGetMatrixIOFinalProcess =======================================
+ <br>%% 
+ <br>%% Strip extra '(' and ')' from the ends of signalAddr and prepend '&' if
+ <br>%% needed.
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="FcnGetMatrixIOFinalProcess" class="tlc_func">FcnGetMatrixIOFinalProcess</a>(signalAddr)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarIsPassByPtr2BaseType">SLibAutosarIsPassByPtr2BaseType</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% Since we know that the width of the port is greater than 1, then when
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% when pass by pointer to base type is enabled the input argument is 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% a pointer to the base type. 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% Otherwise get the address of the array.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "(%&lt;signalAddr&gt;)"
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "&(%&lt;signalAddr&gt;)"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span> 
+ <br><span class="tlc_endfunction">%endfunction</span> %% FcnGetMatrixIOFinalProcess
+ <br>&nbsp; <br>&nbsp; <br>%% Function: FcnGetMatrixInputArgumentStr =====================================
+ <br>%% 
+ <br>%% Pre: This function should be only called if the record associated with the 
+ <br>%%      port has width > 1. 
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="FcnGetMatrixInputArgumentStr" class="tlc_func">FcnGetMatrixInputArgumentStr</a>(portIdx) void
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ip = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#FcnGetInputPortRecord">FcnGetInputPortRecord</a>(portIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mapSource = <span class="tlc_bifunc">IDNUM</span>(ip.SignalSrc[0])[0]
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (mapSource == "u")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% Canonical Input - Argument of a reusable subsystem function
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "(%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAliasedThruDataTypeName">LibBlockInputSignalAliasedThruDataTypeName</a>(portIdx, "")> (*)[%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalWidth">LibBlockInputSignalWidth</a>(portIdx)&gt;])(%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(portIdx, "", "", 0)>)"
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> (mapSource == "U")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% For root input we can use the address directly. 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> signalAddr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(portIdx, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpSignalAddr = <span class="tlc_bifunc">FEVAL</span>("regexp", signalAddr, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"(//[0//])$", "tokens")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (!<span class="tlc_bifunc">ISEMPTY</span>(tmpSignalAddr) && !SLibAutosarIs<span class="tlc_bifunc">AR4</span>())
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> signalAddr = <span class="tlc_bifunc">FEVAL</span>("regexprep", signalAddr, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"//[0//]$", "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> signalAddr = <span class="tlc_bifunc">FEVAL</span>("regexprep", signalAddr, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"^&//*", "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> signalAddr
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalStorageClass">LibBlockInputSignalStorageClass</a>(portIdx, 0) != "Auto" || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mapSource != "C")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% As long as mapSource is I or storage is not Auto we can use
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% LibBlockInputSignal and strip the last [0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> signalAddr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(portIdx, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpSignalAddr = <span class="tlc_bifunc">FEVAL</span>("regexp", signalAddr, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"(//[0//])$", "tokens")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(tmpSignalAddr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> signalAddr = <span class="tlc_bifunc">FEVAL</span>("regexprep", signalAddr, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"//[0//]$", "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% If the return string contains &(val[0]), then replace it with val
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> signalAddr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(portIdx, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> signalAddr = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/sfun_autosar_clientop.html#FcnGetMatrixIOConvertAddrToLValue">FcnGetMatrixIOConvertAddrToLValue</a>(signalAddr)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/sfun_autosar_clientop.html#FcnGetMatrixIOFinalProcess">FcnGetMatrixIOFinalProcess</a>(signalAddr)
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_endfunction">%endfunction</span> %% FcnGetMatrixInputArgumentStr
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>%% Function: FcnGetMatrixOutputArgumentStr =====================================
+ <br>%% 
+ <br>%% Pre: This function should be only called if the record associated with the 
+ <br>%%      port has width > 1. 
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="FcnGetMatrixOutputArgumentStr" class="tlc_func">FcnGetMatrixOutputArgumentStr</a>(portIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ip = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#FcnGetOutputPortRecord">FcnGetOutputPortRecord</a>(portIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mapSource = <span class="tlc_bifunc">IDNUM</span>(ip.SignalSrc[0])[0]
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalStorageClass">LibBlockOutputSignalStorageClass</a>(portIdx) != "Auto" || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mapSource != "C")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> signalAddr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(portIdx, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpSignalAddr = <span class="tlc_bifunc">FEVAL</span>("regexp", signalAddr, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"(//w+)//[0//]", "tokens")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(tmpSignalAddr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> signalAddr = <span class="tlc_bifunc">FEVAL</span>("regexprep", signalAddr, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"//w+//[0//]", tmpSignalAddr[0])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% This block is only visited if mapSource is "C". Cannot output to "C".
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errMsg = "Model outputing to constant."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>(errMsg)&gt;
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/AUTOSAR/AUTOSAR/sfun_autosar_clientop.html#FcnGetMatrixIOFinalProcess">FcnGetMatrixIOFinalProcess</a>(signalAddr)
+ <br><span class="tlc_endfunction">%endfunction</span> %% FcnGetMatrixOutputArgumentStr
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>%% Function: BlockInstanceSetup ===========================================
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="BlockInstanceSetup" class="tlc_func">BlockInstanceSetup</a>(block, system) void
+ <br>&nbsp;&nbsp;%%
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> MultiInstanceERTCode
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportError">LibBlockReportError</a>(block, "Invoke AUTOSAR Server Operation block resides in a model mapped to a multi-instance AUTOSAR Software Component. This is not supported for the AUTOSAR Target. You must place this block in a model mapped to a single-instance AUTOSAR Software Component.")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>() || CodeFormat=="S-Function" || ::isRAccel
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceRTWTarget">IsModelReferenceRTWTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportError">LibBlockReportError</a>(block, "Invoke AUTOSAR Server Operation block resides in a referenced model. This is not supported for the AUTOSAR Target. You must place this block in the top model.")>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/block_api.html#LibBlockSetIsExpressionCompliant">LibBlockSetIsExpressionCompliant</a>(block)&gt;
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;%%
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br>%% Function: Outputs ======================================================
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="Outputs" class="tlc_func">Outputs</a> (block, system) Output
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnCallStr = %&lt;FcnCallFullStr&gt;
+ <br>&nbsp;&nbsp;%%
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>() || CodeFormat=="S-Function" || ::isRAccel
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% Do nothing
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;fcnCallStr&gt;;
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br>%% Function: BlockOutputSignal ============================================
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="BlockOutputSignal" class="tlc_func">BlockOutputSignal</a>(block,system,portIdx,ucv,lcv,idx,retType) void
+ <br>&nbsp;&nbsp;%%
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnCallStr = %&lt;FcnCallExprStr&gt;
+ <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> retType
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Signal"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>() || CodeFormat=="S-Function" || ::isRAccel
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Do nothing
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "%&lt;fcnCallStr&gt;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Unsupported return type: %&lt;retType&gt;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportError">LibBlockReportError</a>(block,errTxt)&gt;
+ <br>&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br>&nbsp;&nbsp;%%
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br></body></html>

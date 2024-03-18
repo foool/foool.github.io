@@ -1,0 +1,92 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+*<span class="tlc_comment">%% </span>
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2017<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Array<span style="padding-left:9.5px"></span>Plot<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>target<span style="padding-left:9.5px"></span>file,<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>use<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>mobile<span style="padding-left:9.5px"></span>targets.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_implements">%implements</span> * "C"
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>BlockInstanceSetup<span style="padding-left:9.5px"></span>=========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Define<span style="padding-left:9.5px"></span>over-ride<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>type<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>PWork<span style="padding-left:9.5px"></span>structure<span style="padding-left:9.5px"></span>when<span style="padding-left:9.5px"></span>logging<span style="padding-left:9.5px"></span>to
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>structure
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="BlockInstanceSetup" class="tlc_func">BlockInstanceSetup</a>(block, system) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/block_api.html#LibBlockSetIsExpressionCompliant">LibBlockSetIsExpressionCompliant</a>(block)>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("ParamSettings.IsERTMobileTarget") &amp;&amp; ParamSettings.IsERTMobileTarget
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ParamSettings.MobileTargetDevice == 1 <span class="tlc_comment">%% iOS</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#SLibAddToCommonIncludes">SLibAddToCommonIncludes</a>("driver_ios_plot.h")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> ParamSettings.MobileTargetDevice == 2 <span class="tlc_comment">%% Android</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#SLibAddToCommonIncludes">SLibAddToCommonIncludes</a>("driver_android_plot.h")>   
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% BlockInstanceSetup</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Start<span style="padding-left:9.5px"></span>=============================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>scope<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>IsERTMobileTarget<span style="padding-left:9.5px"></span>defined,<span style="padding-left:9.5px"></span>initialize<span style="padding-left:9.5px"></span>plot.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Start" class="tlc_func">Start</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeQ     = "static "
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> CodeFormat == "S-Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> warnTxt = "Scope blocks not currently supported for S-Function " ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"code format.  Block disabled."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportWarning">LibBlockReportWarning</a>(block, warnTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span>  <span class="tlc_bifunc">EXISTS</span>("ParamSettings.IsERTMobileTarget" ) &amp;&amp; ParamSettings.IsERTMobileTarget 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> scopeID = ParamSettings.MobileTargetID
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mobileScopeProps = <span class="tlc_bifunc">STRING</span>(ParamSettings.MobileScopeProperties)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockSampleTimeStr = "%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockSampleTime">LibBlockSampleTime</a>(block)>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sampleTimeStr = "%<<span>blockSampleTimeStr</span>>" 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> pIdx = NumDataInputPorts-1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sampleTimeStr = sampleTimeStr + "," + "%<<span>blockSampleTimeStr</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const char* mobileScopeProperties%<<span>scopeID</span>> = "%<<span>mobileScopeProps</span>>";
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T numInputPortsScope%<<span>scopeID</span>> = %<<span>NumDataInputPorts</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T scope%<<span>scopeID</span>>ID = %<<span>ParamSettings.MobileTargetID</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;real32_T sampleTimes%<<span>scopeID</span>>[%<<span>NumDataInputPorts</span>>] = {%<<span>sampleTimeStr</span>>};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INITIALIZE_PLOT(scope%<<span>scopeID</span>>ID,numInputPortsScope%<<span>scopeID</span>>,mobileScopeProperties%<<span>scopeID</span>>,sampleTimes%<<span>scopeID</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* End of %<<span>Type</span>>: '%<<span>Name</span>>' */ 
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% Start</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Outputs<span style="padding-left:9.5px"></span>===========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>scope<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>IsERTMobileTarget<span style="padding-left:9.5px"></span>defined,<span style="padding-left:9.5px"></span>include<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/scope_mobile.html">scope_mobile.tlc</a><span style="padding-left:9.5px"></span>file.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span>  <span class="tlc_bifunc">EXISTS</span>("ParamSettings.IsERTMobileTarget" ) &amp;&amp; ParamSettings.IsERTMobileTarget
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Call plotting routine for a mobile target */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/scope_mobile.html">scope_mobile.tlc</a>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* End of %<<span>Type</span>>: '%<<span>Name</span>>' */
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> Accelerator
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Call into Simulink for Scope */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/accellib.html#SLibCallBlockInSimulink">SLibCallBlockInSimulink</a>(system, block, "SS_CALL_MDL_OUTPUTS")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% Outputs</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/scope.html">scope.tlc</a>
+</span> <br></body></html>

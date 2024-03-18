@@ -1,0 +1,77 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_if">%if</span> !<span class="tlc_bifunc">EXISTS</span>("::_BLOCK_PRIVATE_API_")
+ <br><span class="tlc_assign">%assign</span> ::_BLOCK_PRIVATE_API_ = 1
+ <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>2019<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function{Block<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span>SLibInBlockScope
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>true<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>within<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>scope<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>record
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibInBlockScope" class="tlc_func">SLibInBlockScope</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">EXISTS</span>("BlockIdx")
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function{Block<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span>SLibGetCurrentBlock
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>current<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>record<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>ius<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>within<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>scope<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>record.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetCurrentBlock" class="tlc_func">SLibGetCurrentBlock</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/block_private_api.html#SLibInBlockScope">SLibInBlockScope</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> self = ::CompiledModel.System[BlockIdx[0]].Block[BlockIdx[2]]
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> self.BlockIdx[0] != BlockIdx[0] || self.BlockIdx[2] != BlockIdx[2]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_error">%error</span> "Incoherent BlockIdx in record."
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> self
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function{Block<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span>SLibBlockIsExpressionCompliant
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>true<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>block's<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>compliant<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>expression<span style="padding-left:9.5px"></span>folding.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>To<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>BlockSetupAndCompatiblityCheck<span style="padding-left:9.5px"></span>function.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibBlockIsExpressionCompliant" class="tlc_func">SLibBlockIsExpressionCompliant</a>(block) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% TLCExprCompliant</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> CGMODEL_ACCESS("Block.GetTLCExpressionCompliance", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;block.BlockIdx[0], block.BlockIdx[2])
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function{Block<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span>SLibBlockIntegerDowncastRequired
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>true<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>needs<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>enforce<span style="padding-left:9.5px"></span>integer<span style="padding-left:9.5px"></span>downcasts<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>its
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>expression.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibBlockIntegerDowncastRequired" class="tlc_func">SLibBlockIntegerDowncastRequired</a>(block) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% EnforceIntegerDowncast</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> CGMODEL_ACCESS("Block.GetEnforceIntegerDowncast", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;block.BlockIdx[0], block.BlockIdx[2])
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function{Block<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span>SLibBlockGetCustomStorageComplianceLevel
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>custom<span style="padding-left:9.5px"></span>storage<span style="padding-left:9.5px"></span>compliance<span style="padding-left:9.5px"></span>level<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>block
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibBlockGetCustomStorageComplianceLevel" class="tlc_func">SLibBlockGetCustomStorageComplianceLevel</a>(block) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% CustomStorageClassCompliant</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> CGMODEL_ACCESS("Block.GetCSCComplianceLevel", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;block.BlockIdx[0], block.BlockIdx[2])
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span> <span class="tlc_comment">%% _BLOCK_PRIVATE_API_</span>
+ <br></body></html>

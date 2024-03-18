@@ -1,0 +1,30 @@
+<html>
+<head>
+
+<style>
+p {color : black; font-family:courier; font-size: 80%;}
+body {line-height: 100%; font-family:courier;}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_function {color: green;}.tlc_endfunction {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}
+.tlc_bifunc {color: brown;}
+</style>
+
+</head>
+<body>
+%% Abstract:
+ <br>%%      TLC file for xPC Target Byte Unpacking block
+ <br>%%
+ <br>%% Copyright 1996-2005 The MathWorks, Inc.
+ <br>%%  
+ <br><span class="tlc_implements">%implements</span> xpcbyte2any "C"
+ <br>&nbsp; <br><span class="tlc_function">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block,system) Output
+ <br>&nbsp;&nbsp;%% Alignment has been taken care of in the S-Function itself,
+ <br>&nbsp;&nbsp;%% using offset and width in the LibBlock* functions will suffice.
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width  = block.SFcnParamSettings.Width
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> offset = block.SFcnParamSettings.Offset
+ <br>&nbsp; <br>&nbsp;&nbsp;/* Unpack: %&lt;block.Name&gt; */
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> i = NumDataOutputPorts
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(void) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMemFcnCall">LibGenMemFcnCall</a>("memcpy", <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(i, "", "", 0), ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(0, "", "", offset[i]), width[i])>;
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endfunction">%endfunction</span> <br></body></html>

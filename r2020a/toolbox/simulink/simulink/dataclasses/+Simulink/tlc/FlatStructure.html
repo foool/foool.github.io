@@ -1,0 +1,647 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2019<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Make<span style="padding-left:9.5px"></span>sure<span style="padding-left:9.5px"></span>no<span style="padding-left:9.5px"></span>white<span style="padding-left:9.5px"></span>space<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>shows<span style="padding-left:9.5px"></span>up<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>code.
+</span> <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Target<span style="padding-left:9.5px"></span>language<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>C
+</span> <br><span class="tlc_implements">%implements</span> * "C"
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%=============================================================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="AddWs" class="tlc_func">AddWs</a>(s) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(s)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "%<<span>s</span>> "
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%=============================================================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="VerifyBooleanScalars" class="tlc_func">VerifyBooleanScalars</a>(classrec) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numData = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageClassRecordNumData">LibCustomStorageClassRecordNumData</a>(classrec)
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = numData
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> datarec = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetDataRecord">LibGetDataRecord</a>(classrec, idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageVerifyRecordIsScalar">LibCustomStorageVerifyRecordIsScalar</a>(datarec)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageVerifyRecordIsNonComplex">LibCustomStorageVerifyRecordIsNonComplex</a>(datarec)>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%=============================================================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="GetPointer" class="tlc_func">GetPointer</a>(cscDefn, msDefn) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> cscDefn.DataAccess == "Pointer"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "*"
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%=============================================================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="GetPointerForData" class="tlc_func">GetPointerForData</a>(cscDefn, msDefn, datarec) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataAccess = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDataAccess">SLibGetDataAccess</a>(cscDefn, datarec)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> dataAccess == "Pointer"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "*"
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%=============================================================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="GetActualStructNameForData" class="tlc_func">GetActualStructNameForData</a>(cscDefn, datarec)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> caProps    = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetCustomStorageAttributes">LibGetCustomStorageAttributes</a>(datarec)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetInstanceSpecificProp">LibGetInstanceSpecificProp</a>(cscDefn, caProps, "StructName")
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(structName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% If instance specific struct name is empty (user didn't specify in</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% object), use default generated struct name here, which should be</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% able to avoid conflict among multiple packages and CSCs.</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cscTypeAttributes    = cscDefn.CSCTypeAttributes
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isStructNameInstSpec = cscTypeAttributes.IsStructNameInstanceSpecific
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isStructNameInstSpec
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> coderInfoPkg = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRTWInfoObjectPackage">LibGetRTWInfoObjectPackage</a>(datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cscName    = cscDefn.Name
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structName = "rt_" + coderInfoPkg + "_" + cscName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> structName
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%=============================================================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="GetDataRecTypedef" class="tlc_func">GetDataRecTypedef</a>(datarec, bitpack)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id        = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(datarec)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> useStdContainerName = TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtThruId  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeIdAliasedThruToFromId">LibGetDataTypeIdAliasedThruToFromId</a>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeId">LibGetRecordDataTypeId</a>(datarec))
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataWidth = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalmaplib.html#LibGetDataSymbolicWidth">LibGetDataSymbolicWidth</a>(datarec)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataDims = ""
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> dataWidth != "1"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataDims = "[%<<span>dataWidth</span>>]"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(dataDims) &amp;&amp; <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsContainerCGTypeStdContainer">SLibIsContainerCGTypeStdContainer</a>(datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataDims = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> useStdContainerName = TLC_TRUE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtName    = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordCompositeOptStdDataTypeName">LibGetRecordCompositeOptStdDataTypeName</a>(datarec, useStdContainerName)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> bitpack &amp;&amp; (dtThruId == tSS_BOOLEAN)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Hardcode bit field datatype as uint_T</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Depending on the word size specified in the ConfigSet Dialog</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% uint_T will be typedef'd in rtwtypes.h</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> boolType   = "uint_T"  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typedefStr = "%<<span>boolType</span>> %<<span>id</span>> : 1;"
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typedefStr = "%<<span>dtName</span>> %<<span>id</span>>%<<span>dataDims</span>>;"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> CGMODEL_ACCESS("CGModel.getCustomDataTraceIsEnabled")  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typedefStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commentlib.html#SLibAddBlockTraceForDeclarationFromDataRec">SLibAddBlockTraceForDeclarationFromDataRec</a>(datarec, typedefStr)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Put Description field of SDO in comments if the option is on</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> desc = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDescriptionForData">SLibGetDescriptionForData</a>(datarec)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(desc)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typedefStr = "%<<span>typedefStr</span>> /* %<<span>desc</span>> */"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hasElementName = <span class="tlc_bifunc">ISFIELD</span>(datarec,"HasStructCSCElement") ? datarec.HasStructCSCElement : ""
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> def = <span class="tlc_bifunc">ISEMPTY</span>(hasElementName)? "" : "#define %<<span>hasElementName</span>>"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vcRecord = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetDataInlineVariantNetConditions">SLibGetDataInlineVariantNetConditions</a>(datarec)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ifCond = vcRecord.ifCond
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> endIfCond = vcRecord.endIfCond
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typedefStr = "%<<span>ifCond</span>>/n%<<span>typedefStr</span>>/n%<<span>def</span>>/n%<<span>endIfCond</span>>"     
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> typedefStr
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%=============================================================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="GetDataRecInit" class="tlc_func">GetDataRecInit</a>(datarec, comma)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(datarec)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageRecordIsModelParameter">LibCustomStorageRecordIsModelParameter</a>(datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initData  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#LibParameterInstanceInitStr">LibParameterInstanceInitStr</a>(datarec)
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataWidth = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalmaplib.html#LibGetDataSymbolicWidth">LibGetDataSymbolicWidth</a>(datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isSymbolic = (dataWidth != "%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalmaplib.html#LibGetDataWidth">LibGetDataWidth</a>(datarec)>")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataCmplx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetRecordIsComplex">SLibGetRecordIsComplex</a>(datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtIdx     = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeId">LibGetRecordDataTypeId</a>(datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% For signal/dwork CSC static init, use InitialValue if suitable</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(datarec.InitialValue)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ground   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetGroundInitFromId">LibGetGroundInitFromId</a>(dtIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initData = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibExpandGroundForStaticInit">SLibExpandGroundForStaticInit</a>(dataWidth, isSymbolic, dataCmplx, ground)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initData = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibExpandInitialValueForStaticInit">SLibExpandInitialValueForStaticInit</a>(dataWidth, isSymbolic, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataCmplx, dtIdx, datarec.InitialValue)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hasElementName = <span class="tlc_bifunc">ISFIELD</span>(datarec,"HasStructCSCElement") ? datarec.HasStructCSCElement : ""
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> def = <span class="tlc_bifunc">ISEMPTY</span>(hasElementName)? "" : "#define %<<span>hasElementName</span>>"
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vcRecord = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetDataInlineVariantNetConditions">SLibGetDataInlineVariantNetConditions</a>(datarec)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ifCond = vcRecord.ifCond
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> endIfCond = vcRecord.endIfCond
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> "/n/* %<<span>id</span>> *//n%<<span>ifCond</span>>/n%<<span>initData</span>>%<<span>comma</span>>/n%<<span>def</span>>/n%<<span>endIfCond</span>>"
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%=============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Sort<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>order<span style="padding-left:9.5px"></span>of:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>1st<span style="padding-left:9.5px"></span>order:<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>type<span style="padding-left:9.5px"></span>size
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>2nd<span style="padding-left:9.5px"></span>order:<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>type<span style="padding-left:9.5px"></span>name
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>3rd<span style="padding-left:9.5px"></span>order:<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>identifier<span style="padding-left:9.5px"></span>(StructName_Identifier)
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnSortGroupData" class="tlc_func">FcnSortGroupData</a>(cscDefn, classrec) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% e.g.:</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%   sortedDataIndices = [3, 4, 1, 0, 2, 5]  %% datarec indices after sort</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sortedDataIndices = []
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% e.g.:</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%   tmpDataMap {</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%     s002 {                     %% size 2</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%       int16_Struct1_SigA   3   %%   type "int16", struct "Struct1", data id "SigA", datarec idx 3</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%       int16_Struct2_SigA   4   %%   type "int16", struct "Struct2", data id "SigA", datarec idx 4</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%       int16_Struct1_PrmB   1   %%   type "int16", struct "Struct1", data id "PrmB", datarec idx 1</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%     s008 {             %% size 8</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%       DAlias_Struct1_PrmA  0   %%   type "DAlias", struct "Struct1", data id "PrmA", datarec idx 0</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%       double_Struct2_DwA   2   %%   type "double", struct "Struct2", data id "DwA",  datarec idx 2</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%     s001 {             %% size 1</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%       boolean_Struct1_SigB 5   %%   type "boolean", struct "Struct1", data id "SigB", datarec idx 5</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%   }</span>
+ <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> tmpDataMap {}
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Scan through datarec by their un-sorted order</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numData = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageClassRecordNumData">LibCustomStorageClassRecordNumData</a>(classrec)
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> iData = numData
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> datarec = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetDataRecord">LibGetDataRecord</a>(classrec, iData)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtId    = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeId">LibGetRecordDataTypeId</a>(datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtSize  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeSLSizeFromId">LibGetDataTypeSLSizeFromId</a>(dtId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtName  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeNameFromId">LibGetDataTypeNameFromId</a>(dtId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataId  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structName = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetActualStructNameForData">GetActualStructNameForData</a>(cscDefn, datarec)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Patternize the fieldname such that FIELDNAMES will sort them accordingly</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sfname = <span class="tlc_bifunc">SPRINTF</span>("ds%3.3u", dtSize)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tfname = <span class="tlc_bifunc">SPRINTF</span>("%s_%s_%s", dtName, structName, dataId)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(tmpDataMap, sfname)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Add newly encountered data type size into the map as a field</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> tmpDataMap %<<span>sfname</span>> {}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sfield = <span class="tlc_bifunc">GETFIELD</span>(tmpDataMap, sfname)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sfield = <span class="tlc_bifunc">GETFIELD</span>(tmpDataMap, sfname)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> sfield %<<span>tfname</span>> iData
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% FIELDNAMES will do the actual sort</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sfNames = <span class="tlc_bifunc">FIELDNAMES</span>(tmpDataMap)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sfNum = <span class="tlc_bifunc">SIZE</span>(sfNames, 1)
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> f1 = sfNum
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sfname = sfNames[sfNum - f1 - 1]  <span class="tlc_comment">%% reversing order</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sfield = <span class="tlc_bifunc">GETFIELD</span>(tmpDataMap, sfname)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tfNames = <span class="tlc_bifunc">FIELDNAMES</span>(sfield)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> f2 = <span class="tlc_bifunc">SIZE</span>(tfNames, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tfname = tfNames[f2]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> iData = <span class="tlc_bifunc">GETFIELD</span>(sfield, tfname)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sortedDataIndices = sortedDataIndices + iData
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> sortedDataIndices
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%Function<span style="padding-left:9.5px"></span>:<span style="padding-left:9.5px"></span>IsGuardingRequired<span style="padding-left:9.5px"></span>==========================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract<span style="padding-left:9.5px"></span>:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Need<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>check<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>guarding<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>required<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>struct<span style="padding-left:9.5px"></span>element.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>guarding<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>required<span style="padding-left:9.5px"></span>iff
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>a)<span style="padding-left:9.5px"></span>there<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>another<span style="padding-left:9.5px"></span>element<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>classrec<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>same<span style="padding-left:9.5px"></span>identifier<span style="padding-left:9.5px"></span>&amp;&amp;
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>b)<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>datarec<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>signal<span style="padding-left:9.5px"></span>record<span style="padding-left:9.5px"></span>&amp;&amp;
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>c)<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>record<span style="padding-left:9.5px"></span>corresponds<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>signal<span style="padding-left:9.5px"></span>present<span style="padding-left:9.5px"></span>within<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>variant<span style="padding-left:9.5px"></span>subsystem
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>can<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>evaluated<span style="padding-left:9.5px"></span>using<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>VariantCondition<span style="padding-left:9.5px"></span>field<span style="padding-left:9.5px"></span>being<span style="padding-left:9.5px"></span>present<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>record
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester<span style="padding-left:9.5px"></span>:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/tVSSSigObj.m
+</span> <br><span class="tlc_fkw">%function</span> <a id="IsGuardingRequired" class="tlc_func">IsGuardingRequired</a>(classrec,datarecNum,datarec) <span class="tlc_fkw">void</span>
+ <br><span class="tlc_comment">%%if<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>record<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>signal,<span style="padding-left:9.5px"></span>there<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>no<span style="padding-left:9.5px"></span>need<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>guard<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>structure
+</span> <br><span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEQUAL</span>(datarec.RecordType, "BlockOutput")
+ <br>&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Check<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>identifier<span style="padding-left:9.5px"></span>present<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>datarec,<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>present<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>other<span style="padding-left:9.5px"></span>datarec<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>class
+</span> <br><span class="tlc_assign">%assign</span> numData =  <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageClassRecordNumData">LibCustomStorageClassRecordNumData</a>(classrec)
+ <br><span class="tlc_foreach">%foreach</span> iData = numData
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(iData,datarecNum) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpDatarec = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetDataRecord">LibGetDataRecord</a>(classrec,iData)
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% get the signal identifer and compare the name against the passed datarec</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% if there is any other record with the same identifer, we might have to guard</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a></a>(tmpDatarec),<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a></a>(datarec))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_TRUE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br><span class="tlc_return">%return</span> TLC_FALSE  
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%=============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>vector<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>[typedefs<span style="padding-left:9.5px"></span>decls<span style="padding-left:9.5px"></span>defns]<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>grouped<span style="padding-left:9.5px"></span>custom
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>storage<span style="padding-left:9.5px"></span>class.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>In<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>case<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>instance-specific<span style="padding-left:9.5px"></span>struct<span style="padding-left:9.5px"></span>name,<span style="padding-left:9.5px"></span>typedefs/
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>decls/defns<span style="padding-left:9.5px"></span>each<span style="padding-left:9.5px"></span>can<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>string<span style="padding-left:9.5px"></span>containing<span style="padding-left:9.5px"></span>multiple<span style="padding-left:9.5px"></span>C<span style="padding-left:9.5px"></span>typedefs/decls/
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>defns.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="GetGroupTypeDeclDefnFlatStructure" class="tlc_func">GetGroupTypeDeclDefnFlatStructure</a>(cscDefn, msDefn, classrec) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> cscDefn.DataInit != "Macro"
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cscName              = cscDefn.Name
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cscTypeAttributes    = cscDefn.CSCTypeAttributes
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isTypeDef            = cscTypeAttributes.IsTypeDef
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> bitpack              = cscTypeAttributes.BitPackBoolean
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isStructNameInstSpec = cscTypeAttributes.IsStructNameInstanceSpecific
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isOneStruct          = 1
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isOneDataType        = 1
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> directStaticInit     = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(cscDefn.DataAccess == "Direct") &amp;&amp; (cscDefn.DataInit == "Static")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> directAutoInitMayHavePrm = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(cscDefn.DataAccess == "Direct") &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(cscDefn.DataInit == "Auto") &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(cscDefn.DataUsage.IsParameter)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> bitpack
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#VerifyBooleanScalars">VerifyBooleanScalars</a>(classrec)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numData = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageClassRecordNumData">LibCustomStorageClassRecordNumData</a>(classrec)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%%---------------------------------------------------------------------------</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Determine if the data resides in a single structure, even if the structure</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% name is in fact instance-specific; this will allow us to optimize</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% performance later</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Also determine if the data are all same data-type-through-id</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% This records holds the number of data elements present in a given structure. This is required </span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% to determine if the data init for a structure requires a comma or not.  </span>
+ <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> tmpStructElementsCount { }
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> iData = numData
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> datarec = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetDataRecord">LibGetDataRecord</a>(classrec, iData)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currentStructName = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetActualStructNameForData">GetActualStructNameForData</a>(cscDefn, datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(tmpStructElementsCount, currentStructName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> tmpStructElementsCount /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>currentStructName</span>> { /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NumElements 1/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structRec = <span class="tlc_bifunc">GETFIELD</span>(tmpStructElementsCount,currentStructName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structRec.NumElements = structRec.NumElements + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span> 
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> iData == 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structName = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetActualStructNameForData">GetActualStructNameForData</a>(cscDefn, datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtThruId   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeIdAliasedThruToFromId">LibGetDataTypeIdAliasedThruToFromId</a>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeId">LibGetRecordDataTypeId</a>(datarec))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Check if struct name varies</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isOneStruct &amp;&amp; (currentStructName != structName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isOneStruct = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Check if data-type-through-id varies</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isOneDataType &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeIdAliasedThruToFromId">LibGetDataTypeIdAliasedThruToFromId</a>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeId">LibGetRecordDataTypeId</a>(datarec)) != dtThruId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isOneDataType = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%%---------------------------------------------------------------------------</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Sort data (currently by data-type-size, data-type-name, data-identifier)</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isDataSorted = TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !isOneDataType
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpSortedDataList = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#FcnSortGroupData">FcnSortGroupData</a>(cscDefn, classrec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <span class="tlc_bifunc">SIZE</span>(tmpSortedDataList, 1) == numData
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isDataSorted = TLC_TRUE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%%---------------------------------------------------------------------------</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Scan each data of this CSC, save any instance-specific struct name info,</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% and partially construct instance-specific typedef / initstr</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create a tmp map to save all instance-specific struct name info</span>
+ <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> tmpInstSpecStructs { }
+ <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> tmpStructHasConditionalElements { }  
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Assign default attributes</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeToken = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#AddWs">AddWs</a>(cscTypeAttributes.TypeToken)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeTag   = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#AddWs">AddWs</a>(cscTypeAttributes.TypeTag)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeName  = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#AddWs">AddWs</a>(cscTypeAttributes.TypeName)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> allElemConditional = TLC_TRUE <span class="tlc_comment">%%assume, if we find at least one unconditional, set this to false</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dummyElementName = "_rt_unused"
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = numData
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> iData = isDataSorted ? tmpSortedDataList[idx] : idx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> datarec = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetDataRecord">LibGetDataRecord</a>(classrec, iData)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id      = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structName = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetActualStructNameForData">GetActualStructNameForData</a>(cscDefn, datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vcRecord = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetDataInlineVariantNetConditions">SLibGetDataInlineVariantNetConditions</a>(datarec)  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%One fallout of this is that if a vss has 2 choices and each of these have a mutually exclusive signal of struct storage class</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% even if the vss has azvc off, we will generate #ifndef guards for the dummy elements. This should be OK because</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% these are preprocessor directives.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%This loop iterates over all structured data and potentially data can exist</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% across different structures. We need to determine if a given structure is always</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% conditional or not. Therefore, we maintain a record for every structure and determine if </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% that structure is always conditional or not    </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(tmpStructHasConditionalElements, structName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% assume all elements to be conditional and create the record</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> tmpStructHasConditionalElements /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>structName</span>> { /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AllElementsConditional TLC_TRUE /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ElementIdx 1 / 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vrec = <span class="tlc_bifunc">GETFIELD</span>(tmpStructHasConditionalElements, structName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vrec.ElementIdx = vrec.ElementIdx + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>  
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !vcRecord.hasConds
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% if we encouter an unconditional element, update the field</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vrec = <span class="tlc_bifunc">GETFIELD</span>(tmpStructHasConditionalElements, structName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vrec.AllElementsConditional = TLC_FALSE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span> 
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%--- Check that actual struct name to use is a valid C identifier</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsValidCVariable">LibIsValidCVariable</a>(structName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "StructName '%<<span>structName</span>>' for data '%<<span>id</span>>' " + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"of custom storage class '%<<span>cscName</span>>' is not a valid C identifier"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportError">LibReportError</a>(errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Override default attributes in the instance-specific case</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isStructNameInstSpec
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeToken = ""  <span class="tlc_comment">%% can't share same type token among different struct (?) </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeTag   = "%<<span>structName</span>>_tag"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeName  = "%<<span>structName</span>>_type"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%--- Add to tmp map if it's a new (must be instance specific then)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%    struct name</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(tmpInstSpecStructs, structName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% NOTE: structName should be valid identifier, otherwise will error out when</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%       adding to tmp record here</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structCount = <span class="tlc_bifunc">GETFIELD</span>(tmpStructElementsCount,structName)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> tmpInstSpecStructs /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>structName</span>> { /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typetoken typeToken /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typetag typeTag /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typename typeName /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef "" /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initstr "" /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;numElements structCount.NumElements  /  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;useInitstr directStaticInit /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hasElementName "" /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IsStructAlwaysConditional TLC_TRUE /  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srec = <span class="tlc_bifunc">GETFIELD</span>(tmpInstSpecStructs, structName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vrec = <span class="tlc_bifunc">GETFIELD</span>(tmpStructHasConditionalElements, structName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%We cannot directly assign srec.IsStructAlwaysConditional to be vcRecord.hasConds, because vcRecord spans across multiple structures</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% srec is for a single structure. Hence, we determine conditionality for a given structure</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srec.IsStructAlwaysConditional = vrec.AllElementsConditional
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Add the hasElementName to the structure record</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srec.hasElementName = <span class="tlc_bifunc">ISFIELD</span>(datarec,"HasStructCSCElement") ? datarec.HasStructCSCElement : ""
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% If the data resides in more than one structure, cache the structures'</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% typedefs and initializers using string concatenation</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !isOneStruct
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%--- Increment the typedef associated with this data's struct</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srec.typedef = "%<<span>srec.typedef</span>>/n%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetDataRecTypedef">GetDataRecTypedef</a>(datarec, bitpack)>"
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%--- Increment the init string associated with this data's struct</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> directStaticInit || directAutoInitMayHavePrm
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> elemIdx = vrec.ElementIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numElements = srec.numElements
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% If it is the last element there is no comma</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comma = (elemIdx == numElements) ? "" : ","
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srec.initstr = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>srec.initstr</span>>%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetDataRecInit">GetDataRecInit</a>(datarec, comma)>"
+ <br>&nbsp; <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%-- If there is a parameter, set the flag to write initstr</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> directAutoInitMayHavePrm &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!srec.useInitstr &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageRecordIsModelParameter">LibCustomStorageRecordIsModelParameter</a>(datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srec.useInitstr = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>  <span class="tlc_comment">%% of numData</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structNames = <span class="tlc_bifunc">FIELDNAMES</span>(tmpInstSpecStructs)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numStructNames = <span class="tlc_bifunc">SIZE</span>(structNames, 1)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% If the data resides in a single structure, cache the structure's typedef</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% and initializer using an open string buffer, which is faster than using</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% string concatenation as we do above for the multi-structure case</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isOneStruct
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> numStructNames == 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srec = <span class="tlc_bifunc">GETFIELD</span>(tmpInstSpecStructs, structNames[0])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> typedefStr
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = numData
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> iData = isDataSorted ? tmpSortedDataList[idx] : idx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> datarec = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetDataRecord">LibGetDataRecord</a>(classrec, iData)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> elemNameTraceMarker = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(datarec, "VarGroupIdx") 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/datagrouplib.html#SLibIsLegacyStorageClassForDataRecord">SLibIsLegacyStorageClassForDataRecord</a>(datarec))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> idx = datarec.VarGroupIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varGroupElem = ::CompiledModel.VarGroups.VarGroup[idx[0]].VarGroupElements[idx[1]]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> modelElem = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#SLibGetModelElemCategory">SLibGetModelElemCategory</a>(varGroupElem)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> modelElem = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#SLibGetModelElemCategoryForIndividualMapping">SLibGetModelElemCategoryForIndividualMapping</a>(datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> elemNameTraceMarker = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibAddTrace2">SLibAddTrace2</a>("StorageClassSource", "Individual", "ModelDataSource", "%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(datarec)>")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> traceMarker = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibAddTrace2">SLibAddTrace2</a>("ModelElemCategory", "%<<span>modelElem</span>>", "StorageClass", "%<<span>classrec.Name</span>>")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibTraceBegin">SLibTraceBegin</a>(elemNameTraceMarker)> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibTraceBegin">SLibTraceBegin</a>(traceMarker)> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetDataRecTypedef">GetDataRecTypedef</a>(datarec, bitpack)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibTraceEnd">SLibTraceEnd</a>(traceMarker)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibTraceEnd">SLibTraceEnd</a>(elemNameTraceMarker)>     
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> typedefStr
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srec.typedef = typedefStr
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> directStaticInit || directAutoInitMayHavePrm
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> initStr
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = numData
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> iData = isDataSorted ? tmpSortedDataList[idx] : idx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> datarec = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetDataRecord">LibGetDataRecord</a>(classrec, iData)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% If it is the last data, do not insert a comma. Else insert a comma</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comma = (idx == numData-1) ? "" : ","
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetDataRecInit">GetDataRecInit</a>(datarec, comma)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%-- If there is a parameter, set the flag to write initstr</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> directAutoInitMayHavePrm &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!srec.useInitstr &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageRecordIsModelParameter">LibCustomStorageRecordIsModelParameter</a>(datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srec.useInitstr = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> initStr
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srec.initstr = initStr
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%%--------------------------------------------------------------------------</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% For each instance-specific struct name, complete its typedef and initstr,</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% and construct its decl / defn string</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pointer   = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetPointer">GetPointer</a>(cscDefn, msDefn)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> qualifier = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetQualifier">SLibGetQualifier</a>(msDefn)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtnTypedefs = ""
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtnDecls    = ""
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtnDefns     = ""
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> i = numStructNames
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structName = structNames[i]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srec = <span class="tlc_bifunc">GETFIELD</span>(tmpInstSpecStructs, structName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dummyElementGuard = ""
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> srec.IsStructAlwaysConditional == TLC_TRUE &amp;&amp; !<span class="tlc_bifunc">ISEMPTY</span>(srec.hasElementName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%assert !<span class="tlc_bifunc">ISEMPTY</span>(srec.hasElementName)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dummyElementGuard = "#ifndef %<<span>srec.hasElementName</span>>" + "/n" + /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"char %<<span>dummyElementName</span>>;" + "/n" + /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"#endif"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srec.typedef = (isTypeDef ? "typedef " : "" ) + /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"struct " + srec.typetoken + " " + srec.typetag + " {" + /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;srec.typedef + "/n" + dummyElementGuard + "/n" + (isTypeDef ? "/n} %<<span>srec.typename</span>>;" : "/n};")
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> srec.useInitstr &amp;&amp; !<span class="tlc_bifunc">ISEMPTY</span>(srec.initstr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> srec.IsStructAlwaysConditional == TLC_TRUE &amp;&amp; !<span class="tlc_bifunc">ISEMPTY</span>(srec.hasElementName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%assert !<span class="tlc_bifunc">ISEMPTY</span>(srec.hasElementName)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dummyElementValue = "#ifndef %<<span>srec.hasElementName</span>>" + "/n" + /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"0" + "/n" + /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"#endif"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dummyElementValue = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srec.initstr = " = {%<<span>srec.initstr</span>>/n" + dummyElementValue + "/n}"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srec.initstr = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structType = (isTypeDef ? srec.typename : "struct %<<span>srec.typetag</span>>")
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> decl = "extern " + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;qualifier + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;structType + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" " + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pointer + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;structName + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";"
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> defn = qualifier + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;structType + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" " + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pointer + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;structName + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;srec.initstr + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";"
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtnTypedefs = rtnTypedefs + "/n" + srec.typedef + "/n"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtnDecls = rtnDecls + "/n" + decl
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtnDefns = rtnDefns + "/n" + defn + "/n"
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> ["%<<span>rtnTypedefs</span>>", "%<<span>rtnDecls</span>>", "%<<span>rtnDefns</span>>"]
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>  <span class="tlc_comment">%% of GetGroupTypeDeclDefnFlatStructure</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>GetCSCTypeComment<span style="padding-left:9.5px"></span>=================================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="GetCSCTypeComment" class="tlc_func">GetCSCTypeComment</a>(cscDefn, msDefn, classrec) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtnStr="/* Type definition for custom storage class: %<<span>cscDefn.Name</span>> */"
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> rtnStr
+ <br><span class="tlc_fkw">%endfunction</span>  <span class="tlc_comment">%% of GetCSCTypeComment</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>GetCSCDeclComment<span style="padding-left:9.5px"></span>=================================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="GetCSCDeclComment" class="tlc_func">GetCSCDeclComment</a>(cscDefn, msDefn, classrec) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtnStr ="/* Declaration for custom storage class: %<<span>cscDefn.Name</span>> */"
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> rtnStr
+ <br><span class="tlc_fkw">%endfunction</span>  <span class="tlc_comment">%% of GetCSCDeclComment</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>GetCSCDefnComment<span style="padding-left:9.5px"></span>=================================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="GetCSCDefnComment" class="tlc_func">GetCSCDefnComment</a>(cscDefn, msDefn, classrec) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtnStr = "/* Definition for custom storage class: %<<span>cscDefn.Name</span>> */"
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> rtnStr
+ <br><span class="tlc_fkw">%endfunction</span>  <span class="tlc_comment">%% of GetCSCDefnComment</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>GetContentsFlatStructure<span style="padding-left:9.5px"></span>=========================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="GetContentsFlatStructure" class="tlc_func">GetContentsFlatStructure</a>(cscDefn, msDefn,record, idx, reim) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pointer    = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetPointerForData">GetPointerForData</a>(cscDefn, msDefn, record)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structName = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetActualStructNameForData">GetActualStructNameForData</a>(cscDefn, record)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id         = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(record)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> cscDefn.DataAccess == "Direct"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> delim = "."
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> delim = "->"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% The data is accessed as <STRUCT_NAME><delim><DATA_NAME></span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> structName + delim + id + idx + reim
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>DataAccess<span style="padding-left:9.5px"></span>=========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>DataAccess<span style="padding-left:9.5px"></span>provides<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>API<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>requesting<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>fragments<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>other
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>information<span style="padding-left:9.5px"></span>corresponding<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>custom<span style="padding-left:9.5px"></span>storage<span style="padding-left:9.5px"></span>class.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="DataAccess" class="tlc_func">DataAccess</a>(record, request, idx, reim) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cscDefn = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetCSCDefForData">SLibGetCSCDefForData</a>(record)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> msDefn = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetMemorySectionDefForData">SLibGetMemorySectionDefForData</a>(record)
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> cscDefn.IsGrouped
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> request
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "contents"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetContentsFlatStructure">GetContentsFlatStructure</a>(cscDefn, msDefn, record, idx, reim)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "address"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (cscDefn.DataInit == "Macro") || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(cscDefn.CSCTypeAttributes.BitPackBoolean)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cscName = cscDefn.Name
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "address not supported for %<<span>cscName</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtn       = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetContentsFlatStructure">GetContentsFlatStructure</a>(cscDefn, msDefn, record, idx, reim)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtypeId   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeId">LibGetRecordDataTypeId</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cmplx     = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordIsComplex">LibGetRecordIsComplex</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cast      = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetNonVolatileCmplxPointerCast">LibGetNonVolatileCmplxPointerCast</a>(msDefn, dtypeId, cmplx, idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtn = cast + "&amp;(%<<span>rtn</span>>)"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> rtn
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "initialize"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageRecordIsModelParameter">LibCustomStorageRecordIsModelParameter</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (cscDefn.DataInit == "Dynamic") || (cscDefn.DataInit == "Auto")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonreglib.html#SLibRemoveZeroInitForDataDefault">SLibRemoveZeroInitForDataDefault</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> gndValue = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetDefaultInitialValue">SLibGetDefaultInitialValue</a>(record, tRealPart)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+mpt/tlc/MPTUnstructured.html#DataAccess">DataAccess</a>(record, "contents", idx, reim)> = " + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>gndValue</span>>;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""      
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "layout"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (cscDefn.DataInit == "Macro") || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(cscDefn.CSCTypeAttributes.BitPackBoolean)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ["other"]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% LibDefaultCustomStorageLayout is the default layout function, and may</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% be used when the data is laid out in memory like built-in Simulink</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% data.  If the data is not laid out in memory like Simulink data,</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% return the vector ["other"].</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibDefaultCustomStorageLayout">LibDefaultCustomStorageLayout</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% You should invoke LibDefaultCustomStorageUnknownClassAccessType</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% for unrecognized requests.  It gracefully errors for unhandled</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% critical cases, and supplies safe defaults for unhandled</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% noncritical requests.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> LibDefaultCustomStorageUnknownDataAccessType ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(record, request, idx, reim)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>ClassAccess<span style="padding-left:9.5px"></span>========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>ClassAccess<span style="padding-left:9.5px"></span>provides<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>API<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>requesting<span style="padding-left:9.5px"></span>information<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>actions
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>corresponding<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>custom<span style="padding-left:9.5px"></span>storage<span style="padding-left:9.5px"></span>class.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>NOTE:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Expecting<span style="padding-left:9.5px"></span>record<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>GlobalMemoryMap->CustomData,
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>CompiledModel->CustomStorageClass.
+</span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="ClassAccess" class="tlc_func">ClassAccess</a>(record, request) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cscDefn = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetCSCDefForCSC">SLibGetCSCDefForCSC</a>(record)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> msDefn = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetMemorySectionDefForCSC">SLibGetMemorySectionDefForCSC</a>(record)
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> cscDefn.IsGrouped
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> request
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "setup"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "comment"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtnStr = "/* Custom storage class: %<<span>cscDefn.Name</span>> */"
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> rtnStr
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "typeComment"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> cscDefn.CommentSource == "Default"
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetCSCTypeComment">GetCSCTypeComment</a>(cscDefn, msDefn, record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "declComment"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> cscDefn.CommentSource == "Default"
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetCSCDeclComment">GetCSCDeclComment</a>(cscDefn, msDefn, record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "defnComment"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> cscDefn.CommentSource == "Default"
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetCSCDefnComment">GetCSCDefnComment</a>(cscDefn, msDefn, record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "groupTypeDeclDefn"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetGroupTypeDeclDefnFlatStructure">GetGroupTypeDeclDefnFlatStructure</a>(cscDefn, msDefn, record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% You should invoke LibDefaultCustomStorageUnknownClassAccessType</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% for unrecognized requests.  It gracefully errors for unhandled</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% critical cases, and supplies safe defaults for unhandled</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% noncritical requests.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibDefaultCustomStorageUnknownClassAccessType">LibDefaultCustomStorageUnknownClassAccessType</a>(record, request)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]
+</span> <br></body></html>

@@ -1,0 +1,262 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>generates<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>model_targ_data_map.m<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>containing
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>mapping<span style="padding-left:9.5px"></span>info<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>memory<span style="padding-left:9.5px"></span>map<span style="padding-left:9.5px"></span>so<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>SL<span style="padding-left:9.5px"></span>can<span style="padding-left:9.5px"></span>create<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>type<span style="padding-left:9.5px"></span>transition<span style="padding-left:9.5px"></span>tables.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2010<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_EXTMODEMAPLIB_") == 0
+ <br><span class="tlc_assign">%assign</span> _EXTMODEMAPLIB_ = 1
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FcnDumpExtModeHostMapBody<span style="padding-left:9.5px"></span>=========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Dumps<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>type<span style="padding-left:9.5px"></span>transition<span style="padding-left:9.5px"></span>information<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>signals<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>parameters<span style="padding-left:9.5px"></span>as
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>MATLAB<span style="padding-left:9.5px"></span>code.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnDumpExtModeHostMapBody" class="tlc_func">FcnDumpExtModeHostMapBody</a>(type) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_with">%with</span> GlobalMemoryMap
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structuredData     = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalmaplib.html#SLibGetMapStructData">SLibGetMapStructData</a>(type)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nTotSects          = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalmaplib.html#SLibGetMapNumDataSections">SLibGetMapNumDataSections</a>(type)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_switch">%switch</span>(type)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "parameter"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> map           = "paramMap"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structureName = "%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetParametersStruct">LibGetParametersStruct</a>()</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sectIdxOffset = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "signal"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> map           = "sigMap"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structureName = "%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetBlockIOStruct">LibGetBlockIOStruct</a>()</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sectIdxOffset = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "dwork"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> map           = "dworkMap"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structureName = "%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetDWorkStruct">LibGetDWorkStruct</a>()</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sectIdxOffset = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalmaplib.html#SLibGetMapNumDataSections">SLibGetMapNumDataSections</a>("signal")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> TLC_FALSE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> globalSectIdx = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;nTotData      = 0; %add to this count as we go
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;nTotSects     = %<<span>nTotSects</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sectIdxOffset = %<<span>sectIdxOffset</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;;%
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;;% Define dummy sections &amp; preallocate arrays
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;;%
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;dumSection.nData = -1;  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;dumSection.data  = [];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;dumData.logicalSrcIdx = -1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;dumData.dtTransOffset = -1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;;%
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;;% Init/prealloc %<<span>map</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;;%
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>map</span>>.nSections           = nTotSects;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>map</span>>.sectIdxOffset       = sectIdxOffset;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (%<<span>nTotSects</span>> > 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>map</span>>.sections(nTotSects) = dumSection; %prealloc
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>map</span>>.nTotData            = -1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;;%
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;;% Auto data (%<<span>structureName</span>>)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;;%
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">EXISTS</span>(structuredData.NumSections)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numSections = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numSections = structuredData.NumSections
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> sectionIdx = numSections
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> section = structuredData.Section[sectionIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;section.nData     = %<<span>section.NumData</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;section.data(%<<span>section.NumData</span>>)  = dumData; %prealloc
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> dataIdx = section.NumData
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> data = section.Data[dataIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(data,"SL_LogicalSrc")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mIdx = dataIdx + 1 <span class="tlc_comment">%% '1' based indexing for M</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;% %<<span>data.Name</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varName = "data.SL_LogicalSrc"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> var = %<<span>varName</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtTransOffset = <span class="tlc_bifunc">CAST</span>("Number",data.OffsetFromBaseAddr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> section.IsComplex
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtTransOffset = dtTransOffset/2
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;section.data(%<<span>mIdx</span>>).logicalSrcIdx = %<<span>var</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;section.data(%<<span>mIdx</span>>).dtTransOffset = %<<span>dtTransOffset</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nTotData = nTotData + section.nData;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>map</span>>.sections(%<<span>globalSectIdx</span>>) = section;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear section
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> globalSectIdx = globalSectIdx + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(GlobalMemoryMap,"UnstructuredData")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;%
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;% Non-auto Data (%<<span>type</span>>)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;%
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nData = UnstructuredData.NumData
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> dataIdx = nData
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> data = UnstructuredData.Data[dataIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> data.SL_ExtModeType == type
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Any data record without the SL_LogicalSrc field does not</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% correspond to an element of the Simulink BIO or Aggregate</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Parameter tables and can not be included in the data type</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% tranistion table or the target data map file.  An example</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% is a signal declared as an "exported global".  The function</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalmaplib.html#SLibGetMapNumDataSections">SLibGetMapNumDataSections</a>() in <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalmaplib.html">globalmaplib.tlc</a> performs</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% the same check to return the correct number of data sections.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(data,"SL_LogicalSrc")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;% %<<span>data.Name</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;section.nData = 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varName = "data.SL_LogicalSrc"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> var = %<<span>varName</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;section.data(1).logicalSrcIdx = %<<span>var</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;section.data(1).dtTransOffset = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nTotData = nTotData + section.nData;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>map</span>>.sections(%<<span>globalSectIdx</span>>) = section;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear section
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> globalSectIdx = globalSectIdx + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(GlobalMemoryMap,"CustomData")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;%
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;% Custom Data (%<<span>type</span>>)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;%
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nDataRecs = NumCustomData
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> dataRecIdx = nDataRecs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> customDataRec = CustomData[dataRecIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nData         = customDataRec.NumData
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> dataIdx = nData
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> nData == 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> data = customDataRec.Data
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> data = customDataRec.Data[dataIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalmaplib.html#SLibIsGlobalMapDataWithNoExternalLinkage">SLibIsGlobalMapDataWithNoExternalLinkage</a>(data)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (data.SL_ExtModeType == type)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Any data record without the SL_LogicalSrc field does not</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% correspond to an element of the Simulink BIO or Aggregate</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Parameter tables and can not be included in the data type</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% transition table or the target data map file.  An example</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% is a signal declared as an "exported global".  The function</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalmaplib.html#SLibGetMapNumDataSections">SLibGetMapNumDataSections</a>() in <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalmaplib.html">globalmaplib.tlc</a> performs</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% the same check to return the correct number of data sections.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(data,"SL_LogicalSrc")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;% %<<span>data.Name</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;section.nData = 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varName = "data.SL_LogicalSrc"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> var = %<<span>varName</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;section.data(1).logicalSrcIdx = %<<span>var</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;section.data(1).dtTransOffset = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nTotData = nTotData + section.nData;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>map</span>>.sections(%<<span>globalSectIdx</span>>) = section;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clear section
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> globalSectIdx = globalSectIdx + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;;%
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;;% Add final counts to struct.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;;%
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>map</span>>.nTotData = nTotData;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibWriteExtModeHostMapFile<span style="padding-left:9.5px"></span>=======================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>interface<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>simulink<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>mapping.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>prototype<span style="padding-left:9.5px"></span>contains<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>following<span style="padding-left:9.5px"></span>assumptions.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>ERT<span style="padding-left:9.5px"></span>team
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>would<span style="padding-left:9.5px"></span>need<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>maintain<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>generalize<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>cover<span style="padding-left:9.5px"></span>Kai's<span style="padding-left:9.5px"></span>changes.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>o<span style="padding-left:9.5px"></span>all<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>defined<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>Simulink<span style="padding-left:9.5px"></span>appears<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>map<span style="padding-left:9.5px"></span>(but<span style="padding-left:9.5px"></span>doesn't<span style="padding-left:9.5px"></span>matter
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>where<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>long<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>written<span style="padding-left:9.5px"></span>correctly)
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>o<span style="padding-left:9.5px"></span>all<span style="padding-left:9.5px"></span>structured<span style="padding-left:9.5px"></span>param<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>rtP
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>o<span style="padding-left:9.5px"></span>all<span style="padding-left:9.5px"></span>structured<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>i/o<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>rtB
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>o<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>types<span style="padding-left:9.5px"></span>specified<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>Simulink<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>respected<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>ERT
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Notes
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>o<span style="padding-left:9.5px"></span>To<span style="padding-left:9.5px"></span>view<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>MATLAB<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>proper<span style="padding-left:9.5px"></span>indentation,<span style="padding-left:9.5px"></span>try<span style="padding-left:9.5px"></span>loading<span style="padding-left:9.5px"></span>it
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>MATLAB<span style="padding-left:9.5px"></span>editor<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>emacs<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>m<span style="padding-left:9.5px"></span>editing<span style="padding-left:9.5px"></span>mode.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibWriteExtModeHostMapFile" class="tlc_func">SLibWriteExtModeHostMapFile</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> targDataMapFileName          = ""
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> modelName                    = "%<<span>Name</span>>"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> modelNameLen                 = <span class="tlc_bifunc">SIZE</span>(modelName,1)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> targDataMapFileNameSuffix    = "_targ_data_map"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> targDataMapFileNameSuffixLen = <span class="tlc_bifunc">SIZE</span>(targDataMapFileNameSuffix,1)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> targDataMapFileNameMaxLen    = 63
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> modelNameAllowableLen        = targDataMapFileNameMaxLen - targDataMapFileNameSuffixLen
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> modelNameLen < modelNameAllowableLen
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> modelNameAllowableLen = modelNameLen
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = modelNameAllowableLen
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> targDataMapFileName = targDataMapFileName + modelName[idx]
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> targDataMapFileName = targDataMapFileName + targDataMapFileNameSuffix + ".m"
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> f = targDataMapFileName
+ <br>&nbsp;&nbsp;function targMap = targDataMap(),
+ <br>&nbsp; <br>&nbsp;&nbsp;;%***********************
+ <br>&nbsp;&nbsp;;% Create Parameter Map *
+ <br>&nbsp;&nbsp;;%***********************
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/extmodemaplib.html#FcnDumpExtModeHostMapBody">FcnDumpExtModeHostMapBody</a>("parameter")>
+ <br>&nbsp; <br>&nbsp;&nbsp;;%**************************
+ <br>&nbsp;&nbsp;;% Create Block Output Map *
+ <br>&nbsp;&nbsp;;%**************************
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/extmodemaplib.html#FcnDumpExtModeHostMapBody">FcnDumpExtModeHostMapBody</a>("signal")>
+ <br>&nbsp; <br>&nbsp;&nbsp;;%*******************
+ <br>&nbsp;&nbsp;;% Create DWork Map *
+ <br>&nbsp;&nbsp;;%*******************
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/extmodemaplib.html#FcnDumpExtModeHostMapBody">FcnDumpExtModeHostMapBody</a>("dwork")>
+ <br>&nbsp; <br>&nbsp;&nbsp;;%
+ <br>&nbsp;&nbsp;;% Add individual maps to base struct.
+ <br>&nbsp;&nbsp;;%
+ <br>&nbsp; <br>&nbsp;&nbsp;targMap.paramMap  = paramMap;    
+ <br>&nbsp;&nbsp;targMap.signalMap = sigMap;
+ <br>&nbsp;&nbsp;targMap.dworkMap  = dworkMap;
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;;%
+ <br>&nbsp;&nbsp;;% Add checksums to base struct.
+ <br>&nbsp;&nbsp;;%
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ModelChecksum0 = <span class="tlc_bifunc">SPRINTF</span>("%u", %<ModelChecksum[0]>)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ModelChecksum1 = <span class="tlc_bifunc">SPRINTF</span>("%u", %<ModelChecksum[1]>)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ModelChecksum2 = <span class="tlc_bifunc">SPRINTF</span>("%u", %<ModelChecksum[2]>)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ModelChecksum3 = <span class="tlc_bifunc">SPRINTF</span>("%u", %<ModelChecksum[3]>)
+ <br>&nbsp; <br>&nbsp;&nbsp;targMap.checksum0 = %<<span>ModelChecksum0</span>>;
+ <br>&nbsp;&nbsp;targMap.checksum1 = %<<span>ModelChecksum1</span>>;
+ <br>&nbsp;&nbsp;targMap.checksum2 = %<<span>ModelChecksum2</span>>;
+ <br>&nbsp;&nbsp;targMap.checksum3 = %<<span>ModelChecksum3</span>>;
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> f
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibWriteExtModeHostMapFile</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_endif">%endif</span> <span class="tlc_comment">%% _EXTMODEMAPLIB_</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/extmodemaplib.html">extmodemaplib.tlc</a>
+</span> <br></body></html>

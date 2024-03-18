@@ -1,0 +1,468 @@
+<html>
+<head>
+
+<style>
+p {color : black; font-family:courier; font-size: 80%;}
+body {line-height: 100%; font-family:courier;}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_function {color: green;}.tlc_endfunction {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}
+.tlc_bifunc {color: brown;}
+</style>
+
+</head>
+<body>
+%% ============================================================================
+ <br>%% 
+ <br>%% 
+ <br>%% 
+ <br>%%
+ <br>%% Abstract:
+ <br>%%      This system file creates (optional) the necessary files to support
+ <br>%%      CANape.  If the option is selected, this file will produce an ASAP2
+ <br>%%      file with information about signals/parameters in the model
+ <br>%%
+ <br>%% Copyright 1996-2010 The MathWorks, Inc.
+ <br>%%
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>(" _XPCGENLIB_") == 0
+ <br><span class="tlc_assign">%assign</span>  ::_XPCGENLIB_ = 1
+ <br>&nbsp; <br>&nbsp; <br>%% Function: init_slrt ========================================
+ <br>%% Abstract:
+ <br>%%   This function provides initialization for slrt artifacts 
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="init_slrt" class="tlc_func">init_slrt</a>(capiFile) void
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::skipSubSystem  = TLC_TRUE %%skip subsystems signals
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::skipwideFxPt   = TLC_TRUE %%skip double word  
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::skipComplex    = TLC_FALSE %%skip complex
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::skipStruct     = TLC_FALSE %%skip structured
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::skipBusCreator = TLC_FALSE %%skip bus creator
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::stripsysstr   = <span class="tlc_bifunc">STRING</span>(CompiledModel.Name)+ <span class="tlc_bifunc">STRING</span>("/") 
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcgenlib.html#xPCBioDotMOpen">xPCBioDotMOpen</a>()&gt;
+ <br>&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcgenlib.html#xPCPTDotMOpen">xPCPTDotMOpen</a>()&gt;
+ <br>&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/slrtxcp.html#xcpGenOpen">xcpGenOpen</a>()&gt;
+ <br>&nbsp;&nbsp;<span class="tlc_selectfile">%selectfile</span> capiFile
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isProtected  = <span class="tlc_bifunc">FEVAL</span>("xpcgate","isprotected" ,::CompiledModel.Name)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isProtected
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::skipIsProtected = TLC_TRUE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: close_slrt ========================================
+ <br>%% Abstract:
+ <br>%%   This function terminates slrt artifacts
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="close_slrt" class="tlc_func">close_slrt</a>(capiFile) void
+ <br>&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcgenlib.html#xPCBioDotMClose">xPCBioDotMClose</a>()&gt;
+ <br>&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcgenlib.html#xPCPTDotMClose">xPCPTDotMClose</a>()&gt;
+ <br>&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/slrtxcp.html#xcpGenClose">xcpGenClose</a>()&gt;
+ <br>&nbsp;&nbsp;<span class="tlc_selectfile">%selectfile</span> capiFile
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: slrt_dtypeHook=====================================
+ <br>%% Abstract:
+ <br>%%   This function gets datatypeinfo
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="slrt_dtypeHook" class="tlc_func">slrt_dtypeHook</a>(im) void
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::slrtim = im
+ <br>&nbsp;&nbsp;%%<<span class="tlc_bifunc">FEVAL</span>("tlc2m", "imrec", im)>
+ <br>&nbsp;&nbsp;%%<<span class="tlc_bifunc">FEVAL</span>("tlc2m", "cmrec", ::CompiledModel)>
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: slrtSignalHook ========================================
+ <br>%% Abstract:
+ <br>%%   XXXXXXXXXXXXXXXXX
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="slrtSignalHook" class="tlc_func">slrtSignalHook</a>(capiFile,sigRec, blkPath, sigLabel, portIdx, numPorts )  
+ <br>&nbsp;&nbsp;%%assign blkPath  = <span class="tlc_bifunc">FEVAL</span>("strrep", blkPath, stripsysstr, <span class="tlc_bifunc">STRING</span>("") )
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> lenName  = FEVAL ("length", CompiledModel.Name)  
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkPath  = <span class="tlc_bifunc">FEVAL</span>("stripsysname", blkPath, %&lt;lenName&gt; )
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkPath  = <span class="tlc_bifunc">FEVAL</span>("xpcgate", "htmlencode", blkPath )
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portSuffix = ""  
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ( numPorts > 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span>  portSuffix = "/p" + "%&lt;portIdx+1&gt;"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>  
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkPath  = "%&lt;blkPath&gt;" + "%&lt;portSuffix&gt;"  
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span>  sigName = sigLabel == "" ?  "NULL" : <span class="tlc_bifunc">STRING</span>(sigLabel)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span>  sigName  = <span class="tlc_bifunc">FEVAL</span>("xpcgate", "htmlencode", sigName )
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span>  sigInfo = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcgenlib.html#GetSignalInfoFromMemoryMap">GetSignalInfoFromMemoryMap</a>(sigRec.MemoryMapIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> sigInfo    ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;blkName    blkPath    ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sigName    sigName    ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;portIdx    portIdx    ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;portSuffix portSuffix
+ <br>&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcgenlib.html#xPCGenSigInfo">xPCGenSigInfo</a>(sigInfo)&gt;
+ <br>&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/slrtxcp.html#xcpGenAddSignal">xcpGenAddSignal</a>(sigInfo.data.Name)&gt;
+ <br>&nbsp;&nbsp;<span class="tlc_selectfile">%selectfile</span> capiFile
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> blkPath    
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: slrtSignalChartHook ========================================
+ <br>%% Abstract:
+ <br>%%   XXXXXXXXXXXXXXXXXXXXXXX
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="slrtSignalChartDataHook" class="tlc_func">slrtSignalChartDataHook</a>(capiFile, sigRec, blkPath, sigLabel )  
+ <br>&nbsp;&nbsp;%%assign blkPath  = <span class="tlc_bifunc">FEVAL</span>("strrep", blkPath, stripsysstr, <span class="tlc_bifunc">STRING</span>("") )
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> lenName  = FEVAL ("length",CompiledModel.Name)  
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkPath  = <span class="tlc_bifunc">FEVAL</span>("stripsysname", blkPath, %&lt;lenName&gt;)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkPath  = <span class="tlc_bifunc">FEVAL</span>("xpcgate", "htmlencode", blkPath )  
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portSuffix = ""
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portIdx = 0
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span>  sigName = sigLabel == "" ?  "NULL" : <span class="tlc_bifunc">STRING</span>(sigLabel)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span>  sigName  = <span class="tlc_bifunc">FEVAL</span>("xpcgate", "htmlencode", sigName )
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span>  sigInfo = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcgenlib.html#GetSignalInfoFromMemoryMap">GetSignalInfoFromMemoryMap</a>(sigRec.MemoryMapIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> sigInfo    ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;blkName    blkPath    ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sigName    sigName    ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;portIdx    0    ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;portSuffix portSuffix
+ <br>&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcgenlib.html#xPCGenSigInfo">xPCGenSigInfo</a>(sigInfo)&gt;
+ <br>&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/slrtxcp.html#xcpGenAddSignal">xcpGenAddSignal</a>(sigInfo.data.Name)&gt;  
+ <br>&nbsp;&nbsp;<span class="tlc_selectfile">%selectfile</span> capiFile
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> blkPath                 
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: slrtParameterHook ========================================
+ <br>%% Abstract:
+ <br>%%   XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="slrtParameterHook" class="tlc_func">slrtParameterHook</a>(capiFile,paramInfo)
+ <br>&nbsp;&nbsp;%%assign blkPath  = <span class="tlc_bifunc">FEVAL</span>("strrep", paramInfo.blkPath, stripsysstr, <span class="tlc_bifunc">STRING</span>("") )
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> lenName   = FEVAL ("length",CompiledModel.Name)  
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkPath   = <span class="tlc_bifunc">FEVAL</span>("stripsysname", paramInfo.blkPath, %&lt;lenName&gt;)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkPath   = <span class="tlc_bifunc">FEVAL</span>("xpcgate", "htmlencode", blkPath )  
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> paramInfo.blkPath = blkPath
+ <br>&nbsp;&nbsp;%%assign ptInfo   = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcgenlib.html#GetParamInfoFromMemoryMap">GetParamInfoFromMemoryMap</a>(paramInfo.data,paramInfo.section)
+ <br>&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcgenlib.html#xPCGenParamInfo">xPCGenParamInfo</a>(paramInfo)&gt;
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/slrtxcp.html#xcpGenAddParameter">xcpGenAddParameter</a>(paramInfo.paramName, paramInfo.data, paramInfo.dataTypeIdx)>
+ <br>&nbsp;&nbsp;<span class="tlc_selectfile">%selectfile</span> capiFile
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> blkPath
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: slrtModelParameterHook ========================================
+ <br>%% Abstract:
+ <br>%%   XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="slrtModelParameterHook" class="tlc_func">slrtModelParameterHook</a>(capiFile, paramInfo) void
+ <br>&nbsp;&nbsp;%%assign empblkpath = ""
+ <br>&nbsp;&nbsp;%%assign ptInfo = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcgenlib.html#GetParamInfoFromMemoryMap">GetParamInfoFromMemoryMap</a>(paramInfo.data,paramInfo.section)
+ <br>&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcgenlib.html#xPCGenParamInfo">xPCGenParamInfo</a>(paramInfo)&gt;
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/slrtxcp.html#xcpGenAddParameter">xcpGenAddParameter</a>(paramInfo.paramName, paramInfo.data, paramInfo.dataTypeIdx)>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileNameForCode">SLibGetFileNameForCode</a>("mdl_capi_src") + ".%&lt;::LangFileExt&gt;"  
+ <br>&nbsp;&nbsp;<span class="tlc_selectfile">%selectfile</span> capiFile
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>%% Function: xPCBioDotMOpen ========================================
+ <br>%% Abstract:
+ <br>%%   This function opens and populates the bio.m file
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="xPCBioDotMOpen" class="tlc_func">xPCBioDotMOpen</a>() void
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::xPCNumBlkSig = 0
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::xPCNumTotalSig = 0
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> ::ModelBioDotM = "../%&lt;Name&gt;bio.m"
+ <br>&nbsp;&nbsp;<span class="tlc_selectfile">%selectfile</span> ::ModelBioDotM
+ <br>function bio=%&lt;Name&gt;bio
+ <br>bio = [];
+ <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br><span class="tlc_endfunction">%endfunction</span> %%xPCBioDotMOpen
+ <br>&nbsp; <br>%% Function: xPCPTDotMOpenxs ========================================
+ <br>%% Abstract:
+ <br>%%   This function opens and populates the pt.m file
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="xPCPTDotMOpen" class="tlc_func">xPCPTDotMOpen</a>() void
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::xPCNumTotalPT = 0
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> ::ModelPTDotM = "../%&lt;Name&gt;pt.m"
+ <br>&nbsp;&nbsp;<span class="tlc_selectfile">%selectfile</span> ::ModelPTDotM
+ <br>function pt=%&lt;Name&gt;pt
+ <br>pt = [];
+ <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br><span class="tlc_endfunction">%endfunction</span> %%xPCPTDotMOpen
+ <br>&nbsp; <br>%% Function: xPCBioDotMClose ========================================
+ <br>%% Abstract:
+ <br>%%   This function closes  <sys>bio.m file
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="xPCBioDotMClose" class="tlc_func">xPCBioDotMClose</a>() void
+ <br>&nbsp;&nbsp;<span class="tlc_selectfile">%selectfile</span> ::ModelBioDotM
+ <br>function len = getlenBIO
+ <br>len = %&lt;::xPCNumBlkSig&gt;;
+ <br>&nbsp; <br><span class="tlc_closefile">%closefile</span> ModelBioDotM
+ <br><span class="tlc_endfunction">%endfunction</span> %%xxPCBioDotMClose
+ <br>&nbsp; <br>%% Function: xPCPTDotMClose ========================================
+ <br>%% Abstract:
+ <br>%%   This function closes  <sys>pt.m file
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="xPCPTDotMClose" class="tlc_func">xPCPTDotMClose</a>() void
+ <br>&nbsp;&nbsp;<span class="tlc_selectfile">%selectfile</span> ::ModelPTDotM
+ <br>function len = getlenPT
+ <br>len = %&lt;::xPCNumTotalPT&gt;;
+ <br>&nbsp; <br><span class="tlc_closefile">%closefile</span> ModelPTDotM
+ <br><span class="tlc_endfunction">%endfunction</span> %%xPCPTDotMClose
+ <br>&nbsp; <br>%% Function: xPCRefDotMOpen ========================================
+ <br>%% Abstract:
+ <br>%%   This function opens and populates the bio.m file
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="xPCRefDotMOpen" class="tlc_func">xPCRefDotMOpen</a>() void
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Name = CompiledModel.Name
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> ::ModelRefDotM = "../%&lt;Name&gt;ref.m"
+ <br>&nbsp;&nbsp;<span class="tlc_selectfile">%selectfile</span> ::ModelRefDotM
+ <br>function sys=%&lt;Name&gt;ref
+ <br>sys = [];
+ <br>sys.child = [];
+ <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br><span class="tlc_endfunction">%endfunction</span> %%xPCREFDotMOpen
+ <br>&nbsp; <br>%% Function: xPCRefDotMClose ========================================
+ <br>%% Abstract:
+ <br>%%   This function closes  <sys>pt.m file
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="xPCRefDotMClose" class="tlc_func">xPCRefDotMClose</a>() void
+ <br>&nbsp;&nbsp;<span class="tlc_selectfile">%selectfile</span> ::ModelRefDotM
+ <br><span class="tlc_closefile">%closefile</span> ModelRefDotM
+ <br><span class="tlc_endfunction">%endfunction</span> %%xPCPTDotMClose
+ <br>&nbsp; <br>&nbsp; <br>%% Function: GetSignalInfoFromMemoryMap================================
+ <br>%% Abstract:
+ <br>%%   This function returns record SigInfo
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="GetSignalInfoFromMemoryMap" class="tlc_func">GetSignalInfoFromMemoryMap</a>(mmi) void
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> gmm = CompiledModel.GlobalMemoryMap  
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> mmi[2] == -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% Skip  Local or reuse data
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> []
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structIdx  = mmi[0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> secIdx     = mmi[1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataIdx    = mmi[2]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> secIdx == -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Unstructured data
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> data = gmm.UnstructuredData.Data[dataIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isComplex   = data.IsComplex
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataTypeIdx = data.DataTypeIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> structIdx == -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Custom data
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> data =  CustomData[secIdx].Data[dataIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isComplex   = data.IsComplex
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataTypeIdx = data.DataTypeIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Structured data
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> section     = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StructuredData[structIdx].Section[secIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> data        = section.Data[dataIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataTypeIdx = section.DataTypeIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isComplex   = section.IsComplex
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span> %% Non-Local Data
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> sigInfo { ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;data        data; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;dataTypeIdx dataTypeIdx ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;isComplex   isComplex ...
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> sigInfo
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function:  xPCGenSigInfo====================================
+ <br>%% Abstract:
+ <br>%%   This function closes  <sys>bio.m file
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="xPCGenSigInfo" class="tlc_func">xPCGenSigInfo</a>(si) void
+ <br><span class="tlc_assign">%assign</span> sigWidth = 0
+ <br><span class="tlc_assign">%assign</span> dimsIdxCount  = 0
+ <br><span class="tlc_assign">%assign</span> DimensionsMap =  []
+ <br><span class="tlc_assign">%assign</span> DimensionsMapComments =  []
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> isComplex   = si.isComplex
+ <br><span class="tlc_assign">%assign</span> data        = si.data
+ <br><span class="tlc_assign">%assign</span> dataTypeIdx = si.dataTypeIdx
+ <br><span class="tlc_assign">%assign</span> isStruct    = si.data.IsStruct
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_assign">%assign</span> sigAddress = data.BaseAddr
+ <br>&nbsp; <br><span class="tlc_if">%if</span> data.NumDimensions < 3
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sigWidth = data.NumRows * data.NumCols
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimsOffset = -1
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nCols = <span class="tlc_bifunc">CAST</span>("Number", data.NumCols)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nRows = <span class="tlc_bifunc">CAST</span>("Number", data.NumRows)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nDims = 2
+ <br><span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sigWidth = 1
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> dimsIdx = <span class="tlc_bifunc">SIZE</span>(data.Dimensions,1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DimensionsMap = DimensionsMap + data.Dimensions[dimsIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DimensionsMapComments = DimensionsMapComments + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%&lt;<span class="tlc_bifunc">CAST</span>("Number",dimsIdxCount+dimsIdx)&gt;: %&lt;Name&gt;"
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sigWidth = sigWidth * data.Dimensions[dimsIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimsOffset   = <span class="tlc_bifunc">CAST</span>("Number", dimsIdxCount)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimsIdxCount = dimsIdxCount + data.NumDimensions
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nCols = -1
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nRows = -1
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nDims = <span class="tlc_bifunc">CAST</span>("Number", data.NumDimensions)
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> skip     = <span class="tlc_bifunc">STRING</span>("false")
+ <br><span class="tlc_if">%if</span> (  isStruct == 1  ||  isComplex == 1 )
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> skip     =  <span class="tlc_bifunc">STRING</span>("true")
+ <br><span class="tlc_endif">%endif</span> 
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> dtType   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeNameFromId">LibGetDataTypeNameFromId</a>(dataTypeIdx)
+ <br><span class="tlc_assign">%assign</span> dtSize   = "sizeof(%&lt;dtType&gt;)"
+ <br>%% Map the generated data type to the ANSI C data type.
+ <br><span class="tlc_assign">%assign</span> dtName   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetANSICDataTypeFromId">SLibGetANSICDataTypeFromId</a>(dataTypeIdx)
+ <br>%%assign resultN = "%&lt;si.blkName&gt;%&lt;si.portSuffix&gt;"
+ <br><span class="tlc_assign">%assign</span> resultN = "%&lt;si.blkName&gt;"
+ <br><span class="tlc_assign">%assign</span> CANapeSigName = si.sigName == "NULL" ? "" : si.sigName
+ <br><span class="tlc_selectfile">%selectfile</span> ::ModelBioDotM
+ <br><span class="tlc_assign">%assign</span> resultN= FEVAL ("strrep",resultN,"'","''")
+ <br><span class="tlc_assign">%assign</span> sigNameFixed = si.sigName == "NULL" ? "" : ...
+ <br>&nbsp;&nbsp;FEVAL ("strrep", si.sigName, "'", "''")
+ <br>%%assign sigNameFixed = FEVAL ("strrep", sigNameFixed, "'", "''")
+ <br>bio(%&lt;::xPCNumBlkSig+1&gt;).blkName='%&lt;resultN&gt;';
+ <br>bio(%&lt;::xPCNumBlkSig+1&gt;).sigName='%&lt;sigNameFixed&gt;';
+ <br>bio(%&lt;::xPCNumBlkSig+1&gt;).portIdx=%&lt;si.portIdx&gt;;
+ <br>bio(%&lt;::xPCNumBlkSig+1&gt;).dim=[%&lt;data.NumRows&gt;,%&lt;data.NumCols&gt;];
+ <br>bio(%&lt;::xPCNumBlkSig+1&gt;).sigWidth=%&lt;sigWidth&gt;;
+ <br>bio(%&lt;::xPCNumBlkSig+1&gt;).sigAddress='%&lt;sigAddress&gt;';
+ <br>bio(%&lt;::xPCNumBlkSig+1&gt;).ndims=%&lt;nDims&gt;;
+ <br>bio(%&lt;::xPCNumBlkSig+1&gt;).size=%&lt;DimensionsMap&gt;;
+ <br>bio(%&lt;::xPCNumBlkSig+1&gt;).isStruct=%&lt;skip&gt;;
+ <br><span class="tlc_if">%if</span> %<::xPCNumBlkSig + 1> == 1
+ <br>bio(getlenBIO) = bio(1);
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br><span class="tlc_assign">%assign</span> ::xPCNumBlkSig = ::xPCNumBlkSig + 1
+ <br><span class="tlc_assign">%assign</span> ::xPCNumTotalSig = ::xPCNumTotalSig + sigWidth
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ <br>&nbsp; <br>%% Function: GetParamInfoFromMemoryMap================================
+ <br>%% Abstract:
+ <br>%%   This function returns record SigInfo
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="GetParamInfoFromMemoryMap" class="tlc_func">GetParamInfoFromMemoryMap</a>(paramInfo)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> data = paramInfo.data
+ <br>&nbsp;&nbsp;%%assign section = paramInfo.section
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimsIdxCount  = 0
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DimensionsMap =  []
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DimensionsMapComments =  []
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> class  = data.Class
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtEnum = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeEnumFromId">LibGetDataTypeEnumFromId</a>(paramInfo.dataTypeIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> data.NumDimensions < 3
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimsOffset = -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nCols = <span class="tlc_bifunc">CAST</span>("Number", data.NumCols)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nRows = <span class="tlc_bifunc">CAST</span>("Number", data.NumRows)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nDims = 2
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> dimsIdx = <span class="tlc_bifunc">SIZE</span>(data.Dimensions,1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DimensionsMap = DimensionsMap + data.Dimensions[dimsIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DimensionsMapComments = DimensionsMapComments + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%&lt;<span class="tlc_bifunc">CAST</span>("Number",dimsIdxCount+dimsIdx)&gt;: %&lt;Name&gt;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimsOffset   = <span class="tlc_bifunc">CAST</span>("Number", dimsIdxCount)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimsIdxCount = dimsIdxCount + data.NumDimensions
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nCols = -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nRows = -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nDims = <span class="tlc_bifunc">CAST</span>("Number", data.NumDimensions)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> ptInfo { ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;data         data    ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;class        class   ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;nrows        nRows   ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ncols        nCols   ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;subsource    dtEnum ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ndims        nDims  ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;size         DimensionsMap ...
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> ptInfo
+ <br>&nbsp; <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function:  xPCGenParamInfo============================================
+ <br>%% Abstract:
+ <br>%%   This function closes  <sys>bio.m file
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="xPCGenParamInfo" class="tlc_func">xPCGenParamInfo</a>(pi) void
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ptInfo   = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcgenlib.html#GetParamInfoFromMemoryMap">GetParamInfoFromMemoryMap</a>(pi)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isComplex   = pi.isComplex
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isStruct    = pi.data.IsStruct
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> paramWidth  = ptInfo.nrows * ptInfo.ncols
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkName = pi.blkPath
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkName = FEVAL ("strrep",blkName,"'","''")
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_selectfile">%selectfile</span> ::ModelPTDotM
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> skip     = <span class="tlc_bifunc">STRING</span>("false")
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (  isStruct == 1   ||  isComplex == 1 )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> skip     =  <span class="tlc_bifunc">STRING</span>("true")
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(blkName)
+ <br>pt(%<::xPCNumTotalPT + 1>).blockname = '';
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkName  = <span class="tlc_bifunc">FEVAL</span>("xpcgate","c2m",blkName )
+ <br>pt(%<::xPCNumTotalPT + 1>).blockname = '%&lt;blkName&gt;';
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>pt(%<::xPCNumTotalPT + 1>).paramname = '%&lt;pi.paramName&gt;';
+ <br>pt(%<::xPCNumTotalPT + 1>).class     = '%&lt;ptInfo.class&gt;';
+ <br>pt(%<::xPCNumTotalPT + 1>).nrows     = %&lt;ptInfo.nrows&gt;;
+ <br>pt(%<::xPCNumTotalPT + 1>).ncols     = %&lt;ptInfo.ncols&gt;;
+ <br>pt(%<::xPCNumTotalPT + 1>).subsource = '%&lt;ptInfo.subsource&gt;';
+ <br>pt(%<::xPCNumTotalPT + 1>).ndims     = '%&lt;ptInfo.ndims&gt;';
+ <br>pt(%<::xPCNumTotalPT + 1>).size      = '%&lt;ptInfo.size&gt;';
+ <br>pt(%<::xPCNumTotalPT + 1>).isStruct  = %&lt;skip&gt;;
+ <br>pt(%<::xPCNumTotalPT + 1>).symbol     = '%&lt;pi.data.Name&gt;';
+ <br>pt(%<::xPCNumTotalPT + 1>).baseaddr   = '%&lt;pi.data.BaseAddr&gt;';
+ <br>pt(%<::xPCNumTotalPT + 1>).dtname     = '%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeNameFromId">LibGetDataTypeNameFromId</a>(pi.dataTypeIdx)&gt;';
+ <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(pi.data,"IsStruct") && pi.data.IsStruct == 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> busIdx = pi.data.StructInfo.NumElements  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtId   = pi.data.StructInfo.BusElement[busIdx].DataTypeIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dim    = pi.data.StructInfo.BusElement[busIdx].NumRows * pi.data.StructInfo.BusElement[busIdx].NumCols
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> symbol = pi.data.StructInfo.BusElement[busIdx].Name
+ <br>pt(%<::xPCNumTotalPT + 1>).elements(%&lt;busIdx+1&gt;).symbol     = '%&lt;symbol&gt;';
+ <br>pt(%<::xPCNumTotalPT + 1>).elements(%&lt;busIdx+1&gt;).nrows     = %&lt;pi.data.StructInfo.BusElement[busIdx].NumRows&gt;;
+ <br>pt(%<::xPCNumTotalPT + 1>).elements(%&lt;busIdx+1&gt;).ncols     = %&lt;pi.data.StructInfo.BusElement[busIdx].NumCols&gt;;
+ <br>pt(%<::xPCNumTotalPT + 1>).elements(%&lt;busIdx+1&gt;).dtname     = '%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeNameFromId">LibGetDataTypeNameFromId</a>(dtId)&gt;';
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_if">%if</span> %<::xPCNumTotalPT + 1> == 1
+ <br>pt(getlenPT) = pt(1);
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::xPCNumTotalPT = ::xPCNumTotalPT + 1
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ <br>&nbsp; <br>%% Function:  xPCGenMMIHierachyInfo=====================================
+ <br>%% Abstract:
+ <br>%%   This function closes  <sys>bio.m file
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="xPCGenMMIHierachyInfo" class="tlc_func">xPCGenMMIHierachyInfo</a>(mdlRefBlks) void
+ <br><span class="tlc_assign">%assign</span> baseSysIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()
+ <br><span class="tlc_assign">%assign</span> lenName      = FEVAL ("length",CompiledModel.Name)
+ <br><span class="tlc_selectfile">%selectfile</span> ::ModelRefDotM
+ <br><span class="tlc_assign">%assign</span> NumDataTypes = 0
+ <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>(slrtim)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> NumDataTypes = slrtim.NumDataTypes
+ <br><span class="tlc_endif">%endif</span>
+ <br>sys.NumDataTypes = %&lt;NumDataTypes&gt;; 
+ <br>sys.DataTypes = [];
+ <br>temp.EnumNames='';
+ <br>temp.EnumValues = [];
+ <br>temp.Name = '';
+ <br>sys.DataTypes = repmat(temp,1,%&lt;NumDataTypes&gt;);
+ <br><span class="tlc_foreach">%foreach</span> idx = NumDataTypes
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dmitem =  slrtim.DataTypeMap[idx]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dname = FEVAL ( "xpcgate", "getdtypename", dmitem )
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> dtypeIdx = ::CompiledModel.DataTypes.NumDataTypes
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dd =  ::CompiledModel.DataTypes.DataType[dtypeIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (dname == dd.Name)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (dd.IsEnumType == 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> enumidx = dd.NumEnumerations
+ <br>sys.DataTypes(%<idx + 1>).EnumNames{%<enumidx + 1>} = '%&lt;dname&gt;.%&lt;dd.Enumeration[enumidx].String&gt;';
+ <br>sys.DataTypes(%<idx + 1>).EnumValues(%<enumidx + 1>)= %&lt;dd.Enumeration[enumidx].Value&gt;;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>sys.DataTypes(%<idx + 1>).Name = '%&lt;dname&gt;';
+ <br><span class="tlc_endforeach">%endforeach</span>  
+ <br><span class="tlc_foreach">%foreach</span> rowIdx = <span class="tlc_bifunc">SIZE</span>(mdlRefBlks,0)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mdlRefInfo = mdlRefBlks[rowIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mSysIdx = mdlRefInfo[0]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> bIdx    = mdlRefInfo[1]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> instIdx = mdlRefInfo[2]
+ <br>&nbsp;&nbsp;<span class="tlc_with">%with</span> System[mSysIdx].Block[bIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blk = System[mSysIdx].Block[bIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(blk)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpVec = [%&lt;mdlRefInfo[3]&gt;, %&lt;mdlRefInfo[4]&gt;]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> bpath  = <span class="tlc_bifunc">STRING</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibMangledGrBlockPath">SLibMangledGrBlockPath</a>(tmpVec))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkPath = <span class="tlc_bifunc">FEVAL</span>("stripsysname", bpath, %&lt;lenName&gt;)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mdlRefName = <span class="tlc_bifunc">STRING</span>(blockInterface.Name)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(blockInterface, "RegistrationFcn")
+ <br>sys.child(%<rowIdx + 1>).Name = '%&lt;mdlRefName&gt;';
+ <br>sys.child(%<rowIdx + 1>).blkpath  = '%&lt;blkPath&gt;';
+ <br>sys.child(%<rowIdx + 1>).Idx  = %&lt;rowIdx&gt;;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% <<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#GetFunctionStr">GetFunctionStr</a>(System[mSysIdx].Block[bIdx], "Registration", instIdx, "", rowIdx, bpath)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>%%System[mSysIdx].Block[bIdx]
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_endif">%endif</span> %%  _XPCGENLIB__
+ <br>%% [EOF] <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcgenlib.html">xpcgenlib.tlc</a>
+ <br></body></html>

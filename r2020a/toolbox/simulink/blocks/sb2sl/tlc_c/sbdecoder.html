@@ -1,0 +1,132 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>File:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/blocks/sb2sl/tlc_c/sbdecoder.html">sbdecoder.tlc</a>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>decoder<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>takes<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>decimal<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>converts<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>its<span style="padding-left:9.5px"></span>binary<span style="padding-left:9.5px"></span>representation.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Multiple<span style="padding-left:9.5px"></span>input<span style="padding-left:9.5px"></span>words<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>supported<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>bits<span style="padding-left:9.5px"></span>specified<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>each.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Initial<span style="padding-left:9.5px"></span>coding<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>A<span style="padding-left:9.5px"></span>S<span style="padding-left:9.5px"></span>Bozin
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1997-2010<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_implements">%implements</span> sbdecoder "C"
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Start<span style="padding-left:9.5px"></span>============================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Start" class="tlc_func">Start</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sfcnName = ParamSettings.FunctionName
+ <br>&nbsp;&nbsp;/* Decimal to binary conversion Block */
+ <br>&nbsp;&nbsp;/* %<<span>Type</span>> Block: (%<<span>sfcnName</span>>): %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibParentMaskBlockName">LibParentMaskBlockName</a>(block)> */
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numbits = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(NumBits, "", "", 0)
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* Initialize working vectors
+ <br>&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;%<<span>numbits</span>> = sizeof(uint32_T) << 3;
+ <br><span class="tlc_fkw">%endfunction</span>  <span class="tlc_comment">%% Outputs</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Outputs<span style="padding-left:9.5px"></span>==========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sfcnName = ParamSettings.FunctionName
+ <br>&nbsp;&nbsp;/* Decimal to binary conversion Block */
+ <br>&nbsp;&nbsp;/* %<<span>Type</span>> Block: (%<<span>sfcnName</span>>): %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibParentMaskBlockName">LibParentMaskBlockName</a>(block)> */
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> up  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(Channels, "0", "", "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numbits = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(NumBits, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> binnumb = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(BinNumber, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> minip = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(MinimumInput,"0", "", "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> maxip = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(MaximumInput,"0", "", "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> res = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(ChannelResolution,"0", "", "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nbp  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(NumBitsPerChannel,"0", "", "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nlp  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterAddr">LibBlockParameterAddr</a>(NumLocationsPerChannel,"0", "", "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> y = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(0, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nch = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalWidth">LibBlockInputSignalWidth</a>(0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;real_T const       *up;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;real_T             *y = %<<span>y</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int_T               bsize = %<<span>numbits</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;real_T const       *minip = %<<span>minip</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;real_T const       *maxip = %<<span>maxip</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;real_T const       *res = %<<span>res</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int_T const        *nbp = %<<span>nbp</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int_T const        *nlp = %<<span>nlp</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;real_T              mini, maxi;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;real_T              u, uf;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int_T               kc, kl;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int_T               nb, nl;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int_T               nch = %<<span>nch</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;real_T              scal = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenSharedMathFcnCall">LibGenSharedMathFcnCall</a>("ldexp",tSS_DOUBLE, "1.0", "bsize")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;uint_T              msb = 1 << (bsize - 1), mask;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;uint_T             *bn = (uint_T *) &amp;%<<span>binnumb</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (block.Connections.InputPortContiguous[0] == "yes")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ui = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(0, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up = %<<span>ui</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up = &amp;%<<span>up</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rollVars = ["U", "<dwork>/Channels"]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_roll">%roll</span> idx = RollRegions, lcv = RollThreshold, block, "FlatRoller", rollVars
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> lcv == ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ui = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", lcv, idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ri = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(Channels, "", lcv, idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>ri</span>> = %<<span>ui</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ui = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(0, "", "", idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ri = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWork">LibBlockDWork</a>(Channels, "", "", idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dt = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalDataTypeName">LibBlockInputSignalDataTypeName</a>(0, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(void) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMemFcnCall">LibGenMemFcnCall</a>("memcpy","&amp;%<<span>ri</span>>", "%<<span>ui</span>>", "%<<span><span class="tlc_bifunc">ROLL_ITERATIONS</span>()</span>> * sizeof(%<<span>dt</span>>)")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endroll">%endroll</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* For each input channel do
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;for (kc = 0; kc < nch; kc++) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;u = up[kc];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mini = *minip++;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;maxi = *maxip++;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;uf = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMathFcnCall">LibGenMathFcnCall</a>("floor",tSS_DOUBLE,"((u < mini ? mini : maxi < u ? maxi : u) - mini) / (*res++)","")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;nl = *nlp++;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;nb = *nbp++;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Get a binary representation of the input signal
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;for (kl = nl; kl >= 0; kl--) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bn[kl] = (uint_T)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMathFcnCall">LibGenMathFcnCall</a>("fmod",tSS_DOUBLE,"uf", "scal")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uf =  %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenSharedMathFcnCall">LibGenSharedMathFcnCall</a>("ldexp",tSS_DOUBLE,"uf", "-bsize")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Extract bits from the binary number
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mask = 1 << ((nb - 1) % bsize);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;for (kl = 0; kl <= nl; kl++) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint_T              bnkl = bn[kl];
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while (mask) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*y++ = bnkl &amp; mask ? 1.0 : 0.0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask >>= 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask = msb;                       /* Reinitialize mask */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;}
+ <br><span class="tlc_fkw">%endfunction</span>  <span class="tlc_comment">%% Outputs</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/blocks/sb2sl/tlc_c/sbdecoder.html">sbdecoder.tlc</a>
+</span> <br></body></html>

@@ -1,0 +1,117 @@
+<html>
+<head>
+
+<style>
+p {color : black; font-family:courier; font-size: 80%;}
+body {line-height: 100%; font-family:courier;}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_function {color: green;}.tlc_endfunction {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}
+.tlc_bifunc {color: brown;}
+</style>
+
+</head>
+<body>
+%% File: <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/common/tgtcommon/tlc_c/tgtgrtmainlib.html">tgtgrtmainlib.tlc</a>
+ <br>%%
+ <br>%% Abstract:
+ <br>%%   Helper functions to automatically generate main for GRT targets
+ <br>%%
+ <br>%% 
+ <br>%% 
+ <br>%%
+ <br>%% Copyright 2001-2006 The MathWorks, Inc.
+ <br>&nbsp; <br>%% Function: SLibCallMdlStepSingleTasking ================================================
+ <br>%% Abstract:
+ <br>%%   Model step for single-tasking case, GRT targets
+ <br><span class="tlc_function">%function</span> <a id="SLibCallMdlStepSingleTasking" class="tlc_func">SLibCallMdlStepSingleTasking</a>() Output
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tnext = rt_SimGetNextSampleHit();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtsiSetSolverStopTime(rtmGetRTWSolverInfo(S),tnext);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MdlOutputs(0);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MdlUpdate(0);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_SimUpdateDiscreteTaskSampleHits(rtmGetNumSampleTimes(S),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtmGetTimingData(S),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtmGetSampleHitPtr(S),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtmGetTPtr(S));
+ <br>&nbsp; <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: SLibCallMdlStepMultiTaskingBaseRate ================================================
+ <br>%% Abstract:
+ <br>%%   Model step for base-rate, multi-tasking case
+ <br><span class="tlc_function">%function</span> <a id="SLibCallMdlStepMultiTaskingBaseRate" class="tlc_func">SLibCallMdlStepMultiTaskingBaseRate</a>() Output
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tnext = rt_SimUpdateDiscreteEvents (rtmGetNumSampleTimes(S), 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtmGetTimingData(S),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtmGetSampleHitPtr(S), 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtmGetPerTaskSampleHitsPtr(S));
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtsiSetSolverStopTime(rtmGetRTWSolverInfo(S),tnext);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (i=FIRST_TID+1; i < NUMST; i++) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eventFlags[i] = sampleHit[i];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MdlOutputs(FIRST_TID);                  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MdlUpdate(FIRST_TID);
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_SimUpdateDiscreteTaskTime(rtmGetTPtr(S), rtmGetTimingData(S), FIRST_TID);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br>%% Function: SLibCallMdlStepMultiTaskingSubRate ================================================
+ <br>%% Abstract:
+ <br>%%   Model step for sub-rates, multi-tasking case
+ <br><span class="tlc_function">%function</span> <a id="SLibCallMdlStepMultiTaskingSubRate" class="tlc_func">SLibCallMdlStepMultiTaskingSubRate</a>(tid) Output
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MdlOutputs(%&lt;tid&gt;);  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MdlUpdate(%&lt;tid&gt;);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_SimUpdateDiscreteTaskTime(rtmGetTPtr(S), rtmGetTimingData(S),%&lt;tid&gt;);                
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: SLibTgtModelInitialize ================================================
+ <br>%% Abstract:
+ <br>%%   Model initialization for GRT target
+ <br><span class="tlc_function">%function</span> <a id="SLibTgtModelInitialize" class="tlc_func">SLibTgtModelInitialize</a>() Output
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;S = MODEL();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (rtmGetErrorStatus(S) != NULL)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;while (1==1) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{ 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Initialization failure */ 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}      
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;MdlInitializeSizes();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;MdlInitializeSampleTimes();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;status = (const char *) rt_SimInitTimingEngine(rtmGetNumSampleTimes(S),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;rtmGetStepSize(S),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;rtmGetSampleTimePtr(S),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;rtmGetOffsetTimePtr(S),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;rtmGetSampleHitPtr(S),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;rtmGetSampleTimeTaskIDPtr(S),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;rtmGetTStart(S),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&rtmGetSimTimeStep(S),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&rtmGetTimingData(S));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (status != NULL)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;while (1==1) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{ 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Initialization failure */ 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;MdlStart();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br>%% Function: SLibGRTDefinesMultiTasking ================================================
+ <br>%% Abstract:
+ <br>%%   Defines for multi-tasking case, GRT targets
+ <br><span class="tlc_function">%function</span> <a id="SLibGRTDefinesMultiTasking" class="tlc_func">SLibGRTDefinesMultiTasking</a>() Output
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> CompiledModel.FixedStepOpts.TID01EQ == 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define FIRST_TID 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define FIRST_TID 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: SLibGRTIncludes ================================================
+ <br>%% Abstract:
+ <br>%%   Includes for GRT targets.
+ <br><span class="tlc_function">%function</span> <a id="SLibGRTIncludes" class="tlc_func">SLibGRTIncludes</a>() Output
+ <br>&nbsp;&nbsp;#include <float.h>
+ <br>&nbsp;&nbsp;#include "rt_sim.h"
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: SLibGRTDeclarations ================================================
+ <br>%% Abstract:
+ <br>%%   Extern function declarations for GRT targets.
+ <br><span class="tlc_function">%function</span> <a id="SLibGRTDeclarations" class="tlc_func">SLibGRTDeclarations</a>() Output
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;extern %&lt;CompiledModel.Name&gt;_rtModel *%&lt;CompiledModel.Name&gt;(void);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;extern void MdlInitializeSizes(void);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;extern void MdlInitializeSampleTimes(void);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;extern void MdlStart(void);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;extern void MdlOutputs(int_T tid);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;extern void MdlUpdate(int_T tid);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;extern void MdlTerminate(void);
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br></body></html>

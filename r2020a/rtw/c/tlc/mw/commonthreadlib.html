@@ -1,0 +1,422 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>==============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Output<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>template<span style="padding-left:9.5px"></span>library
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2014<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>=============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Public<span style="padding-left:9.5px"></span>functions
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>=============================================================================
+</span> <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>SLibGetNumPeriodicTasks<span style="padding-left:9.5px"></span>======================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>periodic<span style="padding-left:9.5px"></span>tasks<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>code.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetNumPeriodicTasks" class="tlc_func">SLibGetNumPeriodicTasks</a>() 
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numTasks = 0 
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>() 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numTasks = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/deploymentdiagram.html#SLibDeploymentGetNumPeriodicTasks">SLibDeploymentGetNumPeriodicTasks</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Note: we use LibGetNumSyncPeriodicTasks instead of LibGetNumRuntimeExportedTasks</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numTasks = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibGetNumSyncPeriodicTasks">LibGetNumSyncPeriodicTasks</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> numTasks
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>SLibGetNumPeriodicTriggers<span style="padding-left:9.5px"></span>======================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>periodic<span style="padding-left:9.5px"></span>triggers<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>code.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetNumPeriodicTriggers" class="tlc_func">SLibGetNumPeriodicTriggers</a>() 
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numTriggers = 0 
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> ehIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggers">LibGetNumTriggers</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerType">LibGetTriggerType</a>(ehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(evType, "PeriodicTrigger")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numTriggers = numTriggers+1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>   
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibGetNumSyncPeriodicTasks">LibGetNumSyncPeriodicTasks</a>() > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numTriggers = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> numTriggers
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>SLibGetNumAperiodicTasks<span style="padding-left:9.5px"></span>=====================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>aperiodic<span style="padding-left:9.5px"></span>tasks<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>code.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetNumAperiodicTasks" class="tlc_func">SLibGetNumAperiodicTasks</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = 0
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/deploymentdiagram.html#SLibDeploymentGetNumAperiodicTasks">SLibDeploymentGetNumAperiodicTasks</a>() 
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retVal
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>SLibGetNumPeriodicMappedEntities<span style="padding-left:9.5px"></span>============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>periodic<span style="padding-left:9.5px"></span>tasks<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>periodic<span style="padding-left:9.5px"></span>triggers<span style="padding-left:9.5px"></span>which
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>have<span style="padding-left:9.5px"></span>blocks<span style="padding-left:9.5px"></span>mapped<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>it.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetNumPeriodicMappedEntities" class="tlc_func">SLibGetNumPeriodicMappedEntities</a>() 
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/deploymentdiagram.html#SLibDeploymentGetNumPeriodicMappedEntities">SLibDeploymentGetNumPeriodicMappedEntities</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibGetNumPeriodicTasks">SLibGetNumPeriodicTasks</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>SLibIsTaskProfilingOn<span style="padding-left:9.5px"></span>=======================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>periodic<span style="padding-left:9.5px"></span>tasks<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>periodic<span style="padding-left:9.5px"></span>triggers<span style="padding-left:9.5px"></span>which
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>have<span style="padding-left:9.5px"></span>blocks<span style="padding-left:9.5px"></span>mapped<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>it.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibIsTaskProfilingOn" class="tlc_func">SLibIsTaskProfilingOn</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">ISFIELD</span>(::CompiledModel, "ConcurrentExecutionProfileGenCode") &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISEQUAL</span>(::CompiledModel.ConcurrentExecutionProfileGenCode, 1)
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>SLibIsRateMonotonicScheduling<span style="padding-left:9.5px"></span>===============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>TLC_TRUE<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>there<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>rate<span style="padding-left:9.5px"></span>monotonic<span style="padding-left:9.5px"></span>tasks<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>deployment
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>diagram,<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>there<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>multitasking<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>deployment<span style="padding-left:9.5px"></span>diagram
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibIsRateMonotonicScheduling" class="tlc_func">SLibIsRateMonotonicScheduling</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isRMSTask = TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> ehIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggers">LibGetNumTriggers</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> taskIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggerTasks">LibGetNumTriggerTasks</a>(ehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#SLibDeploymentGetTaskSchedulingConstraint">SLibDeploymentGetTaskSchedulingConstraint</a>(ehIdx, taskIdx), ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"RateMonotonic")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isRMSTask = TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isRMSTask 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> isRMSTask || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibConcurrentTasks">SLibConcurrentTasks</a>() &amp;&amp; (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibGetNumSyncPeriodicTasks">LibGetNumSyncPeriodicTasks</a>() > 1))
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>SLibIsTaskRateMonotonic<span style="padding-left:9.5px"></span>=====================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>TLC_TRUE<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>task<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>rate<span style="padding-left:9.5px"></span>monotonic<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibIsTaskRateMonotonic" class="tlc_func">SLibIsTaskRateMonotonic</a>(ehIdx, taskIdx) <span class="tlc_fkw">void</span> 
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibConcurrentTasks">SLibConcurrentTasks</a>() || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>())
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isRMSTask = TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#SLibDeploymentGetTaskSchedulingConstraint">SLibDeploymentGetTaskSchedulingConstraint</a>(ehIdx, taskIdx), ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"RateMonotonic")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isRMSTask = TLC_TRUE 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <span class="tlc_bifunc">ISEQUAL</span>(ehIdx, 0)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>    
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> isRMSTask
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>SLibGetNumClockTicksForTrigger<span style="padding-left:9.5px"></span>==============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>clock<span style="padding-left:9.5px"></span>ticks<span style="padding-left:9.5px"></span>required<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>periodic<span style="padding-left:9.5px"></span>trigger<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>increment
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>task<span style="padding-left:9.5px"></span>counter<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>tasks<span style="padding-left:9.5px"></span>belonging<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>periodic<span style="padding-left:9.5px"></span>trigger.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetNumClockTicksForTrigger" class="tlc_func">SLibGetNumClockTicksForTrigger</a>(ehIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nClockTicks = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerBaseRate">LibGetTriggerBaseRate</a>(ehIdx)/FundamentalStepSize + 0.5
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nClockTicks = <span class="tlc_bifunc">CAST</span>("Number",<span class="tlc_bifunc">FEVAL</span>("floor", nClockTicks))
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> nClockTicks
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>SLibGetMaxNumberOfCoresPerTask<span style="padding-left:9.5px"></span>==============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>maximum<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>cores<span style="padding-left:9.5px"></span>assigned<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>one<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>tasks<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetMaxNumberOfCoresPerTask" class="tlc_func">SLibGetMaxNumberOfCoresPerTask</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> maxNumberOfCoresPerTask = -1
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> ehIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggers">LibGetNumTriggers</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerType">LibGetTriggerType</a>(ehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(evType, "AperiodicTrigger")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> taskIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggerTasks">LibGetNumTriggerTasks</a>(ehIdx) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> affinity = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTaskCoreAffinity">LibGetTaskCoreAffinity</a>(ehIdx, taskIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> affinitySize = <span class="tlc_bifunc">SIZE</span>(affinity, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> affinitySize > maxNumberOfCoresPerTask
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> maxNumberOfCoresPerTask = affinitySize
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>         
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> maxNumberOfCoresPerTask
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>DocFunction{Advanced<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibCallRateScheduler">LibCallRateScheduler</a>()<span style="padding-left:9.5px"></span>=====================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>model's<span style="padding-left:9.5px"></span>rate<span style="padding-left:9.5px"></span>scheduler<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>concurrent<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>execution
+</span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="LibCallRateScheduler" class="tlc_func">LibCallRateScheduler</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibConcurrentTasks">SLibConcurrentTasks</a>() || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>())
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> buf = ""
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> buf = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#LibDeploymentCallAdvanceTaskCounters">LibDeploymentCallAdvanceTaskCounters</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibSingleTasking">SLibSingleTasking</a>() 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsMultiInstanceERTOrModelReference">IsMultiInstanceERTOrModelReference</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> buf = "%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmdlreftiming.html#FcnGetMulirateSchedulerName">FcnGetMulirateSchedulerName</a>()</span>>(%<::tSimStruct>);"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> buf = "%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmdlreftiming.html#FcnGetMulirateSchedulerName">FcnGetMulirateSchedulerName</a>()</span>>();"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> buf
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>DocFunction{Advanced<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggers">LibGetNumTriggers</a>()<span style="padding-left:9.5px"></span>========================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>triggers<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>configured<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>concurrent<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>execution
+</span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="LibGetNumTriggers" class="tlc_func">LibGetNumTriggers</a>() 
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibConcurrentTasks">SLibConcurrentTasks</a>() || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>())
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numEH = 1 <span class="tlc_comment">%% At least one periodic event handler</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numEH = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#LibDeploymentGetNumTaskGroups">LibDeploymentGetNumTaskGroups</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> numEH
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>DocFunction{Advanced<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerType">LibGetTriggerType</a>()<span style="padding-left:9.5px"></span>========================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>trigger<span style="padding-left:9.5px"></span>type<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>configured<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>concurrent<span style="padding-left:9.5px"></span>execution
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Returns:<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>"periodic"<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>-<span style="padding-left:9.5px"></span>PeriodicTrigger<span style="padding-left:9.5px"></span>trigger
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>"aperiodic"<span style="padding-left:9.5px"></span>-<span style="padding-left:9.5px"></span>AperiodicTrigger<span style="padding-left:9.5px"></span>trigger
+</span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="LibGetTriggerType" class="tlc_func">LibGetTriggerType</a>(ehId)
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibConcurrentTasks">SLibConcurrentTasks</a>() || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>())
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = ""
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#SLibDeploymentGetEventType">SLibDeploymentGetEventType</a>(ehId)
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <span class="tlc_bifunc">ISEQUAL</span>(ehId, 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = "PeriodicTrigger"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> evType
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>DocFunction{Advanced<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerName">LibGetTriggerName</a>()<span style="padding-left:9.5px"></span>========================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>trigger<span style="padding-left:9.5px"></span>name<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>configured<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>concurrent<span style="padding-left:9.5px"></span>execution
+</span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="LibGetTriggerName" class="tlc_func">LibGetTriggerName</a>(ehId)
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibConcurrentTasks">SLibConcurrentTasks</a>() || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>())
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = ""
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#SLibDeploymentGetEventHandlerName">SLibDeploymentGetEventHandlerName</a>(ehId) 
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <span class="tlc_bifunc">ISEQUAL</span>(ehId, 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = "baseRate"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retVal
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTaskName">LibGetTaskName</a>()<span style="padding-left:9.5px"></span>============================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>name<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>task
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibGetTaskName" class="tlc_func">LibGetTaskName</a>(ehId, taskId)
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibConcurrentTasks">SLibConcurrentTasks</a>() || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>())
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = ""
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#SLibDeploymentGetTaskName">SLibDeploymentGetTaskName</a>(ehId, taskId) 
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <span class="tlc_bifunc">ISEQUAL</span>(ehId, 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = "task%<<span>taskId</span>>" 
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retVal
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>DocFunction{Advanced<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerTargetObject">LibGetTriggerTargetObject</a>()<span style="padding-left:9.5px"></span>===============
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>target<span style="padding-left:9.5px"></span>customization<span style="padding-left:9.5px"></span>object<span style="padding-left:9.5px"></span>associated<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>trigger<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>configured<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>concurrent<span style="padding-left:9.5px"></span>execution
+</span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="LibGetTriggerTargetObject" class="tlc_func">LibGetTriggerTargetObject</a>(ehId)
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibConcurrentTasks">SLibConcurrentTasks</a>() || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>())
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = ""
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerType">LibGetTriggerType</a>(ehId)   
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(evType, "PeriodicTrigger")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Target object for periodic event handler is not supported"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportError">LibReportError</a>(errTxt)>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#SLibDeploymentGetEventHandlerTargetObject">SLibDeploymentGetEventHandlerTargetObject</a>(ehId) 
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retVal
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>DocFunction{Advanced<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerBaseRate">LibGetTriggerBaseRate</a>()<span style="padding-left:9.5px"></span>====================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>base<span style="padding-left:9.5px"></span>rate<span style="padding-left:9.5px"></span>associated<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>periodic<span style="padding-left:9.5px"></span>trigger<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>configured<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>concurrent<span style="padding-left:9.5px"></span>execution
+</span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="LibGetTriggerBaseRate" class="tlc_func">LibGetTriggerBaseRate</a>(ehId)
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibConcurrentTasks">SLibConcurrentTasks</a>() || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>())
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = ""
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerType">LibGetTriggerType</a>(ehId)   
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(evType, "AperiodicTrigger")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Base rate for aperiodic trigger is not supported"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportError">LibReportError</a>(errTxt)>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = ::CompiledModel.EventHandler[ehId].Periodicity.BasePeriod
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibGetSampleTimePeriodAndOffset">LibGetSampleTimePeriodAndOffset</a>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibGetTID01EQ">LibGetTID01EQ</a>(), 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retVal
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>DocFunction{Advanced<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span>LibGetTriggerHandlerType<span style="padding-left:9.5px"></span>===================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>trigger<span style="padding-left:9.5px"></span>handler<span style="padding-left:9.5px"></span>type<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>configured<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>concurrent<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>execution
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Returns:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>"isr"<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>-<span style="padding-left:9.5px"></span>Map<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>operating<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>event<span style="padding-left:9.5px"></span>handler<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>"task"<span style="padding-left:9.5px"></span>-<span style="padding-left:9.5px"></span>Map<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>operating<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>thread
+</span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="LibGetTriggerHandlerType" class="tlc_func">LibGetTriggerHandlerType</a>(ehId)
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibConcurrentTasks">SLibConcurrentTasks</a>() || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>())
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = ""
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#SLibDeploymentGetEventHandlerType">SLibDeploymentGetEventHandlerType</a>(ehId) 
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <span class="tlc_bifunc">ISEQUAL</span>(ehId, 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = "task"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retVal
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>DocFunction{Advanced<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span>LibCallTriggerTask<span style="padding-left:9.5px"></span>=========================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>task<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>associated<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>trigger<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>configured<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>concurrent<span style="padding-left:9.5px"></span>execution
+</span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="LibCallTriggerTask" class="tlc_func">LibCallTriggerTask</a>(ehId, taskId)
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibConcurrentTasks">SLibConcurrentTasks</a>() || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>())
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = ""
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerType">LibGetTriggerType</a>(ehId)   
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(evType, "PeriodicTrigger")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "LibCallTriggerTask for periodic event handler is not supported"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportError">LibReportError</a>(errTxt)>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>() 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#SLibDeploymentEmitCallToEventHandlerTask">SLibDeploymentEmitCallToEventHandlerTask</a>(ehId, taskId) 
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retVal
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>DocFunction{Advanced<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span>LibCallTriggerISR<span style="padding-left:9.5px"></span>==========================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>event<span style="padding-left:9.5px"></span>handler<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>configured<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>concurrent<span style="padding-left:9.5px"></span>execution
+</span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="LibCallTriggerISR" class="tlc_func">LibCallTriggerISR</a>(ehId)
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibConcurrentTasks">SLibConcurrentTasks</a>() || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>())
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = ""
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerType">LibGetTriggerType</a>(ehId)   
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(evType, "PeriodicTrigger") &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "LibCallTriggerISR for periodic event handler is not supported"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportError">LibReportError</a>(errTxt)>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#SLibDeploymentEmitCallToEventHandler">SLibDeploymentEmitCallToEventHandler</a>(ehId) 
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retVal
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>DocFunction{Advanced<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span>LibGetNumTriggerTasks<span style="padding-left:9.5px"></span>======================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>tasks<span style="padding-left:9.5px"></span>triggered<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>event<span style="padding-left:9.5px"></span>associated<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>trigger
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>configured<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>concurrent<span style="padding-left:9.5px"></span>execution
+</span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="LibGetNumTriggerTasks" class="tlc_func">LibGetNumTriggerTasks</a>(ehId) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibConcurrentTasks">SLibConcurrentTasks</a>() || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>())
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numTasks = 0 <span class="tlc_comment">%% assume</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>() 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numTasks = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#SLibDeploymentGetNumEventHandlerTasks">SLibDeploymentGetNumEventHandlerTasks</a>(ehId)
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>   
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <span class="tlc_bifunc">ISEQUAL</span>(ehId, 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numTasks = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibGetNumSyncPeriodicTasks">LibGetNumSyncPeriodicTasks</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> numTasks
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>DocFunction{Advanced<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span>LibGetTriggerTaskSampleTimeIndex<span style="padding-left:9.5px"></span>===========
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>sample<span style="padding-left:9.5px"></span>time<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>task<span style="padding-left:9.5px"></span>triggered<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>event<span style="padding-left:9.5px"></span>associated<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>trigger<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>configured<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>concurrent<span style="padding-left:9.5px"></span>execution
+</span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="LibGetTriggerTaskSampleTimeIndex" class="tlc_func">LibGetTriggerTaskSampleTimeIndex</a>(ehId, taskId)
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibConcurrentTasks">SLibConcurrentTasks</a>() || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>())
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stId   = -1
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = ""
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerType">LibGetTriggerType</a>(ehId)   
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(evType, "AperiodicTrigger")
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Target object for aperiodic event handler is not supported"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportError">LibReportError</a>(errTxt)>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>() 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stId = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#SLibDeploymentGetTaskSampleTimeIndex">SLibDeploymentGetTaskSampleTimeIndex</a>(ehId, taskId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <span class="tlc_bifunc">ISEQUAL</span>(ehId, 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tid01Eq = <span class="tlc_bifunc">ISEQUAL</span>(SolverType, "FixedStep") &amp;&amp; FixedStepOpts.TID01EQ
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (taskId < NumRuntimeExportedRates+tid01Eq)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stId   = taskId + tid01Eq 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> stId
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>DocFunction{Advanced<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span>LibIsCoreAffinityRequired<span style="padding-left:9.5px"></span>=====================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>TLC_TRUE<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>required<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>specify<span style="padding-left:9.5px"></span>core<span style="padding-left:9.5px"></span>affinity<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>some<span style="padding-left:9.5px"></span>tasks
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibIsCoreAffinityRequired" class="tlc_func">LibIsCoreAffinityRequired</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibConcurrentTasks">SLibConcurrentTasks</a>() || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()) 
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = TLC_FALSE
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> ehIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggers">LibGetNumTriggers</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerType">LibGetTriggerType</a>(ehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(evType, "PeriodicTrigger")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> taskIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggerTasks">LibGetNumTriggerTasks</a>(ehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> affinity = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTaskCoreAffinity">LibGetTaskCoreAffinity</a>(ehIdx, taskIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEQUAL</span>(affinity[0], -1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> retVal
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retVal
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>DocFunction{Advanced<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span>LibGetTaskCoreAffinity<span style="padding-left:9.5px"></span>=====================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>core<span style="padding-left:9.5px"></span>affinity<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>task
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibGetTaskCoreAffinity" class="tlc_func">LibGetTaskCoreAffinity</a>(ehId, taskId)
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibConcurrentTasks">SLibConcurrentTasks</a>() || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>())
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerType">LibGetTriggerType</a>(ehId)   
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(evType, "AperiodicTrigger")
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Core affinity for aperiodic trigger is not supported"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportError">LibReportError</a>(errTxt)>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>() 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> affinity = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#SLibDeploymentGetTaskCoreAffinity">SLibDeploymentGetTaskCoreAffinity</a>(ehId, taskId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <span class="tlc_bifunc">ISEQUAL</span>(ehId, 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> affinity = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> affinity
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br></body></html>

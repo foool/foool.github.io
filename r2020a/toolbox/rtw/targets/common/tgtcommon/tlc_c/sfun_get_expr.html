@@ -1,0 +1,109 @@
+<html>
+<head>
+
+<style>
+p {color : black; font-family:courier; font-size: 80%;}
+body {line-height: 100%; font-family:courier;}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_function {color: green;}.tlc_endfunction {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}
+.tlc_bifunc {color: brown;}
+</style>
+
+</head>
+<body>
+%% File : sfun_get_expr
+ <br>%%
+ <br>%% Purpose : Generate a C Code expression that can be read as
+ <br>%%           a Simulink signal.
+ <br>%%
+ <br>%% Details : The user is allowed to enter a simple TLC expression
+ <br>%%           in the mask. For example the user could enter
+ <br>%%
+ <br>%%           MIOS1.ADC[%&lt;idx&gt;]
+ <br>%%
+ <br>%%           The user also indicates the width of the output signal.
+ <br>%%           If the signal is rolled then the output will look like
+ <br>%%
+ <br>%%           ... MIOS1.ADC[0] ...
+ <br>%%           ... MIOS1.ADC[1] ...
+ <br>%%           ... MIOS1.ADC[2] ...
+ <br>%%
+ <br>%%           If the signal is looped the output will look like
+ <br>%%
+ <br>%%           for (i1=0;i1<3;i1++){
+ <br>%%              ... MIOS1.ADC[i] ...
+ <br>%%           }       
+ <br>%%
+ <br>%% 
+ <br>%% 
+ <br>%%
+ <br>%% Copyright 2002-2004 The MathWorks, Inc.
+ <br>&nbsp; <br><span class="tlc_implements">%implements</span> sfun_get_expr "C"
+ <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/common/tgtcommon/tlc_c/targets_general_includes.html">targets_general_includes.tlc</a>"
+ <br>&nbsp; <br>%% Function: BlockInstanceSetup ===============================================
+ <br>%% Abstract:
+ <br>%%   Pre-code generation work
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="BlockInstanceSetup" class="tlc_func">BlockInstanceSetup</a>(block, system) void
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(RTWdata.header)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>(RTWdata.header)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(RTWdata.src)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToModelSources">LibAddToModelSources</a>(RTWdata.src)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/block_api.html#LibBlockSetIsExpressionCompliant">LibBlockSetIsExpressionCompliant</a>(block)&gt;
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: Outputs ==========================================================
+ <br>%% Abstract:
+ <br>%%     Generate code according the the expression supplied by
+ <br>%%     the user. 
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block, system) Output
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (<span class="tlc_bifunc">EXISTS</span>(OptionalParameter)) && (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterSize">LibBlockParameterSize</a>(OptionalParameter)[0] != 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rollVars = ["Y","P"]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rollVars = ["Y"]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_roll">%roll</span>  idx = RollRegions, lcv = RollThreshold, block, "Roller", rollVars
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> expr = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/rtwdemos/rtwdemo_sfun_adder_cpp.html#BlockOutputSignal">BlockOutputSignal</a>(block,system,0,"",lcv,idx,"Signal")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> y = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0,"" ,lcv, idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;y&gt; = %&lt;expr&gt;;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endroll">%endroll</span>
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_function">%function</span> <a id="BlockOutputSignal" class="tlc_func">BlockOutputSignal</a>(block,system,portIdx,ucv,lcv,idx,retType) void
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outputIsExpr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockOutputSignalIsExpr">LibBlockOutputSignalIsExpr</a>(0) ? 1 : 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_switch">%switch</span> retType
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Signal"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/common/configuration/environment/targetlib.html#SLibCodeGenForSim">SLibCodeGenForSim</a>() 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Output a default expression for Simulation
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outDTypeID = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalDataTypeId">LibBlockOutputSignalDataTypeId</a>(0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outGND = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetGroundValueFromId">LibGetGroundValueFromId</a>(outDTypeID)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> expr  = outGND
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Output the requested expression for Real Time 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> expr = RTWdata.expr
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> i = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/common/tgtcommon/tlc_c/sfun_get_expr.html#FcnGetLoopIndex">FcnGetLoopIndex</a>(ucv,lcv,idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (<span class="tlc_bifunc">EXISTS</span>(OptionalParameter)) && (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterSize">LibBlockParameterSize</a>(OptionalParameter)[0] != 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> p = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameter">LibBlockParameter</a>(OptionalParameter,ucv,lcv,idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> expr  = "/"%&lt;expr&gt;/""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> expr  = %&lt;expr&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> expr  = "(%&lt;expr&gt;)"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> expr
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Unsupported return type: %&lt;retType&gt;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportError">LibBlockReportError</a>(block,errTxt)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_function">%function</span> <a id="FcnGetLoopIndex" class="tlc_func">FcnGetLoopIndex</a>(ucv,lcv,idx) void
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ucv != ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> i = ucv
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> lcv != ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> i = lcv
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> i = idx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> i
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br></body></html>

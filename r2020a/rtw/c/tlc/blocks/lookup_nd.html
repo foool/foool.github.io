@@ -1,0 +1,825 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>File<span style="padding-left:9.5px"></span>:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/lookup_nd.html">lookup_nd.tlc</a><span style="padding-left:9.5px"></span>(derived<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>sfun_lookupnd.tlc)
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1990-2016<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:<span style="padding-left:9.5px"></span>Lookup<span style="padding-left:9.5px"></span>Table<span style="padding-left:9.5px"></span>(n-D)<span style="padding-left:9.5px"></span>Cubic<span style="padding-left:9.5px"></span>spline<span style="padding-left:9.5px"></span>mode.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_implements">%implements</span> "Lookup_n-D" "C"
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>BlockInstanceSetup<span style="padding-left:9.5px"></span>===============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Register<span style="padding-left:9.5px"></span>interest<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>expression<span style="padding-left:9.5px"></span>folding<span style="padding-left:9.5px"></span>participation.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="BlockInstanceSetup" class="tlc_func">BlockInstanceSetup</a>(block, system) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/block_api.html#LibBlockSetIsExpressionCompliant">LibBlockSetIsExpressionCompliant</a>(block)></span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>FcnSplineSecondDerivInitInSharedUtility<span style="padding-left:9.5px"></span>=================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnSplineSecondDerivInitInSharedUtility" class="tlc_func">FcnSplineSecondDerivInitInSharedUtility</a>(block) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Get float or double</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ioTypeUn = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalDataTypeId">LibBlockOutputSignalDataTypeId</a>(0)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ioTypeId = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeIdAliasedThruToFromId">LibGetDataTypeIdAliasedThruToFromId</a>(ioTypeUn)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ioTypeId != tSS_DOUBLE &amp;&amp; ioTypeId != tSS_SINGLE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_exit">%exit</span> "Spline interpolation only supports floating point data types."
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Instance info indices for accessing the mapping data</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeIdx   = (ioTypeId == tSS_DOUBLE) ? 0 : 1
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Data mappings used to build the function name and descriptions</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DdType      = [ "d", "f" ]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DdSuffix    = ["", "F"]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DdTypeName  = ["real_T", "real32_T"]
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Get the exact instance from map</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dType       = DdType[dTypeIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dSuffix     = DdSuffix[dTypeIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeName   = DdTypeName[dTypeIdx]
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Build the spline derivative function name</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> derivName = "rt_Spline2Deriv%<<span>dType</span>>"
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Register utility name in the Shared Code Manager</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> derivName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibRegisterSharedUtility">SLibRegisterSharedUtility</a>(block, derivName)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Generate second derivative initialization function - prototype, body.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Then, call shared utility helper function to place the function</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% in appropriate source.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !(<span class="tlc_bifunc">ISFIELD</span>(FixPtUtils, derivName))
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cache_sharedutils_lib.html#LibPushEmptyStackSharedUtils">LibPushEmptyStackSharedUtils</a>()</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% register that utility is being defined</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpRet = <span class="tlc_bifunc">SETFIELD</span>(FixPtUtils, derivName,1)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Build the interp fcn prototype</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> derivFcnBody
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpfcnName = "%<<span>derivName</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnReturns = "void"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = ["const %<<span>dTypeName</span>> *x, ", "const %<<span>dTypeName</span>> *y, ",...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"uint32_T n, ", "%<<span>dTypeName</span>> *u, ", "%<<span>dTypeName</span>> *y2"]
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> derivDecRoot = "%<<span>fcnReturns</span>> %<<span>tmpfcnName</span>>(%<fcnParams[0]>" + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<fcnParams[1]>" + "%<fcnParams[2]>" + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<fcnParams[3]>" + "%<fcnParams[4]>)"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> derivPrototype
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>derivDecRoot</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> derivPrototype
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dTypeName</span>> p, qn, sig, un;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32_T  n1, i, k;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;n1 = n - 1U;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y2[0U] = 0.0%<<span>dSuffix</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u[0U]  = 0.0%<<span>dSuffix</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (i = 1U; i < n1; i++)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dTypeName</span>> dxm1 = x[i] - x[i - 1U];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dTypeName</span>> dxp1 = x[i + 1U] - x[i];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dTypeName</span>> dxpm = dxp1 + dxm1;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sig = dxm1 / dxpm;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p = (sig * y2[i - 1U]) + 2.0%<<span>dSuffix</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y2[i] = (sig - 1.0%<<span>dSuffix</span>>) / p;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u[i] = ((y[i + 1U] - y[i]) / dxp1) - ((y[i] - y[i - 1U]) / dxm1);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u[i] = (((6.0%<<span>dSuffix</span>> * u[i]) / dxpm) - (sig * u[i - 1U])) / p;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;qn = 0.0%<<span>dSuffix</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;un = 0.0%<<span>dSuffix</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y2[n1] = (un - (qn * u[n1 - 1U])) / ((qn * y2[n1 - 1U]) + 1.0%<<span>dSuffix</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (k = n1; k > 0U; k--)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y2[k-1U] = (y2[k-1U] * y2[k]) + u[k-1U];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> derivFcnBody
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%  Build the function</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> derivDef
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> fcnAbstract
+ <br>Second derivative initialization function for spline
+ <br>for last dimension.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> fcnAbstract
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> derivFcnRec {Name tmpfcnName; Returns fcnReturns; Params fcnParams; Abstract fcnAbstract; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Category "utility"; GeneratedBy "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/lookup_nd.html">lookup_nd.tlc</a>"}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDumpFunctionBanner">SLibDumpFunctionBanner</a>(derivFcnRec)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_undef">%undef</span> derivFcnRec
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>derivDecRoot</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>derivFcnBody</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> derivDef
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% add the rtsplntypes.h include into header and body file</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#FcnTrackHeaderFileUsage">FcnTrackHeaderFileUsage</a>("rtsplntypes.h", TLC_FALSE, TLC_FALSE)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> rtlookIncl
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#include "rtsplntypes.h"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> rtlookIncl
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cache_sharedutils_lib.html#SLibDumpUtilsSourceCodeWithPrototypeIncludesAndCached">SLibDumpUtilsSourceCodeWithPrototypeIncludesAndCached</a>(derivName, derivPrototype, derivDef, rtlookIncl)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> derivStackBuf = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cache_sharedutils_lib.html#LibPopStackSharedUtilsIncludes">LibPopStackSharedUtilsIncludes</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#FcnTrackSharedUtilHeaderFileUsage">FcnTrackSharedUtilHeaderFileUsage</a>(derivName + ".h", TLC_FALSE)>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> derivName
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>FcnGenerateSplineInSharedUtility<span style="padding-left:9.5px"></span>=================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGenerateSplineInSharedUtility" class="tlc_func">FcnGenerateSplineInSharedUtility</a>(block) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Get float or double</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ioTypeUn = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalDataTypeId">LibBlockOutputSignalDataTypeId</a>(0)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ioTypeId = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeIdAliasedThruToFromId">LibGetDataTypeIdAliasedThruToFromId</a>(ioTypeUn)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeRec = DataTypes.DataType[ioTypeId]
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ioTypeId != tSS_DOUBLE &amp;&amp; ioTypeId != tSS_SINGLE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_exit">%exit</span> "Spline interpolation only supports floating point data types."
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Instance info indices for accessing the mapping data</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> interpIdx  = ParamSettings.interpMethod - 1
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (interpIdx == 2)   <span class="tlc_comment">%% Assert it is spline interpolation</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> searchIdx  = ParamSettings.searchMode - 1
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> extrapIdx  = ParamSettings.extrapMethod - 1
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (searchIdx != 0 || ParamSettings.cacheBpFlag == 0)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cacheIdx   = (searchIdx == 0) ? 0 : ParamSettings.cacheBpFlag
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeIdx   = (ioTypeId == tSS_DOUBLE) ? 0 : 1
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Data mappings used to build the function name and descriptions</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Dsearch     = [ "Evn", "Lin", "Bin" ]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DsearchDesc = ["Evenly-spaced breakpoints", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Linear breakpoint search", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Binary breakpoint search"]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Dextrap     = [ "C", "X", "S" ]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DextrapDesc = ["Clipping", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Linear extrapolation", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Spline extrapolation"]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DcacheBp    = [ "Z", "S" ]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DcacheDesc  = ["Index search starts at the same place each time", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Uses previous index search result"]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DdType      = [ "d", "f" ]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DdSuffix    = ["", "F"]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DdTypeName  = ["real_T", "real32_T"]
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Get the exact instance from map</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> interp      = "Spl"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> interpDesc  = "Spline interpolation"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> search      = Dsearch[searchIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> searchDesc  = DsearchDesc[searchIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> extrap      = Dextrap[extrapIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> extrapDesc  = DextrapDesc[extrapIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cache       = DcacheBp[cacheIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cacheDesc   = DcacheDesc[cacheIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dType       = DdType[dTypeIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dSuffix     = DdSuffix[dTypeIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeName   = DdTypeName[dTypeIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numDims     = "N"
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ParamSettings.vectorInputFlag == 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numDims_ev = NumDataInputPorts
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numDims_ev = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalWidth">LibBlockInputSignalWidth</a>(0)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Build the top-level spline function name</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ParamSettings.preCalcSecondDerivFirstDimCoeffs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> calcCoeff = ""
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> calcCoeff = "c"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (search == "Evn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "look_SplN" + search + extrap + cache + calcCoeff + dType + "%<<span>numDims_ev</span>>" + "D"
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "look_SplN" + search + extrap + cache + calcCoeff + dType
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Register utility name in the Shared Code Manager</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibRegisterSharedUtility">SLibRegisterSharedUtility</a>(block, fcnName)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Build the interpolation function name</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> interpName = "intrp_NSpl" + calcCoeff + dType
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Register utility name in the Shared Code Manager</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> interpName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibRegisterSharedUtility">SLibRegisterSharedUtility</a>(block, interpName)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Generate top-level function - prototype, body.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Then, call shared utility helper function to place the function</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% in appropriate source.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !(<span class="tlc_bifunc">ISFIELD</span>(FixPtUtils, fcnName))
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cache_sharedutils_lib.html#LibPushEmptyStackSharedUtils">LibPushEmptyStackSharedUtils</a>()</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% register that utility is being defined</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpRet = <span class="tlc_bifunc">SETFIELD</span>(FixPtUtils, fcnName,1)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Build the top-level fcn prototype</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = ["uint32_T numDims, ", "const %<<span>dTypeName</span>>* u, ", "const rt_LUTSplineWork  * const SWork"]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnReturns = dTypeName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnDecRoot = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>fcnReturns</span>> %<<span>fcnName</span>>(%<fcnParams[0]>" + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fcnParams[1] + fcnParams[2] +")"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> fcnPrototype
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>fcnDecRoot</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> fcnPrototype
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Build the function-body</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> fcnBody
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;rt_LUTnWork * const TWork_look = SWork->m_TWork;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> idxRef = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> idxRef = (cache == "S") ? "bpIdx[k]" : "dummy"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (search == "Evn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> idxRef = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = "(%<<span>dTypeName</span>>*) TWork_look->m_bpLambda"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(castStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dTypeName</span>>*   const fraction = %<<span>castStr</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;uint32_T*       const bpIdx    =                 TWork_look->m_bpIndex;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const uint32_T* const maxIndex =                 TWork_look->m_maxIndex;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> checkRangeInCode = ParamSettings.checkRangeInCode
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/setuplib.html#SLibIsValidCoderContext">SLibIsValidCoderContext</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_error">%error</span> "Code generation for this block is not supported, if the TLC command is invoked offline"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtwCtx = ::CompiledModel.RTWContext
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (search == "Evn")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const %<<span>dTypeName</span>>* bpData = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dims = ParamSettings.tableDims
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> k = numDims_ev
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> maxId = dims[k]-1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bpData = ((const %<<span>dTypeName</span>> * * )TWork_look->m_bpDataSet)[%<<span>k</span>>];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% This needs to be optimized after CGIR fixes</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vec = <span class="tlc_bifunc">FEVAL</span>("rtwprivate", "rtwcgtlc", "PreLookup", rtwCtx, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dTypeRec, "u[%<<span>k</span>>]", "bpData", idxRef, "bpIdx[%<<span>k</span>>]", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"fraction[%<<span>k</span>>]", search, interp, extrap, cache, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"maxIndex[%<<span>k</span>>]", maxId, checkRangeInCode)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<vec[2]>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> headers = vec[3]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%The header vector is a row vector</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = <span class="tlc_bifunc">SIZE</span>(headers, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#FcnTrackHeaderFileUsage">FcnTrackHeaderFileUsage</a>(headers[idx], TLC_FALSE, TLC_FALSE)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32_T    k;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(k = 0U; k < numDims; k++)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% reinterpret_cast (g1965620)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const %<<span>dTypeName</span>>* const bpData = ((const %<<span>dTypeName</span>> * const *)TWork_look->m_bpDataSet)[k];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% This needs to be optimized after CGIR fixes</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vec = <span class="tlc_bifunc">FEVAL</span>("rtwprivate", "rtwcgtlc", "PreLookup", rtwCtx, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dTypeRec, "u[k]", "bpData", idxRef, "bpIdx[k]", "fraction[k]", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;search, interp, extrap, cache, "maxIndex[k]", checkRangeInCode)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<vec[2]>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> headers = vec[3]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%The header vector is a row vector</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = <span class="tlc_bifunc">SIZE</span>(headers, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#FcnTrackHeaderFileUsage">FcnTrackHeaderFileUsage</a>(headers[idx], TLC_FALSE, TLC_FALSE)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> eIdx = <span class="tlc_bifunc">CAST</span>("Unsigned", extrapIdx+1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#FcnTrackSharedUtilHeaderFileUsage">FcnTrackSharedUtilHeaderFileUsage</a>(interpName + ".h", TLC_FALSE)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return(%<<span>interpName</span>>(numDims, SWork, %<<span>eIdx</span>>));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> fcnBody
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%  Build the function</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> fcnDef
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnAbstract = "n-D Spline interpolation function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> fcnRec {Name fcnName; Returns fcnReturns; Params fcnParams; Abstract fcnAbstract; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Category "utility"; GeneratedBy "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/lookup_nd.html">lookup_nd.tlc</a>"}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDumpFunctionBanner">SLibDumpFunctionBanner</a>(fcnRec)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_undef">%undef</span> fcnRec
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>fcnDecRoot</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*   n-D column-major table lookup operating on %<<span>dTypeName</span>> with:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*       - %<<span>interpDesc</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*       - %<<span>extrapDesc</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*       - %<<span>searchDesc</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*       - %<<span>cacheDesc</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>fcnBody</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> fcnDef
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% add the rtsplntypes.h include into header and body file</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#FcnTrackHeaderFileUsage">FcnTrackHeaderFileUsage</a>("rtsplntypes.h", TLC_FALSE, TLC_FALSE)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> rtlookIncl
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#include "rtsplntypes.h"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> rtlookIncl
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Dump using cache_sharedutils utility</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cache_sharedutils_lib.html#SLibDumpUtilsSourceCodeWithPrototypeIncludesAndCached">SLibDumpUtilsSourceCodeWithPrototypeIncludesAndCached</a>(fcnName, fcnPrototype, fcnDef, rtlookIncl)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> lookStackBuf = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cache_sharedutils_lib.html#LibPopStackSharedUtilsIncludes">LibPopStackSharedUtilsIncludes</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Generate interpolation function - prototype, body.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Then, call shared utility helper function to place the function</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% in appropriate source.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !(<span class="tlc_bifunc">ISFIELD</span>(FixPtUtils, interpName))
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cache_sharedutils_lib.html#LibPushEmptyStackSharedUtils">LibPushEmptyStackSharedUtils</a>()</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% register that utility is being defined</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpRet = <span class="tlc_bifunc">SETFIELD</span>(FixPtUtils, interpName,1)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Build the interp fcn prototype</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpfcnName = "%<<span>interpName</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = ["uint32_T numDims, ", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"const rt_LUTSplineWork * const splWork, ", "uint32_T extrapMethod"]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> interpFcnRec {Name tmpfcnName; Returns dTypeName; Params fcnParams}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> interpDecRoot = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>dTypeName</span>> %<<span>tmpfcnName</span>>(%<fcnParams[0]>" + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<fcnParams[1]>" + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<fcnParams[2]>)"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> interpPrototype
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>interpDecRoot</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> interpPrototype
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Build the interp function-body</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> interpBody
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;uint32_T il;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;uint32_T iu, k, i;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (ParamSettings.hasPrevBp0AndTableData) &amp;&amp; (::CompiledModel.ConfigSet.EnableMemcpy == 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32_T index;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dTypeName</span>>  h, s, p, smsq, pmsq;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* intermediate results work areas "this" and "next" */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = "(const rt_LUTnWork *)splWork->m_TWork"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(castStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const rt_LUTnWork *TWork_interp = %<<span>castStr</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = "(%<<span>dTypeName</span>> *)  TWork_interp->m_bpLambda"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(castStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const %<<span>dTypeName</span>> *fraction    = %<<span>castStr</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = "(%<<span>dTypeName</span>> *)  TWork_interp->m_tableData"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(castStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const %<<span>dTypeName</span>> *yp          = %<<span>castStr</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = "(%<<span>dTypeName</span>> *)  splWork->m_yyA"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(castStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dTypeName</span>> *yyA               = %<<span>castStr</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = "(%<<span>dTypeName</span>> *)  splWork->m_yyB"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(castStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dTypeName</span>> *yyB               = %<<span>castStr</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = "(%<<span>dTypeName</span>> *)  splWork->m_yy2"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(castStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dTypeName</span>> *yy2               = %<<span>castStr</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = "(%<<span>dTypeName</span>> *)  splWork->m_up"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(castStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dTypeName</span>> *up                = %<<span>castStr</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = "(%<<span>dTypeName</span>> *)  splWork->m_y2"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(castStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dTypeName</span>> *y2                = %<<span>castStr</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (ParamSettings.hasReCalcFlag)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint8_T* reCalc                 = splWork->m_reCalc;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (ParamSettings.hasPrevBp0AndTableData)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = "(%<<span>dTypeName</span>> *)  splWork->m_preBp0AndTable"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(castStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dTypeName</span>> *dp                = %<<span>castStr</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% const_cast and reinterpret_cast (g1965620)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const %<<span>dTypeName</span>> **bpDataSet  = (const %<<span>dTypeName</span>> **) TWork_interp->m_bpDataSet;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const %<<span>dTypeName</span>> *xp          = bpDataSet[0U];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dTypeName</span>> *yy                = yyA;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;uint32_T bufBank         = 0U;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;uint32_T  len            = TWork_interp->m_maxIndex[0U] + 1U;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !(ParamSettings.preCalcSecondDerivFirstDimCoeffs)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (ParamSettings.hasPrevBp0AndTableData)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* compare bp0 and table to see whether they get changed */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.ConfigSet.EnableMemcpy
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* compare the bp0 data */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMemFcnCall">LibGenMemFcnCall</a>("memcmp", "dp", "xp", "len * sizeof(%<<span>dTypeName</span>>)")> != 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*reCalc = 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(void) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMemFcnCall">LibGenMemFcnCall</a>("memcpy", "dp", "xp", "len * sizeof(%<<span>dTypeName</span>>)")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* compare the table data */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dp = &amp;(dp[len]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMemFcnCall">LibGenMemFcnCall</a>("memcmp", "dp", "yp", "len * splWork->m_numYWorkElts[0U] * sizeof(%<<span>dTypeName</span>>)")> != 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*reCalc = 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(void) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMemFcnCall">LibGenMemFcnCall</a>("memcpy", "dp", "yp", "len * splWork->m_numYWorkElts[0U] * sizeof(%<<span>dTypeName</span>>)")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* compare the bp0 data */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0U; i < len; i++)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(dp[i] != xp[i])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*reCalc = 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dp[i] = xp[i];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dp = &amp;(dp[len]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* compare the table data */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0U; i < splWork->m_numYWorkElts[0U]; i++)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (k = 0U; k < len; k++)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (dp[index] != yp[index])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*reCalc = 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dp[index] = yp[index];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++index;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%end of hasPrevBp0AndTableData</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (ParamSettings.hasReCalcFlag)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (*reCalc == 1) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* If table and bps are tunable calculate 1st dim 2nd deriv */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Generate first dimension's second derivatives */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0U; i < splWork->m_numYWorkElts[0U]; i++)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Build the spline derivative function name</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> derivName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/lookup_nd.html#FcnSplineSecondDerivInitInSharedUtility">FcnSplineSecondDerivInitInSharedUtility</a>(block)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>derivName</span>>(xp, yp, len, up, y2);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yp = &amp;yp[len];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y2 = &amp;y2[len];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Set pointers back to beginning */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yp = (const %<<span>dTypeName</span>> *) TWork_interp->m_tableData;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y2 =       (%<<span>dTypeName</span>> *) splWork->m_y2;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (ParamSettings.hasReCalcFlag)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*reCalc = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%end of preCalcSecondDerivFirstDimCoeffs</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Generate at-point splines in each dimension */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;for( k = 0U; k < numDims; k++ )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* this dimension's input setup */
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xp   = bpDataSet[k];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;len  = TWork_interp->m_maxIndex[k] + 1U;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;il   = TWork_interp->m_bpIndex[k];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iu   = il + 1U;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;h    = xp[iu] - xp[il];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p    = fraction[k];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s    = 1.0%<<span>dSuffix</span>> - p;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pmsq = p * ((p*p) - 1.0%<<span>dSuffix</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;smsq = s * ((s*s) - 1.0%<<span>dSuffix</span>>);
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Calculate spline curves for input in this
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* dimension at each value of the higher
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* other dimensions/' points in the table.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ( (p > 1.0%<<span>dSuffix</span>>) &amp;&amp; (extrapMethod == 2U) )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dTypeName</span>> slope;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0U; i < splWork->m_numYWorkElts[k]; i++)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slope = (yp[iu] - yp[il]) + ((y2[il]*h*h)*(1.0%<<span>dSuffix</span>>/6.0%<<span>dSuffix</span>>));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yy[i] = yp[iu] + (slope * (p-1.0%<<span>dSuffix</span>>));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yp = &amp;yp[len];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y2 = &amp;y2[len];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else if ( (p < 0.0%<<span>dSuffix</span>>) &amp;&amp; (extrapMethod == 2U) )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dTypeName</span>> slope;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0U; i < splWork->m_numYWorkElts[k]; i++)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slope = (yp[iu] - yp[il]) - ((y2[iu]*h*h)*(1.0%<<span>dSuffix</span>>/6.0%<<span>dSuffix</span>>));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yy[i] = yp[il] + (slope * p);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yp = &amp;yp[len];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y2 = &amp;y2[len];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0U; i < splWork->m_numYWorkElts[k]; i++)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yy[i] = yp[il] + p * (yp[iu] - yp[il]) +
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((smsq * y2[il] + pmsq * y2[iu])*h*h)*(1.0%<<span>dSuffix</span>>/6.0%<<span>dSuffix</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yp = &amp;yp[len];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y2 = &amp;y2[len];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* set pointers to new result and calculate second derivatives */
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yp = yy;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y2 = yy2;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ( splWork->m_numYWorkElts[k+1U] > 0U )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32_T      nextLen = TWork_interp->m_maxIndex[k+1U] + 1U;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const %<<span>dTypeName</span>> *nextXp  = bpDataSet[k+1U];
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0U; i < splWork->m_numYWorkElts[k+1U]; i++)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Build the spline derivative function name</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> derivName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/lookup_nd.html#FcnSplineSecondDerivInitInSharedUtility">FcnSplineSecondDerivInitInSharedUtility</a>(block)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>derivName</span>>(nextXp, yp, nextLen, up, y2);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yp = &amp;yp[nextLen];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y2 = &amp;y2[nextLen];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Set work vectors yp, y2 and yy for next iteration;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* the yy just calculated becomes the yp in the
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* next iteration, y2 was just calculated for these
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* new points and the yy buffer is swapped to the space
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* for storing the next iteration/'s results.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yp = yy;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y2 = yy2;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Swap buffers for next dimension and
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* toggle bufBank for next iteration.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (bufBank == 0U)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yy      = yyA;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bufBank = 1U;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yy      = yyB;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bufBank = 0U;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;return( yp[0U] );
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> interpBody
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%  Build the function</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> interpDef
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnAbstract = "n-D natural spline calculation function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> interpFcnRec Abstract fcnAbstract Category "utility" GeneratedBy "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/lookup_nd.html">lookup_nd.tlc</a>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDumpFunctionBanner">SLibDumpFunctionBanner</a>(interpFcnRec)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_undef">%undef</span> interpFcnRec
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>interpDecRoot</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>interpBody</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> interpDef
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% add the rtsplntypes.h include into header and body file</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#FcnTrackHeaderFileUsage">FcnTrackHeaderFileUsage</a>("rtsplntypes.h", TLC_FALSE, TLC_FALSE)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> rtlookIncl
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#include "rtsplntypes.h"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> rtlookIncl
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cache_sharedutils_lib.html#SLibDumpUtilsSourceCodeWithPrototypeIncludesAndCached">SLibDumpUtilsSourceCodeWithPrototypeIncludesAndCached</a>(interpName, interpPrototype, interpDef, rtlookIncl)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> interpStackBuf = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cache_sharedutils_lib.html#LibPopStackSharedUtilsIncludes">LibPopStackSharedUtilsIncludes</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Generate second derivative initialization function - prototype, body.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Then, call shared utility helper function to place the function</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% in appropriate source.</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpfcnName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/lookup_nd.html#FcnSplineSecondDerivInitInSharedUtility">FcnSplineSecondDerivInitInSharedUtility</a>(block)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> fcnName
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Start<span style="padding-left:9.5px"></span>======================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Initialize<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>state<span style="padding-left:9.5px"></span>information<span style="padding-left:9.5px"></span>(first<span style="padding-left:9.5px"></span>input<span style="padding-left:9.5px"></span>&amp;<span style="padding-left:9.5px"></span>time)
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Start" class="tlc_func">Start</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> NUM_DIMS_FOR_TWORK = 6
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> INTERP_FLAT        = 1
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> INTERP_LINEAR      = 2
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> INTERP_SPLINE      = 3
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> interpMethod       = ParamSettings.interpMethod
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> idxTypeId          = tSS_UINT32
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> idxType            = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeNameFromId">LibGetDataTypeNameFromId</a>(idxTypeId)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ioTypeUn = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalDataTypeId">LibBlockOutputSignalDataTypeId</a>(0)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ioTypeId = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeIdAliasedThruToFromId">LibGetDataTypeIdAliasedThruToFromId</a>(ioTypeUn)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ioTypeId != tSS_DOUBLE &amp;&amp; ioTypeId != tSS_SINGLE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_exit">%exit</span> "Spline interpolation only supports floating point data types."
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeIdx   = (ioTypeId == tSS_DOUBLE) ? 0 : 1
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DdTypeName  = ["real_T", "real32_T"]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeName   = DdTypeName[dTypeIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DdType      = [ "d", "f" ]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dType       = DdType[dTypeIdx]
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ParamSettings.vectorInputFlag == 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numDims = NumDataInputPorts
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numDims = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalWidth">LibBlockInputSignalWidth</a>(0)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dims     = ParamSettings.tableDims
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ParamSettings.vectorInputFlag == 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numEl = NumDataInputPorts
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numEl = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalWidth">LibBlockInputSignalWidth</a>(0)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (interpMethod == INTERP_SPLINE )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Need TWork setup.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% reinterpret_cast (g1965620)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;rt_LUTnWork *TWork_start = (rt_LUTnWork *) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkAddr">LibBlockDWorkAddr</a>(TWork,"","",0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = "(void **) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkAddr">LibBlockDWorkAddr</a>(m_bpDataSet,"","",0)>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(castStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;void **bpDataSet = %<<span>castStr</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = "(const %<<span>idxType</span>> *) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterBaseAddr">LibBlockParameterBaseAddr</a>(dimSizes)>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(castStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;TWork_start->m_dimSizes  = %<<span>castStr</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% reinterpret_cast (g1965620)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;TWork_start->m_tableData = (void *) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterBaseAddr">LibBlockParameterBaseAddr</a>(Table)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;TWork_start->m_bpDataSet = bpDataSet;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;TWork_start->m_bpIndex   = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkAddr">LibBlockDWorkAddr</a>(m_bpIndex,"","",0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;TWork_start->m_bpLambda  = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkAddr">LibBlockDWorkAddr</a>(m_bpLambda,"","",0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = "(const %<<span>idxType</span>> *) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterBaseAddr">LibBlockParameterBaseAddr</a>(maxIndex)>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(castStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;TWork_start->m_maxIndex  = %<<span>castStr</span>>;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = numDims
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> lzIdx   = <span class="tlc_bifunc">FEVAL</span>("sprintf","%d",idx+1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtpName = "BreakpointsForDimension%<<span>lzIdx</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% const_cast and reinterpret_cast (g1965620)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bpDataSet[%<<span>idx</span>>] = (void *) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterBaseAddr">LibBlockParameterBaseAddr</a>(<span class="tlc_bifunc">GETFIELD</span>(block,rtpName))>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Spline interpolation setup.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ((ParamSettings.preCalcSecondDerivFirstDimCoeffs) || (ParamSettings.hasPrevBp0AndTableData))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const %<<span>dTypeName</span>> **bpDataSet;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const %<<span>dTypeName</span>> *xp, *yp;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (ParamSettings.preCalcSecondDerivFirstDimCoeffs)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dTypeName</span>> *up, *y2;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32_T i, len;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (ParamSettings.hasPrevBp0AndTableData)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (::CompiledModel.ConfigSet.EnableMemcpy == 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32_T i, j, index;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dTypeName</span>> *dp;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32_T len;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const rt_LUTnWork *TWork_interp;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#FcnTrackHeaderFileUsage">FcnTrackHeaderFileUsage</a>("rtsplntypes.h", TLC_FALSE, TLC_FALSE)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% reinterpret_cast (g1965620)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_LUTSplineWork *rt_SplWk = (rt_LUTSplineWork*)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkAddr">LibBlockDWorkAddr</a>(SWork,"","",0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% reinterpret_cast (g1965620)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_SplWk->m_TWork = (rt_LUTnWork*)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkAddr">LibBlockDWorkAddr</a>(TWork, "", "", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_SplWk->m_yyA   = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkAddr">LibBlockDWorkAddr</a>(m_yyA, "", "", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_SplWk->m_yyB   = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkAddr">LibBlockDWorkAddr</a>(m_yyB, "", "", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_SplWk->m_yy2   = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkAddr">LibBlockDWorkAddr</a>(m_yy2, "", "", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_SplWk->m_up    = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkAddr">LibBlockDWorkAddr</a>(m_up,  "", "", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_SplWk->m_y2    = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkAddr">LibBlockDWorkAddr</a>(m_y2,  "", "", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_SplWk->m_numYWorkElts = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterBaseAddr">LibBlockParameterBaseAddr</a>(numYWorkElts)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (ParamSettings.hasReCalcFlag)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_SplWk->m_reCalc = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkAddr">LibBlockDWorkAddr</a>(reCalcSecDerivFirstDimCoeffs,  "", "", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (ParamSettings.hasPrevBp0AndTableData)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_SplWk->m_preBp0AndTable = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkAddr">LibBlockDWorkAddr</a>(prevBp0AndTableData,  "", "", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (ParamSettings.hasReCalcFlag)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*rt_SplWk->m_reCalc = 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (ParamSettings.hasPrevBp0AndTableData)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* cache table data and first breakpoint data */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = "(const rt_LUTnWork *)rt_SplWk->m_TWork"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(castStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TWork_interp = %<<span>castStr</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% const_cast and reinterpret_cast (g1965620)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bpDataSet = (const %<<span>dTypeName</span>> **) TWork_interp->m_bpDataSet;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xp  = bpDataSet[0U];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;len = TWork_interp->m_maxIndex[0U] + 1U;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dp  = (%<<span>dTypeName</span>> *) rt_SplWk->m_preBp0AndTable;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yp  = (%<<span>dTypeName</span>> *) TWork_interp->m_tableData;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.ConfigSet.EnableMemcpy
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(void) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMemFcnCall">LibGenMemFcnCall</a>("memcpy", "dp", "xp", "len * sizeof(%<<span>dTypeName</span>>)")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dp = &amp;(dp[len]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* save the table data */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(void) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMemFcnCall">LibGenMemFcnCall</a>("memcpy", "dp", "yp", "len * rt_SplWk->m_numYWorkElts[0U] * sizeof(%<<span>dTypeName</span>>)")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* save the bp0 data */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (j = 0U; j < len; j++)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dp[j] = xp[j];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dp = &amp;(dp[len]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* save the table data */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0U; i < rt_SplWk->m_numYWorkElts[0U]; i++)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (j = 0U; j < len; j++)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dp[index] = yp[index];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;++index;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ParamSettings.preCalcSecondDerivFirstDimCoeffs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* If table and bps are not-tunable then precalculate 1st dim 2nd deriv */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = "(const rt_LUTnWork *)rt_SplWk->m_TWork"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(castStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TWork_interp = %<<span>castStr</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% const_cast and reinterpret_cast (g1965620)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bpDataSet = (const %<<span>dTypeName</span>> **) TWork_interp->m_bpDataSet;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xp  = bpDataSet[0U];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = "(%<<span>dTypeName</span>> *)  TWork_interp->m_tableData"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(castStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yp  = %<<span>castStr</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;len = TWork_interp->m_maxIndex[0U] + 1U;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = "(%<<span>dTypeName</span>> *)  rt_SplWk->m_up"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(castStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up  = %<<span>castStr</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = "(%<<span>dTypeName</span>> *)  rt_SplWk->m_y2"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> castStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(castStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y2  = %<<span>castStr</span>>;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Generate first dimension's second derivatives */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0U; i < rt_SplWk->m_numYWorkElts[0U]; i++)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Build the spline derivative function name</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> derivName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/lookup_nd.html#FcnSplineSecondDerivInitInSharedUtility">FcnSplineSecondDerivInitInSharedUtility</a>(block)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>derivName</span>>(xp, yp, len, up, y2);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yp = &amp;yp[len];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y2 = &amp;y2[len];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% This tlc file should only be used if spline interpolation is requested.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_setcommandswitch">%setcommandswitch</span> "-v1" <span class="tlc_comment">%% force TLC stack trace</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_exit">%exit</span> This function should only be used for splines.
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Outputs<span style="padding-left:9.5px"></span>==========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Perform<span style="padding-left:9.5px"></span>indicated<span style="padding-left:9.5px"></span>interpolation<span style="padding-left:9.5px"></span>using<span style="padding-left:9.5px"></span>run<span style="padding-left:9.5px"></span>time<span style="padding-left:9.5px"></span>library<span style="padding-left:9.5px"></span>functions.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> INTERP_FLAT   = 1
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> INTERP_LINEAR = 2
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> INTERP_SPLINE = 3
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> BPSEARCH_EVEN   = 1
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> BPSEARCH_LINEAR = 2
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> BPSEARCH_BINARY = 3
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ioType    = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalDataTypeName">LibBlockOutputSignalDataTypeName</a>(0,"")
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ParamSettings.vectorInputFlag == 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numDims = NumDataInputPorts
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numDims = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalWidth">LibBlockInputSignalWidth</a>(0)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numDimsArg = <span class="tlc_bifunc">CAST</span>("Unsigned", numDims)
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dims           = ParamSettings.tableDims
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tabDimsStr     = "%<<span class="tlc_bifunc">CAST</span>("Number", dims[0])>"
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> i = %<<span class="tlc_bifunc">SIZE</span>(dims,1)*<span class="tlc_bifunc">SIZE</span>(dims,0)-1>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tabDimsStr = tabDimsStr + " x " + "%<<span class="tlc_bifunc">CAST</span>("Number", dims[i+1])>"
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> interpStr = [ "None - Flat Look-Up", "Linear", "Spline" ]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> extrapStr = [ "None - Clip", "Linear", "Spline" ]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Dsearch   = [ "Evenly Spaced Points", "Linear", "Binary" ]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> bpCache   = [ "OFF", "ON" ]
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> comment
+ <br>&nbsp;&nbsp;&nbsp;*       Table size:  %<<span>tabDimsStr</span>>
+ <br>&nbsp;&nbsp;&nbsp;*    Interpolation:  %<interpStr[ParamSettings.interpMethod-1]>
+ <br>&nbsp;&nbsp;&nbsp;*    Extrapolation:  %<extrapStr[ParamSettings.extrapMethod-1]>
+ <br>&nbsp;&nbsp;&nbsp;*   Breakpt Search:  %<Dsearch[ParamSettings.searchMode - 1]>
+ <br>&nbsp;&nbsp;&nbsp;*    Breakpt Cache:  %<bpCache[ParamSettings.cacheBpFlag]>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> comment
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commentlib.html#LibCacheBlockComment">LibCacheBlockComment</a>(block, comment)>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> y       = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0,"","",0)
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span>  ParamSettings.interpMethod != INTERP_SPLINE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% This tlc file should only be used if spline interpolation is requested.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_setcommandswitch">%setcommandswitch</span> "-v1" <span class="tlc_comment">%% force TLC stack trace</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_exit">%exit</span> This function should only be used for splines.
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%  Spline cases</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> splFcnName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/lookup_nd.html#FcnGenerateSplineInSharedUtility">FcnGenerateSplineInSharedUtility</a>(block)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#FcnTrackSharedUtilHeaderFileUsage">FcnTrackSharedUtilHeaderFileUsage</a>(splFcnName + ".h", TLC_FALSE)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#FcnTrackHeaderFileUsage">FcnTrackHeaderFileUsage</a>("rtsplntypes.h", TLC_FALSE, TLC_FALSE)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% reinterpret_cast (g1965620)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> xSWork = "(rt_LUTSplineWork*)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockDWorkAddr">LibBlockDWorkAddr</a>(SWork,"","",0)>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (numDims == 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% 1-D (inputs always contiguous)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(0,"","",0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>y</span>> = %<<span>splFcnName</span>>(%<<span>numDimsArg</span>>, %<<span>u</span>>, %<<span>xSWork</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% n-D</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (ParamSettings.vectorInputFlag == 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>ioType</span>> rt_LUTuVect[%<<span>numDims</span>>];
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = numDims
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_LUTuVect[%<<span>idx</span>>] = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(idx,"","",0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>y</span>> = %<<span>splFcnName</span>>(%<<span>numDimsArg</span>>, rt_LUTuVect, %<<span>xSWork</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Get base address only since block requires contiguous inputs</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(0,"","",0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>y</span>> = %<<span>splFcnName</span>>(%<<span>numDimsArg</span>>, %<<span>u</span>>, %<<span>xSWork</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% next line is intentionally blank whitespace</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/lookup_nd.html">lookup_nd.tlc</a>
+</span> <br></body></html>

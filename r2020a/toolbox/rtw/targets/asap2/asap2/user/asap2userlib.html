@@ -1,0 +1,478 @@
+<html>
+<head>
+
+<style>
+p {color : black; font-family:courier; font-size: 80%;}
+body {line-height: 100%; font-family:courier;}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_function {color: green;}.tlc_endfunction {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}
+.tlc_bifunc {color: brown;}
+</style>
+
+</head>
+<body>
+%% 
+ <br>%%  
+ <br>%% 
+ <br>%%
+ <br>%% Abstract:
+ <br>%%   User ASAP2 library.
+ <br>%%
+ <br>%% Copyright 1994-2019 The MathWorks, Inc.
+ <br>%%
+ <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br>%% Function: ASAP2UserFcnWriteHead
+ <br>%% Abstract: Text to include at beginning of ASAP2 file.
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="ASAP2UserFcnWriteFileHead" class="tlc_func">ASAP2UserFcnWriteFileHead</a>() Output
+ <br>&nbsp;&nbsp;/******************************************************************************
+ <br>&nbsp;&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;&nbsp;*  ASAP2 file:     %&lt;ASAP2FileName&gt;
+ <br>&nbsp;&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#LibCommonHeaderInfo">LibCommonHeaderInfo</a>()&gt;/
+ <br>&nbsp;&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;&nbsp;* (add additional file header information here)
+ <br>&nbsp;&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;&nbsp;******************************************************************************/
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br>%% Function: ASAP2UserFcnWriteHeader
+ <br>%% Abstract: Define format for HEADER section of ASAP2 file.
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="ASAP2UserFcnWriteHeader" class="tlc_func">ASAP2UserFcnWriteHeader</a>() Output
+ <br>&nbsp;&nbsp;/begin HEADER "Header Comments go here"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;/end HEADER
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br>%% Function: ASAP2UserFcnWriteHardwareInterface
+ <br>%% Abstract: Used to define hardware interface for ASAP2 file.
+ <br>%%
+ <br>%% NOTE: It may be easiest to inline separate files for each section:
+ <br>%% For example:
+ <br>%%   %include "./user_a2ml.txt"
+ <br>%% 
+ <br><span class="tlc_function">%function</span> <a id="ASAP2UserFcnWriteHardwareInterface" class="tlc_func">ASAP2UserFcnWriteHardwareInterface</a>() Output
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/begin MOD_PAR "%&lt;ASAP2ModParComment&gt;"
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/end MOD_PAR
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/begin MOD_COMMON  "%&lt;ASAP2MOD_COMMON_Comment&gt;" 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BYTE_ORDER     %&lt;ASAP2BYTE_ORDER&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/end MOD_COMMON
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: ASAP2UserFcnWriteFileTail
+ <br>%% Abstract: Text to include at end of ASAP2 file.
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="ASAP2UserFcnWriteFileTail" class="tlc_func">ASAP2UserFcnWriteFileTail</a>() Output
+ <br>&nbsp;&nbsp;/* (add any file trailer comments here) */
+ <br>&nbsp;&nbsp;/* EOF %&lt;ASAP2FileName&gt; */
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: ASAP2UserFcnASAP2Version
+ <br>%% Abstract: Defines ASAP2 Version Number.
+ <br>%%
+ <br>%%  NOTE: 'VersionNo' represents the main version number and 'UpgradeNo' the 
+ <br>%%  upgrade number (fractional part of version number).        
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="ASAP2UserFcnASAP2Version" class="tlc_func">ASAP2UserFcnASAP2Version</a>() void
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> VersionNo = "1"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> UpgradeNo = "31"
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> [%&lt;VersionNo&gt;, %&lt;UpgradeNo&gt;]
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: ASAP2UserFcnDataTypeAlias
+ <br>%% Abstract: Maps Simulink DataTypeId to desired data type name.
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="ASAP2UserFcnDataTypeAlias" class="tlc_func">ASAP2UserFcnDataTypeAlias</a>(dtId) void
+ <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> dtId
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_BOOLEAN
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "UBYTE"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_UINT8
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "UBYTE"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_INT8
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "SBYTE"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_UINT16
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "UWORD"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_INT16
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "SWORD"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_UINT32
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "ULONG"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_INT32
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "SLONG"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_SINGLE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "FLOAT32_IEEE"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_DOUBLE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "FLOAT64_IEEE"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsEnumDataType">LibIsEnumDataType</a>(dtId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsEnumTypeStoredAsInt">LibIsEnumTypeStoredAsInt</a>(dtId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "SLONG"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> enumStorageId = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetEnumTypeStorageType">LibGetEnumTypeStorageType</a>(dtId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/asap2/asap2/user/asap2userlib.html#ASAP2UserFcnDataTypeAlias">ASAP2UserFcnDataTypeAlias</a>(enumStorageId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%START_ASSERT
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Unhandled dataType. DataTypeID = %&lt;dtId&gt;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportError">LibReportError</a>(errTxt)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%END_ASSERT
+ <br>&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: ASAP2UserFcnRecordLayoutAlias_Common
+ <br>%% Abstract: Maps Simulink DataTypeId to desired data type name for use in 
+ <br>%%           record layout
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="ASAP2UserFcnRecordLayoutAlias_Common" class="tlc_func">ASAP2UserFcnRecordLayoutAlias_Common</a>(dtId) void
+ <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> dtId
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_UINT8
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "UBYTE"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_INT8
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "SBYTE"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_UINT16
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "UWORD"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_INT16
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "SWORD"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_UINT32
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "ULONG"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_INT32
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "SLONG"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_SINGLE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "FLOAT32_IEEE"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_DOUBLE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "FLOAT64_IEEE"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%START_ASSERT
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Unhandled dataType. DataTypeID = %&lt;dtId&gt;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportError">LibReportError</a>(errTxt)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%END_ASSERT
+ <br>&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: ASAP2UserFcnWriteMeasurement
+ <br>%% Abstract: Defines format for writing out MEASUREMENTs.
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="ASAP2UserFcnWriteMeasurement" class="tlc_func">ASAP2UserFcnWriteMeasurement</a>(signal) Output
+ <br>&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2grouplib.html#LibASAP2AddMeasurementToGraphicalGroup">LibASAP2AddMeasurementToGraphicalGroup</a>(signal)&gt;
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtId = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetDataTypeId">LibASAP2GetDataTypeId</a>(signal)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> signalWidth = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordWidth">LibGetRecordWidth</a>(signal)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/begin MEASUREMENT
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Name                   */      %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetSymbol">LibASAP2GetSymbol</a>(signal)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Long identifier        */      "%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetLongID">LibASAP2GetLongID</a>(signal)&gt;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Data type              */      %&lt;<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/asap2/asap2/user/asap2userlib.html#ASAP2UserFcnDataTypeAlias">ASAP2UserFcnDataTypeAlias</a>(dtId)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Conversion method      */      %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetCompuMethod">LibASAP2GetCompuMethod</a>(signal)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Resolution (Not used)  */      0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Accuracy (Not used)    */      0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Lower limit            */      %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetPhysicalMin">LibASAP2GetPhysicalMin</a>(signal)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Upper limit            */      %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetPhysicalMax">LibASAP2GetPhysicalMax</a>(signal)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> signalWidth > 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> matrixDims = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#FcnGetMatrixDimensions">FcnGetMatrixDimensions</a>(signal)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(matrixDims) && <span class="tlc_bifunc">EXISTS</span>(ASAP2EnableMatrixDim) && ASAP2EnableMatrixDim==TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Matrix Dimensions      */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MATRIX_DIM                       %&lt;matrixDims&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Array Size             */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ARRAY_SIZE                        %&lt;signalWidth&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ECU_ADDRESS                       %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetAddress">LibASAP2GetAddress</a>(signal)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/end MEASUREMENT
+ <br><span class="tlc_selectfile">%selectfile</span> ASAP2List
+ <br>%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetSymbol">LibASAP2GetSymbol</a>(signal)&gt;
+ <br><span class="tlc_selectfile">%selectfile</span> ModelASAP2File
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: ASAP2UserFcnWriteStructMeasurement
+ <br>%% Abstract: Defines format for writing out MEASUREMENTs.
+ <br>%%
+ <br>%% Arguments:
+ <br>%%   - signal: Variable name or field name if in a C Structure
+ <br>%%   - parentName:  Structure name (empty for unstructured data)
+ <br>%%   - width:  Number of elements in array.
+ <br><span class="tlc_function">%function</span> <a id="ASAP2UserFcnWriteStructMeasurement" class="tlc_func">ASAP2UserFcnWriteStructMeasurement</a>(signal, parentName, width) Output
+ <br>&nbsp;&nbsp;%%
+ <br>&nbsp;&nbsp;%% pName is used to append to data name
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pName = ""
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(parentName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> data = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalmaplib.html#FcnGetGlobalMemoryMapData">FcnGetGlobalMemoryMapData</a>(signal)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> data.IsStruct
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> data = signal
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;%% width is only defined for nested array of buses
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(width)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordWidth">LibGetRecordWidth</a>(signal)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;%% The loop is designed to handle both buses and arrays of buses. If signal 
+ <br>&nbsp;&nbsp;%% is an array, the index of each element has to be added to the symbol 
+ <br>&nbsp;&nbsp;%% string.
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> dataIdx = width
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%%
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% Get the ROOT or Parent Group
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(parentName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootGroup = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2grouplib.html#LibASAP2CreateGroup">LibASAP2CreateGroup</a>("%&lt;::CompiledModel.Name&gt;", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%&lt;::CompiledModel.Name&gt;", "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(signal, "GrSrc")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkRef  = signal.GrSrc
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ( (blkRef[1] != -1) && (blkRef[0] != -1) )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> grSubSys   = ::CompiledModel.BlockHierarchyMap.Subsystem[blkRef[0]]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> parentSysName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2grouplib.html#FcnConvertSLNameToASAP2Name">FcnConvertSLNameToASAP2Name</a>(grSubSys.Name)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootGroup  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2grouplib.html#LibASAP2CreateGroup">LibASAP2CreateGroup</a>(parentSysName, grSubSys.Name, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Convert bus[idx].elem to bus_idx_elem in order to create valid group name
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2grouplib.html#SLibMakeGroupName">SLibMakeGroupName</a>(parentName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootGroup = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2grouplib.html#LibASAP2CreateGroup">LibASAP2CreateGroup</a>(pName, parentName, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% Create a Group (with name same as struct name) and make it a sub-Group of
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% Root Group
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% Note:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%%  parentGrpName is the original symbol that may contain "->", ".", and "[idx]" operators
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%%  pGrpName is the modified symbol that forms a valid TLC identifier
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> width > 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> parentGrpName = data.Name + "[%&lt;dataIdx&gt;]"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> parentGrpName = data.Name
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% Append parent name only if the parent is a bus
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(parentName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> parentGrpName = parentName + "." + parentGrpName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% Convert bus[idx].elem to bus_idx_elem in order to create a valid group name
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% Convert localB->bus to localB_bus for referenced model in order to create a valid group name
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pGrpName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2grouplib.html#SLibMakeGroupName">SLibMakeGroupName</a>(parentGrpName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> parentGrp  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2grouplib.html#LibASAP2CreateGroup">LibASAP2CreateGroup</a>(parentGrpName, "", "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpVar = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2grouplib.html#LibASAP2AddSubGroupToGroup">LibASAP2AddSubGroupToGroup</a>(rootGroup, parentGrp)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%%
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> busIdx = data.StructInfo.NumElements  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtId = data.StructInfo.BusElement[busIdx].DataTypeIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> storageId = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeStorageIdFromId">LibGetDataTypeStorageIdFromId</a>(dtId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataWidth   =  <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetParamWidthForBusElement">LibASAP2GetParamWidthForBusElement</a>(data,busIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Nested bus elements is now supported
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsStructDataType">LibIsStructDataType</a>(dtId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> width > 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> measurementName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetSymbolForBusElement">LibASAP2GetSymbolForBusElement</a>(data,busIdx,dataIdx,parentName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> measurementAddress = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetAddressForBusElement">LibASAP2GetAddressForBusElement</a>(data,busIdx,dataIdx,parentName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> measurementName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetSymbolForBusElement">LibASAP2GetSymbolForBusElement</a>(data,busIdx,"",parentName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> measurementAddress = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetAddressForBusElement">LibASAP2GetAddressForBusElement</a>(data,busIdx,"",parentName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2grouplib.html#LibASAP2AddMeasurementToGroup">LibASAP2AddMeasurementToGroup</a>(parentGrp,measurementName)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/begin MEASUREMENT
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Name                   */      %&lt;measurementName&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Long identifier        */      "%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetLongIDForBusElement">LibASAP2GetLongIDForBusElement</a>(data,busIdx)&gt;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Data type              */      %&lt;<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/asap2/asap2/user/asap2userlib.html#ASAP2UserFcnDataTypeAlias">ASAP2UserFcnDataTypeAlias</a>(storageId)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Conversion method      */      %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetCompuMethodForBusElement">LibASAP2GetCompuMethodForBusElement</a>(data,busIdx)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Resolution (Not used)  */      0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Accuracy (Not used)    */      0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Lower limit            */      %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetPhysicalMinForBusElement">LibASAP2GetPhysicalMinForBusElement</a>(data,busIdx)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Upper limit            */      %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetPhysicalMaxForBusElement">LibASAP2GetPhysicalMaxForBusElement</a>(data,busIdx)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> dataWidth > 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> matrixDims = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetParamMatrixDimensionsForBusElement">LibASAP2GetParamMatrixDimensionsForBusElement</a>(data,busIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(matrixDims) && <span class="tlc_bifunc">EXISTS</span>(ASAP2EnableMatrixDim) && ASAP2EnableMatrixDim==TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Matrix Dimensions      */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MATRIX_DIM                       %&lt;matrixDims&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Array Size             */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ARRAY_SIZE                        %&lt;dataWidth&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ECU_ADDRESS                       %&lt;measurementAddress&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/end MEASUREMENT
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_selectfile">%selectfile</span> ASAP2List
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;measurementName&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_selectfile">%selectfile</span> ModelASAP2File
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/asap2/asap2/user/asap2userlib.html#ASAP2UserFcnWriteStructMeasurement">ASAP2UserFcnWriteStructMeasurement</a>(data.StructInfo.BusElement[busIdx], parentGrpName, dataWidth)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: ASAP2UserFcnWriteCompuVTab
+ <br>%% Abstract: Defines format for writing out COMPU_VTab.
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="ASAP2UserFcnWriteCompuVTab" class="tlc_func">ASAP2UserFcnWriteCompuVTab</a>(idx) Output
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> valuePairs    = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetCompuMethodVTabContents">LibASAP2GetCompuMethodVTabContents</a>(idx)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numValuePairs = <span class="tlc_bifunc">SIZE</span>(valuePairs, 1)
+ <br>&nbsp;&nbsp;/begin COMPU_VTAB
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Name of Table          */      VTAB_FOR_%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetCompuMethodName">LibASAP2GetCompuMethodName</a>(idx)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Long identifier        */      "%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetCompuMethodLongID">LibASAP2GetCompuMethodLongID</a>(idx)&gt;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Conversion Type        */      TAB_VERB
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Number of Elements     */      %&lt;numValuePairs&gt;
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> pairIdx = numValuePairs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Table Element          */      %&lt;valuePairs[pairIdx]&gt;
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;/end COMPU_VTAB
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: ASAP2UserFcnWriteCompuMethods
+ <br>%% Abstract: Defines format for writing out COMPU_METHODs.
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="ASAP2UserFcnWriteCompuMethods" class="tlc_func">ASAP2UserFcnWriteCompuMethods</a>(idx) Output
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> convType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetCompuMethodConvType">LibASAP2GetCompuMethodConvType</a>(idx)
+ <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> convType
+ <br>&nbsp;&nbsp;<span class="tlc_case">%case</span> "RAT_FUNC"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/begin COMPU_METHOD
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Name of CompuMethod    */      %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetCompuMethodName">LibASAP2GetCompuMethodName</a>(idx)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Long identifier        */      "%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetCompuMethodLongID">LibASAP2GetCompuMethodLongID</a>(idx)&gt;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Conversion Type        */      RAT_FUNC
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Format                 */      "%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetCompuMethodFormat">LibASAP2GetCompuMethodFormat</a>(idx)&gt;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Units                  */      "%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetCompuMethodUnits">LibASAP2GetCompuMethodUnits</a>(idx)&gt;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Coefficients           */      COEFFS %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetCompuMethodCoeffs">LibASAP2GetCompuMethodCoeffs</a>(idx)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/end COMPU_METHOD
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_case">%case</span> "TAB_VERB"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/begin COMPU_METHOD
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Name of CompuMethod    */      %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetCompuMethodName">LibASAP2GetCompuMethodName</a>(idx)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Long identifier        */      "%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetCompuMethodLongID">LibASAP2GetCompuMethodLongID</a>(idx)&gt;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Conversion Type        */      TAB_VERB
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Format                 */      "%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetCompuMethodFormat">LibASAP2GetCompuMethodFormat</a>(idx)&gt;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Units                  */      "%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetCompuMethodUnits">LibASAP2GetCompuMethodUnits</a>(idx)&gt;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Conversion Table       */      COMPU_TAB_REF VTAB_FOR_%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetCompuMethodName">LibASAP2GetCompuMethodName</a>(idx)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/end COMPU_METHOD
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/asap2/asap2/user/asap2userlib.html#ASAP2UserFcnWriteCompuVTab">ASAP2UserFcnWriteCompuVTab</a>(idx)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%%START_ASSERT
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Unhandled conversion type (%&lt;convType&gt;)"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportError">LibReportError</a>(errTxt)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%%END_ASSERT
+ <br>&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/asap2/asap2/user/asap2userlib.html#ASAP2UserFcnWriteComAxis">ASAP2UserFcnWriteComAxis</a>(axisName, param, inputReference, isModelArg)
+ <br>%% Abstract: 
+ <br>%%   - Defines format for writing out AXIS_DESCR as COM_AXIS.
+ <br>%%   - Supports axis parameter that resolves to a Simulink data objects with
+ <br>%%     a non-Auto storage class as well as those that resolve to model 
+ <br>%%     arguments in a referenced model
+ <br>%%  
+ <br>%% Arguments:
+ <br>%%   - axisName: Axis name to be used in comment
+ <br>%%   - param: Axis parameter to write to A2L file as AXIS_DESCR
+ <br>%%   - inputReference: Reference to input signal
+ <br>%%   - isModelArg: Is parameter a model argument?
+ <br><span class="tlc_function">%function</span> <a id="ASAP2UserFcnWriteComAxis" class="tlc_func">ASAP2UserFcnWriteComAxis</a>(axisName, param, inputReference, isModelArg) Output
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !isModelArg
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> axisCompuMethodName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetCompuMethod">LibASAP2GetCompuMethod</a>(param)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> axisNumAxisPts = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetNumAxisPts">LibASAP2GetNumAxisPts</a>(param)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> axisLowerLimit = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetPhysicalMin">LibASAP2GetPhysicalMin</a>(param)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> axisUpperLimit = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetPhysicalMax">LibASAP2GetPhysicalMax</a>(param)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> axisRef = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetSymbol">LibASAP2GetSymbol</a>(param)
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% Axis parameter resolves to a model argument in a referenced model
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtId = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeId">LibGetRecordDataTypeId</a>(param)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%%
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> axisCompuMethodName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#FcnASAP2ConstructCompuMethod">FcnASAP2ConstructCompuMethod</a>(dtId, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> axisNumAxisPts = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeWidth">LibCGTypeWidth</a>(param.CGTypeIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> axisLowerLimit = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetPhysicalMinFromDTId">LibASAP2GetPhysicalMinFromDTId</a>(dtId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> axisUpperLimit = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetPhysicalMaxFromDTId">LibASAP2GetPhysicalMaxFromDTId</a>(dtId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> axisRef = param.ModelArgumentIdentifier
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;%%
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/begin AXIS_DESCR                 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Description of %&lt;axisName&gt; Points */
+ <br>&nbsp;/* Axis Type            */      COM_AXIS
+ <br>&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(inputReference)
+ <br>&nbsp;&nbsp;&nbsp;/* Reference to Input   */      NO_INPUT_QUANTITY
+ <br>&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;/* Reference to Input   */      %&lt;inputReference&gt;
+ <br>&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;/* Conversion Method    */      %&lt;axisCompuMethodName&gt;
+ <br>&nbsp;/* Number of Axis Pts   */      %&lt;axisNumAxisPts&gt;
+ <br>&nbsp;/* Lower Limit          */      %&lt;axisLowerLimit&gt;
+ <br>&nbsp;/* Upper Limit          */      %&lt;axisUpperLimit&gt;
+ <br>&nbsp;AXIS_PTS_REF                    %&lt;axisRef&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/end AXIS_DESCR
+ <br>&nbsp;&nbsp;%%    
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% Function: ASAP2UserFcnWriteStdAxis
+ <br>%% Abstract: Defines format for writing out AXIS_DESCR as STD_AXIS
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="ASAP2UserFcnWriteStdAxis" class="tlc_func">ASAP2UserFcnWriteStdAxis</a>(axisName, param, inputReference) Output
+ <br>&nbsp;&nbsp;%% 
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> axisInfo      = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetSTDAxisInfo">LibASAP2GetSTDAxisInfo</a>(param)
+ <br>&nbsp;&nbsp;%%  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/begin AXIS_DESCR                 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Description of %&lt;axisName&gt; Points */
+ <br>&nbsp;/* Axis Type            */      STD_AXIS
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(inputReference)
+ <br>&nbsp;/* Reference to Input   */      NO_INPUT_QUANTITY
+ <br>&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Reference to Input   */      %&lt;inputReference&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Conversion Method    */      %&lt;axisInfo.CompuMethod&gt;  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Number of Axis Pts   */      %&lt;axisInfo.NumAxisPoints&gt;         
+ <br>&nbsp;/* Lower Limit          */      %&lt;axisInfo.PhysicalMin&gt;  
+ <br>&nbsp;/* Upper Limit          */      %&lt;axisInfo.PhysicalMax&gt;  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/end AXIS_DESCR
+ <br>&nbsp;&nbsp;%%    
+ <br><span class="tlc_endfunction">%endfunction</span> 
+ <br>&nbsp; <br>%% Function: ASAP2UserFcnWriteFixAxis 
+ <br>%% Abstract: Defines format for writing out AXIS_DESCR as FIX_AXIS.
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="ASAP2UserFcnWriteFixAxis" class="tlc_func">ASAP2UserFcnWriteFixAxis</a>(axisName, param, inputReference) Output
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> axisValue     = param.Value  
+ <br>&nbsp;&nbsp;%%  
+ <br>&nbsp;&nbsp;%% Compute AXIS_DESCR characteristics for the FIX_AXIS
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numAxisPoints = %&lt;<span class="tlc_bifunc">SIZE</span>(axisValue,1)&gt;
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> lowerLimit    = <span class="tlc_bifunc">CAST</span>("Number", %&lt;axisValue[0]&gt;)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> upperLimit    = <span class="tlc_bifunc">CAST</span>("Number", %&lt;axisValue[numAxisPoints-1]&gt;)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> distance      = <span class="tlc_bifunc">CAST</span>("Number", %&lt;axisValue[1]-axisValue[0]&gt;)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> axisInfo      = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetFixAxisInfo">LibASAP2GetFixAxisInfo</a>(param)
+ <br>&nbsp;&nbsp;%%
+ <br>&nbsp;&nbsp;%% Compute if distance is a power of 2  
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (distance > 1) && ((distance & (distance-1)) == 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% If distance is a power of 2 we write FIX_AXIS_PAR
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> shift         = <span class="tlc_bifunc">CAST</span>("Number",<span class="tlc_bifunc">FEVAL</span>("eval","log<span class="tlc_bifunc">2</span>(%&lt;distance&gt;)")) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fixAxisParStr = "FIX_AXIS_PAR"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fixAxisParVal = "     %&lt;lowerLimit&gt; %&lt;shift&gt; %&lt;numAxisPoints&gt;"    
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fixAxisParStr = "FIX_AXIS_PAR_DIST"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fixAxisParVal = "%&lt;lowerLimit&gt; %&lt;distance&gt; %&lt;numAxisPoints&gt;"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;%%  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/begin AXIS_DESCR                 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Description of %&lt;axisName&gt; Points */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Axis Type            */      FIX_AXIS
+ <br>&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(inputReference)
+ <br>&nbsp;&nbsp;&nbsp;/* Reference to Input   */      NO_INPUT_QUANTITY
+ <br>&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;/* Reference to Input   */      %&lt;inputReference&gt;
+ <br>&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;/* Conversion Method    */      %&lt;axisInfo.CompuMethod&gt;
+ <br>&nbsp;/* Number of Axis Pts   */      %&lt;numAxisPoints&gt;
+ <br>&nbsp;/* Lower Limit          */      %&lt;axisInfo.PhysicalMin&gt;
+ <br>&nbsp;/* Upper Limit          */      %&lt;axisInfo.PhysicalMax&gt;
+ <br>&nbsp;FORMAT                          "%&lt;axisInfo.Format&gt;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;fixAxisParStr&gt;               %&lt;fixAxisParVal&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/end AXIS_DESCR 
+ <br><span class="tlc_endfunction">%endfunction</span> 
+ <br>&nbsp; <br>%% Function: ASAP2UserFcnWriteFixAxisList
+ <br>%% Abstract: Defines format for writing out AXIS_DESCR as FIX_AXIS_PAR_LIST.
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="ASAP2UserFcnWriteFixAxisList" class="tlc_func">ASAP2UserFcnWriteFixAxisList</a>(axisName, param, inputReference) Output
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> axisValue     = param.Value
+ <br>&nbsp;&nbsp;%% Compute AXIS_DESCR characteristics for the FIX_AXIS
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numAxisPoints = %&lt;<span class="tlc_bifunc">SIZE</span>(axisValue,1)&gt;
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> lowerLimit    = <span class="tlc_bifunc">CAST</span>("Number", %&lt;axisValue[0]&gt;)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> upperLimit    = <span class="tlc_bifunc">CAST</span>("Number", %&lt;axisValue[numAxisPoints-1]&gt;)
+ <br>&nbsp;&nbsp;%%  
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> axisInfo      = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#LibASAP2GetFixAxisInfo">LibASAP2GetFixAxisInfo</a>(param)
+ <br>&nbsp;&nbsp;%%  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/begin AXIS_DESCR                 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Description of %&lt;axisName&gt; Points */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Axis Type            */      FIX_AXIS
+ <br>&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(inputReference)
+ <br>&nbsp;&nbsp;&nbsp;/* Reference to Input   */      NO_INPUT_QUANTITY
+ <br>&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;/* Reference to Input   */      %&lt;inputReference&gt;
+ <br>&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;/* Conversion Method    */      %&lt;axisInfo.CompuMethod&gt;
+ <br>&nbsp;/* Number of Axis Pts   */      %&lt;numAxisPoints&gt;
+ <br>&nbsp;/* Lower Limit          */      %&lt;axisInfo.PhysicalMin&gt;
+ <br>&nbsp;/* Upper Limit          */      %&lt;axisInfo.PhysicalMax&gt;
+ <br>&nbsp;FORMAT                          "%&lt;axisInfo.Format&gt;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> axisValues
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> jj = numAxisPoints
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span class="tlc_bifunc">CAST</span>("Number", axisValue[jj])> /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> axisValues
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> listValue = <span class="tlc_bifunc">FEVAL</span>("regexprep", axisValues, "//s/*", " ")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/begin FIX_AXIS_PAR_LIST
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;listValue&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/end FIX_AXIS_PAR_LIST
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/end AXIS_DESCR 
+ <br><span class="tlc_endfunction">%endfunction</span> 
+ <br>&nbsp; <br>&nbsp; <br>%% [EOF] <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/asap2/asap2/user/asap2userlib.html">asap2userlib.tlc</a>
+ <br></body></html>

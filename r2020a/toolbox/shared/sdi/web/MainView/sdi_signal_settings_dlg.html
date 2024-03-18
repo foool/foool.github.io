@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="-1">
+    <title>SDI Signal Settings Dialog</title>
+    <!-- Copyright 2013-2014 The MathWorks, Inc. -->
+    <!-- SDI Signal Settings Dialog Release HTML file -->
+
+    <!-- Include web widget required css files -->
+    <!-- CSS : implied media="all" -->
+    <link rel="stylesheet" href="release/css/webwidget.dojo.css" />
+    <link rel="stylesheet" href="release/css/webwidget.css" />
+    <!--[if IE 9]>
+        <link href="release/css/overrides_ie9.css" rel="stylesheet" type="text/css"/>
+    <![endif]-->
+
+    <!-- Custom CSS Imports -->
+    <link rel="stylesheet" type="text/css" href="release/SDI2/css/sdiSignalSettingsDlg.css" />
+    <link rel="stylesheet" type="text/css" href="release/SDI2/css/inputValidationWidget.css" />
+    <link rel="stylesheet" type="text/css" href="release/SDI2/css/widgets.css" />
+    <link rel="stylesheet" type="text/css" href="release/SDI2/css/colorWidget.css" />
+    <link rel="stylesheet" type="text/css" href="release/SDI2/css/generatedCss.css"/>
+</head>
+
+<body class='tundra'>
+    <!--Include scripts after any HTML, so HTML will render before script loading.-->
+    <!-- Dojo Configuration - remove package declaration not used in your UI -->
+    <form>
+        <fieldset id='dialogFieldset'>
+            <legend id='dialogHeadingDiv'></legend>
+            <div id='dialogDescriptionDiv'></div>
+        </fieldset>
+    </form>
+    <div id='dialogContentDiv'>
+        <div id='lineStyleAndColorDiv'>
+            <span id='lineStyleColorCB'></span> 
+            <label for='lineStyleColorDijitCB' id='lineStyleColorCBLabel'></label>
+            <table id='lineSettingsTable'>
+                <tr>
+                    <td id='lineLabelTD'>
+                        <p id='lineLabel'></p>
+                    </td>
+                    <td id='lineColorAndStyleTD'>
+                        <div id='lineColorAndStyleDIV'></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br/>
+        <div id='subplotsDiv'>
+            <p id='axes'></p>
+            <div id='axesErrorDiv'></div>
+        </div>
+        <br/>
+    </div>
+    <script src="release/SDI2/dojoConfig-release-global.js"></script>
+    <script type="text/javascript" src="release/dojo/dojo.js"></script>
+    <script type="text/javascript">
+        // Require browser compatibility check lib
+        require(["SDI2/browsercheck"], function () {
+            // Require browser compatibility check module, which will run the checks
+            require(["mw-browser-utils/BrowserCheck"], function () {
+                // If the browser compatibility check passes, require in the web widget lib
+                require(["SDI2/SDI2"], function () {
+                    // Load in application code
+                    require([
+                        "require",
+                        "dojo/domReady",
+                        "dojo/dom-style",
+                        "dojo/dom",
+                        "dojo/dom-class",
+                        "dijit/form/CheckBox",
+                        "mw-utils/Utils",
+                        "mw-facade/MatlabFacade",
+                        "SDI2/SDISignalSettingsDlg/Helper",
+                        "SDI2/Helper",
+                        "SDI2/widgets/InputValidationWidget/InputValidationWidget",
+                        "SDI2/widgets/ColorWidget/ColorWidgetUtility",
+                        "dojo/i18n!SDI2/resources/SDI/nls/dialogs"
+                    ], function (
+                        require,
+                        ready,
+                        domStyle,
+                        dom,
+                        domClass,
+                        CheckBox,
+                        Utils,
+                        MatlabFacade,
+                        SDISigSettingsHelper,
+                        SDIHelper,
+                        InputValidationWidget,
+                        ColorWidgetUtility,
+                        sigSettingsDlgI18n) {
+                        ready(function () {
+                            facade = new MatlabFacade();
+                            clientID = Utils.generateUuid();
+                            dlgUUID = SDIHelper.getParameterByName('dlgUUID'); //global variable to keep track of dlgUUID
+                            facade.feval({
+                                "function": "Simulink.sdi.sigSettingsDlg.getDefaultValues",
+                                "arguments": [dlgUUID],
+                                nargout: 1,
+                                "dequeMode": "ppe",
+                                fevalCallback: function (results) {
+                                    // Get default values
+                                    var defaultVals = results[0].results[0];
+                                    var lineColor = defaultVals.ColorString;
+                                    if (lineColor.length === 0) {
+                                        lineColor = '#0072BD'; // Default color
+                                    }
+                                    var lineStyle = defaultVals.LineStyle;
+                                    var checkedValue = (lineStyle.length !== 0);
+                                    if (!checkedValue) {
+                                        lineStyle = '-'; // Default line style
+                                        // Disable line settings row if "Custom style and color" is not checked
+                                        SDISigSettingsHelper.setLineSettingsRowStatus(false);
+                                    }
+                                    var axesDefaultVal = defaultVals.Axes;
+
+                                    // Usage description
+                                    var bShowUsage = true;
+                                    if (defaultVals.hasOwnProperty('ShowUsage')) {
+                                        bShowUsage = defaultVals.ShowUsage;
+                                    }
+                                    if (bShowUsage) {
+                                        dom.byId('dialogHeadingDiv').innerHTML = sigSettingsDlgI18n.DlgUsage;
+                                        dom.byId('dialogDescriptionDiv').innerHTML = sigSettingsDlgI18n.DlgDescription;
+                                    } else {
+                                        domStyle.set(dom.byId('dialogFieldset'), 'display', 'none');
+                                    }
+                                    
+                                    // Get localized strings
+                                    dom.byId('lineStyleColorCBLabel').innerHTML = sigSettingsDlgI18n.UserDefinedStyleColor;
+                                    dom.byId('lineLabel').innerHTML = sigSettingsDlgI18n.LineColorAndStyle;
+                                    dom.byId('axes').innerHTML = sigSettingsDlgI18n.Axes;
+                                    domClass.add(dom.byId('dialogFieldset'), 'fieldsetBorder');
+
+                                    // Create checkbox for "Custom style and color"
+                                    var customCheckbox = new CheckBox({
+                                        id: "lineStyleColorDijitCB",
+                                        checked: checkedValue
+                                    });
+                                    customCheckbox.placeAt('lineStyleColorCB');
+
+                                    // Show the line style and color with default values
+                                    var lineRenderer = SDISigSettingsHelper.updateLineColorAndStyle({
+                                        createCanvas: true,
+                                        color: lineColor,
+                                        lineStyle: lineStyle
+                                    });
+
+                                    // Create the Input validation widget for Subplots
+                                    var bShowSubplot = true;
+                                    if (defaultVals.hasOwnProperty('ShowSubplot')) {
+                                        bShowSubplot = defaultVals.ShowSubplot;
+                                    }
+                                    var args_iv = {
+                                        id: "axesErrorDiv",
+                                        errorMsg: sigSettingsDlgI18n.AxesErrorMsg,
+                                        nonErrorBorderCSS: "nonErrorBorderCSS",
+                                        errorBorderCSS: "errorBorderCSS",
+                                        nonErrorMsgCSS: "nonErrorMsgCSS",
+                                        errorMsgCSS: "errorMsgCSS",
+                                        placeholderText: sigSettingsDlgI18n.NoDisplayAxes,
+                                        initialValue: axesDefaultVal
+                                    }
+                                    var subplotInputBox = new InputValidationWidget(args_iv);
+                                    subplotInputBox.startup();
+                                    if (!bShowSubplot) {
+                                        domStyle.set(dom.byId('subplotsDiv'), 'display', 'none');
+                                    }
+                                    
+                                    // Create callbacks for different elements in this dialog
+                                    SDISigSettingsHelper.createCallbacks(customCheckbox, lineRenderer, subplotInputBox);
+                                },
+
+                                errorCallback: function (results) {}
+                            })
+                        });
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
+
+<!-- LocalWords:  dojo hmi dom testcontentpane px jp nls strs Vals ivw cp
+ jp strs ivw argscp
+-->

@@ -1,0 +1,290 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/toolbox/shared/dsp/vision/matlab/utilities/mex/tlc_c/spclib.html">spclib.tlc</a><span style="padding-left:9.5px"></span>-<span style="padding-left:9.5px"></span>Helper<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>DSP<span style="padding-left:9.5px"></span>System<span style="padding-left:9.5px"></span>Toolbox<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>generation
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1995-2016<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_DSPLIB_") == 0
+ <br><span class="tlc_assign">%assign</span> _DSPLIB_ = 1
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>===========================================================================
+</span> <br>&nbsp; <br><span class="tlc_assign">%assign</span> ::MATLAB_ROOT_TMP = <span class="tlc_bifunc">FEVAL</span>("matlabroot")
+ <br><span class="tlc_assign">%assign</span> ::MATLAB_ROOT     = <span class="tlc_bifunc">FEVAL</span>("strrep", ::MATLAB_ROOT_TMP, "//", "/")
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Include<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>standard<span style="padding-left:9.5px"></span>DSP<span style="padding-left:9.5px"></span>System<span style="padding-left:9.5px"></span>Toolbox<span style="padding-left:9.5px"></span>C<span style="padding-left:9.5px"></span>header<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>all<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>code:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_openfile">%openfile</span> buffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#include "dsp_rt.h" /* DSP System Toolbox general run time support functions */
+ <br><span class="tlc_closefile">%closefile</span> buffer
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibCacheDefine">LibCacheDefine</a>(buffer)>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Include<span style="padding-left:9.5px"></span>DSP<span style="padding-left:9.5px"></span>System<span style="padding-left:9.5px"></span>Toolbox<span style="padding-left:9.5px"></span>fixed-point<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>arithmetic<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>library
+</span> <br><span class="tlc_include">%include</span> <span class="tlc_bifunc">FEVAL</span>("matlabroot")+"/toolbox/shared/dsp/vision/matlab/utilities/mex/tlc_c/<a href="https://foool.github.io/MATLAB/R2020a/toolbox/shared/dsp/vision/matlab/utilities/mex/tlc_c/spcfixptlib.html">spcfixptlib.tlc</a>"
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>===========================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>DSP<span style="padding-left:9.5px"></span>System<span style="padding-left:9.5px"></span>Toolbox<span style="padding-left:9.5px"></span>code-gen<span style="padding-left:9.5px"></span>framework<span style="padding-left:9.5px"></span>(fcn<span style="padding-left:9.5px"></span>definitions,<span style="padding-left:9.5px"></span>etc.):
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>===========================================================================
+</span> <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>JustCreatedCompiledModelRecord<span style="padding-left:9.5px"></span>==================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Checks<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>CompiledModel.recordName
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>record<span style="padding-left:9.5px"></span>already<span style="padding-left:9.5px"></span>exists,<span style="padding-left:9.5px"></span>return<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>0<span style="padding-left:9.5px"></span>(false)
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>record<span style="padding-left:9.5px"></span>does<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>exist,
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>create<span style="padding-left:9.5px"></span>recordName<span style="padding-left:9.5px"></span>under<span style="padding-left:9.5px"></span>CompiledModel
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>return<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>1<span style="padding-left:9.5px"></span>(true)
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Example<span style="padding-left:9.5px"></span>usage:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%if<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/toolbox/target/extensions/processor/shared/ti/blks/mex/tlc_c/rtdx_util.html#JustCreatedCompiledModelRecord">JustCreatedCompiledModelRecord</a>("my_cache")
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%%<span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>first<span style="padding-left:9.5px"></span>time<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>record<span style="padding-left:9.5px"></span>was<span style="padding-left:9.5px"></span>created
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%%<span style="padding-left:9.5px"></span><first-time<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>goes<span style="padding-left:9.5px"></span>here>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%else
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%%<span style="padding-left:9.5px"></span>2nd<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>subsequent<span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>(record<span style="padding-left:9.5px"></span>already<span style="padding-left:9.5px"></span>exists!)
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%%<span style="padding-left:9.5px"></span><subsequent<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>goes<span style="padding-left:9.5px"></span>here>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%endif
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="JustCreatedCompiledModelRecord" class="tlc_func">JustCreatedCompiledModelRecord</a>(recordName) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fullRecordName = "::CompiledModel." + recordName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">EXISTS</span>("%<<span>fullRecordName</span>>")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retval = 1  <span class="tlc_comment">%% First call</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Create record since it does not yet exist:</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> %<<span>recordName</span>> = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel = ::CompiledModel + %<<span>recordName</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_undef">%undef</span> %<<span>recordName</span>>  <span class="tlc_comment">%% Remove from current scope</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retval = 0  <span class="tlc_comment">%% Subsequent call</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> retval
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% JustCreatedCompiledModelRecord</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Include_rt_header<span style="padding-left:9.5px"></span>===============================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Cache<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>include<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>run-time<span style="padding-left:9.5px"></span>support<span style="padding-left:9.5px"></span>library
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Example<span style="padding-left:9.5px"></span>usage:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/shared/dsp/vision/matlab/utilities/mex/tlc_c/spclib.html#Include_rt_header">Include_rt_header</a>(block,<span style="padding-left:9.5px"></span>"dspfft_rt")>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>will<span style="padding-left:9.5px"></span>add:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>#include<span style="padding-left:9.5px"></span>"dspfft_rt.h"
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>model_common.h<span style="padding-left:9.5px"></span>file.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Include_rt_header" class="tlc_func">Include_rt_header</a>(block, libName) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> recName = libName + "_include"
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/target/extensions/processor/shared/ti/blks/mex/tlc_c/rtdx_util.html#JustCreatedCompiledModelRecord">JustCreatedCompiledModelRecord</a>(recName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Include the standard DSP System Toolbox C header file in all generated code:</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileDotH = libName + ".h"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#include "%<<span>fileDotH</span>>" /* DSP System Toolbox run time support library */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibCacheDefine">LibCacheDefine</a>(buffer)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% Include_rt_header</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>getModelName
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:<span style="padding-left:9.5px"></span>returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>name<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>current<span style="padding-left:9.5px"></span>model
+</span> <br><span class="tlc_fkw">%function</span> <a id="getModelName" class="tlc_func">getModelName</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>(::CompiledModel.OrigName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> modelName = ::CompiledModel.OrigName
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> modelName = CompiledModel.Name
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> modelName
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>ModifyBuildInfo
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:<span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>method<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>add<span style="padding-left:9.5px"></span>files<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>BuildInfo<span style="padding-left:9.5px"></span>structure
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>following<span style="padding-left:9.5px"></span>parameters:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>1)<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>product
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>2)<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>path<span style="padding-left:9.5px"></span>(relative<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>product)
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>3)<span style="padding-left:9.5px"></span>header<span style="padding-left:9.5px"></span>files
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>4)<span style="padding-left:9.5px"></span>source<span style="padding-left:9.5px"></span>files
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>5)<span style="padding-left:9.5px"></span>non-build<span style="padding-left:9.5px"></span>files
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>6)<span style="padding-left:9.5px"></span>link<span style="padding-left:9.5px"></span>flags
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Example<span style="padding-left:9.5px"></span>usage<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>within<span style="padding-left:9.5px"></span>TLC:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/shared/dsp/vision/matlab/utilities/mex/tlc_c/spclib.html#ModifyBuildInfo">ModifyBuildInfo</a>("vipblks",<span style="padding-left:9.5px"></span>"viphoughlines",<span style="padding-left:9.5px"></span>"",<span style="padding-left:9.5px"></span>"houghlines_d_rt.c")>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="ModifyBuildInfo" class="tlc_func">ModifyBuildInfo</a>(product, path, hdrFiles, srcFiles, nonBuildFiles, linkFlags) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> foobar = <span class="tlc_bifunc">FEVAL</span>("dspModifyBuildInfo", "%<<span><a href="https://foool.github.io/MATLAB/R2020a/toolbox/shared/dsp/vision/matlab/utilities/mex/tlc_c/spclib.html#getModelName">getModelName</a>()</span>>", "%<<span>product</span>>", "%<<span>path</span>>", "%<<span>hdrFiles</span>>", "%<<span>srcFiles</span>>", "%<<span>nonBuildFiles</span>>", "%<<span>linkFlags</span>>")
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>MAX<span style="padding-left:9.5px"></span>=============================================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>maxof<span style="padding-left:9.5px"></span>two<span style="padding-left:9.5px"></span>variables
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="MAX" class="tlc_func">MAX</a>(a,b)
+ <br><span class="tlc_return">%return</span> ((a > b) ? a : b)
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>MIN<span style="padding-left:9.5px"></span>=============================================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>min<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>two<span style="padding-left:9.5px"></span>variables
+</span> <br><span class="tlc_fkw">%function</span> <a id="MIN" class="tlc_func">MIN</a>(a,b)
+ <br><span class="tlc_return">%return</span> ((a < b) ? a : b)
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibTaskSFcnComment<span style="padding-left:9.5px"></span>==============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Generate<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>C-style<span style="padding-left:9.5px"></span>comment<span style="padding-left:9.5px"></span>indicating<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>sample-<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>offset-
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>times<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>S-Function<span style="padding-left:9.5px"></span>TID.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>TID<span style="padding-left:9.5px"></span>must<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>valid<span style="padding-left:9.5px"></span>TID<span style="padding-left:9.5px"></span>inputs<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>LibGetGlobalTIDFromLocalSFcnTID<span style="padding-left:9.5px"></span>accepts.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>String<span style="padding-left:9.5px"></span>includes<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>comment<span style="padding-left:9.5px"></span>delimiters<span style="padding-left:9.5px"></span>(both<span style="padding-left:9.5px"></span>/*<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>*/)
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Example<span style="padding-left:9.5px"></span>output:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>/*<span style="padding-left:9.5px"></span>Sample<span style="padding-left:9.5px"></span>time:<span style="padding-left:9.5px"></span>[1.0,<span style="padding-left:9.5px"></span>0.0]<span style="padding-left:9.5px"></span>*/
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Example<span style="padding-left:9.5px"></span>calls:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>For<span style="padding-left:9.5px"></span>port-based<span style="padding-left:9.5px"></span>sample<span style="padding-left:9.5px"></span>times:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/toolbox/shared/dsp/vision/matlab/utilities/mex/tlc_c/spclib.html#LibTaskSFcnComment">LibTaskSFcnComment</a>("InputPortIdx0")
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/toolbox/shared/dsp/vision/matlab/utilities/mex/tlc_c/spclib.html#LibTaskSFcnComment">LibTaskSFcnComment</a>("OutputPortIdx0")
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>For<span style="padding-left:9.5px"></span>block-based<span style="padding-left:9.5px"></span>sample<span style="padding-left:9.5px"></span>times:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/toolbox/shared/dsp/vision/matlab/utilities/mex/tlc_c/spclib.html#LibTaskSFcnComment">LibTaskSFcnComment</a>(0)
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibTaskSFcnComment" class="tlc_func">LibTaskSFcnComment</a>(sfcnTID) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibTaskComment">LibTaskComment</a>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibGetGlobalTIDFromLocalSFcnTID">LibGetGlobalTIDFromLocalSFcnTID</a>(sfcnTID))>/
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibTaskSFcnComment</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibBlockCopyInputsToOutputs<span style="padding-left:9.5px"></span>=====================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Copy<span style="padding-left:9.5px"></span>inputs<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>outputs,<span style="padding-left:9.5px"></span>using<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>INPUT<span style="padding-left:9.5px"></span>width.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Assumptions:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>datatype<span style="padding-left:9.5px"></span>matches<span style="padding-left:9.5px"></span>input<span style="padding-left:9.5px"></span>datatype,
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>then<span style="padding-left:9.5px"></span>no<span style="padding-left:9.5px"></span>fixed-point<span style="padding-left:9.5px"></span>cast<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>required,
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>copy<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>performed<span style="padding-left:9.5px"></span>using<span style="padding-left:9.5px"></span>memcpy()<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>direct<span style="padding-left:9.5px"></span>assignment.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Output<span style="padding-left:9.5px"></span>width<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>greater<span style="padding-left:9.5px"></span>than<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>equal<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>input<span style="padding-left:9.5px"></span>width.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>remaining<span style="padding-left:9.5px"></span>part<span style="padding-left:9.5px"></span>of
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>touched.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Input<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>complexity<span style="padding-left:9.5px"></span>can<span style="padding-left:9.5px"></span>differ.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibBlockCopyInputsToOutputs" class="tlc_func">LibBlockCopyInputsToOutputs</a>(INPORT, OUTPORT) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> inDT                  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptlib.html#FixPt_GetInputDataType">FixPt_GetInputDataType</a>(INPORT)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DTYPE_ID              = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalDataTypeId">LibBlockInputSignalDataTypeId</a>(INPORT)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DTYPE_STR             = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalDataTypeName">LibBlockInputSignalDataTypeName</a>(INPORT,"%<<span>tRealPart</span>>")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> OUT_COMPLEX           = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalIsComplex">LibBlockOutputSignalIsComplex</a>(OUTPORT)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> INP_COMPLEX           = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalIsComplex">LibBlockInputSignalIsComplex</a>(INPORT)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> INP_WIDTH             = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalWidth">LibBlockInputSignalWidth</a>(INPORT)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> NUM_REAL_INP_ELEMENTS = INP_WIDTH * (1 + INP_COMPLEX)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outputDTSameAsInput   = (DTYPE_ID == <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalDataTypeId">LibBlockOutputSignalDataTypeId</a>(OUTPORT))
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (outputDTSameAsInput)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (INP_COMPLEX == OUT_COMPLEX)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Copy every input sample</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% to every output sample</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> INP_WIDTH > 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;memcpy( %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(OUTPORT, "", "", 0)>, /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>( INPORT,  "", "", 0)>, /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(%<<span>NUM_REAL_INP_ELEMENTS</span>> * sizeof(%<<span>DTYPE_STR</span>>)) );
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(OUTPORT, "", "", 0)> = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>( INPORT,  "", "", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Input and output differ in complexity</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> INP_COMPLEX
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Copy real part of each</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% complex input sample</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% to each real output sample.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> INP_WIDTH > 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const byte_T *uTemp = (const byte_T *)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>( INPORT,  "", "", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;byte_T       *yTemp = (byte_T       *)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(OUTPORT, "", "", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T inpIdx        = %<<span>INP_WIDTH</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while (inpIdx-- > 0) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;memcpy(yTemp, uTemp, sizeof(%<<span>DTYPE_STR</span>>));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yTemp += sizeof(%<<span>DTYPE_STR</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uTemp += 2*sizeof(%<<span>DTYPE_STR</span>>); /* Skip imaginary part */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(OUTPORT, "", "", 0)> = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>( INPORT,  "", "", "%<<span>tRealPart</span>>0")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Input is real, output is complex</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Copy each real input sample</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% to the real part of each</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% complex output sample.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Interleave output samples with</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% data type zero representation</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% in each imaginary part.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> INP_WIDTH > 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsDataTypeMultiWordFixpt">LibIsDataTypeMultiWordFixpt</a>(DTYPE_ID)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const %<<span>DTYPE_STR</span>> zero = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptlib.html#FixPt_GetGroundValueOrNameFromDataTypeRec">FixPt_GetGroundValueOrNameFromDataTypeRec</a>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptlib.html#FixPt_GetOutputDataType">FixPt_GetOutputDataType</a>(OUTPORT), TLC_FALSE)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const %<<span>DTYPE_STR</span>> zero = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetGroundValueFromId">SLibGetGroundValueFromId</a>(DTYPE_ID)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const byte_T      *uTemp = (const byte_T *)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>( INPORT,  "", "", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;byte_T            *yTemp = (byte_T       *)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(OUTPORT, "", "", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T inpIdx        = %<<span>INP_WIDTH</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while (inpIdx-- > 0) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;memcpy(yTemp, uTemp, sizeof(%<<span>DTYPE_STR</span>>));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uTemp += sizeof(%<<span>DTYPE_STR</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yTemp += sizeof(%<<span>DTYPE_STR</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;memcpy(yTemp, &amp;zero, sizeof(%<<span>DTYPE_STR</span>>));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yTemp += sizeof(%<<span>DTYPE_STR</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Scalar I-O (input is real, output is complex)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(OUTPORT, "", "", "%<<span>tRealPart</span>>0")> = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>( INPORT,  "", "", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsDataTypeMultiWordFixpt">LibIsDataTypeMultiWordFixpt</a>(DTYPE_ID)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(OUTPORT, "", "", "%<<span>tImagPart</span>>0")> = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptlib.html#FixPt_GetGroundValueOrNameFromDataTypeRec">FixPt_GetGroundValueOrNameFromDataTypeRec</a>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptlib.html#FixPt_GetOutputDataType">FixPt_GetOutputDataType</a>(OUTPORT), TLC_FALSE)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(OUTPORT, "", "", "%<<span>tImagPart</span>>0")> = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetGroundValueFromId">SLibGetGroundValueFromId</a>(DTYPE_ID)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Assuming fixed point input</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outLabel_re = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(OUTPORT, "idxSPL", "", "%<<span>tRealPart</span>>0")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outLabel_im = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(OUTPORT, "idxSPL", "", "%<<span>tImagPart</span>>0")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> inLabel_re  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>( INPORT,  "idxSPL", "", "%<<span>tRealPart</span>>0")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> inLabel_im  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>( INPORT,  "idxSPL", "", "%<<span>tImagPart</span>>0")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outDT       = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptlib.html#FixPt_GetOutputDataType">FixPt_GetOutputDataType</a>(OUTPORT)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int idxSPL=0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (; idxSPL<%<<span>INP_WIDTH</span>>; idxSPL++) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptcast.html#FixPt_Fix2FixAlwaysOutput">FixPt_Fix2FixAlwaysOutput</a>(outLabel_re, outDT, inLabel_re, inDT, FixPtRoundingMode, FixPtSaturationMode)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> OUT_COMPLEX
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> INP_COMPLEX
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptcast.html#FixPt_Fix2FixAlwaysOutput">FixPt_Fix2FixAlwaysOutput</a>(outLabel_im, outDT, inLabel_im, inDT, FixPtRoundingMode, FixPtSaturationMode)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Assign zero into imaginary part (input is real, output is complex)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>outLabel_im</span>> = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/fixpt/fixptlib.html#FixPt_GetGroundValueOrNameFromDataTypeRec">FixPt_GetGroundValueOrNameFromDataTypeRec</a>(outDT, TLC_FALSE)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span> <span class="tlc_comment">%% OUT_REAL</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> INP_COMPLEX
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Discarding imaginary part of input */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibBlockCopyInputsToOutputs</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_endif">%endif</span> <span class="tlc_comment">%% _DSPLIB_</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/toolbox/shared/dsp/vision/matlab/utilities/mex/tlc_c/spclib.html">spclib.tlc</a>
+</span> <br></body></html>

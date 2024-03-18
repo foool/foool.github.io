@@ -1,0 +1,126 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>File<span style="padding-left:9.5px"></span>:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simdemos/simfeatures/tlc_c/sdotproduct.html">sdotproduct.tlc</a><span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>sdotproduct.ttlc<span style="padding-left:9.5px"></span>revsion<span style="padding-left:9.5px"></span>1.6
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Murali<span style="padding-left:9.5px"></span>Yeddanapudi,<span style="padding-left:9.5px"></span>27-May-1998
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1990-2009<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Dot<span style="padding-left:9.5px"></span>product<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>target<span style="padding-left:9.5px"></span>file.
+</span> <br>&nbsp; <br>&nbsp; <br><span class="tlc_implements">%implements</span> sdotproduct "C"
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FcnThriftedComplexMultiply<span style="padding-left:9.5px"></span>========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>multiplies<span style="padding-left:9.5px"></span>two<span style="padding-left:9.5px"></span>numbers<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>complex<span style="padding-left:9.5px"></span>plane.<span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>of
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>input<span style="padding-left:9.5px"></span>arguments<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>only<span style="padding-left:9.5px"></span>real,<span style="padding-left:9.5px"></span>then<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>complex<span style="padding-left:9.5px"></span>part<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>passed<span style="padding-left:9.5px"></span>in
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>"".
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnThriftedComplexConjMultiply" class="tlc_func">FcnThriftedComplexConjMultiply</a>(ar,ai,br,bi,cr,ci,op) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buffer
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Compute Cr = Ar * Br + Ai * Bi</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rhsStr = "%<<span>ar</span>> * %<<span>br</span>>"
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/obsoletelib.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/obsoletelib.html#LibIsEqual">LibIsEqual</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/obsoletelib.html#LibIsEqual">LibIsEqual</a></a>(ai, "") &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/obsoletelib.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/obsoletelib.html#LibIsEqual">LibIsEqual</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/obsoletelib.html#LibIsEqual">LibIsEqual</a></a>(bi, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rhsStr = rhsStr + " + %<<span>ai</span>> * %<<span>bi</span>>"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;%<<span>cr</span>> %<<span>op</span>> %<<span>rhsStr</span>>;
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Compute Ci = Ar * Bi - Ai * Br</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/obsoletelib.html#LibIsEqual">LibIsEqual</a>(ci, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rhsStr = "0.0"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/obsoletelib.html#LibIsEqual">LibIsEqual</a>(bi, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rhsStr = "%<<span>ar</span>> * %<<span>bi</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/obsoletelib.html#LibIsEqual">LibIsEqual</a>(ai, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rhsStr = rhsStr + " - %<<span>ai</span>> * %<<span>br</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>ci</span>> %<<span>op</span>> %<<span>rhsStr</span>>;
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buffer
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> buffer
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% FcnThriftedComplexMultiply</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Outputs<span style="padding-left:9.5px"></span>===========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Y<span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>U0'<span style="padding-left:9.5px"></span>*<span style="padding-left:9.5px"></span>U1,<span style="padding-left:9.5px"></span>where<span style="padding-left:9.5px"></span>U0'<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>complex<span style="padding-left:9.5px"></span>conjugate<span style="padding-left:9.5px"></span>transpose<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>U0
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sfcnName = ParamSettings.FunctionName
+ <br>&nbsp;&nbsp;/* %<<span>Type</span>> Block (%<<span>sfcnName</span>>): %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibParentMaskBlockName">LibParentMaskBlockName</a>(block)> */
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u0re = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "", "%<<span>tRealPart</span>>0")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u0im = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "", "%<<span>tImagPart</span>>0")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u1re = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(1, "", "", "%<<span>tRealPart</span>>0")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u1im = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(1, "", "", "%<<span>tImagPart</span>>0")
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> yre = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", "", "%<<span>tRealPart</span>>0")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> yim = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", "", "%<<span>tImagPart</span>>0")
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Need to declare a temporary variable for u1re when the output is</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% being over-written and u0im is non-zero</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outputOverWritesInput = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;((<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalBufferDstPort">LibBlockInputSignalBufferDstPort</a>(0) == 0) || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalBufferDstPort">LibBlockInputSignalBufferDstPort</a>(1) == 0)) &amp;&amp;   ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalIsComplex">LibBlockInputSignalIsComplex</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalIsComplex">LibBlockInputSignalIsComplex</a></a>(0) &amp;&amp; <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalIsComplex">LibBlockInputSignalIsComplex</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalIsComplex">LibBlockInputSignalIsComplex</a></a>(1))
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> outputOverWritesInput
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalDataTypeName">LibBlockOutputSignalDataTypeName</a>(0, tRealPart)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>dtName</span>> tmpVar;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpVar = "tmpVar"
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpVar = yre
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simdemos/simfeatures/tlc_c/sdotproduct.html#FcnThriftedComplexConjMultiply">FcnThriftedComplexConjMultiply</a>(u0re, u0im, u1re, u1im, tmpVar, yim, "=")>/
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rollVars    = ["U", "Y"]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rollRegion  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rolllib.html#LibGetRollRegions1">LibGetRollRegions1</a>(RollRegions)
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/obsoletelib.html#LibIsEqual">LibIsEqual</a>(rollRegion, []) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> outputOverWritesInput
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>yre</span>> = tmpVar;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Continue with dot product for non-scalar case</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_roll">%roll</span> idx = rollRegion, lcv = RollThreshold, block, "Roller", rollVars
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u0re = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0,"",lcv,"%<<span>tRealPart</span>>%<<span>idx</span>>")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u0im = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0,"",lcv,"%<<span>tImagPart</span>>%<<span>idx</span>>")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u1re = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(1,"",lcv,"%<<span>tRealPart</span>>%<<span>idx</span>>")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u1im = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(1,"",lcv,"%<<span>tImagPart</span>>%<<span>idx</span>>")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%               </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> yre = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0,"",lcv,"%<<span>tRealPart</span>>%<<span>idx</span>>")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> yim = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0,"",lcv,"%<<span>tImagPart</span>>%<<span>idx</span>>")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simdemos/simfeatures/tlc_c/sdotproduct.html#FcnThriftedComplexConjMultiply">FcnThriftedComplexConjMultiply</a>(u0re, u0im, u1re, u1im, yre, yim, "+=")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endroll">%endroll</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> outputOverWritesInput
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simdemos/simfeatures/tlc_c/sdotproduct.html">sdotproduct.tlc</a>
+</span> <br></body></html>

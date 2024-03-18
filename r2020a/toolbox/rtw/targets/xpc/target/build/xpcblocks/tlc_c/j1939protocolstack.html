@@ -1,0 +1,138 @@
+<html>
+<head>
+
+<style>
+p {color : black; font-family:courier; font-size: 80%;}
+body {line-height: 100%; font-family:courier;}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_function {color: green;}.tlc_endfunction {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}
+.tlc_bifunc {color: brown;}
+</style>
+
+</head>
+<body>
+%% Abstract: TLC file for J1939 Protocol Stack Block.
+ <br>%%
+ <br>%%   Copyright 2009-2010 The MathWorks, Inc.
+ <br>&nbsp; <br><span class="tlc_implements">%implements</span> j1939protocolstack "C"
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_function">%function</span> <a id="BlockTypeSetup" class="tlc_func">BlockTypeSetup</a>(block, system) void
+ <br>&nbsp; <br><span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>()
+ <br>%% When building a model with this block inside a model reference, and the
+ <br>%% referring block is set to ACCELERATOR mode, then the compile of the file
+ <br>%% generated with this file will fail unless we exclude the target specific
+ <br>%% includes and code.
+ <br>&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("xpctarget.h")&gt;
+ <br>&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("j1939lib.h")&gt;
+ <br>&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("cantransportlib.h")&gt;
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">EXISTS</span>(::xpc_can_datatype_registered)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::xpc_can_datatype_registered = TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">EXISTS</span>(::custom_can_datatype_registered)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::custom_can_datatype_registered = TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> CompiledModel.DataTypes
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> dtIdx = NumDataTypes
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dt = DataType[dtIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (<span class="tlc_bifunc">ISEQUAL</span>(dt.Name,"CAN_MESSAGE_STANDARD") || <span class="tlc_bifunc">ISEQUAL</span>(dt.Name,"CAN_MESSAGE_EXTENDED") || /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISEQUAL</span>(dt.Name, "CAN_MESSAGE"))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibSetDataTypeName">SLibSetDataTypeName</a>(dt, "CAN_DATATYPE")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibSetDataTypeGroundName">SLibSetDataTypeGroundName</a>(dt,"CAN_DATATYPE_GROUND1")&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibSetDataTypeGroundValue">SLibSetDataTypeGroundValue</a>(dt,"CAN_DATATYPE_GROUND")&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibSetDataTypeGroundInit">SLibSetDataTypeGroundInit</a>(dt,"{0,0,0,0,0,{0}}")&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Make a ground reference for CAN_FRAME
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#include "can_message.h"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibExportFileCustomCode">LibExportFileCustomCode</a>(buffer,"header")&gt;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buffer = "can_datatype_ground.c"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#include "can_message.h"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* A ground reference for CAN_DATATYPE */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CAN_DATATYPE CAN_DATATYPE_GROUND;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToModelSources">LibAddToModelSources</a>("can_datatype_ground")&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibCacheExtern">LibCacheExtern</a>("extern CAN_DATATYPE CAN_DATATYPE_GROUND;")>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% add in required includes to the main header file
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("can_message.h")&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("<string.h&gt;")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;%% CAN_DATATYPE already registered.
+ <br>&nbsp;&nbsp;&nbsp;%% Check for CAN_DATATYPE ground name validity.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> CompiledModel.DataTypes
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> dtIdx = NumDataTypes
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dt = DataType[dtIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (<span class="tlc_bifunc">ISEQUAL</span>(dt.Name, "CAN_DATATYPE") && <span class="tlc_bifunc">ISEQUAL</span>(dt.GroundName, "CAN_DATATYPE"))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Data type name and ground name cannot be equal. Reseting ground attributes.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dt.GroundName = "CAN_DATATYPE_GROUND1" 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dt.GroundValue = "CAN_DATATYPE_GROUND" 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dt.GroundInit = "{0,0,0,0,0,{0}}" 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>      
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>     
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_function">%function</span> <a id="Start" class="tlc_func">Start</a>(block, system) Output 
+ <br>{
+ <br><span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>()
+ <br>&nbsp;if (!xpcIsModelInit()) 
+ <br>&nbsp;{ 
+ <br>&nbsp;&nbsp;j1939Error ret;
+ <br>&nbsp;&nbsp;%% Initialize J1939 Protocol Stack
+ <br>&nbsp;&nbsp;ret = j1939InitializeStack(%&lt;SFcnParamSettings.STACKID&gt;, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;SFcnParamSettings.TPENABLED&gt;,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;SFcnParamSettings.ACENABLED&gt;,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;SFcnParamSettings.NUMRXPGN&gt;,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;SFcnParamSettings.NUMTXPGN&gt;,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;SFcnParamSettings.NUMCA&gt;,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;SFcnParamSettings.MAXTP&gt;);
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;if(ret!=J1939_ERROR_OK)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;static uint8_T errmsg[100];
+ <br>&nbsp;&nbsp;&nbsp;sprintf(errmsg,"J1939 PStack Initialization Error: %d",ret);
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> CompiledModel
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootsys = System[NumSystems-1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibSetRTModelErrorStatus">LibSetRTModelErrorStatus</a>("errmsg")&gt;;
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>	
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;}     
+ <br><span class="tlc_endif">%endif</span>
+ <br>}
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_function">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block, system) Output
+ <br>{
+ <br><span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>()
+ <br>&nbsp;int32_T num_msg_sent = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;%%Get input and output CAN message signals
+ <br>&nbsp;<span class="tlc_assign">%assign</span> inputSignal = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(0,"","",0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outputSignal = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(0,"","",0)
+ <br>&nbsp;&nbsp; <br>&nbsp; <br>&nbsp;%%Get message count signals
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> msgCountOut = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(1,"","",0)
+ <br>&nbsp; <br>&nbsp;<span class="tlc_assign">%assign</span> inputWidth   =  <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalWidth">LibBlockInputSignalWidth</a>(0)
+ <br>&nbsp;<span class="tlc_assign">%assign</span> outputWidth  =  <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalWidth">LibBlockOutputSignalWidth</a>(0)
+ <br>&nbsp; <br>&nbsp;&nbsp; <br>&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalConnected">LibBlockInputSignalConnected</a>(0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int32_T max_rx_limit = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;max_rx_limit = (int32_T)min( %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(1,"","",0)&gt;,%&lt;SFcnParamSettings.MAXRX&gt;);
+ <br>&nbsp;&nbsp;%%Receive messages (until we reach "receive depth")
+ <br>&nbsp;&nbsp;CTL_ExecuteRx(%&lt;SFcnParamSettings.STACKID&gt;,%&lt;inputSignal&gt;,%&lt;inputWidth&gt;,max_rx_limit);
+ <br>&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp; <br>&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockOutputSignalConnected">LibBlockOutputSignalConnected</a>(0)
+ <br>&nbsp;&nbsp;%%Send All messages waiting to be sent (until we reach "max transmit")
+ <br>&nbsp;&nbsp;num_msg_sent = CTL_ExecuteTx(%&lt;SFcnParamSettings.STACKID&gt;,%&lt;outputSignal&gt;,%&lt;outputWidth&gt;, %&lt;SFcnParamSettings.MAXTX&gt;);
+ <br>&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;%&lt;msgCountOut&gt; = num_msg_sent;
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span>
+ <br>}
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_function">%function</span> <a id="Terminate" class="tlc_func">Terminate</a>(block, system) Output
+ <br>{
+ <br><span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>()
+ <br>&nbsp;if (!xpcIsModelInit()) 
+ <br>&nbsp;{ 
+ <br>&nbsp;&nbsp;j1939DestroyStack(%&lt;SFcnParamSettings.STACKID&gt;);
+ <br>&nbsp;}
+ <br><span class="tlc_endif">%endif</span>
+ <br>}
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br></body></html>

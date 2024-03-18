@@ -1,0 +1,790 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>formats<span style="padding-left:9.5px"></span>header<span style="padding-left:9.5px"></span>information<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>CompiledModel.ModelFiles<span style="padding-left:9.5px"></span>fields
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2019<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Create<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>header<span style="padding-left:9.5px"></span>files<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>model.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br>&nbsp; <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_FORMATHDR_") == 0
+ <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatrtm.html">formatrtm.tlc</a>"
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> _FORMATHDR_ = 1
+ <br>&nbsp; <br><span class="tlc_assert">%assert</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br>&nbsp; <br><span class="tlc_realformat">%realformat</span> "CONCISE"
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibFormatHdr<span style="padding-left:9.5px"></span>=====================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>create<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>cache<span style="padding-left:9.5px"></span>definitions<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>defines<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>model.h
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>model_private.h<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>sections.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibFormatHdr" class="tlc_func">SLibFormatHdr</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% ============================================================================</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Non-virtual, Non-Inlined subsystems </span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Dump all system headers excluding root")>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nonVirtSubsbys = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatcommon.html#DumpAllSystemHeadersExcludingRootSystem">DumpAllSystemHeadersExcludingRootSystem</a>()
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Dump all system headers excluding root")>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootIdx    = NumSystems-1
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootSystem = System[rootIdx]
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% ============================================================================</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Common Includes</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Generate model.h common includes")>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#LibRegCommonIncludes">LibRegCommonIncludes</a>(rootIdx)>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> rtwCommonIncludesBuffer
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("ifndef")>/
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#LibDumpSharedTypeIncludes">LibDumpSharedTypeIncludes</a>(rootSystem)>
+ <br>&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#LibDumpSystemIncludes">LibDumpSystemIncludes</a>(rootSystem)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(nonVirtSubsbys)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>nonVirtSubsbys</span>>/
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> nonVirtSubsbys
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("endif")>/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> rtwCommonIncludesBuffer
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Generate model.h common includes")>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% ============================================================================</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Defines</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Generate model.h defines")>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> RootHdrGenericDefines
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> rtwDefinesBuffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#LibDeclareGenericModelDefines">LibDeclareGenericModelDefines</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#LibDeclareNCSTATES">LibDeclareNCSTATES</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> rtwDefinesBuffer
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Generate model.h defines")>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% ========================================================================</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Code Identifier bridge for grt interface</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Generate model.h code identifier bridge for grt interface")>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuf
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> GenerateGRTWrapper &amp;&amp; PrefixModelToStructs &amp;&amp; !UsingMalloc
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_blkiolib.html#LibBlockIOStructIsEmpty">LibBlockIOStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define rtB              %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetBlockIOStruct">LibGetBlockIOStruct</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define BlockIO          %<::tBlockIOType>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalInputsStructIsEmpty">LibExternalInputsStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define rtU              %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetExternalInputStruct">LibGetExternalInputStruct</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define ExternalInputs   %<::tInputType>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_cstatelib.html#LibContStatesStructIsEmpty">LibContStatesStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define rtX              %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetContinuousStateStruct">LibGetContinuousStateStruct</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define ContinuousStates %<::tContStateType>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_cstatelib.html#LibCStatesDerivStructIsEmpty">LibCStatesDerivStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define rtXdot           %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetDotContinuousStateStruct">LibGetDotContinuousStateStruct</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define StateDerivatives %<::tXdotType>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_cstatelib.html#LibContStatesDisabledStructIsEmpty">LibContStatesDisabledStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define tXdis            %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetContinuousStateDisabledStruct">LibGetContinuousStateDisabledStruct</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define StateDisabled    %<::tXdisType>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_cstatelib.html#LibContStatesAbsoluteToleranceStructIsEmpty">LibContStatesAbsoluteToleranceStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define tXAbsTol            %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetContinuousStateAbsoluteToleranceStruct">LibGetContinuousStateAbsoluteToleranceStruct</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define CStateAbsTol        %<::tXAbsTolType>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_cstatelib.html#LibContStatesPerturbMinStructIsEmpty">LibContStatesPerturbMinStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define tXPerturbMin           %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetContinuousStatePerturbMinStruct">LibGetContinuousStatePerturbMinStruct</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define CStatePerturbMin        %<::tXPerturbMinType>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%    </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_cstatelib.html#LibContStatesPerturbMaxStructIsEmpty">LibContStatesPerturbMaxStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define tXPerturbMax            %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetContinuousStatePerturbMaxStruct">LibGetContinuousStatePerturbMaxStruct</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define CStatePerturbMax        %<::tXPerturbMaxType>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalOutputsStructIsEmpty">LibExternalOutputsStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define rtY              %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetExternalOutputStruct">LibGetExternalOutputStruct</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define ExternalOutputs  %<::tOutputType>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_simulinkglobal.html#LibParametersStructIsEmpty">LibParametersStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define rtP              %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetParametersStruct">LibGetParametersStruct</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define Parameters       %<::tParametersType>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_dworklib.html#LibDWorkStructIsEmpty">LibDWorkStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define rtDWork          %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetDWorkStruct">LibGetDWorkStruct</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define D_Work           %<::tDWorkType>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_blkiolib.html#LibConstBlockIOStructIsEmpty">LibConstBlockIOStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define tConstBlockIOType %<::tConstBlockIOType>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define rtC               %<::tConstBlockIOStruct>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html#SLibPrmBufferIsEmpty">SLibPrmBufferIsEmpty</a>("Const", "Typedef")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define ConstParam        %<::tConstParamType>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define rtcP              %<::tConstParamStruct>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html#SLibPrmBufferIsEmpty">SLibPrmBufferIsEmpty</a>("ConstWithInit", "Typedef")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define ConstParamWithInit %<::tConstParamWithInitType>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define rtcWithInitP       %<::tConstParamWithInitStruct>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_cstatelib.html#LibPrevZCStatesStructIsEmpty">LibPrevZCStatesStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define rtPrevZCSigState   %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetPreviousZCStruct">LibGetPreviousZCStruct</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define PrevZCSigStates    %<::tPrevZCStateType>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%    </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_cstatelib.html#LibZCSignalValueStructIsEmpty">LibZCSignalValueStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define rtZCSignalValue     %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetZCSignalValueStruct">LibGetZCSignalValueStruct</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define ZCSignalValues      %<::tZCSignalValueType>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%adzc</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%    </span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuf
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> rtwGRTIdentifierBridgeBuffer
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(tmpBuf)
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Backward compatible GRT Identifiers */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("ifndef")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tmpBuf</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("endif")>/
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> rtwGRTIdentifierBridgeBuffer
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Generate model.h code identifier bridge for grt interface")>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% ============================================================================</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% typedef's</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Generate model.h typedefs")>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> intgDataTypedefsBuf
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (NumContStates > 0) &amp;&amp; (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTCodeFormat">SLibIsERTCodeFormat</a>())
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("ifndef")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_cstatelib.html#SLibCacheIntgStructDef">SLibCacheIntgStructDef</a>()</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("endif")>/
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> intgDataTypedefsBuf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Generate model.h typedefs")>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% ============================================================================</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Const params</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Generate model.h const params")>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> constParamsBuffer
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html#SLibPrmBufferIsEmpty">SLibPrmBufferIsEmpty</a>("Const", "Typedef")
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Constant parameters (%<::AutoOrDefaultStorageClass> storage) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("ifndef")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html#SLibGetPrmBuffer">SLibGetPrmBuffer</a>("Const", "Typedef")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("endif")>/
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html#SLibPrmBufferIsEmpty">SLibPrmBufferIsEmpty</a>("ConstWithInit", "Typedef")
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Constant parameters with dynamic initialization (%<::AutoOrDefaultStorageClass> storage) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("ifndef")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html#SLibGetPrmBuffer">SLibGetPrmBuffer</a>("ConstWithInit", "Typedef")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("endif")>/
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> constParamsBuffer
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Generate model.h const params")>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% ============================================================================</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% External inputs structure</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Generate model.h external inputs structure")>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> rtwExternalInputsBuffer
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalInputsStructIsEmpty">LibExternalInputsStructIsEmpty</a>() || !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalInputSizesStructIsEmpty">LibExternalInputSizesStructIsEmpty</a>() )&amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(!MultiInstanceERTCode || RootIOStructures || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#SLibHasGlobalExternalInputsWithFPC">SLibHasGlobalExternalInputsWithFPC</a>())
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpNeedsExtI = TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> GenerateClassInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> classConfObj = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnGetRTWCPPStepPrototypeRecord">FcnGetRTWCPPStepPrototypeRecord</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !classConfObj.hasGlobalAccessForInport &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!classConfObj.forcesGlobalAccessForInport
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpNeedsExtI = TLC_FALSE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tmpNeedsExtI
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("ifndef")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalInputsStructIsEmpty">LibExternalInputsStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* External inputs (root inport signals with %<::AutoOrDefaultStorageClass> storage) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> align = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibDumpExternalIOStructAlignment">LibDumpExternalIOStructAlignment</a>(::tInputType, ... 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ExternalInputs.StructAlignment)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> align != ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_switch">%switch</span>(structDAFlag.position)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "DATA_ALIGNMENT_PREDIRECTIVE"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef %<<span>align</span>> struct {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibDumpExternalInputsStructDefinition">LibDumpExternalInputsStructDefinition</a>()</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} %<::tInputType>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "DATA_ALIGNMENT_POSTDIRECTIVE"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef struct {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibDumpExternalInputsStructDefinition">LibDumpExternalInputsStructDefinition</a>()</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} %<::tInputType> %<<span>align</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "DATA_ALIGNMENT_PRECEDING_STATEMENT"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>align</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef struct {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibDumpExternalInputsStructDefinition">LibDumpExternalInputsStructDefinition</a>()</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} %<::tInputType>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "DATA_ALIGNMENT_FOLLOWING_STATEMENT"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef struct {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibDumpExternalInputsStructDefinition">LibDumpExternalInputsStructDefinition</a>()</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} %<::tInputType>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>align</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> TLC_FALSE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef struct {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibDumpExternalInputsStructDefinition">LibDumpExternalInputsStructDefinition</a>()</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} %<::tInputType>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalInputSizesStructIsEmpty">LibExternalInputSizesStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* External input sizes (for root inport signals with variable sizes) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef struct {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibDumpExternalInputSizesStructDefinition">LibDumpExternalInputSizesStructDefinition</a>()</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} %<::tInputSizeType>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("endif")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> rtwExternalInputsBuffer
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Generate model.h external inputs structure")>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% ============================================================================</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% External outputs structure</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Generate model.h external outputs structure")>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> rtwExternalOutputsBuffer
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalOutputsStructIsEmpty">LibExternalOutputsStructIsEmpty</a>() || !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalOutputSizesStructIsEmpty">LibExternalOutputSizesStructIsEmpty</a>()) &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(!MultiInstanceERTCode || RootIOStructures || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#SLibHasGlobalExternalOutputsWithFPC">SLibHasGlobalExternalOutputsWithFPC</a>())
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpNeedsExtO = TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> GenerateClassInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> classConfObj = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnGetRTWCPPStepPrototypeRecord">FcnGetRTWCPPStepPrototypeRecord</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (!classConfObj.hasGlobalAccessForOutport) &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(!classConfObj.forcesGlobalAccessForOutport)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpNeedsExtO = TLC_FALSE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tmpNeedsExtO
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("ifndef")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalOutputsStructIsEmpty">LibExternalOutputsStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* External outputs (root outports fed by signals with %<::AutoOrDefaultStorageClass> storage) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> align = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibDumpExternalIOStructAlignment">LibDumpExternalIOStructAlignment</a>(::tOutputType, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ExternalOutputs.StructAlignment)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> align != ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_switch">%switch</span>(structDAFlag.position)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "DATA_ALIGNMENT_PREDIRECTIVE"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef %<<span>align</span>> struct {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibDumpExternalOutputsStructDefinition">LibDumpExternalOutputsStructDefinition</a>()</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} %<::tOutputType>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "DATA_ALIGNMENT_POSTDIRECTIVE"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef struct {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibDumpExternalOutputsStructDefinition">LibDumpExternalOutputsStructDefinition</a>()</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} %<::tOutputType> %<<span>align</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "DATA_ALIGNMENT_PRECEDING_STATEMENT"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>align</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef struct {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibDumpExternalOutputsStructDefinition">LibDumpExternalOutputsStructDefinition</a>()</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} %<::tOutputType>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "DATA_ALIGNMENT_FOLLOWING_STATEMENT"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef struct {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibDumpExternalOutputsStructDefinition">LibDumpExternalOutputsStructDefinition</a>()</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} %<::tOutputType>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>align</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef struct {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibDumpExternalOutputsStructDefinition">LibDumpExternalOutputsStructDefinition</a>()</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} %<::tOutputType>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalOutputSizesStructIsEmpty">LibExternalOutputSizesStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* External output sizes (for root outports fed by signals with variable sizes) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef struct {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibDumpExternalOutputSizesStructDefinition">LibDumpExternalOutputSizesStructDefinition</a>()</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} %<::tOutputSizeType>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("endif")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> rtwExternalOutputsBuffer
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Generate model.h external outputs structure")>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Generate model.h rsim data info map")>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> rsimDataInfoMap
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isRSim &amp;&amp; RTWCAPI &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* RTWCAPI data structure for RSIM */ 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;typedef struct {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtwCAPI_ModelMappingInfo mmi;  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#HasModelReferenceBlocks">HasModelReferenceBlocks</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nMdlRefBlks = <span class="tlc_bifunc">SIZE</span>(::CompiledModel.ModelReferenceBlocks,0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;rtwCAPI_ModelMappingInfo* childMMI[%<<span>nMdlRefBlks</span>>];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>     
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;} %<<span>RSimRTWCAPIType</span>>;
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>  
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> rsimDataInfoMap
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Generate model.h rsim data info map")>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% ============================================================================</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Externs</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Generate model.h externs")>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuf
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#LibDumpGroundExterns">LibDumpGroundExterns</a>()</span>>/
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isRSim || (UsingMalloc &amp;&amp; CodeFormat != "S-Function")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::GenCPP
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#ifdef __cplusplus
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;extern "C" {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;extern const char *RT_MEMORY_ALLOCATION_ERROR; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::GenCPP
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#ifdef __cplusplus
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>  
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootSystem = System[NumSystems-1]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> reqInsts   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#LibGetSystemField">LibGetSystemField</a>(rootSystem, "ReqRootPrmHdrDataInsts")
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> HaveSeparateSourceFiles
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> CodeFormat == "RealTime"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_blkiolib.html#LibBlockIOStructIsEmpty">LibBlockIOStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extern %<::tBlockIOType> %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetBlockIOStruct">LibGetBlockIOStruct</a>()</span>>; /* block i/o */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_cstatelib.html#LibContStatesStructIsEmpty">LibContStatesStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extern %<::tContStateType> %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetContinuousStateStruct">LibGetContinuousStateStruct</a>()</span>>; /* states (continuous) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_dworklib.html#LibDWorkStructIsEmpty">LibDWorkStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extern %<::tDWorkType> %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetDWorkStruct">LibGetDWorkStruct</a>()</span>>; /* states (dwork) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_cstatelib.html#LibPrevZCStatesStructIsEmpty">LibPrevZCStatesStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;extern %<::tPrevZCStateType> %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetPreviousZCStruct">LibGetPreviousZCStruct</a>()</span>>; /* prev zc states*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_cstatelib.html#LibZCSignalValueStructIsEmpty">LibZCSignalValueStructIsEmpty</a>() &amp;&amp; !isRSimWithSolverModule
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extern %<::tZCSignalValueType> %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetZCSignalValueStruct">LibGetZCSignalValueStruct</a>()</span>>; /* zero crossings */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalInputsStructIsEmpty">LibExternalInputsStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extern %<::tInputType> %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetExternalInputStruct">LibGetExternalInputStruct</a>()</span>>; /* external inputs */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalOutputsStructIsEmpty">LibExternalOutputsStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extern %<::tOutputType> %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetExternalOutputStruct">LibGetExternalOutputStruct</a>()</span>>; /* external outputs */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ModelIsLinearlyImplicit == "yes"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extern %<::tMassMatrixGlobalType> %<::tMassMatrixGlobal>; /* global MassMatrix */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Emit Extern declarations for exported coder data groups</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> groupFilter { /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Static TLC_TRUE /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dynamic TLC_TRUE /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AccessStandalone TLC_TRUE /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AccessThroughSelf TLC_TRUE /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exported TLC_TRUE /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Imported TLC_FALSE /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ModelData TLC_FALSE /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/datagrouplib.html#SLibDeclareCoderDataGroupInstances">SLibDeclareCoderDataGroupInstances</a>(::CompiledModel.System[<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()],"extern",groupFilter)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Extern declarations for profiler</span>
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prof.html#SLibGenProfGlbExtData">SLibGenProfGlbExtData</a>()</span>>/
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Generate model.h externs")>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> rtwExternsBuffer
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(tmpBuf)
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* External data declarations for dependent source files */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tmpBuf</span>>/
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> tmpBuf
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> rtwExternsBuffer
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Parameters and const blockio is defined in model_data.c</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% so it must always be externed if it exists.</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Generate model.h externs")>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> reqrtwExternsBuffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typePrefix = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#SLibGetModelTypesNamespacePrefix">SLibGetModelTypesNamespacePrefix</a>()
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% rtP parameter structures</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_simulinkglobal.html#LibParametersStructIsEmpty">LibParametersStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("ifndef")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (CodeFormat == "RealTime") || ... 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTCodeFormat">SLibIsERTCodeFormat</a>() &amp;&amp; UsingMalloc &amp;&amp; !isGRTMalloc)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionRequired">SLibAutosarCompilerAbstractionRequired</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionForDataDecl">SLibAutosarCompilerAbstractionForDataDecl</a>(TLC_FALSE, typePrefix + ::tParametersType, TLC_FALSE, TLC_FALSE, <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetParametersStruct">LibGetParametersStruct</a>(), "DataGlobal")>; /* parameters */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>typePrefix</span>>%<::tParametersType> %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetParametersStruct">LibGetParametersStruct</a>()</span>>; /* parameters */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> Accelerator
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>typePrefix</span>>%<::tParametersType> %<::tDefaultParameters>; /* parameters */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(decls)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibApplyMemSecToDataDecl">SLibApplyMemSecToDataDecl</a>(decls, "MemSecDataParameters", ::tDefaultParameters)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("endif")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Constant BlockIO</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_blkiolib.html#LibConstBlockIOStructIsEmpty">LibConstBlockIOStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("ifndef")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (((CodeFormat == "RealTime") || (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTCodeFormat">SLibIsERTCodeFormat</a>())) &amp;&amp; !isGRTMalloc)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionRequired">SLibAutosarCompilerAbstractionRequired</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> canBeConst = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibCanConstBlockIOBeConst">SLibCanConstBlockIOBeConst</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionForDataDecl">SLibAutosarCompilerAbstractionForDataDecl</a>(canBeConst, typePrefix + ::tConstBlockIOType, TLC_FALSE, TLC_FALSE, ::tConstBlockIOStruct, "DataGlobal")>; /* constant block i/o */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>          
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> qualifiers = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetConstBlockIOQualifiers">SLibGetConstBlockIOQualifiers</a>()      
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>qualifiers</span>> %<<span>typePrefix</span>>%<::tConstBlockIOType> %<::tConstBlockIOStruct>; /* constant block i/o */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibApplyMemSecToDataDecl">SLibApplyMemSecToDataDecl</a>(decls, "MemSecDataConstants", ::tConstBlockIOStruct)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> Accelerator
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> qualifiers = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetConstBlockIOQualifiers">SLibGetConstBlockIOQualifiers</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>qualifiers</span>> %<<span>typePrefix</span>>%<::tConstBlockIOType> %<::tInvariantSignals>; /* constant block i/o */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibApplyMemSecToDataDecl">SLibApplyMemSecToDataDecl</a>(decls, "MemSecDataConstants", ::tInvariantSignals)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("endif")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%  </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% - Constant parameters</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% ===> ALL CODE FORMATS</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html#SLibPrmBufferIsEmpty">SLibPrmBufferIsEmpty</a>("Const", "Typedef")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("ifndef")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Constant parameters (%<::AutoOrDefaultStorageClass> storage) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionRequired">SLibAutosarCompilerAbstractionRequired</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionForDataDecl">SLibAutosarCompilerAbstractionForDataDecl</a>(TLC_TRUE, typePrefix + ::tConstParamType, TLC_FALSE, TLC_FALSE, ::tConstParamStruct, "DataGlobal")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> qualifiers = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetConstParamQualifiers">SLibGetConstParamQualifiers</a>()        
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>qualifiers</span>> %<<span>typePrefix</span>>%<::tConstParamType> %<::tConstParamStruct>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibApplyMemSecToDataDecl">SLibApplyMemSecToDataDecl</a>(decls, "MemSecDataConstants", ::tConstParamStruct)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("endif")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% - Constant parameters (with initialization)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% ===> ALL CODE FORMATS</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html#SLibPrmBufferIsEmpty">SLibPrmBufferIsEmpty</a>("ConstWithInit", "Typedef")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("ifndef")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Constant parameters with dynamic initialization (%<::AutoOrDefaultStorageClass> storage) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionRequired">SLibAutosarCompilerAbstractionRequired</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionForDataDecl">SLibAutosarCompilerAbstractionForDataDecl</a>(TLC_FALSE, typePrefix + ::tConstParamWithInitType, TLC_FALSE, TLC_FALSE, ::tConstParamWithInitStruct, "DataGlobal")>; /* constant parameters */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> qualifiers = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetConstParamWithInitQualifiers">SLibGetConstParamWithInitQualifiers</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>qualifiers</span>> %<<span>typePrefix</span>>%<::tConstParamWithInitType> %<::tConstParamWithInitStruct>; /* constant parameters */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibApplyMemSecToDataDecl">SLibApplyMemSecToDataDecl</a>(decls, "MemSecDataConstants", ::tConstParamWithInitStruct)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("endif")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> reqrtwExternsBuffer
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Generate model.h externs")>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Generate model.h embedded-c externs")>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> publicExternGblStructs
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTCodeFormat">SLibIsERTCodeFormat</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% ============================================================================</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Embedded-C exports more symbols - Externs</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("ifndef")>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Declare Coder data groups in model.h</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.NumCoderDataGroups > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Emit declarations for exported coder data groups except InSelf or InParent</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% for multi-instance ERT</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> groupFilter { /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Static TLC_TRUE /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dynamic TLC_TRUE /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AccessStandalone TLC_TRUE /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AccessThroughSelf !MultiInstanceERTCode /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Exported TLC_TRUE /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Imported TLC_FALSE /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ModelData TLC_FALSE /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/datagrouplib.html#SLibDeclareCoderDataGroupInstances">SLibDeclareCoderDataGroupInstances</a>(::CompiledModel.System[<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()],"extern",groupFilter)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> reqInsts.ParamsInst &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_simulinkglobal.html#LibParametersStructIsEmpty">LibParametersStructIsEmpty</a>() &amp;&amp; !GenerateClassInterface
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Block parameters (%<::AutoOrDefaultStorageClass> storage) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::GenCPP &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionRequired">SLibAutosarCompilerAbstractionRequired</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#ifdef __cplusplus
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extern "C" {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionRequired">SLibAutosarCompilerAbstractionRequired</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionForDataDecl">SLibAutosarCompilerAbstractionForDataDecl</a>(TLC_FALSE, ::tParametersType, TLC_FALSE, TLC_FALSE, <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetParametersStruct">LibGetParametersStruct</a>(), "DataGlobal")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<::tParametersType> %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetParametersStruct">LibGetParametersStruct</a>()</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibApplyMemSecToDataDecl">SLibApplyMemSecToDataDecl</a>(decls, "MemSecDataParameters", <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetParametersStruct">LibGetParametersStruct</a>())>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::GenCPP &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_simulinkglobal.html#LibParametersStructIsEmpty">LibParametersStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#ifdef __cplusplus
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> reqInsts.BlockIOInst &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_blkiolib.html#LibBlockIOStructIsEmpty">LibBlockIOStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Block signals (%<::AutoOrDefaultStorageClass> storage) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::GenCPP &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionRequired">SLibAutosarCompilerAbstractionRequired</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#ifdef __cplusplus
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extern "C" {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionRequired">SLibAutosarCompilerAbstractionRequired</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionForDataDecl">SLibAutosarCompilerAbstractionForDataDecl</a>(TLC_FALSE, ::tBlockIOType, TLC_FALSE, TLC_FALSE, <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetBlockIOStruct">LibGetBlockIOStruct</a>(), "DataGlobal")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<::tBlockIOType> %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetBlockIOStruct">LibGetBlockIOStruct</a>()</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibApplyMemSecToDataDecl">SLibApplyMemSecToDataDecl</a>(decls, "MemSecDataInternal", <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetBlockIOStruct">LibGetBlockIOStruct</a>())>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::GenCPP &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionRequired">SLibAutosarCompilerAbstractionRequired</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#ifdef __cplusplus
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> reqInsts.ContStatesInst &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#LibContStatesInstanceIsEmpty">LibContStatesInstanceIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Continuous states (%<::AutoOrDefaultStorageClass> storage) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionRequired">SLibAutosarCompilerAbstractionRequired</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionForDataDecl">SLibAutosarCompilerAbstractionForDataDecl</a>(TLC_FALSE, ::tContStateType, TLC_FALSE, TLC_FALSE, <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetContinuousStateStruct">LibGetContinuousStateStruct</a>(), "DataGlobal")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<::tContStateType> %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetContinuousStateStruct">LibGetContinuousStateStruct</a>()</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibApplyMemSecToDataDecl">SLibApplyMemSecToDataDecl</a>(decls, "MemSecDataInternal", <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetContinuousStateStruct">LibGetContinuousStateStruct</a>())>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> reqInsts.MassMatricesInst &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#LibMassMatricesInstanceIsEmpty">LibMassMatricesInstanceIsEmpty</a>()
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* global MassMatrix */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionRequired">SLibAutosarCompilerAbstractionRequired</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionForDataDecl">SLibAutosarCompilerAbstractionForDataDecl</a>(TLC_FALSE, ::tMassMatrixGlobalType, TLC_FALSE, TLC_FALSE, <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetMassMatrixGlobal">LibGetMassMatrixGlobal</a>(), "DataGlobal")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<::tMassMatrixGlobalType> %<::tMassMatrixGlobal>; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibApplyMemSecToDataDecl">SLibApplyMemSecToDataDecl</a>(decls, "MemSecDataInternal", <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetMassMatrixGlobal">LibGetMassMatrixGlobal</a>())>         
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> reqInsts.DworkInst &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_dworklib.html#LibDWorkStructIsEmpty">LibDWorkStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.DWorkAndBlockIOCombined
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Block signals and states (%<::AutoOrDefaultStorageClass> storage) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::GenCPP &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionRequired">SLibAutosarCompilerAbstractionRequired</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#ifdef __cplusplus
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extern "C" {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Block states (%<::AutoOrDefaultStorageClass> storage) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionRequired">SLibAutosarCompilerAbstractionRequired</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionForDataDecl">SLibAutosarCompilerAbstractionForDataDecl</a>(TLC_FALSE, ::tDWorkType, TLC_FALSE, TLC_FALSE, <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetDWorkStruct">LibGetDWorkStruct</a>(), "DataGlobal")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<::tDWorkType> %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetDWorkStruct">LibGetDWorkStruct</a>()</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibApplyMemSecToDataDecl">SLibApplyMemSecToDataDecl</a>(decls, "MemSecDataInternal", <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetDWorkStruct">LibGetDWorkStruct</a>())>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::GenCPP &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionRequired">SLibAutosarCompilerAbstractionRequired</a>() &amp;&amp; ::CompiledModel.DWorkAndBlockIOCombined
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#ifdef __cplusplus
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> reqInsts.PrevZCStatesInst &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_cstatelib.html#LibPrevZCStatesStructIsEmpty">LibPrevZCStatesStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Do not emit extern C for C++, as that is only being done for structures that</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% may include testpointed signals (hence only in the combine block I/O and</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% DWork case for DWork structure above (see g1980902)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Zero-crossing (trigger) state */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionRequired">SLibAutosarCompilerAbstractionRequired</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionForDataDecl">SLibAutosarCompilerAbstractionForDataDecl</a>(TLC_FALSE, ::tPrevZCStateType, TLC_FALSE, TLC_FALSE, <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetPreviousZCStruct">LibGetPreviousZCStruct</a>(), "DataGlobal")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<::tPrevZCStateType> %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetPreviousZCStruct">LibGetPreviousZCStruct</a>()</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibApplyMemSecToDataDecl">SLibApplyMemSecToDataDecl</a>(decls, "MemSecDataInternal", <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetPreviousZCStruct">LibGetPreviousZCStruct</a>())>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibAutosarActive">SLibAutosarActive</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpbuff = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpbuff
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> reqInsts.ExtInpsInst &amp;&amp; (!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalInputsStructIsEmpty">LibExternalInputsStructIsEmpty</a>() || !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalInputSizesStructIsEmpty">LibExternalInputSizesStructIsEmpty</a>())
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalInputsStructIsEmpty">LibExternalInputsStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* External inputs (root inport signals with %<::AutoOrDefaultStorageClass> storage) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<::tInputType> %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetExternalInputStruct">LibGetExternalInputStruct</a>()</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> decls = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibApplyMemSecToDataDecl">SLibApplyMemSecToDataDecl</a>(decls, "MemSecDataInputs", <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetExternalInputStruct">LibGetExternalInputStruct</a>())
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(decls)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>decls</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalInputSizesStructIsEmpty">LibExternalInputSizesStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* External inputs size (variable-sizing root inport signals with %<::AutoOrDefaultStorageClass> storage) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<::tInputSizeType> %<::tInputSize>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> decls = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibApplyMemSecToDataDecl">SLibApplyMemSecToDataDecl</a>(decls, "MemSecDataInputs", ::tInputSize)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(decls)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>decls</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> reqInsts.ExtOutputsInst &amp;&amp; (!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalOutputsStructIsEmpty">LibExternalOutputsStructIsEmpty</a>() || !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalOutputSizesStructIsEmpty">LibExternalOutputSizesStructIsEmpty</a>())
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalOutputsStructIsEmpty">LibExternalOutputsStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* External outputs (root outports fed by signals with %<::AutoOrDefaultStorageClass> storage) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<::tOutputType> %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetExternalOutputStruct">LibGetExternalOutputStruct</a>()</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> decls = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibApplyMemSecToDataDecl">SLibApplyMemSecToDataDecl</a>(decls, "MemSecDataOutputs", <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/fcniolib.html#LibGetExternalOutputStruct">LibGetExternalOutputStruct</a>())
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(decls)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>decls</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#LibExternalOutputSizesStructIsEmpty">LibExternalOutputSizesStructIsEmpty</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* External outputs size (variable-sizing root outport signals with %<::AutoOrDefaultStorageClass> storage) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<::tOutputSizeType> %<::tOutputSize>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> decls
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> decls = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibApplyMemSecToDataDecl">SLibApplyMemSecToDataDecl</a>(decls, "MemSecDataOutputs", ::tOutputSize)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(decls)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>decls</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpbuff
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(tmpbuff)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::GenCPP
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#ifdef __cplusplus
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extern "C" {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tmpbuff</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::GenCPP
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#ifdef __cplusplus
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetHideChildDefineSymbol">GetHideChildDefineSymbol</a>("endif")>/
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> publicExternGblStructs
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Generate model.h embedded-c externs")>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% ============================================================================</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Dump buffers to output file</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_TRUE,"Generate model.h")>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> bannerBuf
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* %<<span>Name</span>>.h
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibCommonHeaderInfo">SLibCommonHeaderInfo</a>()</span>>/
+ <br>&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> bannerBuf
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("baseMdl_hdr_ban", bannerBuf)>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> bannerBuf
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>(rtwDefinesBuffer)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("baseMdl_hdr_define", rtwDefinesBuffer)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_undef">%undef</span> rtwDefinesBuffer
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% ===========================================================================</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Information related to the rtModel</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> commIncludes
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#SLibDumpCommonIncludes">SLibDumpCommonIncludes</a>(rootSystem)>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> commIncludes
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("baseMdl_hdr_common_incl", commIncludes)>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> commIncludes
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mdlTypesHdrFileName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileNameForCode">SLibGetFileNameForCode</a>("mdl_types_hdr")
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(mdlTypesHdrFileName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> typesIncludesBuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#include "%<<span>mdlTypesHdrFileName</span>>.h"    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> typesIncludesBuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("baseMdl_hdr_common_incl", typesIncludesBuf)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_undef">%undef</span> typesIncludesBuf
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>    
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% changing the tag to mdl_data_typedef so that the includes are moved after the variant definitions</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% in the model header file</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("baseMdl_hdr_child_system_incl", rtwCommonIncludesBuffer)>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> rtwCommonIncludesBuffer
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Primitive types</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("baseMdl_hdr_primitive_typedef", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDeclarePrimitiveTypedefs">SLibDeclarePrimitiveTypedefs</a>())>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isModelClassNamespace = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#SLibIsModelTypesModelClassNamespace">SLibIsModelTypesModelClassNamespace</a>()
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("baseMdl_data_typedef", intgDataTypedefsBuf)>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> intgDataTypedefsBuf
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isModelClassNamespace
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#SLibCacheCPPEncapModelData">SLibCacheCPPEncapModelData</a>("Typedefs", constParamsBuffer)>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mdl_constParam_typedef", constParamsBuffer)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> constParamsBuffer
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isModelClassNamespace
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#SLibCacheCPPEncapModelData">SLibCacheCPPEncapModelData</a>("Typedefs", rtwExternalInputsBuffer)>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mdl_externalInputs_typedef", rtwExternalInputsBuffer)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> rtwExternalInputsBuffer
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isModelClassNamespace
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#SLibCacheCPPEncapModelData">SLibCacheCPPEncapModelData</a>("Typedefs", rtwExternalOutputsBuffer)>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mdl_externalOutputs_typedef", rtwExternalOutputsBuffer)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> rtwExternalOutputsBuffer
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("baseMdl_data_typedef", rtwGRTIdentifierBridgeBuffer)>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> rtwGRTIdentifierBridgeBuffer
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("baseMdl_data_typedef", rsimDataInfoMap)>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> rsimDataInfoMap
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTCodeFormat">SLibIsERTCodeFormat</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mdl_extern_data_decl", publicExternGblStructs)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_undef">%undef</span> publicExternGblStructs
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibFcnProtoCtrlActive">SLibFcnProtoCtrlActive</a>() &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#SLibWriteCustomModelStepFunction">SLibWriteCustomModelStepFunction</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mdl_extern_data_decl", rtwExternsBuffer)>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> rtwExternsBuffer
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isModelClassNamespace
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#SLibCacheCPPEncapModelData">SLibCacheCPPEncapModelData</a>("ExternData", reqrtwExternsBuffer)>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mdl_public_extern_data_decl", reqrtwExternsBuffer)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/compilestats.html#SLibAddTLCCompileStatsCheckPoint">SLibAddTLCCompileStatsCheckPoint</a>(TLC_FALSE,"Generate model.h")>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span> <span class="tlc_comment">%% _FORMATHDR_</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formathdr.html">formathdr.tlc</a>
+</span> <br></body></html>

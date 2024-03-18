@@ -1,0 +1,1105 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>2009-2015<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br><span class="tlc_openfile">%openfile</span> h_file = "tlm_tb/mw_support_tb.h"
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br>&nbsp; <br>#ifndef _mw_support_tb_h_
+ <br>#define _mw_support_tb_h_
+ <br>&nbsp; <br>&nbsp; <br>#include <systemc.h>
+ <br>#include "tlm.h"
+ <br>#include "tlm_utils/simple_initiator_socket.h"
+ <br>#include "tlm_utils/tlm_quantumkeeper.h"
+ <br>&nbsp; <br>#include "%<<span>tbname</span>>_def.h"
+ <br>&nbsp; <br>#ifdef MX_COMPAT_32
+ <br>typedef int mwSize;
+ <br>typedef int mwIndex;
+ <br>typedef int mwSignedIndex;
+ <br>#else
+ <br>typedef size_t    mwSize;         /* unsigned pointer-width integer */
+ <br>typedef size_t    mwIndex;        /* unsigned pointer-width integer */
+ <br>typedef ptrdiff_t mwSignedIndex;  /* a signed pointer-width integer */
+ <br>#endif
+ <br>&nbsp; <br>&nbsp; <br>#include <vector>
+ <br>&nbsp; <br>&nbsp; <br>// ------------------------------------------------------------------------------
+ <br>// Utils
+ <br>// ------------------------------------------------------------------------------
+ <br>&nbsp; <br>// print-level bit definitions
+ <br>#define TLMG_PRINT_START_OF_SIM        0x0001
+ <br>#define TLMG_PRINT_END_OF_SIM          0x0002
+ <br>#define TLMG_PRINT_VEC_INIT            0x0010
+ <br>#define TLMG_PRINT_VEC_COMPARE_OK      0x0020
+ <br>#define TLMG_PRINT_VEC_BYTE_BUF_ON_MISCOMPARE 0x0040
+ <br>#define TLMG_PRINT_VEC_PROGRESS_DOT    0x0080
+ <br>#define TLMG_PRINT_VEC_NUM             0x0100
+ <br>#define TLMG_PRINT_TRANSPORT           0x1000
+ <br>#define TLMG_PRINT_CSR_TRANSPORT       0x2000
+ <br>#define TLMG_PRINT_SYNC_TO_FUNCS       0x4000
+ <br>&nbsp; <br>// error type bit definitions
+ <br>#define TLMG_ERR_MISCOMPARE            0x0010
+ <br>#define TLMG_ERR_MAT_INIT              0x0020
+ <br>#define TLMG_ERR_TRANSPORT             0x0040
+ <br>#define TLMG_ERR_MAT_WRITE             0x0080
+ <br>#define TLMG_ERR_SYNC_TIMEOUT          0x0100
+ <br>#define TLMG_ERR_OVFLW_UNFLW           0x0200
+ <br>#define TLMG_ERR_NOT_SUPPORTED         0x0400
+ <br>&nbsp; <br>class mw_utils_tb {
+ <br>&nbsp;&nbsp;public:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mw_utils_tb(int currVerbosity);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;~mw_utils_tb();
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;void markError(int errKind);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;void printMsg(int level, const char * fmt, ...);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;void printErr(int err, const char * fmt, ...);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;void turnOnMsgKind(int msgKindMask);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;void turnOffMsgKind(int msgKindMask);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int  getErrorStatus();
+ <br>&nbsp; <br>&nbsp;&nbsp;private:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int  m_errorStatus;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int  m_currVerbosity;
+ <br>};
+ <br>&nbsp; <br>// ------------------------------------------------------------------------------
+ <br>// PortInfo
+ <br>// ------------------------------------------------------------------------------
+ <br>struct mw_portinfo_tb {
+ <br>&nbsp; <br>&nbsp;&nbsp;// Simulink MAT file field info
+ <br>&nbsp;&nbsp;void *       pmxa;            // pointer to Data field mxArray for MAT data
+ <br>&nbsp;&nbsp;char    *       pslf;            // pointer to SL data buffer (mxGetData on Data mxArray)
+ <br>&nbsp;&nbsp;size_t          sldsize;         // SL data buffer size
+ <br>&nbsp;&nbsp;char    *       matname;         // name of field in MAT file
+ <br>&nbsp; <br>&nbsp;&nbsp;// Generated C-code field info
+ <br>&nbsp;&nbsp;unsigned char * pcf;             // pointer to C struct data field (e.g. &amp;rtU.inXX, &amp;rtY.outXX)
+ <br>&nbsp;&nbsp;size_t          cfsize;          // C struct field size (in bytes)
+ <br>&nbsp;&nbsp;char    *       cfname;          // C struct field name
+ <br>&nbsp; <br>&nbsp;&nbsp;sc_dt::uint64   tlmaddr;         // target address offset for each field
+ <br>&nbsp; <br>&nbsp;&nbsp;~mw_portinfo_tb();
+ <br>};
+ <br>typedef std::vector<mw_portinfo_tb> mw_portinfovec_tb;
+ <br>&nbsp; <br>// ------------------------------------------------------------------------------
+ <br>// MAT file interface
+ <br>// ------------------------------------------------------------------------------
+ <br>class mw_matfile_tb {
+ <br>&nbsp;&nbsp;public:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;enum SignalDirectionEnumT { INPUT_SIG, OUTPUT_SIG };
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;mw_matfile_tb();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mw_matfile_tb(mw_utils_tb &amp; utils,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const char * fn, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int numIn, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int numOut, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const char * perm, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const char * mvar,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int numVec);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;~mw_matfile_tb();
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;// these next two are or could be made to be static...however, we may need
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// to change if signal name binding is required.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;void initializeInMatFieldInfo(mw_portinfovec_tb &amp; inFieldInfo, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_portinfovec_tb &amp; expOutFieldInfo);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;void initializeOutMatFieldInfo(mw_portinfovec_tb &amp; expOutFieldInfo,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_portinfovec_tb &amp; actOutFieldInfo);
+ <br>&nbsp; <br>&nbsp;&nbsp;private:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mw_utils_tb &amp; m_utils;
+ <br>&nbsp; <br>&nbsp;&nbsp;public:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int writeSclog();
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;const char *  m_filename;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int           m_numInFields;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int           m_numOutFields;
+ <br>&nbsp; <br>&nbsp;&nbsp;private:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int openMat();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int readSclog();
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;const char *  m_perm;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const char *  m_matVar;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int           m_numVectors;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;void *     m_sclog;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;void *     m_pmat;
+ <br>};
+ <br>&nbsp; <br>// ------------------------------------------------------------------------------
+ <br>// Vector/MAT
+ <br>// ------------------------------------------------------------------------------
+ <br>class mw_vecmat_tb {
+ <br>&nbsp;&nbsp;public:
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;mw_vecmat_tb(mw_utils_tb &amp; utils, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_portinfovec_tb &amp; inFieldInfo,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_portinfovec_tb &amp; actOutFieldInfo,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_portinfovec_tb &amp; expOutFieldInfo);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;~mw_vecmat_tb();
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;void initialize(mw_portinfovec_tb &amp; inFieldInfo, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_portinfovec_tb &amp; actOutFieldInfo, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_portinfovec_tb &amp; expOutFieldInfo);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;bool getNextInput();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;bool getNextExpectedOutput();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;void putNextActualOutput();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;void compareResult();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;void terminate();
+ <br>&nbsp; <br>&nbsp;&nbsp;private:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mw_utils_tb       &amp; m_utils;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mw_portinfovec_tb &amp; m_inFieldInfo;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mw_portinfovec_tb &amp; m_actOutFieldInfo;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mw_portinfovec_tb &amp; m_expOutFieldInfo; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int                 m_vecCountIn;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int                 m_vecCountOut;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int                 m_vecMiscompares;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mw_matfile_tb       m_matInfoIn;        // input stimulus, expected outputs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mw_matfile_tb       m_matInfoOut;       // actual outputs
+ <br>};
+ <br>&nbsp; <br>&nbsp; <br>// ------------------------------------------------------------------------------
+ <br>// Synchronization 
+ <br>// ------------------------------------------------------------------------------
+ <br>class mw_sync_tb_IF {
+ <br>&nbsp;&nbsp;public:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;virtual void         incLocalTime(sc_time incTime) = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;virtual void         setLocalTime(sc_time locTime) = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;virtual sc_time      getLocalTime() = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;virtual void         syncToExplicitTime(sc_time time) = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;virtual void         syncToLocalTime() = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;virtual void         syncToDataReady(mw_irq_tb &amp; irq) = 0;
+ <br>};
+ <br>&nbsp; <br>// -----------------------------------------------
+ <br>class mw_syncuntimed_tb : public virtual mw_sync_tb_IF {
+ <br>&nbsp;&nbsp;public:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_syncuntimed_tb(mw_utils_tb &amp; utils);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~mw_syncuntimed_tb();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void         incLocalTime(sc_time incTime);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void         setLocalTime(sc_time locTime);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sc_time      getLocalTime();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void         syncToExplicitTime(sc_time time);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void         syncToLocalTime();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void         syncToDataReady(mw_irq_tb &amp; irq);
+ <br>&nbsp;&nbsp;private:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_utils_tb                  m_utils;
+ <br>};
+ <br>&nbsp; <br>// -----------------------------------------------
+ <br>class mw_syncfunctimed_tb : public virtual mw_sync_tb_IF {
+ <br>&nbsp;&nbsp;public:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_syncfunctimed_tb(mw_utils_tb &amp; utils);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~mw_syncfunctimed_tb();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void         incLocalTime(sc_time incTime);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void         setLocalTime(sc_time locTime);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sc_time      getLocalTime();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void         syncToExplicitTime(sc_time time);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void         syncToLocalTime();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void         syncToDataReady(mw_irq_tb &amp; irq);
+ <br>&nbsp;&nbsp;private:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_utils_tb                  m_utils;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sc_time                      m_delay;
+ <br>};
+ <br>&nbsp; <br>// -----------------------------------------------
+ <br>class mw_syncquantum_tb : public virtual mw_sync_tb_IF {
+ <br>&nbsp;&nbsp;public:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_syncquantum_tb(mw_utils_tb &amp; utils, int quantum);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~mw_syncquantum_tb();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void         incLocalTime(sc_time incTime);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void         setLocalTime(sc_time locTime);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sc_time      getLocalTime();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void         syncToExplicitTime(sc_time time);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void         syncToLocalTime();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void         syncToDataReady(mw_irq_tb &amp; irq);
+ <br>&nbsp;&nbsp;private:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_utils_tb                  m_utils;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tlm_utils::tlm_quantumkeeper m_qk;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sc_time                      m_delay;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int                          m_quantum;
+ <br>};
+ <br>&nbsp; <br>// -----------------------------------------------
+ <br>class mw_sync_tb : public virtual mw_sync_tb_IF {
+ <br>&nbsp;&nbsp;public:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enum TimingModeT { Untimed, LooselyTimed };
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_sync_tb(mw_utils_tb &amp; utils, TimingModeT tmode, int quantum=0);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~mw_sync_tb();
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TimingModeT  setTimingMode(TimingModeT tmode);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void         incLocalTime(sc_time incTime);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void         setLocalTime(sc_time locTime);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sc_time      getLocalTime();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void         syncToExplicitTime(sc_time time);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void         syncToLocalTime();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void         syncToDataReady(mw_irq_tb &amp; irq);
+ <br>&nbsp; <br>&nbsp;&nbsp;private:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_utils_tb                  m_utils;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TimingModeT                  m_timingMode;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_syncuntimed_tb            m_syncUntimed;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_syncfunctimed_tb          m_syncFunctimed;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_syncquantum_tb            m_syncQuantum;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_sync_tb_IF *              m_activeSyncObj;
+ <br>};
+ <br>&nbsp; <br>// ------------------------------------------------------------------------------
+ <br>// Transaction 
+ <br>// ------------------------------------------------------------------------------
+ <br>class mw_tr_tb {
+ <br>&nbsp;&nbsp;public:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mw_tr_tb(mw_utils_tb &amp; utils, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_sync_tb &amp; sync, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_tlmsocket_tb* tlmsocket);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;~mw_tr_tb();
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;void sendTlmWriteTransaction(sc_dt::uint64 addr, unsigned char *dptr, size_t dsize);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;void sendTlmReadTransaction(sc_dt::uint64 addr, unsigned char *dptr, size_t dsize);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sc_dt::uint64 m_csrAddr;
+ <br>&nbsp; <br>&nbsp;&nbsp;private:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mw_utils_tb &amp;     m_utils;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mw_sync_tb &amp;      m_sync;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mw_tlmsocket_tb &amp; m_socket;
+ <br>};
+ <br>&nbsp; <br>&nbsp; <br>// ------------------------------------------------------------------------------
+ <br>// Command/Status Register
+ <br>class mw_csr_tb {
+ <br>&nbsp;&nbsp;public:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mw_csr_tb(mw_utils_tb &amp; utils, mw_sync_tb &amp; sync, mw_tr_tb &amp; tr,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sc_dt::uint64 csrAddr, sc_mutex &amp; mutex);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;~mw_csr_tb();
+ <br>&nbsp; <br>&nbsp;&nbsp;void readModifyWrite(mw_comstatreg_tb bitMask, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_comstatreg_tb bitValue);
+ <br>&nbsp;&nbsp;void writeCommand(mw_comstatreg_tb bitValue);
+ <br>&nbsp;&nbsp;mw_comstatreg_tb readStatus();
+ <br>&nbsp;&nbsp;bool pollForStatus(mw_comstatreg_tb bitMask, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_comstatreg_tb bitValue, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_comstatreg_tb &amp; comstatreg,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int maxIters, sc_time iterWait);
+ <br>&nbsp; <br>&nbsp;&nbsp;private:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mw_utils_tb &amp;    m_utils;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mw_sync_tb &amp;     m_sync;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mw_tr_tb &amp;       m_tr;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mw_comstatreg_tb m_csreg;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sc_dt::uint64    m_csrAddr;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sc_mutex &amp; m_mutex;
+ <br>};
+ <br>&nbsp; <br>#endif
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br><span class="tlc_closefile">%closefile</span> h_file
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIndentFile">SLibIndentFile</a>("tlm_tb/mw_support_tb.h","")>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br><span class="tlc_openfile">%openfile</span> cpp_file = "tlm_tb/mw_support_tb.cpp"
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br>&nbsp; <br>#include "mw_support_tb.h"
+ <br>&nbsp; <br>#include <string>
+ <br>#include <stdarg.h>
+ <br>#include "mat.h"
+ <br>&nbsp; <br>using std::string;
+ <br>&nbsp; <br>#ifndef TLMG_MAX_NUM_MISCOMPARES
+ <br>#define TLMG_MAX_NUM_MISCOMPARES       20
+ <br>#endif
+ <br>&nbsp; <br>// ------------------------------------------------------------------------------
+ <br>// Utils
+ <br>// ------------------------------------------------------------------------------
+ <br>mw_utils_tb::mw_utils_tb(int currVerbosity) :
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_errorStatus(0), m_currVerbosity(currVerbosity) 
+ <br>{
+ <br>}
+ <br>&nbsp; <br>mw_utils_tb::~mw_utils_tb() 
+ <br>{
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>void mw_utils_tb::markError(int errKind)
+ <br>{
+ <br>&nbsp;&nbsp;m_errorStatus |= errKind;
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>void mw_utils_tb::printMsg(int level, const char * fmt, ...)
+ <br>{
+ <br>&nbsp;&nbsp;if (level &amp; m_currVerbosity) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// prepend thread name and time to message
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;// thread name:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sc_process_handle ph = sc_get_current_process_handle();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;string thrName(ph.name());
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;size_t shortNameIdx = thrName.find_last_of('.');
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;string shortName = thrName.substr(shortNameIdx+1);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;size_t isReader = shortName.find("readerThread");
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;// sim time:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const sc_time &amp; simtime = sc_time_stamp();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;static char buf[512];              // FIXME: detect err on overrun
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;va_list args;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;va_start(args, fmt);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;vsprintf(buf, fmt, args);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;va_end(args);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (isReader != string::npos) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("[%10s] (%10s) /t/t%s", (simtime.to_string()).c_str(),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shortName.c_str(), buf);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("[%10s] (%10s) %s", (simtime.to_string()).c_str(), shortName.c_str(),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buf);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;}
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>void mw_utils_tb::printErr(int err, const char * fmt, ...)
+ <br>{
+ <br>&nbsp;&nbsp;sc_process_handle ph = sc_get_current_process_handle();
+ <br>&nbsp;&nbsp;char buf[256];                       // FIXME: detect err on overrun
+ <br>&nbsp;&nbsp;va_list args;
+ <br>&nbsp;&nbsp;va_start(args, fmt);
+ <br>&nbsp;&nbsp;vsprintf(buf, fmt, args);
+ <br>&nbsp;&nbsp;va_end(args);
+ <br>&nbsp;&nbsp;printf("(%10s) %s", ph.name(), buf);
+ <br>&nbsp;&nbsp;markError(err);
+ <br>}
+ <br>&nbsp; <br>&nbsp; <br>void mw_utils_tb::turnOnMsgKind(int msgKindMask) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_currVerbosity |= msgKindMask;
+ <br>}
+ <br>&nbsp; <br>void mw_utils_tb::turnOffMsgKind(int msgKindMask) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_currVerbosity &amp;= ~msgKindMask;
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>int mw_utils_tb::getErrorStatus(void)
+ <br>{
+ <br>&nbsp;&nbsp;return m_errorStatus;
+ <br>}
+ <br>&nbsp; <br>&nbsp; <br>// ------------------------------------------------------------------------------
+ <br>// Port Info
+ <br>// ------------------------------------------------------------------------
+ <br>mw_portinfo_tb::~mw_portinfo_tb()
+ <br>{
+ <br>}
+ <br>&nbsp; <br>&nbsp; <br>// ------------------------------------------------------------------------------
+ <br>// MAT File
+ <br>// ------------------------------------------------------------------------------
+ <br>//mw_matfile_tb::mw_matfile_tb() :
+ <br>//  m_filename(""), m_perm(""), m_matVar(""), m_numInFields(0), m_numOutFields(0),
+ <br>//  m_numVectors(0), m_sclog(NULL), m_pmat(NULL)
+ <br>//{
+ <br>//}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>mw_matfile_tb::mw_matfile_tb(
+ <br>&nbsp;&nbsp;mw_utils_tb &amp; utils, const char * fn, int numIn, int numOut, 
+ <br>&nbsp;&nbsp;const char * perm, const char * mvar, int numVec) :
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils(utils), 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_filename(fn), 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_numInFields(numIn), 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_numOutFields(numOut), 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_perm(perm), 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_matVar(mvar), 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_numVectors(numVec),
+ <br>&nbsp;&nbsp;m_sclog(NULL), m_pmat(NULL)
+ <br>{
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>mw_matfile_tb::~mw_matfile_tb()
+ <br>{
+ <br>&nbsp;&nbsp;mxDestroyArray((mxArray*)m_sclog);
+ <br>&nbsp;&nbsp;if (matClose((MATFile*)m_pmat) != 0) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;printf("## ERROR: closing file %s/n", m_filename);
+ <br>&nbsp;&nbsp;}
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>// expected structure of the MAT file info. . .
+ <br>//      tlmg_inXXX
+ <br>//          Data (buffer of elem data type)
+ <br>//          SampleInfo
+ <br>//              elemDataType
+ <br>//              (etc)
+ <br>//          DataTypeInfo
+ <br>//              numerictype
+ <br>//              isComplex
+ <br>//      tlmg_outXXX
+ <br>//          (etc)
+ <br>//
+ <br>void mw_matfile_tb::initializeInMatFieldInfo(
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_portinfovec_tb &amp; inFieldInfo,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_portinfovec_tb &amp; expOutFieldInfo) 
+ <br>{
+ <br>&nbsp;&nbsp;if (openMat()) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.markError(TLMG_ERR_MAT_INIT);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;if (readSclog()) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.markError(TLMG_ERR_MAT_INIT);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>&nbsp;&nbsp;int numfields = mxGetNumberOfFields((mxArray*)m_sclog);
+ <br>&nbsp; <br>&nbsp;&nbsp;int in_dcount = 0;
+ <br>&nbsp;&nbsp;int out_dcount = 0;
+ <br>&nbsp;&nbsp;SignalDirectionEnumT sigdir;
+ <br>&nbsp;&nbsp;for (int i=0; i<numfields; i++) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// ----------------------------------------
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// get fieldname and direction
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// ----------------------------------------
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;const char * fname = mxGetFieldNameByNumber((mxArray*)m_sclog, i);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (!strncmp("tlmg_in", fname, 7)) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sigdir = INPUT_SIG;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_VEC_INIT,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## found input field %s at %s fieldnum %d/n", fname,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_matVar, i);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;} else if (!strncmp("tlmg_out", fname, 8)) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sigdir = OUTPUT_SIG;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_VEC_INIT,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## found output field %s at %s fieldnum %d/n", fname,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_matVar, i);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_VEC_INIT,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## skipping unknown field %s in var %s/n", fname, m_matVar);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;// -------------------------------------------------------
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// get hold of Data field and its underlying data buffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// -------------------------------------------------------
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mxArray * pmxa_field;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if ((pmxa_field = mxGetFieldByNumber((mxArray*)m_sclog, 0, i)) == NULL) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printErr(TLMG_ERR_MAT_INIT,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## ERROR: %s.tlmg_XX var could not be read./n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_matVar);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;                          //return(1);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;int fnum;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if ((fnum = mxGetFieldNumber(pmxa_field, "Data")) == -1) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printErr(TLMG_ERR_MAT_INIT,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## ERROR: %s.tlmg_XX var did not have Data field./n", m_matVar);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;                          //return(1);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;mxArray * pmxa_dfield;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if ((pmxa_dfield = mxGetFieldByNumber(pmxa_field, 0, fnum)) == NULL) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printErr(TLMG_ERR_MAT_INIT,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## ERROR: %s.tlmg_XX.Data var could not be read./n", m_matVar);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;                          //return(1);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;if (sigdir == INPUT_SIG) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inFieldInfo[in_dcount].pmxa = (void*)pmxa_dfield;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inFieldInfo[in_dcount].pslf = (char *)mxGetData(pmxa_dfield);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inFieldInfo[in_dcount].sldsize = 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mxGetNumberOfElements(pmxa_dfield) * mxGetElementSize(pmxa_dfield);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in_dcount++;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expOutFieldInfo[out_dcount].pmxa = (void*)pmxa_dfield;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expOutFieldInfo[out_dcount].pslf = (char *)mxGetData(pmxa_dfield);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expOutFieldInfo[out_dcount].sldsize = 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mxGetNumberOfElements(pmxa_dfield) * mxGetElementSize(pmxa_dfield);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out_dcount++;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;if (in_dcount != m_numInFields) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printErr(TLMG_ERR_MAT_INIT, "## found %d input fields in var %s, expected %d/n", 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in_dcount, m_matVar, NUM_IN_PORTS);
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;if (out_dcount != m_numOutFields) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printErr(TLMG_ERR_MAT_INIT, "## found %d output fields in var %s, expected %d/n", 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out_dcount, m_matVar, NUM_OUT_PORTS);
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_VEC_INIT,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## setup %d input data fields, %d output data fields/n", in_dcount,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out_dcount);
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>// expected structure of the MAT file info. . .
+ <br>//      tlmg_outXXX
+ <br>//          Data (buffer of elem data type)
+ <br>//
+ <br>void mw_matfile_tb::initializeOutMatFieldInfo(
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_portinfovec_tb &amp; expOutFieldInfo,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_portinfovec_tb &amp; actOutFieldInfo) 
+ <br>{
+ <br>&nbsp; <br>&nbsp;&nbsp;if (openMat()) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.markError(TLMG_ERR_MAT_INIT);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;const char * topFields[] = {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> loopId = tlmg_info.OutStruct.NumPorts
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"tlmg_out%<loopId+1>",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"tlmg_outX"
+ <br>&nbsp;&nbsp;};
+ <br>&nbsp; <br>&nbsp;&nbsp;mwSize dims[2] = { 1, 1 };
+ <br>&nbsp; <br>&nbsp;&nbsp;m_sclog = (void*)mxCreateStructArray(2, dims, m_numOutFields, topFields);
+ <br>&nbsp;&nbsp;if (m_sclog == NULL) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printErr(TLMG_ERR_MAT_INIT,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## ERROR: Could not create top-level mx struct for MAT file %s/n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_filename);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;exit(-1);                          //return(1);
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;const char * outStructFieldNames[] = { "Data" };// may add DataTypeInfo later.
+ <br>&nbsp; <br>&nbsp;&nbsp;mxArray * paOutStruct;
+ <br>&nbsp;&nbsp;for (int i=0; i<m_numOutFields; i++) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// create Data array -- should match expected data out. . .
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;dims[1] = expOutFieldInfo[i].sldsize;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;actOutFieldInfo[i].sldsize = dims[1];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;actOutFieldInfo[i].pmxa = (void*)mxCreateNumericArray(2, dims, mxUINT8_CLASS,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mxREAL);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (actOutFieldInfo[i].pmxa == NULL) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printErr(TLMG_ERR_MAT_INIT,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## ERROR: Could not create mx numeric array for MAT file %s/n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_filename);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit(-1);                        //return(1);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;actOutFieldInfo[i].pslf = (char *)mxGetData((mxArray*)actOutFieldInfo[i].pmxa);
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;// create and attach child data out struct
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;dims[1] = 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;paOutStruct = mxCreateStructArray(2, dims, 1, outStructFieldNames);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (paOutStruct == NULL) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printErr(TLMG_ERR_MAT_INIT,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## ERROR: Could not create mx data out struct for MAT file %s/n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_filename);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit(-1);                        //return(1);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;mxSetFieldByNumber(paOutStruct, 0, 0, (mxArray*)actOutFieldInfo[i].pmxa);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;mxSetFieldByNumber((mxArray*)m_sclog, 0, i, paOutStruct);
+ <br>&nbsp;&nbsp;}
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>int mw_matfile_tb::openMat()
+ <br>{
+ <br>&nbsp;&nbsp;m_pmat = (void*)matOpen(m_filename, m_perm);
+ <br>&nbsp;&nbsp;if (m_pmat == NULL) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;printf("## ERROR: opening file %s with permissions %s/n", m_filename, m_perm);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return -1;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;return 0;
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>int mw_matfile_tb::readSclog()
+ <br>{
+ <br>&nbsp;&nbsp;m_sclog = (void*)matGetVariable((MATFile*)m_pmat, m_matVar);
+ <br>&nbsp;&nbsp;if (m_sclog == NULL) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;printf("## ERROR: could not get %s variable in file %s/n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_matVar, m_filename);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return -1;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;if (!mxIsStruct((mxArray*)m_sclog)) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;printf("## ERROR: var %s was not a struct./n", m_matVar);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return -1;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;return 0;
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>int mw_matfile_tb::writeSclog()
+ <br>{
+ <br>&nbsp;&nbsp;if (matPutVariable((MATFile*)m_pmat, m_matVar, (mxArray*)m_sclog)) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;printf("## ERROR: Could not write MAT file %s./n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_filename);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return -1;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;return 0;
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------------
+ <br>// Vector/MAT 
+ <br>// ------------------------------------------------------------------------------
+ <br>mw_vecmat_tb::mw_vecmat_tb(
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_utils_tb &amp; utils,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_portinfovec_tb &amp; inFieldInfo,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_portinfovec_tb &amp; actOutFieldInfo,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_portinfovec_tb &amp; expOutFieldInfo) :
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils(utils), 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_inFieldInfo(inFieldInfo),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_actOutFieldInfo(actOutFieldInfo),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_expOutFieldInfo(expOutFieldInfo),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_vecCountIn(0),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_vecCountOut(0),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_vecMiscompares(0),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_matInfoIn(m_utils, INPUT_VECTOR_FILE, NUM_IN_PORTS, NUM_OUT_PORTS, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"r", "tlmg_tlminvec", NUM_VECTORS),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_matInfoOut(m_utils, OUTPUT_VECTOR_FILE, 0, NUM_OUT_PORTS, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"w", "tlmg_tlmoutvec", NUM_VECTORS)
+ <br>{
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------------
+ <br>mw_vecmat_tb::~mw_vecmat_tb() 
+ <br>{
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>void mw_vecmat_tb::initialize(
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_portinfovec_tb &amp; inFieldInfo, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_portinfovec_tb &amp; actOutFieldInfo, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_portinfovec_tb &amp; expOutFieldInfo) 
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_matInfoIn.initializeInMatFieldInfo(inFieldInfo, expOutFieldInfo);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_matInfoOut.initializeOutMatFieldInfo(expOutFieldInfo, actOutFieldInfo);
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>bool mw_vecmat_tb::getNextInput()
+ <br>{
+ <br>&nbsp;&nbsp;bool endOfVec = false;
+ <br>&nbsp; <br>&nbsp;&nbsp;// get stimulus data from MAT and put into rU.
+ <br>&nbsp;&nbsp;for (int i=0; i<m_matInfoIn.m_numInFields; i++) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int offset = m_vecCountIn*m_inFieldInfo[i].cfsize;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (offset+m_inFieldInfo[i].cfsize > m_inFieldInfo[i].sldsize) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_VEC_NUM,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## end of input vectors in MAT file %s for input number %d/n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_matInfoIn.m_filename, i);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endOfVec = true;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;memcpy(m_inFieldInfo[i].pcf, m_inFieldInfo[i].pslf+offset, m_inFieldInfo[i]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cfsize);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;if (!endOfVec) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_VEC_NUM, "## vec %5d:/n##/t initialized input dataset/n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_vecCountIn);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_vecCountIn++;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if ((!((m_vecCountIn-1) % 100)) &amp;&amp; (m_vecCountIn != 1)) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_VEC_PROGRESS_DOT, "./n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;return endOfVec;
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>bool mw_vecmat_tb::getNextExpectedOutput()
+ <br>{
+ <br>&nbsp;&nbsp;bool endOfVec = false;
+ <br>&nbsp;&nbsp;for (int i=0; i<m_matInfoIn.m_numOutFields; i++) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int offset = m_vecCountOut*m_expOutFieldInfo[i].cfsize;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (offset+m_expOutFieldInfo[i].cfsize == m_expOutFieldInfo[i].sldsize) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_VEC_NUM,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## end of output vectors in MAT file %s for output number %d/n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_matInfoIn.m_filename, i);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endOfVec = true;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;} else if (offset+m_expOutFieldInfo[i].cfsize > m_expOutFieldInfo[i].sldsize)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// error
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endOfVec = true;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return endOfVec;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;memcpy(m_expOutFieldInfo[i].pcf, m_expOutFieldInfo[i].pslf+offset,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_expOutFieldInfo[i].cfsize);
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_VEC_NUM, "##/t initialized expected output dataset/n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_vecCountOut);
+ <br>&nbsp;&nbsp;return endOfVec;
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>void mw_vecmat_tb::putNextActualOutput()
+ <br>{
+ <br>&nbsp;&nbsp;int offset;
+ <br>&nbsp;&nbsp;for (int i=0; i<m_matInfoOut.m_numOutFields; i++) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;offset = m_vecCountOut*m_actOutFieldInfo[i].cfsize;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (offset+m_actOutFieldInfo[i].cfsize > m_actOutFieldInfo[i].sldsize) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printErr(TLMG_ERR_MAT_WRITE,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## ERROR: cannot write actual output data at vec %d, field %d because mxArray is not large enough./n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_vecCountOut, i);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;memcpy(m_actOutFieldInfo[i].pslf+offset, m_actOutFieldInfo[i].pcf,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_actOutFieldInfo[i].cfsize);
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_VEC_NUM, "##/t wrote actual output dataset to MAT file buffer./n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_vecCountOut);
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>void mw_vecmat_tb::compareResult()
+ <br>{
+ <br>&nbsp;&nbsp;bool hadMiscompare = false;
+ <br>&nbsp;&nbsp;for (int i=0; i<m_matInfoIn.m_numOutFields; i++) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (memcmp(m_expOutFieldInfo[i].pcf, m_actOutFieldInfo[i].pcf,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_expOutFieldInfo[i].cfsize)) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printErr(TLMG_ERR_MISCOMPARE, "## ERROR: vec %d miscompare at output %d/n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_vecCountOut, i);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hadMiscompare = true;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//printf("## vector %d, field %d/n", m_vecCountOut, i);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (unsigned int j=0; j<m_expOutFieldInfo[i].cfsize; j++) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_VEC_BYTE_BUF_ON_MISCOMPARE,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"/tbyte %3d: exp=%2x act=%2x/n", j,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(*(m_expOutFieldInfo[i].pcf+j)&amp;0xff),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(*(m_actOutFieldInfo[i].pcf+j)&amp;0xff));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;if (hadMiscompare) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (m_vecMiscompares++ == TLMG_MAX_NUM_MISCOMPARES) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.turnOffMsgKind(TLMG_PRINT_VEC_BYTE_BUF_ON_MISCOMPARE);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_VEC_COMPARE_OK,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"##/t actual output dataset did not match expected output dataset/n");
+ <br>&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_VEC_COMPARE_OK,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"##/t actual output dataset matched expected output dataset/n");
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;m_vecCountOut++;
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>void mw_vecmat_tb::terminate()
+ <br>{
+ <br>&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_END_OF_SIM,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"/n"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"#############################################/n"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## END OF VECTORS. PLAYED %5d VECTORS.   ##/n"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## DATA MISCOMPARES     : %5d            ##/n"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## TRANSPORT ERRORS     : %5s            ##/n"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## MAT FILE WRITE ERRORS: %5s            ##/n"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"#############################################/n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_vecCountIn, m_vecMiscompares,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(m_utils.getErrorStatus() &amp; TLMG_ERR_TRANSPORT) ? "YES" : "NO",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(m_utils.getErrorStatus() &amp; TLMG_ERR_MAT_WRITE) ? "YES" : "NO");
+ <br>&nbsp;&nbsp;if (m_matInfoOut.writeSclog()) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.markError(TLMG_ERR_MAT_WRITE);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return;
+ <br>&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_END_OF_SIM, "##/t Wrote results MAT file./n");
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;// destroy mx allocated memory done in destructors of instantiated
+ <br>&nbsp;&nbsp;// structures.
+ <br>&nbsp;&nbsp;// CHECKME: need to ensure FieldInfo destroyed before MatInfo.
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------------
+ <br>// Synchronization
+ <br>// ------------------------------------------------------------------------------
+ <br>// ------------------------------------------------------------------------
+ <br>mw_sync_tb::mw_sync_tb(mw_utils_tb &amp; utils, TimingModeT tmode, int quantum) : 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils(utils), 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_timingMode(tmode),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_syncUntimed(utils),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_syncFunctimed(utils),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_syncQuantum(utils, quantum)
+ <br>{ 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;setTimingMode(tmode);
+ <br>}
+ <br>// ------------------------------------------------------------------------
+ <br>mw_sync_tb::~mw_sync_tb() { }
+ <br>// ------------------------------------------------------------------------
+ <br>mw_sync_tb::TimingModeT mw_sync_tb::setTimingMode(TimingModeT tmode) 
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;TimingModeT tmp = m_timingMode;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_timingMode = tmode;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;switch (tmode) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case Untimed:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_activeSyncObj = &amp;m_syncUntimed;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case LooselyTimed:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_activeSyncObj = &amp;m_syncFunctimed;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return tmp;
+ <br>}
+ <br>// ------------------------------------------------------------------------
+ <br>void mw_sync_tb::incLocalTime(sc_time t) { 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_activeSyncObj->incLocalTime(t); 
+ <br>}
+ <br>void mw_sync_tb::setLocalTime(sc_time t) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_activeSyncObj->setLocalTime(t); 
+ <br>}
+ <br>sc_time mw_sync_tb::getLocalTime() { 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return m_activeSyncObj->getLocalTime(); 
+ <br>}
+ <br>void mw_sync_tb::syncToExplicitTime(sc_time t) { 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_activeSyncObj->syncToExplicitTime(t); 
+ <br>}
+ <br>void mw_sync_tb::syncToLocalTime() { 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_activeSyncObj->syncToLocalTime(); 
+ <br>}
+ <br>void mw_sync_tb::syncToDataReady(sc_core::sc_in<bool> &amp; irq) { 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_activeSyncObj->syncToDataReady(irq); 
+ <br>}
+ <br>&nbsp; <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>mw_syncuntimed_tb::mw_syncuntimed_tb(mw_utils_tb &amp; utils) :
+ <br>&nbsp;&nbsp;m_utils(utils)
+ <br>{
+ <br>}
+ <br>&nbsp; <br>mw_syncuntimed_tb::~mw_syncuntimed_tb()
+ <br>{
+ <br>}
+ <br>&nbsp; <br>void mw_syncuntimed_tb::incLocalTime(sc_time t)
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;syncToLocalTime();
+ <br>}
+ <br>&nbsp; <br>void mw_syncuntimed_tb::setLocalTime(sc_time t)
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// do nothing
+ <br>}
+ <br>&nbsp; <br>sc_time mw_syncuntimed_tb::getLocalTime()
+ <br>{
+ <br>&nbsp;&nbsp;return SC_ZERO_TIME;
+ <br>}
+ <br>&nbsp; <br>void mw_syncuntimed_tb::syncToExplicitTime(sc_time t)
+ <br>{
+ <br>&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_SYNC_TO_FUNCS,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"##/t waiting for explicit amount of time (time = 0 ns + 0 ns)./n");
+ <br>&nbsp;&nbsp;wait(SC_ZERO_TIME);
+ <br>}
+ <br>&nbsp; <br>void mw_syncuntimed_tb::syncToLocalTime()
+ <br>{
+ <br>&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_SYNC_TO_FUNCS,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"##/t syncing to local time offset (delay = 0 ns)./n");
+ <br>&nbsp;&nbsp;wait(SC_ZERO_TIME);
+ <br>}
+ <br>&nbsp; <br>void mw_syncuntimed_tb::syncToDataReady(sc_core::sc_in<bool> &amp; irq)
+ <br>{
+ <br>&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_SYNC_TO_FUNCS,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"##/t syncing to interrupt signal for data ready in output buffer.../n");
+ <br>&nbsp;&nbsp;if (irq.read() == true) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_SYNC_TO_FUNCS,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"##/t...saw interrupt already asserted/n");
+ <br>&nbsp;&nbsp;} 
+ <br>&nbsp;&nbsp;else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;wait(irq.posedge_event()); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_SYNC_TO_FUNCS, "##/t...saw interrupt/n");
+ <br>&nbsp;&nbsp;}
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>mw_syncfunctimed_tb::mw_syncfunctimed_tb(mw_utils_tb &amp; utils) :
+ <br>&nbsp;&nbsp;m_utils(utils), m_delay(SC_ZERO_TIME)
+ <br>{
+ <br>}
+ <br>&nbsp; <br>mw_syncfunctimed_tb::~mw_syncfunctimed_tb()
+ <br>{
+ <br>}
+ <br>&nbsp; <br>void mw_syncfunctimed_tb::incLocalTime(sc_time t)
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_delay += t;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;syncToLocalTime();
+ <br>}
+ <br>&nbsp; <br>void mw_syncfunctimed_tb::setLocalTime(sc_time t)
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_delay = t;
+ <br>}
+ <br>&nbsp; <br>sc_time mw_syncfunctimed_tb::getLocalTime()
+ <br>{
+ <br>&nbsp;&nbsp;return m_delay;
+ <br>}
+ <br>&nbsp; <br>void mw_syncfunctimed_tb::syncToExplicitTime(sc_time t)
+ <br>{
+ <br>&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_SYNC_TO_FUNCS,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"##/t waiting for explicit amount of time (time = %s + %s)./n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_delay.to_string().c_str(), t.to_string().
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c_str() );
+ <br>&nbsp; <br>&nbsp;&nbsp;wait(m_delay);
+ <br>&nbsp;&nbsp;wait(t);
+ <br>&nbsp;&nbsp;m_delay = SC_ZERO_TIME;
+ <br>}
+ <br>&nbsp; <br>void mw_syncfunctimed_tb::syncToLocalTime()
+ <br>{
+ <br>&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_SYNC_TO_FUNCS,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"##/t syncing to local time offset (delay = %s)./n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(m_delay.to_string()).c_str() );
+ <br>&nbsp;&nbsp;wait(m_delay);
+ <br>&nbsp;&nbsp;m_delay = SC_ZERO_TIME;
+ <br>}
+ <br>&nbsp; <br>void mw_syncfunctimed_tb::syncToDataReady(sc_core::sc_in<bool> &amp; irq)
+ <br>{
+ <br>&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_SYNC_TO_FUNCS,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"##/t syncing to interrupt signal for data ready in output buffer.../n");
+ <br>&nbsp;&nbsp;if (irq.read() == true) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_SYNC_TO_FUNCS,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"##/t...saw interrupt already asserted/n");
+ <br>&nbsp;&nbsp;} 
+ <br>&nbsp;&nbsp;else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;wait(irq.posedge_event()); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_SYNC_TO_FUNCS, "##/t...saw interrupt/n");
+ <br>&nbsp;&nbsp;}
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>mw_syncquantum_tb::mw_syncquantum_tb(mw_utils_tb &amp; utils, int quantum) : 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils(utils),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_delay(SC_ZERO_TIME),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_quantum(quantum)
+ <br>{ 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_qk.set_global_quantum(sc_time(m_quantum, SC_NS));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_qk.reset();
+ <br>}
+ <br>&nbsp; <br>mw_syncquantum_tb::~mw_syncquantum_tb() 
+ <br>{ }
+ <br>&nbsp; <br>void mw_syncquantum_tb::incLocalTime(sc_time incTime) 
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_qk.inc(incTime);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (m_qk.need_sync()) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_SYNC_TO_FUNCS,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"##/t Quantum reached: syncing to local time offset (delay = %s)./n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(m_qk.get_local_time().to_string()).c_str() );
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_qk.sync();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>}
+ <br>&nbsp; <br>void mw_syncquantum_tb::setLocalTime(sc_time locTime) 
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_qk.set(locTime);
+ <br>}
+ <br>&nbsp; <br>sc_time mw_syncquantum_tb::getLocalTime()  {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return m_qk.get_local_time();
+ <br>}
+ <br>&nbsp; <br>void mw_syncquantum_tb::syncToExplicitTime(sc_time time)  {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_SYNC_TO_FUNCS,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"##/t waiting for explicit amount of time (time = %s + %s)./n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_qk.get_local_time().to_string().c_str(), time.to_string().c_str() );
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_qk.sync();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;wait(time);
+ <br>}
+ <br>&nbsp; <br>void mw_syncquantum_tb::syncToLocalTime()  {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_SYNC_TO_FUNCS,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"##/t syncing to local time offset (delay = %s)./n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(m_qk.get_local_time().to_string()).c_str() );
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_qk.sync();
+ <br>}
+ <br>&nbsp; <br>void mw_syncquantum_tb::syncToDataReady(sc_core::sc_in<bool> &amp; irq)  {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_SYNC_TO_FUNCS,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"##/t syncing to interrupt signal for data ready in output buffer.../n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (irq.read() == true) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_SYNC_TO_FUNCS, "##/t...saw interrupt already asserted/n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;} 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_qk.sync(); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (irq.read() == true) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_SYNC_TO_FUNCS, "##/t...saw interrupt already asserted/n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;} 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;wait(irq.posedge_event());
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_SYNC_TO_FUNCS, "##/t...saw interrupt/n");
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------------
+ <br>// Transaction
+ <br>// ------------------------------------------------------------------------------
+ <br>mw_tr_tb::mw_tr_tb(mw_utils_tb &amp; utils, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_sync_tb &amp; sync, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_tlmsocket_tb* socket) :
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils(utils), 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_sync(sync),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_socket(*socket),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_csrAddr(-1)
+ <br>{
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>mw_tr_tb::~mw_tr_tb()
+ <br>{
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>void mw_tr_tb::sendTlmWriteTransaction(sc_dt::uint64 addr, unsigned char *dptr, size_t dsize)
+ <br>{
+ <br>&nbsp;&nbsp;sc_time delay = m_sync.getLocalTime();
+ <br>&nbsp; <br>&nbsp;&nbsp;tlm::tlm_generic_payload gp;
+ <br>&nbsp;&nbsp;gp.set_address(addr);
+ <br>&nbsp;&nbsp;gp.set_command(tlm::TLM_WRITE_COMMAND);
+ <br>&nbsp;&nbsp;gp.set_data_ptr(dptr);
+ <br>&nbsp;&nbsp;gp.set_data_length(dsize);
+ <br>&nbsp;&nbsp;gp.set_streaming_width(dsize);
+ <br>&nbsp;&nbsp;gp.set_byte_enable_ptr(0);
+ <br>&nbsp;&nbsp;gp.set_response_status(tlm::TLM_INCOMPLETE_RESPONSE);
+ <br>&nbsp; <br>&nbsp;&nbsp;m_socket->b_transport(gp, delay);
+ <br>&nbsp;&nbsp;tlm::tlm_response_status gp_status = gp.get_response_status();
+ <br>&nbsp;&nbsp;if (gp_status != tlm::TLM_OK_RESPONSE) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printErr(TLMG_ERR_TRANSPORT, "## ERROR: TLM write error./n");
+ <br>&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_TRANSPORT,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"##/t TLM write transaction to target component at address %#08x/n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(unsigned int) addr);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (addr == (unsigned int) m_csrAddr) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_CSR_TRANSPORT,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"##/t (Command/Status reg data value = %#010x)/n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*((unsigned int *) dptr));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;m_sync.setLocalTime(delay);
+ <br>&nbsp;&nbsp;m_sync.incLocalTime(SC_ZERO_TIME);
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>void mw_tr_tb::sendTlmReadTransaction(sc_dt::uint64 addr, unsigned char *dptr, size_t dsize) 
+ <br>{
+ <br>&nbsp;&nbsp;sc_time delay = m_sync.getLocalTime();
+ <br>&nbsp; <br>&nbsp;&nbsp;tlm::tlm_generic_payload gp;
+ <br>&nbsp;&nbsp;gp.set_address(addr);                // memory address
+ <br>&nbsp;&nbsp;gp.set_command(tlm::TLM_READ_COMMAND);// memory command
+ <br>&nbsp;&nbsp;gp.set_data_ptr(dptr);
+ <br>&nbsp;&nbsp;gp.set_data_length(dsize);
+ <br>&nbsp;&nbsp;gp.set_streaming_width(dsize);
+ <br>&nbsp;&nbsp;gp.set_byte_enable_ptr(0);
+ <br>&nbsp;&nbsp;gp.set_response_status(tlm::TLM_INCOMPLETE_RESPONSE);
+ <br>&nbsp; <br>&nbsp;&nbsp;m_socket->b_transport(gp, delay);
+ <br>&nbsp;&nbsp;tlm::tlm_response_status gp_status = gp.get_response_status();
+ <br>&nbsp;&nbsp;if (gp_status != tlm::TLM_OK_RESPONSE) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printErr(TLMG_ERR_TRANSPORT, "## ERROR: TLM read error./n");
+ <br>&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_TRANSPORT,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"##/t TLM read  transaction to target component at address %#08x/n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(unsigned int)addr);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (addr == (unsigned int) m_csrAddr) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_CSR_TRANSPORT,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"##/t (Command/Status reg data value = %#010x)/n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*((unsigned int *) dptr));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;m_sync.setLocalTime(delay);
+ <br>&nbsp;&nbsp;m_sync.incLocalTime(SC_ZERO_TIME);
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------------
+ <br>// Command/Status Register
+ <br>// ------------------------------------------------------------------------------
+ <br>mw_csr_tb::mw_csr_tb(mw_utils_tb &amp; utils, mw_sync_tb &amp; sync, mw_tr_tb &amp; tr,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sc_dt::uint64 csrAddr, sc_mutex &amp; mutex) :
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils(utils),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_sync(sync),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_tr(tr),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_csrAddr(csrAddr),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_mutex(mutex)
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_tr.m_csrAddr = m_csrAddr;
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>mw_csr_tb::~mw_csr_tb()
+ <br>{
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>void mw_csr_tb::readModifyWrite(mw_comstatreg_tb bitMask, mw_comstatreg_tb bitValue)
+ <br>{
+ <br>&nbsp;&nbsp;m_mutex.lock();
+ <br>&nbsp;&nbsp;// read comstat reg
+ <br>&nbsp;&nbsp;m_tr.sendTlmReadTransaction(m_csrAddr, (unsigned char *) &amp; m_csreg, sizeof(m_csreg));
+ <br>&nbsp; <br>&nbsp;&nbsp;// modify
+ <br>&nbsp;&nbsp;m_csreg &amp;= ~bitMask;  // zero out bits of interest
+ <br>&nbsp;&nbsp;m_csreg |= bitValue;  // set bits of interest
+ <br>&nbsp; <br>&nbsp;&nbsp;// write
+ <br>&nbsp;&nbsp;m_tr.sendTlmWriteTransaction(m_csrAddr, (unsigned char *) &amp; m_csreg, sizeof(m_csreg));
+ <br>&nbsp;&nbsp;m_mutex.unlock();
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>void mw_csr_tb::writeCommand (mw_comstatreg_tb bitValue)
+ <br>{
+ <br>&nbsp;&nbsp;m_csreg = bitValue;
+ <br>&nbsp;&nbsp;m_tr.sendTlmWriteTransaction(m_csrAddr, (unsigned char *)&amp; m_csreg, sizeof(m_csreg));
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>mw_comstatreg_tb mw_csr_tb::readStatus() 
+ <br>{
+ <br>&nbsp;&nbsp;m_tr.sendTlmReadTransaction(m_csrAddr, (unsigned char *)&amp;m_csreg, sizeof(m_csreg));
+ <br>&nbsp;&nbsp;return m_csreg;
+ <br>}
+ <br>&nbsp; <br>// ------------------------------------------------------------------------
+ <br>// e.g., looking for inbuf not empty or outbuf full
+ <br>// pollForStatus((INBUF_EMPTY_BIT_MASK | OUTBUF_FULL_BIT_MASK),
+ <br>//                OUTBUF_FULL_BIT_MASK, x,x,x)
+ <br>//
+ <br>// returns true on timeout, false if saw expected status.
+ <br>//
+ <br>bool mw_csr_tb::pollForStatus(mw_comstatreg_tb bitMask,
+ <br>&nbsp;&nbsp;mw_comstatreg_tb bitValue,
+ <br>&nbsp;&nbsp;mw_comstatreg_tb &amp; comstatreg,
+ <br>&nbsp;&nbsp;int maxIters, sc_time iterWait)
+ <br>{
+ <br>&nbsp;&nbsp;m_sync.syncToLocalTime();            // ensure read current status
+ <br>&nbsp;&nbsp;m_csreg = readStatus();
+ <br>&nbsp;&nbsp;mw_comstatreg_tb pollResult = (m_csreg &amp; bitMask);
+ <br>&nbsp;&nbsp;while ((pollResult != bitValue) &amp;&amp; (maxIters > 0) ) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_sync.syncToLocalTime();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_sync.syncToExplicitTime(iterWait);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_csreg = readStatus();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;pollResult = m_csreg &amp; bitMask;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;maxIters--;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;m_sync.syncToLocalTime();
+ <br>&nbsp;&nbsp;comstatreg = m_csreg;
+ <br>&nbsp;&nbsp;if (maxIters <= 0) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printErr(TLMG_ERR_SYNC_TIMEOUT,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## ERROR: Timed out waiting for bitValue=%#010x. (bitMask=%#010x, masked csr=%#010x)/n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bitValue, bitMask, pollResult);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return true;
+ <br>&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_SYNC_TO_FUNCS,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"##/t...saw polling return expected value. (bitValue=%#010x, bitMask=%#010x, masked csr=%#010x)/n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bitValue, bitMask, pollResult);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return false;
+ <br>&nbsp;&nbsp;}
+ <br>}
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br><span class="tlc_closefile">%closefile</span> cpp_file
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIndentFile">SLibIndentFile</a>("tlm_tb/mw_support_tb.cpp","")>
+ <br></body></html>

@@ -1,0 +1,90 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>2010-2018<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:<span style="padding-left:9.5px"></span>Profiling<span style="padding-left:9.5px"></span>instrumention<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>accessible<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>cannot
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>instrumented<span style="padding-left:9.5px"></span>from<span style="padding-left:9.5px"></span>CGIR
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_PROF_TLC_") == 0
+ <br><span class="tlc_assign">%assign</span> _PROF_TLC_ = 1
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibProfilerSystemStart<span style="padding-left:9.5px"></span>============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Generate<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>starting<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>profile<span style="padding-left:9.5px"></span>operation<span style="padding-left:9.5px"></span>at<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>beginning<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>segment<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>System's<span style="padding-left:9.5px"></span>fcn<span style="padding-left:9.5px"></span>(Output/Update/OutputUpdate/Derivatives)
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>function
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibProfilerSystemStart" class="tlc_func">SLibProfilerSystemStart</a>(system, sectionIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuff
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTTarget">SLibIsERTTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> startSymbol = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibTraceBegin">SLibTraceBegin</a>(sectionIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>startSymbol</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> startSymbol = <span class="tlc_bifunc">FEVAL</span>("coder.internal.getExecTimeProbeSymbol", "start")
+ <br>&nbsp;&nbsp;%<<span>startSymbol</span>>(%<<span>sectionIdx</span>>);
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuff
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> tmpBuff
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibProfilerSystemFinish<span style="padding-left:9.5px"></span>============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Generate<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>ending<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>profile<span style="padding-left:9.5px"></span>operation<span style="padding-left:9.5px"></span>at<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>end<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>segment<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>System's<span style="padding-left:9.5px"></span>fcn<span style="padding-left:9.5px"></span>(Output/Update/OutputUpdate/Derivatives)
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>function
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibProfilerSystemFinish" class="tlc_func">SLibProfilerSystemFinish</a>(system, sectionIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuff
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTTarget">SLibIsERTTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> endSymbol = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibTraceEnd">SLibTraceEnd</a>(sectionIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>endSymbol</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> endSymbol = <span class="tlc_bifunc">FEVAL</span>("coder.internal.getExecTimeProbeSymbol", "end")
+ <br>&nbsp;&nbsp;%<<span>endSymbol</span>>(%<<span>sectionIdx</span>>);
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuff
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> tmpBuff
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibProfilerGetSectionIdx" class="tlc_func">SLibProfilerGetSectionIdx</a>(fcnName) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span>  sectionIdx = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">FEVAL</span>("coder.internal.requestExecTimeTraceId", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibGetModelName">LibGetModelName</a>(), fcnName)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(sectionIdx) || (sectionIdx<=0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_exit">%exit</span> Failed to get identifier for execution profiling
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTTarget">SLibIsERTTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> customTraceIdentifier = <span class="tlc_bifunc">FEVAL</span>("coder.internal.getExecTimeProbeSymbol", "customTraceIdentifier")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtnVal = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibAddTrace">SLibAddTrace</a>("%<<span>customTraceIdentifier</span>>", "%<<span>sectionIdx</span>>")
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtnVal = <span class="tlc_bifunc">SPRINTF</span>("%dU",sectionIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> rtnVal
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibProfilerTypeDefs<span style="padding-left:9.5px"></span>============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Generate<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>typedefs<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>profiler<span style="padding-left:9.5px"></span>objects<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>macro<span style="padding-left:9.5px"></span>definitions<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>CPU<span style="padding-left:9.5px"></span>cycle<span style="padding-left:9.5px"></span>counting
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibProfilerTypeDefs" class="tlc_func">SLibProfilerTypeDefs</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> declarationsSymbol = <span class="tlc_bifunc">FEVAL</span>("coder.internal.getExecTimeProbeSymbol", "declarations")
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuff
+ <br>&nbsp;&nbsp;/* %<<span>declarationsSymbol</span>> */
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuff
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> tmpBuff
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span>
+ <br></body></html>

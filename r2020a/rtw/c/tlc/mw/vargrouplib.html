@@ -1,0 +1,190 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>2015-2017<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>library<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>contains<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>related<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Simulink<span style="padding-left:9.5px"></span>VarGroups
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_VARGROUPLIB_") == 0
+ <br><span class="tlc_assign">%assign</span> _VARGROUPLIB_ = 1
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibVarGroupIsStruct<span style="padding-left:9.5px"></span>================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>TLC_TRUE<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>given<span style="padding-left:9.5px"></span>vargroup<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>structure
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibVarGroupIsStruct" class="tlc_func">SLibVarGroupIsStruct</a>(aVarGroupIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> ::CompiledModel.VarGroups.NumVarGroups > aVarGroupIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> -1 < aVarGroupIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varGroup = ::CompiledModel.VarGroups.VarGroup[aVarGroupIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> 0 == varGroup.PackageAsStruct || -1 < varGroup.CGTypeIdx
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> 1 == varGroup.PackageAsStruct
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibVarGroupLocalName<span style="padding-left:9.5px"></span>===============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>local<span style="padding-left:9.5px"></span>name<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>given<span style="padding-left:9.5px"></span>vargroup
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibVarGroupLocalName" class="tlc_func">SLibVarGroupLocalName</a>(aVarGroupIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> ::CompiledModel.VarGroups.NumVarGroups > aVarGroupIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> -1 < aVarGroupIdx
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> ::CompiledModel.VarGroups.VarGroup[aVarGroupIdx].LocalName
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibVarGroupSystemIdx<span style="padding-left:9.5px"></span>=============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>owner<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>given<span style="padding-left:9.5px"></span>vargroup
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibVarGroupSystemIdx" class="tlc_func">SLibVarGroupSystemIdx</a>(aVarGroupIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> ::CompiledModel.VarGroups.NumVarGroups > aVarGroupIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> -1 < aVarGroupIdx
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> ::CompiledModel.VarGroups.VarGroup[aVarGroupIdx].SysIdx
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibVarGroupNumElements<span style="padding-left:9.5px"></span>=============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>elements<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>given<span style="padding-left:9.5px"></span>vargroup
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibVarGroupNumElements" class="tlc_func">SLibVarGroupNumElements</a>(aVarGroupIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> ::CompiledModel.VarGroups.NumVarGroups > aVarGroupIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> -1 < aVarGroupIdx
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> ::CompiledModel.VarGroups.VarGroup[aVarGroupIdx].NumVarGroupElements
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibVarGroupElementSource<span style="padding-left:9.5px"></span>===========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>source<span style="padding-left:9.5px"></span>record<span style="padding-left:9.5px"></span>idnum<span style="padding-left:9.5px"></span>string<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>given<span style="padding-left:9.5px"></span>vargroup<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>element<span style="padding-left:9.5px"></span>index
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibVarGroupElementSource" class="tlc_func">SLibVarGroupElementSource</a>(aVarGroupIdx, aElementIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupNumElements">SLibVarGroupNumElements</a>(aVarGroupIdx) > aElementIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> -1 < aElementIdx
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.VarGroups.VarGroup[aVarGroupIdx].VarGroupElements[aElementIdx]
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibDefineVarGroupElement<span style="padding-left:9.5px"></span>===========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>true<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>given<span style="padding-left:9.5px"></span>vargoup<span style="padding-left:9.5px"></span>element<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>defined<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>associated<span style="padding-left:9.5px"></span>data
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>structure.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibDefineVarGroupElement" class="tlc_func">SLibDefineVarGroupElement</a>(aVarGroupIdx, aElementIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> systemIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupSystemIdx">SLibVarGroupSystemIdx</a>(aVarGroupIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varGroupElement = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupElementSource">SLibVarGroupElementSource</a>(aVarGroupIdx, aElementIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> res = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#SLibNeedGenDataDefFromVarGroup">SLibNeedGenDataDefFromVarGroup</a>(varGroupElement, systemIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_TRUE == res[0] || !<span class="tlc_bifunc">WHITE_SPACE</span>(res[2])
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibVarGroupCGTypeIndex<span style="padding-left:9.5px"></span>==================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>CGType<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>vargoup
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibVarGroupCGTypeIdx" class="tlc_func">SLibVarGroupCGTypeIdx</a>(aVarGroupIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varGroupTypeIdx = ::CompiledModel.VarGroups.VarGroup[aVarGroupIdx].CGTypeIdx
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeIsMatrix">LibCGTypeIsMatrix</a>(varGroupTypeIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varGroupTypeIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/implicititerssutil.html#SLibGetBaseTypeForVarGroupUsedAsMatrix">SLibGetBaseTypeForVarGroupUsedAsMatrix</a>(varGroupTypeIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> varGroupTypeIdx
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibVarGroupElementName<span style="padding-left:9.5px"></span>=============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>vargroup<span style="padding-left:9.5px"></span>element<span style="padding-left:9.5px"></span>name<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>given<span style="padding-left:9.5px"></span>vargroup<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>element<span style="padding-left:9.5px"></span>index
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibVarGroupElementName" class="tlc_func">SLibVarGroupElementName</a>(aVarGroupIdx, aElementIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupNumElements">SLibVarGroupNumElements</a>(aVarGroupIdx) > aElementIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> -1 < aElementIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varGroup = ::CompiledModel.VarGroups.VarGroup[aVarGroupIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> 0 == varGroup.PackageAsStruct
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> varGroup.VarGroupElementIds[aElementIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cgTypeIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupCGTypeIdx">SLibVarGroupCGTypeIdx</a>(aVarGroupIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeMemberName">LibCGTypeMemberName</a>(cgTypeIdx, aElementIdx)
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibVarGroupSetElementName<span style="padding-left:9.5px"></span>==========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>vargroup<span style="padding-left:9.5px"></span>element<span style="padding-left:9.5px"></span>name<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>given<span style="padding-left:9.5px"></span>vargroup<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>element<span style="padding-left:9.5px"></span>index
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibVarGroupSetElementName" class="tlc_func">SLibVarGroupSetElementName</a>(aVarGroupIdx,aElementIdx,aNewIdentifier) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupNumElements">SLibVarGroupNumElements</a>(aVarGroupIdx) > aElementIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> -1 < aElementIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varGroup = ::CompiledModel.VarGroups.VarGroup[aVarGroupIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> 0 == varGroup.PackageAsStruct
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varGroup.VarGroupElementIds[aElementIdx] = aNewIdentifier
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cgTypeIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupCGTypeIdx">SLibVarGroupCGTypeIdx</a>(aVarGroupIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">CGMODEL_ACCESS</span>("CGType.Member.SetName", <span class="tlc_bifunc">STRING</span>(cgTypeIdx), <span class="tlc_bifunc">STRING</span>(aElementIdx), aNewIdentifier)
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibVarGroupElementType<span style="padding-left:9.5px"></span>=============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>vargroup<span style="padding-left:9.5px"></span>element<span style="padding-left:9.5px"></span>CG<span style="padding-left:9.5px"></span>type<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>given<span style="padding-left:9.5px"></span>vargroup
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>element<span style="padding-left:9.5px"></span>index
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibVarGroupElementType" class="tlc_func">SLibVarGroupElementType</a>(aVarGroupIdx, aElementIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupNumElements">SLibVarGroupNumElements</a>(aVarGroupIdx) > aElementIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> -1 < aElementIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varGroup = ::CompiledModel.VarGroups.VarGroup[aVarGroupIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> 0 == varGroup.PackageAsStruct
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> varGroup.VarGroupElementCGTypes[aElementIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cgTypeIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupCGTypeIdx">SLibVarGroupCGTypeIdx</a>(aVarGroupIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeMemberCGTypeIdx">LibCGTypeMemberCGTypeIdx</a>(cgTypeIdx, aElementIdx)
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibVarGroupElementIsVolatile<span style="padding-left:9.5px"></span>====================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>whether<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>vargroup<span style="padding-left:9.5px"></span>element<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>volatile
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibVarGroupElementIsVolatile" class="tlc_func">SLibVarGroupElementIsVolatile</a>(aVarGroupIdx, aElementIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupNumElements">SLibVarGroupNumElements</a>(aVarGroupIdx) > aElementIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> -1 < aElementIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> source = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupElementSource">SLibVarGroupElementSource</a>(aVarGroupIdx,aElementIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> idnum = <span class="tlc_bifunc">IDNUM</span>(source)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> idnum[0] == "W"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dwRec =  ::CompiledModel.DWorks.DWork[idnum[1]]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">ISFIELD</span>(dwRec, "IsDataTransferVolatileDWork") &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(dwRec.IsDataTransferVolatileDWork == 1)
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetVarGroupCategory<span style="padding-left:9.5px"></span>==========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>vargroup<span style="padding-left:9.5px"></span>category<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>given<span style="padding-left:9.5px"></span>vargroup<span style="padding-left:9.5px"></span>index
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibGetVarGroupCategory" class="tlc_func">LibGetVarGroupCategory</a>(varGroupIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> varGroupIdx >= 0
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> CGMODEL_ACCESS("VarGroups.Category",varGroupIdx)
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGetRecordVarGroupIdx<span style="padding-left:9.5px"></span>===========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>VarGroupIdx<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>record.<span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>[-1,<span style="padding-left:9.5px"></span>-1]<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>doesn't<span style="padding-left:9.5px"></span>exist.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetRecordVarGroupIdx" class="tlc_func">SLibGetRecordVarGroupIdx</a>(aDataRec) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = [-1, -1]
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(aDataRec, "VarGroupIdx")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = aDataRec.VarGroupIdx
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retVal
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibIsLocalVariableRecordType<span style="padding-left:9.5px"></span>=====================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>true<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>only<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>provided<span style="padding-left:9.5px"></span>record<span style="padding-left:9.5px"></span>type<span style="padding-left:9.5px"></span>corresponds<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>local<span style="padding-left:9.5px"></span>variable
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibIsLocalVariableRecordType" class="tlc_func">SLibIsLocalVariableRecordType</a>(aVarGroupIdx, aElementIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> idNum = <span class="tlc_bifunc">IDNUM</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupElementSource">SLibVarGroupElementSource</a>(aVarGroupIdx, aElementIdx))
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> recType = idNum[0]
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> recType == "L" || recType == "LDW" || recType == "S"
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_endif">%endif</span><span class="tlc_comment">%%  _VARGROUPLIB_</span>
+ <br></body></html>

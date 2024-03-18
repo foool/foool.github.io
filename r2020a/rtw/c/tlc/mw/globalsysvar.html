@@ -1,0 +1,377 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2017<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>contains<span style="padding-left:9.5px"></span>all<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>generating<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>variables<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>which<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>used<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>nonreusable<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>live<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>reusable<span style="padding-left:9.5px"></span>functions.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_GLOBALSYSVAR_") == 0
+ <br><span class="tlc_assign">%assign</span> _GLOBALSYSVAR_ = 1
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibAccessGlobalArg<span style="padding-left:9.5px"></span>================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>marks<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>argument<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>accessed<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>specific
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>(e.g.<span style="padding-left:9.5px"></span>"Start,<span style="padding-left:9.5px"></span>Output,<span style="padding-left:9.5px"></span>Update,<span style="padding-left:9.5px"></span>...").<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>also<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>sets<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>GlobalAccessed<span style="padding-left:9.5px"></span>flag<span style="padding-left:9.5px"></span>whenever<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>variable<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>accessed.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibAccessGlobalArg" class="tlc_func">LibAccessGlobalArg</a>(arg) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibAccessArgHelper">SLibAccessArgHelper</a>(arg, "Global",<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#FcnGetCurrentAccessTid">FcnGetCurrentAccessTid</a>())>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="LibAccessGlobalArgTID" class="tlc_func">LibAccessGlobalArgTID</a>(arg,tid) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">TYPE</span>(tid) != "Number"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibAccessArgHelper">SLibAccessArgHelper</a>(arg, "Global",<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#FcnGetCurrentAccessTid">FcnGetCurrentAccessTid</a>())>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibAccessArgHelper">SLibAccessArgHelper</a>(arg, "Global",tid)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SystemGlobalDeclIsNeeded" class="tlc_func">SystemGlobalDeclIsNeeded</a>(arg) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">ISFIELD</span>(arg, "GlobalAccessed")
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FcnGlobalArgNeeded<span style="padding-left:9.5px"></span>================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Call<span style="padding-left:9.5px"></span>either<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>rate<span style="padding-left:9.5px"></span>grouping<span style="padding-left:9.5px"></span>version<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>default<span style="padding-left:9.5px"></span>version.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGlobalArgNeeded" class="tlc_func">FcnGlobalArgNeeded</a>(arg,tid,isRateGrouping) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retVal = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#FcnArgNeededHelper">FcnArgNeededHelper</a>(arg, ::BlockFcn,tid,isRateGrouping,"Global")
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retVal
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibDumpGlobalVars<span style="padding-left:9.5px"></span>==================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Dump<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>variables<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>initialized<span style="padding-left:9.5px"></span>inside<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>specified<span style="padding-left:9.5px"></span>function
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibDumpGlobalVars" class="tlc_func">LibDumpGlobalVars</a>(system,function) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#LibGetSystemField">LibGetSystemField</a>(system, "Cached" + function + "GlobalVars")>/
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibDumpGlobalVars</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibInitializeGlobalVars<span style="padding-left:9.5px"></span>===========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>For<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>given<span style="padding-left:9.5px"></span>function,<span style="padding-left:9.5px"></span>initialize<span style="padding-left:9.5px"></span>all<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>variables<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>are
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>used<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>nonreusable<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>below<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibInitializeGlobalVars" class="tlc_func">LibInitializeGlobalVars</a>(system, function) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% We only need to initialize global variables</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% (1) if we are generating model reference target, and the</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%     specified system is the model reference base subsystem</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% (2) when the AllowNoArgFcnInReusedFcn is on  </span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !(::CompiledModel.AllowNoArgFcnInReusedFcn) || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>() &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceBaseSys">IsModelReferenceBaseSys</a>(system) &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsServer">LibIsServer</a>(system))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currentTID     = system.CurrentTID
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isRateGrouping = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibIsMultiRateAndPeriodicRateGrouping">SLibIsMultiRateAndPeriodicRateGrouping</a>(system) ||...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#SLibIsModelRefAsyncTID">SLibIsModelRefAsyncTID</a>(currentTID)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isRateGroupedSLF = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsRateGroupedSLFcn">SLibIsRateGroupedSLFcn</a>(system, function, currentTID)
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpbuf
+ <br>&nbsp;&nbsp;<span class="tlc_with">%with</span> system.Interface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> argIdx = NumCanonicalDWorkArgDefs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#FcnGlobalArgNeeded">FcnGlobalArgNeeded</a>(CanonicalDWorkArgDef[argIdx],currentTID,...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isRateGrouping)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> canDWork = CanonicalDWorkArgDef[argIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dwIdx    = canDWork.FirstSignalSrc <span class="tlc_comment">%% global idx</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dwRec    = ::CompiledModel.DWorks.DWork[dwIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dwId     = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(canDWork)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetRecordDataTypeName">SLibGetRecordDataTypeName</a>(dwRec, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Example:</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%   Scalar signal: void foo(real_T *a)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%   Wide signal:   void foo(real_T b[7])</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>canDWork.GlobalIdentifier</span>> = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(canDWork)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> argIdx = NumCanonicalPrmArgDefs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#FcnGlobalArgNeeded">FcnGlobalArgNeeded</a>(CanonicalPrmArgDef[argIdx],currentTID,...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isRateGrouping)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> canPrmDef = CanonicalPrmArgDef[argIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isRateGroupedSLF
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Cannot initialize global variable within a rate grouped simulink</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% function. The global must be initialized in the model init or</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% start functions.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> canPrmDef GlobalInitializationNeeded TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>canPrmDef.GlobalIdentifier</span>> = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(canPrmDef)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> canPrmDef GlobalInitialized TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> argIdx=NumCanonicalInputArgDefs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#FcnGlobalArgNeeded">FcnGlobalArgNeeded</a>(CanonicalInputArgDef[argIdx],currentTID,...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isRateGrouping) &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#FcnArgNeeded">FcnArgNeeded</a>(CanonicalInputArgDef[argIdx],currentTID,...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isRateGrouping)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> canInputArg = CanonicalInputArgDef[argIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> path = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#skipCanonicalSideInput">skipCanonicalSideInput</a>(system.Interface,function+"Fcn",argIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isRateGroupedSLF
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Cannot initialize global variable within a rate grouped simulink</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% function. The global must be initialized in the model init or</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% start functions.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> canInputArg GlobalInitializationNeeded TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(canInputArg,"VarGroupIdx")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> path =  <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#SLibCGIRVarGroupPath">SLibCGIRVarGroupPath</a>(canInputArg.VarGroupIdx[0], system.SystemIdx, TLC_TRUE)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupElementName">SLibVarGroupElementName</a>(canInputArg.VarGroupIdx[0], canInputArg.VarGroupIdx[1])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id = canInputArg.GlobalIdentifier
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>path</span>>%<<span>id</span>> = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(canInputArg)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> canInputArg GlobalInitialized TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> argIdx=NumCanonicalOutputArgDefs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#FcnGlobalArgNeeded">FcnGlobalArgNeeded</a>(CanonicalOutputArgDef[argIdx],currentTID,...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isRateGrouping) &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#FcnArgNeeded">FcnArgNeeded</a>(CanonicalOutputArgDef[argIdx],currentTID,...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isRateGrouping)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> canOutputArg = CanonicalOutputArgDef[argIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isReference = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnPassCanonicalOutputAsReference">FcnPassCanonicalOutputAsReference</a>(canOutputArg)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> path = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#skipCanonicalSideOutput">skipCanonicalSideOutput</a>(system.Interface,function+"Fcn",argIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isRateGroupedSLF
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Cannot initialize global variable within a rate grouped simulink</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% function. The global must be initialized in the model init or</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% start functions.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> canOutputArg GlobalInitializationNeeded TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(canOutputArg,"VarGroupIdx")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> path =  <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#SLibCGIRVarGroupPath">SLibCGIRVarGroupPath</a>(canOutputArg.VarGroupIdx[0], system.SystemIdx, TLC_TRUE)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupElementName">SLibVarGroupElementName</a>(canOutputArg.VarGroupIdx[0], canOutputArg.VarGroupIdx[1])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id = canOutputArg.GlobalIdentifier
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (canOutputArg.PassByReturn == "yes" || isReference) &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordWidth">LibGetRecordWidth</a>(canOutputArg) == 1 &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(function == "OutputUpdate" || function == "Output")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>path</span>>%<<span>id</span>> = &amp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(canOutputArg)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>path</span>>%<<span>id</span>> = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(canOutputArg)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> canOutputArg GlobalInitialized TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> simpIface = ::CompiledModel.RTWCGModules.RTWCGModule[system.CGIRModuleIdx].SimplifiedInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#FcnGlobalArgNeeded">FcnGlobalArgNeeded</a>(RTMArgDef,currentTID,isRateGrouping) &amp;&amp; !(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsSelfStructured">SLibIsSelfStructured</a>() &amp;&amp; (simpIface || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelRefScalableBuild">IsModelRefScalableBuild</a>()))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tsysRTM</span>> = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib.html#GetSimStructExpr">GetSimStructExpr</a>(system, ::tSimStruct)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#FcnGlobalArgNeeded">FcnGlobalArgNeeded</a>(ContStatesArgDef,currentTID,isRateGrouping)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(system,"ContStates")> = localX;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#FcnGlobalArgNeeded">FcnGlobalArgNeeded</a>(ContStatesDerivativeArgDef,currentTID,isRateGrouping)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(system,"ContStatesDerivative")> = localXdot; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#FcnGlobalArgNeeded">FcnGlobalArgNeeded</a>(ContStatesDisabledArgDef,currentTID,isRateGrouping)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(system,"ContStatesDisabled")> = localXdis;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#FcnGlobalArgNeeded">FcnGlobalArgNeeded</a>(ContStatesAbsoluteToleranceArgDef,currentTID,isRateGrouping)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(system,"ContStatesAbsoluteTolerance")> = localXAbsTol;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#FcnGlobalArgNeeded">FcnGlobalArgNeeded</a>(ContStatesPerturbMinArgDef,currentTID,isRateGrouping)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(system,"ContStatesPerturbMin")> = localXPerturbMin;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#FcnGlobalArgNeeded">FcnGlobalArgNeeded</a>(ContStatesPerturbMaxArgDef,currentTID,isRateGrouping)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(system,"ContStatesPerturbMax")> = localXPerturbMax;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#FcnGlobalArgNeeded">FcnGlobalArgNeeded</a>(ZCSVArgDef,currentTID,isRateGrouping)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(system,"ZCSV")>  = localZCSV;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpbuf
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (!<span class="tlc_bifunc">ISFIELD</span>(system,"ContainsNonreusedFcn") || system.ContainsNonreusedFcn == 0) &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(::BlockFcn != "Registration")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% In the model reference registaration function, we may access global </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% identifiers.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <span class="tlc_bifunc">WHITE_SPACE</span>(tmpbuf)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> tmpbuf
+ <br><span class="tlc_fkw">%endfunction</span>  <span class="tlc_comment">%% LibInitializeGlobalVars</span>
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibDeclareGlobalVars<span style="padding-left:9.5px"></span>==============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>For<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>given<span style="padding-left:9.5px"></span>system,<span style="padding-left:9.5px"></span>declare<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>variables<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>used<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>any
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>nonreusable<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>live<span style="padding-left:9.5px"></span>below<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>system.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>may<span style="padding-left:9.5px"></span>be
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>passed<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>string<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>prepend<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>declaration<span style="padding-left:9.5px"></span>(such<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>"extern")
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibDeclareGlobalVars" class="tlc_func">LibDeclareGlobalVars</a>(system, extern) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% We only need to declare global variables</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% (1) if we are generating model reference target, and the</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%     specified system is the model reference base subsystem</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% (2) when the AllowNoArgFcnInReusedFcn is on  </span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !(::CompiledModel.AllowNoArgFcnInReusedFcn) || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>() &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceBaseSys">IsModelReferenceBaseSys</a>(system))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> simpIface = ::CompiledModel.RTWCGModules.RTWCGModule[system.CGIRModuleIdx].SimplifiedInterface
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpbuf
+ <br>&nbsp;&nbsp;<span class="tlc_with">%with</span> system.Interface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> argIdx=NumCanonicalDWorkArgDefs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#SystemGlobalDeclIsNeeded">SystemGlobalDeclIsNeeded</a>(CanonicalDWorkArgDef[argIdx])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> canDWork = CanonicalDWorkArgDef[argIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dwIdx    = canDWork.FirstSignalSrc <span class="tlc_comment">%% global idx</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dwRec    = ::CompiledModel.DWorks.DWork[dwIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dwId     = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(canDWork)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetRecordDataTypeName">SLibGetRecordDataTypeName</a>(dwRec, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Example:</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%   Scalar signal: void foo(real_T *a)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%   Wide signal:   void foo(real_T b[7])</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>extern</span>> %<<span>dataType</span>> *%<<span>canDWork.GlobalIdentifier</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> argIdx = NumCanonicalPrmArgDefs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#SystemGlobalDeclIsNeeded">SystemGlobalDeclIsNeeded</a>(CanonicalPrmArgDef[argIdx])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> canPrmDef = CanonicalPrmArgDef[argIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span>   identi = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(canPrmDef)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetRecordDataTypeName">SLibGetRecordDataTypeName</a>(canPrmDef, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span>    width = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameterWidth">LibBlockParameterWidth</a>(canPrmDef)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span>    isPtr = ((canPrmDef.DeclareAsPointer == "yes") || (width > 1))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span>      ptr = isPtr ? "*" : ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> optConst =  isPtr ? "const " : ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span>   argDef = "%<<span>identi</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>extern</span>> %<<span>optConst</span>> %<<span>dataType</span>> %<<span>ptr</span>>%<<span>canPrmDef.GlobalIdentifier</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> argIdx=NumCanonicalInputArgDefs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#SystemGlobalDeclIsNeeded">SystemGlobalDeclIsNeeded</a>(CanonicalInputArgDef[argIdx])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ci = CanonicalInputArgDef[argIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetRecordDataTypeName">SLibGetRecordDataTypeName</a>(ci, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isPtr = (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordWidth">LibGetRecordWidth</a>(ci)>1 || ci.DeclareAsPointer == "yes")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ptr   =  isPtr ? "*" : ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> optConst =  isPtr ? "const " : ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comment = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(ci, "GrSrc")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comment  = "/* " + <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGrBlockCommentName">SLibGrBlockCommentName</a>(ci.GrSrc) + " */"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(ci,"VarGroupIdx")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>extern</span>> %<<span>optConst</span>> %<<span>dataType</span>> %<<span>ptr</span>>%<<span>ci.GlobalIdentifier</span>>; %<<span>comment</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> argIdx=NumCanonicalOutputArgDefs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#SystemGlobalDeclIsNeeded">SystemGlobalDeclIsNeeded</a>(CanonicalOutputArgDef[argIdx])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> co = CanonicalOutputArgDef[argIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetRecordDataTypeName">SLibGetRecordDataTypeName</a>(co, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% The comment will be based on the root outport that the block is</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% feeding.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comment = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(co, "RootOutputIdx")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Get the external outputs record that corresponds to this output </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% index.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> extOut = ExternalOutputs.ExternalOutput[co.RootOutputIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outName = System[extOut.Block[0]].Block[extOut.Block[1]].Name
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comment  = "/* '" + outName + "' */"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(co,"VarGroupIdx")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>extern</span>> %<<span>dataType</span>> *%<<span>co.GlobalIdentifier</span>>; %<<span>comment</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#SystemGlobalDeclIsNeeded">SystemGlobalDeclIsNeeded</a>(RTMArgDef) &amp;&amp; !(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsSelfStructured">SLibIsSelfStructured</a>() &amp;&amp; (simpIface || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelRefScalableBuild">IsModelRefScalableBuild</a>()))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>extern</span>> %<::tSimStructType> *%<<span>tsysRTM</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#SystemGlobalDeclIsNeeded">SystemGlobalDeclIsNeeded</a>(ContStatesArgDef)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>extern</span>> %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupType">FcnSysVarGroupType</a>(system,"ContStates")> *%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(system,"ContStates")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#SystemGlobalDeclIsNeeded">SystemGlobalDeclIsNeeded</a>(ContStatesDerivativeArgDef)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>extern</span>> %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupType">FcnSysVarGroupType</a>(system,"ContStatesDerivative")> *%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(system,"ContStatesDerivative")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#SystemGlobalDeclIsNeeded">SystemGlobalDeclIsNeeded</a>(ContStatesDisabledArgDef)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>extern</span>> %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupType">FcnSysVarGroupType</a>(system,"ContStatesDisabled")> *%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(system,"ContStatesDisabled")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#SystemGlobalDeclIsNeeded">SystemGlobalDeclIsNeeded</a>(ContStatesAbsoluteToleranceArgDef)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>extern</span>> %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupType">FcnSysVarGroupType</a>(system,"ContStatesAbsoluteTolerance")> *%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(system,"ContStatesAbsoluteTolerance")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#SystemGlobalDeclIsNeeded">SystemGlobalDeclIsNeeded</a>(ContStatesPerturbMinArgDef)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>extern</span>> %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupType">FcnSysVarGroupType</a>(system,"ContStatesPerturbMin")> *%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(system,"ContStatesPerturbMin")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#SystemGlobalDeclIsNeeded">SystemGlobalDeclIsNeeded</a>(ContStatesPerturbMaxArgDef)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>extern</span>> %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupType">FcnSysVarGroupType</a>(system,"ContStatesPerturbMax")> *%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(system,"ContStatesPerturbMax")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#SystemGlobalDeclIsNeeded">SystemGlobalDeclIsNeeded</a>(ZCSVArgDef)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>extern</span>> %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupType">FcnSysVarGroupType</a>(system,"ZCSV")> *%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupNonreusedName">FcnSysVarGroupNonreusedName</a>(system,"ZCSV")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpbuf
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(system,"ContainsNonreusedFcn") || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;system.ContainsNonreusedFcn == 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <span class="tlc_bifunc">WHITE_SPACE</span>(tmpbuf)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> tmpbuf
+ <br><span class="tlc_fkw">%endfunction</span>  <span class="tlc_comment">%% LibDeclareGlobalVars</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibGlobalFileHandling<span style="padding-left:9.5px"></span>============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>we<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>allowing<span style="padding-left:9.5px"></span>nonreusable<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>live<span style="padding-left:9.5px"></span>inside<span style="padding-left:9.5px"></span>reusable<span style="padding-left:9.5px"></span>functions,<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>then<span style="padding-left:9.5px"></span>handle<span style="padding-left:9.5px"></span>all<span style="padding-left:9.5px"></span>necessary<span style="padding-left:9.5px"></span>extern<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>declarations<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>subsystem<span style="padding-left:9.5px"></span>files.
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGlobalFileHandling" class="tlc_func">SLibGlobalFileHandling</a>(fileOwnerSystem, system) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% system will handle #including any reusable parent filenames.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(fileOwnerSystem,"IncludedReusableParentHeaderFiles")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = <span class="tlc_bifunc">SIZE</span>(fileOwnerSystem.IncludedReusableParentHeaderFiles,1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sys = System[fileOwnerSystem.IncludedReusableParentHeaderFiles[idx]]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> parentName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibGetSystemOutputHdrFileBaseName">SLibGetSystemOutputHdrFileBaseName</a>(sys)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Don't include root header file, since this is already included</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> parentName != ::CompiledModel.Name
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Include %<<span>parentName</span>>.h for global extern declarations */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#include "%<<span>parentName</span>>.h"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheSystemCodeToFile">SLibCacheSystemCodeToFile</a>("sys_src_incl", system, tmpBuf)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% The file name owner for opFile will handle declaring any </span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% extern variables from reusable parents.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(fileOwnerSystem,"IncludedReusableParentSystemIdx")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = <span class="tlc_bifunc">SIZE</span>(fileOwnerSystem.IncludedReusableParentSystemIdx,1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sys = System[fileOwnerSystem.IncludedReusableParentSystemIdx[idx]]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !GenerateClassInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> externBuf = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html#LibDeclareGlobalVars">LibDeclareGlobalVars</a>(sys, "extern")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% GenerateClassInterface == true. System level global variables have been</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% moved to the class scope, and thus there is no need to declare them at the</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% global scope</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> externBuf = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysInfo   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#GetSystemNameForComments">GetSystemNameForComments</a>(sys)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(externBuf)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceBaseSys">IsModelReferenceBaseSys</a>(sys) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Extern declarations from %<<span>sysInfo</span>> */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Extern declarations from reusable %<<span>sysInfo</span>> */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>externBuf</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheSystemCodeToFile">SLibCacheSystemCodeToFile</a>("sys_extern_data_defn", system, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmpBuf)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span> <span class="tlc_comment">%% _GLOBALSYSVAR_</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalsysvar.html">globalsysvar.tlc</a>
+</span> <br></body></html>

@@ -1,0 +1,174 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Multithreading Dataflow Models with Hierarchy</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-04-11"><meta name="DC.source" content="slexDataflowModelHierarchyExample_publish.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Multithreading Dataflow Models with Hierarchy</h1><!--introduction--><p>This example shows how dataflow, a data-driven domain in Simulink, partitions a model with hierarchy to run a multithreaded simulation. The example is vision system containing subsystems that detect and track road lane markers.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">About Dataflow</a></li><li><a href="#2">Lane Departure Warning System</a></li><li><a href="#3">Block to Thread Allocation</a></li><li><a href="#4">Multithreaded Simulation</a></li><li><a href="#5">Thread Allocation Results</a></li><li><a href="#6">Summary</a></li></ul></div><h2 id="1">About Dataflow</h2><p>With dataflow, blocks inside domain execute based on arrival of data as opposed to the Simulink timing engine, and models are automatically partitioned into concurrent threads that accelerate simulation and increase data throughput. For an introduction to dataflow see the <a href="matlab:web(fullfile(matlabroot,'toolbox','shared','dataflow','dataflowdemos','html','slexDataflowIntroductionExample_publish.html'))">Introduction to Dataflow for Multithreading in Simulink</a> example. To take advantage of dataflow domain, hence multithreaded simulation, your model or sub-section of your model must only have discrete-time blocks. Using Dataflow Subsystem we can create dataflow regions in a model. The Dataflow Subsystem delineates the region of the model where dataflow semantics, as opposed to time-based semantics is used to sort and execute blocks. Moreover, you cannot have blocks that access time, require a Simulink solver, or not support code generation. In Simulink, you create a dataflow domain using the Dataflow Subsystem block. Inputs to Dataflow Subsystem block are converted to dataflow signals (a signal with no sample time associated with it) from Simulink time based signals. All the blocks inside Dataflow Subsystem block form a dataflow region in the model.</p><h2 id="2">Lane Departure Warning System</h2><p>This example shows a lane departure warning system that detects and tracks road lane markers in a video sequence and notifies the driver if they are moving across a lane. This large model is organized into many subsystems hierarchically which naturally decomposes the various functional components of the system. The "Detect Lanes" subsystem detects the lanes and also identifies whether there is any lane departure. "DrawLane" block uses this information to draw lane information on the input video. "Video Viewer" block displays the resulting output video. This example model shows a dataflow region in the model that has multiple input signals and multiple output signals. The model also shows use of virtual subsystems inside dataflow region to organize sections of your model hierarchically.</p><img vspace="5" hspace="5" src="slexDataflowModelHierarchyExample_publish_01.png" alt=""> <h2 id="3">Block to Thread Allocation</h2><p>Dataflow Subsystem block in the model enables Simulink to partition the model to run using concurrent threads. Performance of multithreaded run can be visualized using the Dataflow Multithreading Analysis app. You can open this app by double-clicking on the Dataflow Multithreading Analysis App block in the model. In this app you can see that 4 threads are used for the model. Dataflow has automatically partitioned the model by taking all the blocks including the ones inside the subsystems and scheduling them into multiple threads. You can also see that for 3 delays the model can run using 4 threads and get an estimated speedup of 3.5x. This is the number of delays we have set on the Dataflow Configuration block in the Dataflow Subsystem.</p><img vspace="5" hspace="5" src="slexDataflowModelHierarchyExample_publish_02.png" alt=""> <h2 id="4">Multithreaded Simulation</h2><p>By creating a dataflow region in the model it enabled Simulink to automatically partition the model into concurrent execution threads. When simulating this model it uses multiple threads which achieves an estimated speedup of 3.5 times faster than the single-threaded version. The Results window shows the left and right lane markers and a lane departure warning message when there is a departure.</p><img vspace="5" hspace="5" src="slexDataflowModelHierarchyExample_publish_03.png" alt=""> <h2 id="5">Thread Allocation Results</h2><p>The partitioning of the dataflow region into threads can be seen by turning thread highlighting "on" using the menu option "Display-&gt;Highlight Dataflow Threads". For this model, 4 different threads used by the dataflow region are shown using 4 different colors. A virtual subsystem that contains blocks running in different threads is shown with black highlighting. For example, the DrawLane block runs in a separate thread, while the blocks inside "Detect Lanes" subsystem run in different threads. The Thread Legend window can be used to selectively highlight only some threads for inspecting the model.</p><p><img vspace="5" hspace="5" src="slexDataflowModelHierarchyExampleHighlightThreadsPix.png" alt=""> </p><img vspace="5" hspace="5" src="slexDataflowModelHierarchyExample_publish_04.png" alt=""> <h2 id="6">Summary</h2><p>This example shows how a video processing system simulation model containing a hierarchy of subsystems uses dataflow to automatically partition the model into concurrent execution threads and runs the model using multiple threads. Dataflow Multithreading Analysis app shows how different blocks are scheduled to run in parallel and how introducing pipeline delays between blocks can increase concurrency. Note that depending on the desktop computer system and the processor you are using, the numbers and visualization showed could be different when you run the same model in your computer. These numbers and analysis were published on a Windows desktop computer with Intel&reg; Xeon&reg; CPU E5-1650 v3 @ 3.4 GHz 6 Cores 12 Threads processor.</p><p class="footer">Copyright 2016-2017 The MathWorks, Inc.<br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Multithreading Dataflow Models with Hierarchy
+% This example shows how dataflow, a data-driven domain in Simulink,
+% partitions a model with hierarchy to run a multithreaded simulation. The
+% example is vision system containing subsystems that detect and
+% track road lane markers.
+
+% Copyright 2016-2017 The MathWorks, Inc.
+
+%% About Dataflow
+% With dataflow, blocks inside domain execute based on arrival of data as
+% opposed to the Simulink timing engine, and models are automatically
+% partitioned into concurrent threads that accelerate simulation and
+% increase data throughput. For an introduction to dataflow see the
+% <matlab:web(fullfile(matlabroot,'toolbox','shared','dataflow','dataflowdemos','html','slexDataflowIntroductionExample_publish.html'))
+% Introduction to Dataflow for Multithreading in Simulink> example. To take
+% advantage of dataflow domain, hence multithreaded simulation, your model
+% or sub-section of your model must only have discrete-time blocks. Using
+% Dataflow Subsystem we can create dataflow regions in a model. The
+% Dataflow Subsystem delineates the region of the model where dataflow
+% semantics, as opposed to time-based semantics is used to sort and execute
+% blocks. Moreover, you cannot have blocks that access time, require a
+% Simulink solver, or not support code generation. In Simulink, you create
+% a dataflow domain using the Dataflow Subsystem block. Inputs to Dataflow
+% Subsystem block are converted to dataflow signals (a signal with no
+% sample time associated with it) from Simulink time based signals. All the
+% blocks inside Dataflow Subsystem block form a dataflow region in the
+% model.
+
+%% Lane Departure Warning System
+% This example shows a lane departure warning system that detects and
+% tracks road lane markers in a video sequence and notifies the driver if
+% they are moving across a lane. This large model is organized into many
+% subsystems hierarchically which naturally decomposes the various
+% functional components of the system. The "Detect Lanes" subsystem detects
+% the lanes and also identifies whether there is any lane departure.
+% "DrawLane" block uses this information to draw lane information on the
+% input video. "Video Viewer" block displays the resulting output video.
+% This example model shows a dataflow region in the model that has multiple
+% input signals and multiple output signals. The model also shows use of
+% virtual subsystems inside dataflow region to organize sections of your
+% model hierarchically.
+model_name = 'slexDataflowModelHierarchyExample';
+open_system(model_name);
+open_system([model_name '/Subsystem']); % Open Dataflow Subsystem
+
+%% Block to Thread Allocation
+% Dataflow Subsystem block in the model enables Simulink to partition the
+% model to run using concurrent threads. Performance of multithreaded run
+% can be visualized using the Dataflow Multithreading Analysis app. You can
+% open this app by double-clicking on the Dataflow Multithreading Analysis
+% App block in the model. In this app you can see that 4 threads are used
+% for the model. Dataflow has automatically partitioned the model by taking
+% all the blocks including the ones inside the subsystems and scheduling
+% them into multiple threads. You can also see that for 3 delays the model
+% can run using 4 threads and get an estimated speedup of 3.5x. This is the
+% number of delays we have set on the Dataflow Configuration block in the
+% Dataflow Subsystem.
+set_param(model_name, 'SimulationCommand', 'Update');
+dataflow.internal.visuals.openBlockVisual(model_name,struct(...
+    'AnalysisType',1,'ScreenScaling',[60 400 900 650],'BackGround','white'));
+
+%% Multithreaded Simulation
+% By creating a dataflow region in the model it enabled Simulink to
+% automatically partition the model into concurrent execution threads. When
+% simulating this model it uses multiple threads which achieves an
+% estimated speedup of 3.5 times faster than the single-threaded version.
+% The Results window shows the left and right lane markers and a lane
+% departure warning message when there is a departure.
+sim(model_name,'StopTime','10');
+
+%% Thread Allocation Results
+% The partitioning of the dataflow region into threads can be seen by
+% turning thread highlighting "on" using the menu option
+% "Display->Highlight Dataflow Threads". For this model, 4 different
+% threads used by the dataflow region are shown using 4 different colors. A
+% virtual subsystem that contains blocks running in different threads is
+% shown with black highlighting. For example, the DrawLane block runs in a
+% separate thread, while the blocks inside "Detect Lanes" subsystem run in
+% different threads. The Thread Legend window can be used to selectively
+% highlight only some threads for inspecting the model.
+%
+% <<slexDataflowModelHierarchyExampleHighlightThreadsPix.png>>
+%
+set_param(model_name, 'HighlightDataflowThreads', 'on');
+set_param(model_name, 'SimulationCommand', 'Update');
+print('-dpng',['-s' model_name '/Subsystem'], [model_name 'HighlightThreadsPix.png']);
+
+%% Summary
+% This example shows how a video processing system simulation model 
+% containing a hierarchy of subsystems uses dataflow to automatically
+% partition the model into concurrent execution threads and runs the model
+% using multiple threads. Dataflow Multithreading Analysis app shows how
+% different blocks are scheduled to run in parallel and how introducing
+% pipeline delays between blocks can increase concurrency. Note that
+% depending on the desktop computer system and the processor you are using,
+% the numbers and visualization showed could be different when you run the
+% same model in your computer. These numbers and analysis were published on
+% a Windows desktop computer with Intel(R) Xeon(R) CPU E5-1650 v3 @ 3.4
+% GHz 6 Cores 12 Threads processor.
+
+close_system(model_name, 0);
+
+##### SOURCE END #####
+--></body></html>

@@ -1,0 +1,297 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>2009-2010<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br>&nbsp; <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br><span class="tlc_openfile">%openfile</span> h_file = "tlm/mw_backdoorcfg_if.h"
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br>&nbsp; <br>#ifndef _mw_backdoorcfg_if_
+ <br>#define _mw_backdoorcfg_if_
+ <br>&nbsp; <br>#include "systemc.h"
+ <br>&nbsp; <br>class mw_backdoorcfg_IF:virtual public sc_core::sc_interface
+ <br>{
+ <br>public:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;enum eTimingType
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UNTIMED,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TIMED
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;};
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;virtual void SetTimingParam(eTimingType Type) = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;virtual eTimingType GetTimingParam(void)= 0;
+ <br>};
+ <br>#endif /* _mw_backdoorcfg_if_ */
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br><span class="tlc_closefile">%closefile</span> h_file
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIndentFile">SLibIndentFile</a>("tlm/mw_backdoorcfg_if.h","")>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br><span class="tlc_openfile">%openfile</span> h_file = "tlm/mw_support.h"
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br>#ifndef __MW_SUPPORT_H__
+ <br>#define __MW_SUPPORT_H__
+ <br>&nbsp; <br>#include <systemc>
+ <br>#include <map>
+ <br>&nbsp; <br>template <typename T>
+ <br>class mw_comlink_fifo : public sc_core::sc_object
+ <br>{
+ <br>public:
+ <br>&nbsp;&nbsp;mw_comlink_fifo(const char* name, unsigned int size) : sc_core::sc_object(name),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_size(size)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;clear();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if( m_size > 0 ) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_fifo = new T[m_size];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;~mw_comlink_fifo()
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;clear();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;delete [] m_fifo;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;void clear()
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_free = m_size;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_readindex = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_writeindex = 0;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;bool nb_read(T* data)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if(m_free == m_size ) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;*data = m_fifo[m_readindex];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_readindex = ( m_readindex + 1 ) % m_size;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_free++;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return true;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;bool nb_write(const T* data)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (m_free == 0 ) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;m_fifo[m_writeindex] = *data;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_writeindex = ( m_writeindex + 1 ) % m_size;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_free--;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return true;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;unsigned int get_num_available() const {return m_size-m_free;}
+ <br>&nbsp;&nbsp;unsigned int get_num_free() const {return m_free;}
+ <br>&nbsp; <br>private:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;T*  m_fifo;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;unsigned int m_size;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;unsigned int m_readindex;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;unsigned int m_writeindex;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;unsigned int m_free;
+ <br>&nbsp; <br>}; //mw_comlink_fifo
+ <br>&nbsp; <br>template <typename T>
+ <br>class mw_comlink_timedreg : public sc_core::sc_object
+ <br>{
+ <br>public:
+ <br>&nbsp;&nbsp;mw_comlink_timedreg(const char* name) : sc_core::sc_object(name)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;clear();
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;~mw_comlink_timedreg()
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;clear();
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;typedef std::pair<const sc_core::sc_time, T> pair_type;
+ <br>&nbsp;&nbsp;typedef typename std::multimap<const sc_core::sc_time,T>::iterator it_type;
+ <br>&nbsp; <br>&nbsp;&nbsp;void clear()
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_timedreg.clear();
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;void clear(const sc_core::sc_time&amp; localtime)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sc_core::sc_time globaltime = sc_core::sc_time_stamp() + localtime;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_timedreg.erase(m_timedreg.begin(),m_timedreg.lower_bound(globaltime));
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;bool nb_read(T* data,const sc_core::sc_time&amp; localtime)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sc_core::sc_time globaltime = sc_core::sc_time_stamp() + localtime;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;it_type it_first_future = m_timedreg.upper_bound(globaltime);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;it_type it_lastest_past = it_first_future; //first item in the future;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;if( it_first_future ==  m_timedreg.begin() ) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;it_lastest_past--;  //init to the lastest item in the past;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;*data = (*it_lastest_past).second;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//erase everything older than actual time (register behavior)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_timedreg.erase(m_timedreg.begin(),it_first_future);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return true;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;bool nb_write(const T* data,const sc_core::sc_time&amp; localtime) 
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sc_core::sc_time globaltime = sc_core::sc_time_stamp() + localtime;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_timedreg.insert(pair_type(globaltime,*data));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return true;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>private:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;std::multimap< const sc_core::sc_time,T >  m_timedreg;
+ <br>}; //mw_comlink_timedreg
+ <br>&nbsp; <br>template <typename T>
+ <br>class mw_comlink_timedfifo : public sc_core::sc_object
+ <br>{
+ <br>public:
+ <br>&nbsp;&nbsp;mw_comlink_timedfifo(const char* name, unsigned int size) : sc_core::sc_object(name), m_size(size)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;clear();
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;~mw_comlink_timedfifo()
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;clear();
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;typedef std::pair<const sc_core::sc_time, T> pair_type;
+ <br>&nbsp;&nbsp;typedef typename std::multimap<const sc_core::sc_time,T>::iterator it_type;
+ <br>&nbsp; <br>&nbsp;&nbsp;void clear()
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_timedfifo.clear();
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;void clear(const sc_core::sc_time&amp; localtime)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sc_core::sc_time globaltime = sc_core::sc_time_stamp() + localtime;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_timedfifo.erase(m_timedfifo.begin(),m_timedfifo.lower_bound(globaltime));
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;bool nb_read(T* data,const sc_core::sc_time&amp; localtime)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sc_core::sc_time globaltime = sc_core::sc_time_stamp() + localtime;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;it_type it = m_timedfifo.upper_bound(globaltime);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;unsigned int nb_elem = 0;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;while((it != m_timedfifo.begin()) &amp;&amp; (nb_elem  < m_size))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it--;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nb_elem++;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;if( nb_elem == 0) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;*data = (*it).second;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;it++; //move to next item (new head) and erase everything older;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_timedfifo.erase(m_timedfifo.begin(),it);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return true;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;bool nb_write(const T* data,const sc_core::sc_time&amp; localtime) 
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sc_core::sc_time globaltime = sc_core::sc_time_stamp() + localtime;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;it_type it = m_timedfifo.upper_bound(globaltime);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;unsigned int nb_elem = 0;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;while((it != m_timedfifo.begin())&amp;&amp; (nb_elem  < m_size))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it--;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nb_elem++;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;if( nb_elem >= m_size) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;m_timedfifo.insert(pair_type(globaltime,*data));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return true;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;unsigned int get_num_available(const sc_core::sc_time&amp; localtime) 
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sc_core::sc_time globaltime = sc_core::sc_time_stamp() + localtime;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;it_type it = m_timedfifo.upper_bound(globaltime);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;unsigned int nb_elem = 0;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;while((it != m_timedfifo.begin())&amp;&amp; (nb_elem  < m_size))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it--;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nb_elem++;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;return nb_elem;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;unsigned int get_num_free(const sc_core::sc_time&amp; localtime) 
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sc_core::sc_time globaltime = sc_core::sc_time_stamp() + localtime;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;it_type it = m_timedfifo.upper_bound(globaltime);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;unsigned int nb_elem = 0;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;while((it != m_timedfifo.begin())&amp;&amp; (nb_elem  < m_size))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it--;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nb_elem++;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;return m_size-nb_elem;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>private:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;std::multimap< const sc_core::sc_time,T >  m_timedfifo;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;unsigned int m_size;    
+ <br>}; //mw_comlink_timedfifo
+ <br>&nbsp; <br>class mw_refresh_reg
+ <br>{
+ <br>public:
+ <br>&nbsp;&nbsp;mw_refresh_reg(unsigned long nb_reg)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_init = 0ULL;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_max = ~((~0ULL) << nb_reg);
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;~mw_refresh_reg()
+ <br>&nbsp;&nbsp;{;}
+ <br>&nbsp; <br>&nbsp;&nbsp;inline void init(bool full)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_reg = full? m_max: m_init;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp; <br>&nbsp;&nbsp;inline void set_init(unsigned long pos)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_init |= (1ULL << pos);
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;inline void set(unsigned long pos)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_reg |= (1ULL << pos);
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;inline bool test(void)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return (m_reg == m_max);
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;private:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long long m_reg;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long long m_max;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned long long m_init;
+ <br>&nbsp;&nbsp;}; //mw_refresh_reg
+ <br>&nbsp; <br>&nbsp; <br>template< int W >
+ <br>void Uint8ToBigUint(const unsigned char* byteArray,unsigned int size,sc_dt::sc_biguint<W>* bigUint)
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;*bigUint = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;for (int i=size-1;i>=0;i--) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*bigUint <<= 8;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*bigUint += byteArray[i];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>};
+ <br>&nbsp; <br>&nbsp; <br>template< int W >
+ <br>void BigUintToUint8(unsigned char* byteArray,unsigned int size,sc_dt::sc_biguint<W> bigUint)
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;for (unsigned int i=0;i<size;i++) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;byteArray[i] = (unsigned char)bigUint.to_uint64();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bigUint >>= 8;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>};
+ <br>&nbsp; <br>#endif //__MW_SUPPORT_H__
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br><span class="tlc_closefile">%closefile</span> h_file
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>###############################################################################
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIndentFile">SLibIndentFile</a>("tlm/mw_support.h","")>
+ <br></body></html>

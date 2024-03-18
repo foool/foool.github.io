@@ -1,0 +1,200 @@
+<html>
+<head>
+
+<style>
+p {color : black; font-family:courier; font-size: 80%;}
+body {line-height: 100%; font-family:courier;}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_function {color: green;}.tlc_endfunction {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}
+.tlc_bifunc {color: brown;}
+</style>
+
+</head>
+<body>
+/% File: <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcinterruptfunctions.html">xpcinterruptfunctions.tlc</a>
+ <br>%    Defines some common functions needed by the various interrupt-handling
+ <br>%    code (async event blocks, external event driving the model, etc.
+ <br>%
+ <br>%    Copyright 1996-2011 The MathWorks, Inc.
+ <br>%/
+ <br>&nbsp; <br>/% Function: xPCIRQDoOnce ====================================================
+ <br>&nbsp;%    Generate code for IRQ handling (whether from the model or from specific
+ <br>&nbsp;%    blocks) that only needs to be done once, such as getting the function
+ <br>&nbsp;%    pointers or including header files. It can be called multiple times but
+ <br>&nbsp;%    will generate code only once.
+ <br>&nbsp;%/
+ <br><span class="tlc_function">%function</span> <a id="xPCIRQDoOnce" class="tlc_func">xPCIRQDoOnce</a>() void
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("::xPCIRQSetupDone") && ::xPCIRQSetupDone == 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::xPCIRQSetupDone = 1
+ <br>&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("<xpctarget.h&gt;")>
+ <br><span class="tlc_endfunction">%endfunction</span> /% <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcinterruptfunctions.html#xPCIRQDoOnce">xPCIRQDoOnce</a>() %/
+ <br>&nbsp; <br>/% Utility function to print out a TLC structure %/
+ <br><span class="tlc_function">%function</span> <a id="printOutStruct" class="tlc_func">printOutStruct</a>(structure) void
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_selectfile">%selectfile</span> STDOUT
+ <br>&nbsp;&nbsp;&nbsp;%&lt;<span class="tlc_bifunc">TYPE</span>(structure)&gt;
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fl  = <span class="tlc_bifunc">FIELDNAMES</span>(structure)
+ <br>&nbsp;&nbsp;&nbsp;%&lt;<span class="tlc_bifunc">FIELDNAMES</span>(structure)&gt;
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = <span class="tlc_bifunc">SIZE</span>(fl, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(%<<span class="tlc_bifunc">TYPE</span>(<span class="tlc_bifunc">GETFIELD</span>(structure, fl[idx]))>) %&lt;fl[idx]&gt;: %<<span class="tlc_bifunc">GETFIELD</span>(structure, fl[idx])>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endfunction">%endfunction</span> /% <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcinterruptfunctions.html#printOutStruct">printOutStruct</a>() %/
+ <br>&nbsp; <br>&nbsp;/% Function: xPCGenerateIRQCode ==============================================
+ <br>&nbsp;&nbsp;%    Generates code for each IRQ, such as registration and deregistration of
+ <br>&nbsp;&nbsp;%    that IRQ.  Now accepts multiple requests for the same IRQ since
+ <br>&nbsp;&nbsp;%    that can now be handled correctly.  Accepts a TLC struct
+ <br>&nbsp;&nbsp;%    with the requisite data (see code for details) and the name of the
+ <br>&nbsp;&nbsp;%    isr.
+ <br>&nbsp;&nbsp;%/
+ <br><span class="tlc_function">%function</span> <a id="xPCGenerateIRQCode" class="tlc_func">xPCGenerateIRQCode</a>(irqData, isr) void
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> IRQ          = <span class="tlc_bifunc">CAST</span>("Number", irqData.IRQ)
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> VendId       = <span class="tlc_bifunc">CAST</span>("Number", irqData.VendorId)
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DevId        = irqData.DeviceId
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nDevId       = <span class="tlc_bifunc">SIZE</span>( DevId, 1 )
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> SubVendId    = <span class="tlc_bifunc">CAST</span>("Number", irqData.SubVendorId)
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> SubDeviceId  = <span class="tlc_bifunc">CAST</span>("Number", irqData.SubDeviceId)
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Slot         = <span class="tlc_bifunc">CAST</span>("Number", irqData.PCISlot)
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> RELATIVEPRIO = <span class="tlc_bifunc">CAST</span>("Number", irqData.ISRPrio)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> IRQ == -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_exit">%exit</span> Simulink Real-Time: An ISA board or a parallel port device can't use automatic IRQ detection
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">EXISTS</span>("::xPCIntCounter")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::xPCIntCounter = 1
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::xPCIntCounter = ::xPCIntCounter + 1
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;%% Make sure include files are protected by #ifdef's, since they may
+ <br>&nbsp;&nbsp;&nbsp;%% get included multiple times.
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(irqData.HookIncludeFile)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToModelSources">LibAddToModelSources</a>(irqData.HookIncludeFile)&gt;
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>  /% end HookInclude file exists section %/
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buffer
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> incfile = 0
+ <br>&nbsp;&nbsp;&nbsp;/* Define interrupt functions for board %&lt;xPCIntCounter&gt; */
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (irqData.StartFunction    != "NULL")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void __cdecl %&lt;irqData.StartFunction&gt;(xpcPCIDevice *);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> incfile = 1
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (irqData.StopFunction     != "NULL")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void __cdecl %&lt;irqData.StopFunction&gt;(xpcPCIDevice *);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> incfile = 1
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (irqData.PreHookFunction  != "NULL")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int __cdecl %&lt;irqData.PreHookFunction&gt;(xpcPCIDevice *);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> incfile = 1
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (irqData.PostHookFunction != "NULL")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void __cdecl %&lt;irqData.PostHookFunction&gt;(xpcPCIDevice *);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> incfile = 1
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span>( <span class="tlc_bifunc">ISEMPTY</span>(irqData.HookIncludeFile) && incfile == 1 )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_exit">%exit</span> Simulink Real-Time: Interrupt functions defined, but no file specified for them.
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> devname = "xpcDev_%&lt;xPCIntCounter&gt;"
+ <br>&nbsp;&nbsp;&nbsp;xpcPCIDevice %&lt;devname&gt;;
+ <br>&nbsp;&nbsp;&nbsp;/* Done with interrupt functions for board %&lt;xPCIntCounter&gt; */
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buffer
+ <br>&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibCacheDefine">LibCacheDefine</a>(buffer)&gt;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buffer
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint8_T irq = %&lt;IRQ&gt;;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span>( VendId > 0 )  /% if a PCI device %/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32_T found = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32_T ind;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint16_T devid[%&lt;nDevId&gt;];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> id = nDevId
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;devid[%&lt;id&gt;] = (uint16_T)%&lt;DevId[id]&gt;;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Call xpcGetPCIDeviceInfo to fill in the structure */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> bus = Slot / 256
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> slot = Slot % 256
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for( ind = 0 ; ind < %&lt;nDevId&gt; ; ind++ )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%printf("%d, 0x%x/n", ind, devid[ind]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if( xpcGetPCIDeviceInfo( (uint16_T)%&lt;VendId&gt;, devid[ind], (uint16_T)%&lt;SubVendId&gt;, (uint16_T)%&lt;SubDeviceId&gt;, %&lt;bus&gt;, %&lt;slot&gt;, &%&lt;devname&gt; ) == 0 )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;found = 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if( found == 0 )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> CompiledModel
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootsys = System[NumSystems-1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibSetRTModelErrorStatus">LibSetRTModelErrorStatus</a>("/"Interrupting board at [%&lt;bus&gt;, %&lt;slot&gt;]: Not present/"" )>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span>(IRQ > 16 )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> OneMSIIrq = %&lt;IRQ&gt;-1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;irq = %&lt;OneMSIIrq&gt;;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slrteSetupMSI(%&lt;devname&gt;.bus, %&lt;devname&gt;.slot, 0, %&lt;OneMSIIrq&gt;);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span>(IRQ == 16 )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slrteSetupMSI(%&lt;devname&gt;.bus, %&lt;devname&gt;.slot, 0, 0xFFFF0000);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xpcGetPciConfigAtSlot(%&lt;devname&gt;.bus, %&lt;devname&gt;.slot, &%&lt;devname&gt;);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if( irq == 2 || irq == 16)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;irq = (uint8_T)%&lt;devname&gt;.InterruptLine;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* connect ISR system to config space irq */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%printf("irq = %d/n", irq );
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* For an ISA board, save the given address in the struct. */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;devname&gt;.BaseAddress[0] = %&lt;Slot&gt;;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* connect ISR system: IRQ %&lt;IRQ&gt; */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (xpceRegisterISR( irq, %&lt;isr&gt;,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;irqData.PreHookFunction&gt;,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;irqData.PostHookFunction&gt;, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;irqData.StartFunction&gt;, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;irqData.StopFunction&gt;,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;RELATIVEPRIO&gt;,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&%&lt;devname&gt;) == -1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static uint8_T ermsg[100];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> CompiledModel
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootsys = System[NumSystems-1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span>( VendId > 0 )  /% if a PCI device %/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf( ermsg, "ISR reg failed for IRQ %d at [%&lt;bus&gt;, %&lt;slot&gt;].", irq );
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibSetRTModelErrorStatus">LibSetRTModelErrorStatus</a>("ermsg")&gt;;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf( ermsg, "ISR registration failed for Interrupt %d ISA board at %&lt;Slot&gt;.", irq );
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibSetRTModelErrorStatus">LibSetRTModelErrorStatus</a>("ermsg")&gt;;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;}   
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;%% Issue an End Of Interrupt to both slave and master PIC to
+ <br>&nbsp;&nbsp;&nbsp;%% insure that there aren't any stale pending interrupts.
+ <br>&nbsp;&nbsp;&nbsp;%% Only do this before calling the first board start function.
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span>( xPCIntCounter == 1 )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xpcOutpB( 0xA0, 0x20 );
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xpcOutpB( 0x20, 0x20 );
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buffer
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;%% Used to think that Registering the ISRs could occur anywhere in mdlStart,
+ <br>&nbsp;&nbsp;&nbsp;%% but the final step of calling the start functions must be last
+ <br>&nbsp;&nbsp;&nbsp;%% in mdlStart.  However, recent changes mean that we have to wait until
+ <br>&nbsp;&nbsp;&nbsp;%% the end before registering or starting.  Must put them both at the
+ <br>&nbsp;&nbsp;&nbsp;%% end of Start code.  Can't use the root Initialize code, there are
+ <br>&nbsp;&nbsp;&nbsp;%% problems with FPGA boards if we try to put this code in Initialize.
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> CompiledModel
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Need to be in this state when compiling for the main interrupt
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% running the model.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>( buffer, "trailer" )>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;%% Disable the ISR in the model's terminate function
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buffer
+ <br>&nbsp;&nbsp;&nbsp;/* disable interrupt for IRQ %&lt;IRQ&gt; */
+ <br>&nbsp;&nbsp;&nbsp;xpceDeRegisterISR( &%&lt;devname&gt; );
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buffer
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> CompiledModel
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlTerminateCustomCode">LibMdlTerminateCustomCode</a>(buffer, "header")>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;<span class="tlc_endfunction">%endfunction</span> /% <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcinterruptfunctions.html#xPCGenerateIRQCode">xPCGenerateIRQCode</a>() %/
+ <br>&nbsp; <br>&nbsp;/% EOF <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcinterruptfunctions.html">xpcinterruptfunctions.tlc</a> %/
+ <br></body></html>

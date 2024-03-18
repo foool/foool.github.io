@@ -1,0 +1,299 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Introduction to Dataflow for Multithreading in Simulink</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-04-28"><meta name="DC.source" content="slexDataflowIntroductionExample_publish.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Introduction to Dataflow for Multithreading in Simulink</h1><!--introduction--><p>This example introduces the data-driven domain in Simulink called dataflow. We create a wireless communication system model using the dataflow domain in Simulink. With dataflow, blocks inside the domain execute based on availability of data as opposed to Simulink's sample time, and the blocks are automatically partitioned into concurrent threads that accelerate simulation and increase data throughput.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">About Dataflow</a></li><li><a href="#2">Wireless Communication System</a></li><li><a href="#3">Single-Threaded Simulation</a></li><li><a href="#4">Converting a Model to Use Dataflow</a></li><li><a href="#5">Analyzing Model for Parallelism</a></li><li><a href="#6">Removing Data Dependency to Create Concurrency</a></li><li><a href="#7">Compensating for Pipeline Delays</a></li><li><a href="#8">Block to Thread Allocation</a></li><li><a href="#9">Multithreaded Simulation</a></li><li><a href="#10">Speedup Analysis</a></li><li><a href="#11">Thread Allocation Results</a></li><li><a href="#13">Summary</a></li></ul></div><h2 id="1">About Dataflow</h2><p>To take advantage of the dataflow domain, hence multithreaded simulation, your model or section of your model must only have discrete-time blocks. Moreover, you cannot have blocks that access time, require a Simulink solver, or do not support code generation. This example shows the speedup achieved using the dataflow domain to run the model multithreaded compared to running the model in a single thread.</p><h2 id="2">Wireless Communication System</h2><p>This example shows a wireless communication system with a QPSK transmitter and receiver. The transmitter is made up of a QPSK Modulator and an FIR Interpolator. The channel introduces phase and frequency offset and additive white gaussian noise. The remaining blocks in the model includes a Multistage Decimator, a Carrier Synchronizer and a Symbol Synchronizer which are part of the receiver. This model uses Simulink's sample time to determine the order and execution of each block. It does not use dataflow, and hence runs in a single thread.</p><img vspace="5" hspace="5" src="slexDataflowIntroductionExample_publish_01.png" alt=""> <h2 id="3">Single-Threaded Simulation</h2><p>Here we simulate the model and measure the execution time of running the model. This simulation executes the blocks in the model using only a single thread. Execution time is measured using the output of the sim command and includes only the run-time of the model and does not include the time it takes for the model to update or terminate. When you simulate the model you will see the constellation diagram that shows the received signal after the carrier synchronization phase.</p><pre class="codeoutput">Simulation execution time for single-threaded model = 16.63s
+</pre><h2 id="4">Converting a Model to Use Dataflow</h2><p>In Simulink, you create a dataflow region using a Dataflow Subsystem. Signals entering the Dataflow Subsystem lose their association with a sample time; therefore, blocks in the dataflow region cannot depend on the signal's sample time. Once a signal leaves the Dataflow Subsystem, it gets associated with the sample time it had before entering the Dataflow Subsystem. All the blocks inside the Dataflow Subsystem form a dataflow region in the model which enables that portion of the model to execute using concurrent threads. The "Random Integer" source block needs time and uses the SampleTime parameter to produce a time-based signal output. Therefore, it is not included in the Dataflow Subsystem. Dataflow Subsystems are used to delineate the region of the model where sample time is not needed. For example, when using a block that uses time like a source block or a scope block it can't be included in the Dataflow Subsystem. Dataflow Subsystems include a Dataflow Configuration block and have a badge on their lower-left corner to differentiate it from other Simulink subsystems.</p><img vspace="5" hspace="5" src="slexDataflowIntroductionExample_publish_02.png" alt=""> <h2 id="5">Analyzing Model for Parallelism</h2><p>This model contains a chain of blocks that are data dependent. There is no inherent parallelism in the model. You can visualize the threads used to simulate the model by using the Dataflow Multithreading Analysis app. To open the app, double-click the Dataflow Multithreading Analysis App block in the model. The Thread Timing diagram shows that because of the sequential nature of the flow of data and the data dependency between blocks, only a single thread can be used for this model. The data dependency between the blocks in the model prevents blocks from being executed concurrently.</p><img vspace="5" hspace="5" src="slexDataflowIntroductionExample_publish_03.png" alt=""> <h2 id="6">Removing Data Dependency to Create Concurrency</h2><p>By pipelining the data dependent blocks we can increase concurrency. Dataflow can create parallelism in the model by introducing pipeline delays between the blocks in the dataflow domain; therefore, breaking the dependency between the blocks. When you update the model, Simulink provides information about the optimal number of pipeline delays that needs to be set in the Dataflow Subsystem to get maximum concurrency. Simulink shows the recommended number of pipeline delays in the form of an information badge in the lower-left corner of the Dataflow Subsystem. Clicking this badge reveals the latency budget set for the Dataflow Subsystem and the corresponding number of threads it will use. The following diagram shows the presence of this badge and the corresponding message in the model.</p><p><img vspace="5" hspace="5" src="slexLatencyBadgePix.png" alt=""> </p><p>For this model, the recommended number of pipeline delays is 4. By setting this value in the Dataflow Configuration block, Simulink uses it to create concurrency in the Dataflow Subsystem. After setting the number of pipeline delays, when you update the model Simulink shows you the locations where pipeline delays are introduced using <img src="slexDataflowIntroductionExample_publish_eq05866184206231734122.png" alt="$Z^{-n}$"> tags on the signal line. Since this model has a long chain of blocks that are data dependent without any inherent parallelism, dataflow creates parallelism from this model by adding pipeline delays between blocks. The diagram below shows the presence of <img src="slexDataflowIntroductionExample_publish_eq01838856733231219473.png" alt="$Z^{-1}$"> tags showing the location of pipeline delays introduced in the dataflow region.</p><p><img vspace="5" hspace="5" src="slexLatencyTagsPix.png" alt=""> </p><h2 id="7">Compensating for Pipeline Delays</h2><p>When pipeline delays are added to a model to break data dependencies between blocks and create concurrency, that delay needs to be accounted for in other parts of the model. Signals that do not go into the dataflow region of the model will not experience this delay. These signals must be delayed in order to align with signals that were processed and delayed by the dataflow region if the signals are to be combined or compared. This is demonstrated in the dataflow example <a href="matlab:web(fullfile(matlabroot,'toolbox','shared','dataflow','dataflowdemos','html','slexDataflowCompensatingDelayExample_publish.html'))">Compensating for Delay Introduced by Dataflow</a>.</p><h2 id="8">Block to Thread Allocation</h2><p>Now that we have created a dataflow region by putting the data-driven part of the model in a Dataflow Subsystem and allowed for latency, we can see that the model is partitioned into 4 threads using the Dataflow Multithreading Analysis app. To open this app, double-click on the Dataflow Multithreading Analysis App block in the model. The Thread Timing diagram in this app shows how each block is assigned to execute in a different thread. There are 4 threads used for this model as seen by the number of horizontal bars on the Thread Timing diagram. Each section in a horizontal bar corresponds to a block in the Dataflow Subsystem. The length of a section corresponds to the relative time taken to run that block for one time step.</p><img vspace="5" hspace="5" src="slexDataflowIntroductionExample_publish_04.png" alt=""> <h2 id="9">Multithreaded Simulation</h2><p>Here we run the multithreaded model, measure its execution time, and compare it to running the model in a single thread. By creating a dataflow region in the model it enabled Simulink to automatically partition the blocks in the dataflow region into concurrent execution threads. When simulating this model it uses multiple threads which achieves speedup of 2.9 times faster than the single-threaded version. We can measure the amount of speedup obtained with the dataflow model by dividing the execution time taken by the model using multiple threads with the execution time taken by model using a single thread. This number is computed and shown below. This number could be different from the estimated speedup shown in the Dataflow Multithreading Analysis app. This difference could arise from thread overhead and cache performance when running the model in multithreaded mode. Moreover, the estimated speedup considers only blocks inside the Dataflow Subsystem, while the actual time measurement includes the entire model, including the source and the scope.</p><pre class="codeoutput">Simulation execution time for multithreaded model = 13.06s
+Actual speedup with dataflow: 1.3x
+</pre><h2 id="10">Speedup Analysis</h2><p>Open the Dataflow Multithreading Analysis app by double-clicking the Dataflow Multithreading Analysis App block in the model. In this app you can view speedup analysis information for different pipeline delays by choosing the menu option "Analysis-&gt;Performance Tradeoff-&gt;Speedup &amp; Threads vs. Delays". This diagram shows the estimated speedup and efficiency that can be obtained for different delay values. Speedup number shows how much faster the system will run when it is multithreaded compared to a single-threaded run. This assumes the dataflow region of the model is taking most of the execution time relative to the non-dataflow region of the model. In this diagram we can see that the best delay value which results in a maximum speedup is 4. This diagram also shows that for this delay value 4 threads will be used. The pipeline delays are also shown in the model on the signal lines as <img src="slexDataflowIntroductionExample_publish_eq05866184206231734122.png" alt="$Z^{-n}$"> where n is the number of delays introduced at that location.</p><img vspace="5" hspace="5" src="slexDataflowIntroductionExample_publish_05.png" alt=""> <h2 id="11">Thread Allocation Results</h2><p>The partitioning of the Dataflow Subsystem into threads can be seen by turning thread highlighting "on" using the menu option "Display-&gt;Highlight Dataflow Threads". For this model, 4 different threads used by the dataflow region are shown using 4 different colors. For example, the QPSK modulator, Phase/Frequency Offset and AWGN channel blocks run in the same thread, while the FIR Interpolation block runs in a different thread. The Thread Legend window can be used to selectively highlight only some threads for inspecting the model.</p><p><img vspace="5" hspace="5" src="slexDataflowIntroductionExampleHighlightThreadsPix.png" alt=""> </p><p>Opening the Dataflow Subsystem we see the various blocks of the QPSK communications system highlighted according to the thread they're assigned to.</p><img vspace="5" hspace="5" src="slexDataflowIntroductionExample_publish_06.png" alt=""> <img vspace="5" hspace="5" src="slexDataflowIntroductionExample_publish_07.png" alt=""> <h2 id="13">Summary</h2><p>This example shows how a communication system modeled in dataflow can be automatically partitioned into concurrent execution threads and run on multiple threads. This example shows an estimated speedup of 3.2x over single-threaded simulation using 4 threads. Dataflow Multithreading Analysis app shows how blocks in the Dataflow Subsystem are assigned to threads and how introducing pipeline delays between blocks breaks data dependency between blocks and creates concurrency. Note that depending on the desktop computer system and the processor you are using, the numbers and analysis showed could be different when you run the same model in your computer. These numbers and analysis were published on a Windows desktop computer with Intel&reg; Xeon&reg; CPU E5-1650 v3 @ 3.4 GHz 6 Cores 12 Threads processor.</p><p class="footer">Copyright 2016-2017 The MathWorks, Inc.<br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Introduction to Dataflow for Multithreading in Simulink
+% This example introduces the data-driven domain in Simulink called
+% dataflow. We create a wireless communication system model using the
+% dataflow domain in Simulink. With dataflow, blocks inside the domain
+% execute based on availability of data as opposed to Simulink's sample
+% time, and the blocks are automatically partitioned into concurrent
+% threads that accelerate simulation and increase data throughput.
+
+% Copyright 2016-2017 The MathWorks, Inc.
+
+%% About Dataflow
+% To take advantage of the dataflow domain, hence multithreaded simulation,
+% your model or section of your model must only have discrete-time blocks.
+% Moreover, you cannot have blocks that access time, require a Simulink
+% solver, or do not support code generation. This example shows the speedup
+% achieved using the dataflow domain to run the model multithreaded
+% compared to running the model in a single thread.
+
+%% Wireless Communication System
+% This example shows a wireless communication system with a QPSK
+% transmitter and receiver. The transmitter is made up of a QPSK Modulator
+% and an FIR Interpolator. The channel introduces phase and frequency
+% offset and additive white gaussian noise. The remaining blocks in the
+% model includes a Multistage Decimator, a Carrier Synchronizer and a
+% Symbol Synchronizer which are part of the receiver. This model uses
+% Simulink's sample time to determine the order and execution of each
+% block. It does not use dataflow, and hence runs in a single thread.
+model_name = 'slexDataflowIntroductionSingleThreadedExample';
+open_system(model_name);
+
+%% Single-Threaded Simulation
+% Here we simulate the model and measure the execution time of running the
+% model. This simulation executes the blocks in the model using only a
+% single thread. Execution time is measured using the output of the sim
+% command and includes only the run-time of the model and does not include
+% the time it takes for the model to update or terminate. When you simulate
+% the model you will see the constellation diagram that shows the received
+% signal after the carrier synchronization phase.
+singleThreadedExecTime = simulateExample(model_name,'StopTime','1000');
+fprintf('Simulation execution time for single-threaded model = %.2fs/n', singleThreadedExecTime);
+close_system([model_name '/Constellation Diagram']);
+close_system(model_name, 0);
+
+%% Converting a Model to Use Dataflow
+% In Simulink, you create a dataflow region using a Dataflow Subsystem.
+% Signals entering the Dataflow Subsystem lose their association with a
+% sample time; therefore, blocks in the dataflow region cannot depend on
+% the signal's sample time. Once a signal leaves the Dataflow Subsystem, it
+% gets associated with the sample time it had before entering the Dataflow
+% Subsystem. All the blocks inside the Dataflow Subsystem form a dataflow
+% region in the model which enables that portion of the model to execute
+% using concurrent threads. The "Random Integer" source block needs time
+% and uses the SampleTime parameter to produce a time-based signal output.
+% Therefore, it is not included in the Dataflow Subsystem. Dataflow
+% Subsystems are used to delineate the region of the model where sample
+% time is not needed. For example, when using a block that uses time like a
+% source block or a scope block it can't be included in the Dataflow
+% Subsystem. Dataflow Subsystems include a Dataflow Configuration block and
+% have a badge on their lower-left corner to differentiate it from other
+% Simulink subsystems.
+
+model_name = 'slexDataflowIntroductionExample';
+open_system(model_name);
+set_param([model_name,'/Subsystem/Dataflow Configuration'],'Latency','0')
+set_param(model_name, 'SimulationCommand', 'Update');
+
+%% Analyzing Model for Parallelism
+% This model contains a chain of blocks that are data dependent. There is
+% no inherent parallelism in the model. You can visualize the threads used
+% to simulate the model by using the Dataflow Multithreading Analysis app.
+% To open the app, double-click the Dataflow Multithreading Analysis App
+% block in the model. The Thread Timing diagram shows that because of the
+% sequential nature of the flow of data and the data dependency between
+% blocks, only a single thread can be used for this model. The data
+% dependency between the blocks in the model prevents blocks from being
+% executed concurrently.
+dataflow.internal.visuals.openBlockVisual(model_name,struct(...
+    'AnalysisType',3,'ScreenScaling',[100 600 700 450],'BackGround','white'));
+
+%% Removing Data Dependency to Create Concurrency
+% By pipelining the data dependent blocks we can increase concurrency.
+% Dataflow can create parallelism in the model by introducing pipeline
+% delays between the blocks in the dataflow domain; therefore, breaking the
+% dependency between the blocks. When you update the model, Simulink
+% provides information about the optimal number of pipeline delays that
+% needs to be set in the Dataflow Subsystem to get maximum concurrency.
+% Simulink shows the recommended number of pipeline delays in the form of
+% an information badge in the lower-left corner of the Dataflow Subsystem.
+% Clicking this badge reveals the latency budget set for the Dataflow
+% Subsystem and the corresponding number of threads it will use. The
+% following diagram shows the presence of this badge and the corresponding
+% message in the model.
+%
+% <<slexLatencyBadgePix.png>>
+%
+% For this model, the recommended number of pipeline delays is 4. By
+% setting this value in the Dataflow Configuration block, Simulink uses it
+% to create concurrency in the Dataflow Subsystem. After setting the number
+% of pipeline delays, when you update the model Simulink shows you the
+% locations where pipeline delays are introduced using $Z^{-n}$ tags on the
+% signal line. Since this model has a long chain of blocks that are data
+% dependent without any inherent parallelism, dataflow creates parallelism
+% from this model by adding pipeline delays between blocks. The diagram
+% below shows the presence of $Z^{-1}$ tags showing the location of
+% pipeline delays introduced in the dataflow region.
+%
+% <<slexLatencyTagsPix.png>>
+%
+close all; % Close open thread allocation diagrams
+set_param([model_name,'/Subsystem/Dataflow Configuration'],'Latency','4')
+set_param(model_name, 'SimulationCommand', 'Update');
+
+%% Compensating for Pipeline Delays
+% When pipeline delays are added to a model to break data dependencies
+% between blocks and create concurrency, that delay needs to be accounted
+% for in other parts of the model. Signals that do not go into the dataflow
+% region of the model will not experience this delay. These signals must be
+% delayed in order to align with signals that were processed and delayed by
+% the dataflow region if the signals are to be combined or compared. This
+% is demonstrated in the dataflow example
+% <matlab:web(fullfile(matlabroot,'toolbox','shared','dataflow','dataflowdemos','html','slexDataflowCompensatingDelayExample_publish.html'))
+% Compensating for Delay Introduced by Dataflow>.
+
+%% Block to Thread Allocation
+% Now that we have created a dataflow region by putting the data-driven
+% part of the model in a Dataflow Subsystem and allowed for latency, we can
+% see that the model is partitioned into 4 threads using the Dataflow
+% Multithreading Analysis app. To open this app, double-click on the
+% Dataflow Multithreading Analysis App block in the model. The Thread
+% Timing diagram in this app shows how each block is assigned to execute in
+% a different thread. There are 4 threads used for this model as seen by
+% the number of horizontal bars on the Thread Timing diagram. Each section
+% in a horizontal bar corresponds to a block in the Dataflow Subsystem. The
+% length of a section corresponds to the relative time taken to run that
+% block for one time step.
+dataflow.internal.visuals.openBlockVisual(model_name,struct(...
+    'AnalysisType',3,'ScreenScaling',[60 400 750 500],'BackGround','white'));
+
+%% Multithreaded Simulation
+% Here we run the multithreaded model, measure its execution time, and
+% compare it to running the model in a single thread. By creating a
+% dataflow region in the model it enabled Simulink to automatically
+% partition the blocks in the dataflow region into concurrent execution
+% threads. When simulating this model it uses multiple threads which
+% achieves speedup of 2.9 times faster than the single-threaded version. We
+% can measure the amount of speedup obtained with the dataflow model by
+% dividing the execution time taken by the model using multiple threads
+% with the execution time taken by model using a single thread. This number
+% is computed and shown below. This number could be different from the
+% estimated speedup shown in the Dataflow Multithreading Analysis app. This
+% difference could arise from thread overhead and cache performance when
+% running the model in multithreaded mode. Moreover, the estimated speedup
+% considers only blocks inside the Dataflow Subsystem, while the actual
+% time measurement includes the entire model, including the source and the
+% scope.
+close all % Close open thread allocation diagrams
+
+multithreadedExecTime = simulateExample(model_name,'StopTime','1000');
+fprintf('Simulation execution time for multithreaded model = %.2fs/n', multithreadedExecTime);
+fprintf('Actual speedup with dataflow: %.1fx/n', singleThreadedExecTime/multithreadedExecTime);
+close_system([model_name '/Constellation Diagram']);
+
+%% Speedup Analysis
+% Open the Dataflow Multithreading Analysis app by double-clicking the
+% Dataflow Multithreading Analysis App block in the model. In this app you
+% can view speedup analysis information for different pipeline delays by
+% choosing the menu option "Analysis->Performance Tradeoff->Speedup &
+% Threads vs. Delays". This diagram shows the estimated speedup and
+% efficiency that can be obtained for different delay values. Speedup
+% number shows how much faster the system will run when it is multithreaded
+% compared to a single-threaded run. This assumes the dataflow region of
+% the model is taking most of the execution time relative to the
+% non-dataflow region of the model. In this diagram we can see that the
+% best delay value which results in a maximum speedup is 4. This diagram
+% also shows that for this delay value 4 threads will be used. The pipeline
+% delays are also shown in the model on the signal lines as $Z^{-n}$ where
+% n is the number of delays introduced at that location.
+close all;
+dataflow.internal.visuals.openBlockVisual(model_name,struct(...
+    'AnalysisType',1,'ScreenScaling',[60 400 900 650],'BackGround','white'));
+
+%% Thread Allocation Results
+% The partitioning of the Dataflow Subsystem into threads can be seen by
+% turning thread highlighting "on" using the menu option
+% "Display->Highlight Dataflow Threads". For this model, 4 different
+% threads used by the dataflow region are shown using 4 different colors.
+% For example, the QPSK modulator, Phase/Frequency Offset and AWGN channel
+% blocks run in the same thread, while the FIR Interpolation block runs in
+% a different thread. The Thread Legend window can be used to selectively
+% highlight only some threads for inspecting the model.
+%
+% <<slexDataflowIntroductionExampleHighlightThreadsPix.png>>
+%
+
+% print('-dpng',['-s' model_name], [model_name 'HighlightThreadsPix.png']);
+
+%% 
+% Opening the Dataflow Subsystem we see the various blocks of the QPSK
+% communications system highlighted according to the thread they're
+% assigned to.
+open_system([model_name '/Subsystem']); % Open Dataflow Subsystem
+set_param(model_name, 'HighlightDataflowThreads', 'on');
+set_param(model_name, 'SimulationCommand', 'Update');
+
+%% Summary
+% This example shows how a communication system modeled in dataflow can be
+% automatically partitioned into concurrent execution threads and run on
+% multiple threads. This example shows an estimated speedup of 3.2x over
+% single-threaded simulation using 4 threads. Dataflow Multithreading
+% Analysis app shows how blocks in the Dataflow Subsystem are assigned to
+% threads and how introducing pipeline delays between blocks breaks data
+% dependency between blocks and creates concurrency. Note that depending on
+% the desktop computer system and the processor you are using, the numbers
+% and analysis showed could be different when you run the same model in
+% your computer. These numbers and analysis were published on a Windows
+% desktop computer with Intel(R) Xeon(R) CPU E5-1650 v3 @ 3.4 GHz 6 Cores
+% 12 Threads processor.
+
+close_system(model_name, 0);
+close all;
+
+% LocalWords:  multithreaded QPSK Multithreading Synchronizer slex
+% LocalWords:  dataflowdemos fs dpng Xeon
+
+##### SOURCE END #####
+--></body></html>

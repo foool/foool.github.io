@@ -1,0 +1,238 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>2009-2010<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br>&nbsp; <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_comment">%%//Thread<span style="padding-left:9.5px"></span>Declaration
+</span> <br><span class="tlc_openfile">%openfile</span> tlmg_process_decl
+ <br><span class="tlc_if">%if</span> tlmg_info.InStruct.NumPorts > 0
+ <br>mw_refresh_reg m_input_refresh_reg;
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgProcessingType,"SystemC Thread")
+ <br>sc_core::sc_event_queue m_start_event;
+ <br>void targetThread(void);
+ <br><span class="tlc_elseif">%elseif</span>  <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgProcessingType,"Callback Function")
+ <br>void targetCallback(sc_core::sc_time i_delay_time);
+ <br><span class="tlc_else">%else</span>
+ <br>void targetThread(void);
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_closefile">%closefile</span> tlmg_process_decl
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> tlmg_process_ctor
+ <br><span class="tlc_if">%if</span> tlmg_info.InStruct.NumPorts > 0
+ <br>m_input_refresh_reg(%<<span>tlmg_info.InStruct.NumPorts</span>>),
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgProcessingType,"SystemC Thread")
+ <br>m_start_event("start_event"),
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_closefile">%closefile</span> tlmg_process_ctor
+ <br>&nbsp; <br><span class="tlc_openfile">%openfile</span>  tlmg_process_init
+ <br><span class="tlc_if">%if</span> tlmg_info.InStruct.NumPorts > 0
+ <br><span class="tlc_foreach">%foreach</span> loopId1 = tlmg_memap.PortNum 
+ <br><span class="tlc_if">%if</span> tlmg_memap.PortList[loopId1].WriteAccess
+ <br><span class="tlc_if">%if</span> tlmg_memap.PortList[loopId1].IsInput
+ <br>m_input_refresh_reg.set_init(%<tlmg_memap.PortList[loopId1].MW.InputPos>);
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>m_input_refresh_reg.init(false);
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_foreach">%foreach</span> loopId1 = tlmg_memap.SockNum 
+ <br><span class="tlc_foreach">%foreach</span> loopId2 = tlmg_memap.SockList[loopId1].BankNum
+ <br><span class="tlc_foreach">%foreach</span> loopId3 = tlmg_memap.SockList[loopId1].Bank[loopId2].RegNum 
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitFieldNum == 0
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].IsParam
+ <br>{
+ <br>%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType> Temp = 0;
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLByteDim <= 8
+ <br>&nbsp;&nbsp;memcpy(&amp;Temp,&amp;%<<span>tlmg_info.ParamStruct.Name</span>>.%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].MW.ParamName>,sizeof(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].TypeName>));
+ <br><span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;Uint8ToBigUint((uint8_T*)&amp;%<<span>tlmg_info.ParamStruct.Name</span>>.%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].MW.ParamName>,sizeof(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].TypeName>),&amp;Temp);
+ <br><span class="tlc_endif">%endif</span>
+ <br>%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name> = Temp;
+ <br>}
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_foreach">%foreach</span> loopId4 = tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitFieldNum
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].IsParam
+ <br>{
+ <br>%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType> Temp = 0;
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLByteDim <= 8
+ <br>&nbsp;&nbsp;memcpy(&amp;Temp,&amp;%<<span>tlmg_info.ParamStruct.Name</span>>.%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].MW.ParamName>,%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].ByteDim>);
+ <br><span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;Uint8ToBigUint((uint8_T*)&amp;%<<span>tlmg_info.ParamStruct.Name</span>>.%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].MW.ParamName>,%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].ByteDim>,&amp;Temp);
+ <br><span class="tlc_endif">%endif</span>
+ <br>%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].Name> = Temp;
+ <br>}
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgProcessingType,"SystemC Thread")
+ <br>m_start_event.cancel_all();
+ <br>SC_THREAD(targetThread);
+ <br><span class="tlc_elseif">%elseif</span>  <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgProcessingType,"Periodic SystemC Thread")
+ <br>SC_THREAD(targetThread);
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_closefile">%closefile</span> tlmg_process_init
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> tlmg_process_impl
+ <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgProcessingType,"Callback Function")
+ <br>void %<<span>tlmname</span>>::targetCallback (sc_core::sc_time delay_time)
+ <br><span class="tlc_else">%else</span>
+ <br>void %<<span>tlmname</span>>::targetThread (void)
+ <br><span class="tlc_endif">%endif</span>
+ <br>{
+ <br><span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgProcessingType,"Callback Function")
+ <br>&nbsp;&nbsp;sc_core::sc_time delay_time = sc_core::SC_ZERO_TIME;
+ <br>&nbsp;&nbsp;while(1)
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;{
+ <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgProcessingType,"SystemC Thread")
+ <br><span class="tlc_if">%if</span> !(tlmg_info.InStruct.NumPorts > 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//Auto trigger
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_start_event.notify(sc_core::SC_ZERO_TIME);
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;wait(m_start_event.default_event());
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgProcessingType,"Periodic SystemC Thread")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;wait(AssertDelay(m_ThreadPeriod())- AssertDelay(m_AlgorithmProcessingTime()));
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_foreach">%foreach</span> loopId1 = tlmg_memap.SockNum 
+ <br><span class="tlc_foreach">%foreach</span> loopId2 = tlmg_memap.SockList[loopId1].BankNum
+ <br><span class="tlc_foreach">%foreach</span> loopId3 = tlmg_memap.SockList[loopId1].Bank[loopId2].RegNum 
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitFieldNum == 0
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].IsInput
+ <br>{
+ <br>%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType> Temp = %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name>;
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLByteDim <= 8
+ <br>memcpy(&amp;%<<span>tlmg_info.RTMStruct.Name</span>>->inputs->%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].MW.InputName>,&amp;Temp,sizeof(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].TypeName>));
+ <br><span class="tlc_else">%else</span>
+ <br>BigUintToUint8((uint8_T*)&amp;%<<span>tlmg_info.RTMStruct.Name</span>>->inputs->%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].MW.InputName>,sizeof(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].TypeName>),Temp);
+ <br><span class="tlc_endif">%endif</span>
+ <br>}
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].IsParam
+ <br>{
+ <br>%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType> Temp = %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name>;
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLByteDim <= 8
+ <br>&nbsp;&nbsp;memcpy(&amp;%<<span>tlmg_info.ParamStruct.Name</span>>.%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].MW.ParamName>,&amp;Temp,sizeof(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].TypeName>));
+ <br><span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;BigUintToUint8((uint8_T*)&amp;%<<span>tlmg_info.ParamStruct.Name</span>>.%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].MW.ParamName>,sizeof(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].TypeName>),Temp);
+ <br><span class="tlc_endif">%endif</span>
+ <br>}
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_foreach">%foreach</span> loopId4 = tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitFieldNum
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].IsInput
+ <br>{
+ <br>%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType> Temp = %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].Name>;
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].IsSignExt
+ <br>%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType> mask = (~0) << (%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].BitWidthName> - 1);
+ <br>if(Temp &amp; mask)
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;Temp = Temp | mask; 
+ <br>}
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLByteDim <= 8
+ <br>memcpy(&amp;%<<span>tlmg_info.RTMStruct.Name</span>>->inputs->%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].MW.InputName>,&amp;Temp,%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].ByteDim>);
+ <br><span class="tlc_else">%else</span>
+ <br>BigUintToUint8((uint8_T*)&amp;%<<span>tlmg_info.RTMStruct.Name</span>>->inputs->%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].MW.InputName>,%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].ByteDim>,Temp);
+ <br><span class="tlc_endif">%endif</span>
+ <br>}
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].IsParam
+ <br>{
+ <br>%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType> Temp = %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].Name>;
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].IsSignExt
+ <br>%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType> mask = (~0) << (%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].BitWidthName> - 1);
+ <br>if(Temp &amp; mask)
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;Temp = Temp | mask; 
+ <br>}
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLByteDim <= 8
+ <br>&nbsp;&nbsp;memcpy(&amp;%<<span>tlmg_info.ParamStruct.Name</span>>.%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].MW.ParamName>,&amp;Temp,%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].ByteDim>);
+ <br><span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;BigUintToUint8((uint8_T*)&amp;%<<span>tlmg_info.ParamStruct.Name</span>>.%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].MW.ParamName>,%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].ByteDim>,Temp);
+ <br><span class="tlc_endif">%endif</span>
+ <br>}
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_info.StepRateRatio,1)
+ <br>%<<span>tlmg_info.OutputFcn.Name</span>>(%<<span>tlmg_info.RTMStruct.Name</span>>);
+ <br><span class="tlc_else">%else</span>
+ <br>for(unsigned int j = 0; j < %<<span>tlmg_info.StepRateRatio</span>>; j++)
+ <br>{
+ <br>%<<span>tlmg_info.OutputFcn.Name</span>>(%<<span>tlmg_info.RTMStruct.Name</span>>);
+ <br>}
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;delay_time += AssertDelay(m_AlgorithmProcessingTime());   
+ <br><span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgProcessingType,"Callback Function")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;wait(AssertDelay(delay_time));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;delay_time = sc_core::SC_ZERO_TIME;
+ <br><span class="tlc_endif">%endif</span> 
+ <br>&nbsp; <br><span class="tlc_foreach">%foreach</span> loopId1 = tlmg_memap.SockNum 
+ <br><span class="tlc_foreach">%foreach</span> loopId2 = tlmg_memap.SockList[loopId1].BankNum
+ <br><span class="tlc_foreach">%foreach</span> loopId3 = tlmg_memap.SockList[loopId1].Bank[loopId2].RegNum 
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitFieldNum == 0
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].IsOutput 
+ <br>{
+ <br>%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType> Temp = 0;
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLByteDim <= 8
+ <br>memcpy(&amp;Temp,&amp;%<<span>tlmg_info.RTMStruct.Name</span>>->outputs->%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].MW.OutputName>,sizeof(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].TypeName>));
+ <br><span class="tlc_else">%else</span>
+ <br>Uint8ToBigUint((uint8_T*)&amp;%<<span>tlmg_info.RTMStruct.Name</span>>->outputs->%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].MW.OutputName>,sizeof(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].TypeName>),&amp;Temp);
+ <br><span class="tlc_endif">%endif</span>
+ <br>%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name> = Temp;
+ <br>}
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_foreach">%foreach</span> loopId4 = tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitFieldNum
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].IsOutput 
+ <br>{
+ <br>%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType> Temp = 0;
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLByteDim <= 8
+ <br>memcpy(&amp;Temp,&amp;%<<span>tlmg_info.RTMStruct.Name</span>>->outputs->%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].MW.OutputName>,%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].ByteDim>);
+ <br><span class="tlc_else">%else</span>
+ <br>Uint8ToBigUint((uint8_T*)&amp;%<<span>tlmg_info.RTMStruct.Name</span>>->outputs->%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].MW.OutputName>,%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].ByteDim>,&amp;Temp);
+ <br><span class="tlc_endif">%endif</span>
+ <br>%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].Name> = Temp;
+ <br>}
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;m_trigint.notify(m_trig,delay_time);
+ <br>&nbsp; <br>&nbsp; <br>&nbsp;&nbsp;}
+ <br>}
+ <br><span class="tlc_closefile">%closefile</span> tlmg_process_impl
+ <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> tlmg_process_trigger
+ <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgProcessingType,"SystemC Thread")
+ <br>m_start_event.notify(delay_time);
+ <br><span class="tlc_elseif">%elseif</span>  <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgProcessingType,"Callback Function")
+ <br>targetCallback(delay_time);
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_closefile">%closefile</span> tlmg_process_trigger
+ <br></body></html>

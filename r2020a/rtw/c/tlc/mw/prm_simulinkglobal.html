@@ -1,0 +1,409 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>=============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>File:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_simulinkglobal.html">prm_simulinkglobal.tlc</a>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2019<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>=============================================================================
+</span> <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_PRM_SIMULINKGLOBAL_") == 0
+ <br><span class="tlc_assign">%assign</span> _PRM_SIMULINKGLOBAL_ = 1
+ <br>&nbsp; <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html">prm_cacheutils.tlc</a>"
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibCacheSimulinkGlobalPrmBuffers<span style="padding-left:9.5px"></span>=================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Generate<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>Decl<span style="padding-left:9.5px"></span>&amp;<span style="padding-left:9.5px"></span>Instance<span style="padding-left:9.5px"></span>buffers<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>SimulinkGlobal<span style="padding-left:9.5px"></span>parameters.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibCacheSimulinkGlobalPrmBuffers" class="tlc_func">SLibCacheSimulinkGlobalPrmBuffers</a>(startIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% The UnstructuredSimulinkGlobal buffers Decl and Instance could be created</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% by either FcnGenUnstructuredSimulinkGlobalPrmDeclsAndInstances </span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% or SLibCacheUnstructuredSimulinkGlobalPrmBuffers.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% The first case happens only when the parameter tuning mode is not DialogOnly.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% The second case happens only for DialogOnly mode (to handle parameters in the </span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% ModelReferenceGlobal section). These two calls are mutually exclusive, thus </span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% ensuring no double creation of the same buffers.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Notice that for a top model in Accelerator mode, calls to </span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% SLibIsParamUnstructured in FcnGenUnstructuredSimulinkGlobalPrmDeclsAndInstances</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% ensures that we get empty UnstructuredSimulinkGlobal buffers as expected.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> InlineParameters != 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_simulinkglobal.html#FcnGenUnstructuredSimulinkGlobalPrmDeclsAndInstances">FcnGenUnstructuredSimulinkGlobalPrmDeclsAndInstances</a>(startIdx)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_simulinkglobal.html#FcnGenStructuredSimulinkGlobalPrmDeclsAndInstances">FcnGenStructuredSimulinkGlobalPrmDeclsAndInstances</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_fkw">%endfunction</span>  
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibIsProtectedModelParamNotTunable" class="tlc_func">SLibIsProtectedModelParamNotTunable</a>(mdlParam)
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> prmIdx = <span class="tlc_bifunc">SIZE</span>(TunableParamsList,1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(mdlParam.WorkspaceVarName, TunableParamsList[prmIdx])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_TRUE  
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Loop<span style="padding-left:9.5px"></span>through<span style="padding-left:9.5px"></span>entries<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>Model<span style="padding-left:9.5px"></span>Parameters<span style="padding-left:9.5px"></span>table<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>write<span style="padding-left:9.5px"></span>out<span style="padding-left:9.5px"></span>unstructured
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>SimulinkGlobal<span style="padding-left:9.5px"></span>variables
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGenUnstructuredSimulinkGlobalPrmDeclsAndInstances" class="tlc_func">FcnGenUnstructuredSimulinkGlobalPrmDeclsAndInstances</a>(startIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html#SLibCreatePrmBuffer">SLibCreatePrmBuffer</a>("UnstructuredSimulinkGlobal", "Decl")>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html#SLibCreatePrmBuffer">SLibCreatePrmBuffer</a>("UnstructuredSimulinkGlobal", "Instance")>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% For protected models, we must create separate buffers for "tunable" </span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% variables that are inlined (i.e. parameters with Auto storage class)</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% But we keep the declaration in model.h, everyone has visibility to that.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> CompiledModel.GenProtectedModelOrSubmodel
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> instanceProtBuffer = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html#SLibCreatePrmBuffer">SLibCreatePrmBuffer</a>("UnstructuredSimulinkGlobalProtInlined", "Instance")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> declBuffer = ""
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> instanceBuffer = ""
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numParams = NumInrtP
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> prmIdx = numParams
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mdlParam = Parameter[startIdx + prmIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_simulinkglobal.html#SLibIsParamUnstructured">SLibIsParamUnstructured</a>(mdlParam)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> decl = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGenModelParamDecl">SLibGenModelParamDecl</a>(mdlParam, TLC_TRUE)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> inst = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGenUnstrModelParamInstance">SLibGenUnstrModelParamInstance</a>(mdlParam, TLC_TRUE)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> CompiledModel.GenProtectedModelOrSubmodel &amp;&amp; <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_simulinkglobal.html#SLibIsProtectedModelParamNotTunable">SLibIsProtectedModelParamNotTunable</a>(mdlParam)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> instanceProtBuffer = instanceProtBuffer + inst
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> instanceBuffer = instanceBuffer + inst
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> declBuffer = declBuffer + decl
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html#SLibSetPrmBufferPart">SLibSetPrmBufferPart</a>("UnstructuredSimulinkGlobal", "Decl", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"Code", declBuffer)>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html#SLibSetPrmBufferPart">SLibSetPrmBufferPart</a>("UnstructuredSimulinkGlobal", "Instance", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"Code", instanceBuffer)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> CompiledModel.GenProtectedModelOrSubmodel
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html#SLibSetPrmBufferPart">SLibSetPrmBufferPart</a>("UnstructuredSimulinkGlobalProtInlined", "Instance", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Code", instanceProtBuffer)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br><span class="tlc_fkw">%endfunction</span> 
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibInitParameterValueAccessIdx<span style="padding-left:9.5px"></span>====================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Initializes<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>parameters<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>ValueAccessIdx<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>zero.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibInitParameterValueAccessIdx" class="tlc_func">SLibInitParameterValueAccessIdx</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> prmIdx = ::CompiledModel.ModelParameters.NumParameters
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(::CompiledModel.ModelParameters.Parameter[prmIdx], "ValueAccessIdx")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> ::CompiledModel.ModelParameters.Parameter[prmIdx] ValueAccessIdx 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.ModelParameters.Parameter[prmIdx].ValueAccessIdx = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibInitParameterValueAccessIdx</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibResetParameterValueAccessIdx<span style="padding-left:9.5px"></span>===================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Resets<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>parameters<span style="padding-left:9.5px"></span>ValueAccessIdx<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>zero.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibResetParameterValueAccessIdx" class="tlc_func">SLibResetParameterValueAccessIdx</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> prmIdx = ::CompiledModel.ModelParameters.NumParameters
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.ModelParameters.Parameter[prmIdx].ValueAccessIdx = 0
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibResetParameterValueAccessIdx</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Loop<span style="padding-left:9.5px"></span>through<span style="padding-left:9.5px"></span>systems<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>write<span style="padding-left:9.5px"></span>out<span style="padding-left:9.5px"></span>structured<span style="padding-left:9.5px"></span>SimulinkGlobal<span style="padding-left:9.5px"></span>variables.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>necessary<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>structured<span style="padding-left:9.5px"></span>variables<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>stored<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>associated<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>appropriate<span style="padding-left:9.5px"></span>system.<span style="padding-left:9.5px"></span>Notice<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>we<span style="padding-left:9.5px"></span>skip<span style="padding-left:9.5px"></span>unstructured<span style="padding-left:9.5px"></span>variables<span style="padding-left:9.5px"></span>in
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>FcnScopeParameters.
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGenStructuredSimulinkGlobalPrmDeclsAndInstances" class="tlc_func">FcnGenStructuredSimulinkGlobalPrmDeclsAndInstances</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numsys = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetNumSystemsForCodeGen">GetNumSystemsForCodeGen</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> sysIdx = numsys
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sys = System[sysIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html#SLibCreateSystemPrmBuffer">SLibCreateSystemPrmBuffer</a>(sys, "SimulinkGlobal", "Typedef")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html#SLibCreateSystemPrmBuffer">SLibCreateSystemPrmBuffer</a>(sys, "SimulinkGlobal", "Decl")>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Generate the parameter structure typedef &amp; decl buffers for this system</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> result = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_simulinkglobal.html#FcnGenOneSimulinkGlobalPrmStructDecl">FcnGenOneSimulinkGlobalPrmStructDecl</a>(sysIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html#SLibSetSystemPrmBufferPart">SLibSetSystemPrmBufferPart</a>(sys, "SimulinkGlobal", "Typedef", "Code", result[0])>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html#SLibSetSystemPrmBufferPart">SLibSetSystemPrmBufferPart</a>(sys, "SimulinkGlobal", "Decl",    "Code", result[1])>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_simulinkglobal.html#SLibInitParameterValueAccessIdx">SLibInitParameterValueAccessIdx</a>()</span>>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html#SLibCreatePrmBuffer">SLibCreatePrmBuffer</a>("SimulinkGlobal", "Instance")>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("NumPrmStructElements", INVALID_COUNTER)>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> result = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibCacheConstVarGroupInstances">SLibCacheConstVarGroupInstances</a>("Parameter")
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html#SLibSetPrmBufferPart">SLibSetPrmBufferPart</a>("SimulinkGlobal", "Instance", "Code", result[0])>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.NumPrmStructElements = result[1]
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_simulinkglobal.html#SLibResetParameterValueAccessIdx">SLibResetParameterValueAccessIdx</a>()</span>>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% FcnGenAllSimulinkGlobalPrmDecls</span>
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Loop<span style="padding-left:9.5px"></span>through<span style="padding-left:9.5px"></span>systems<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>write<span style="padding-left:9.5px"></span>out<span style="padding-left:9.5px"></span>parameter<span style="padding-left:9.5px"></span>coder<span style="padding-left:9.5px"></span>group<span style="padding-left:9.5px"></span>variables.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>necessary<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>structured<span style="padding-left:9.5px"></span>variables<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>stored<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>associated<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>appropriate<span style="padding-left:9.5px"></span>system.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGenCoderDataGroupGlobalPrmDeclsAndInstances" class="tlc_func">FcnGenCoderDataGroupGlobalPrmDeclsAndInstances</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numsys = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetNumSystemsForCodeGen">GetNumSystemsForCodeGen</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootSystem = System[numsys-1]
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_simulinkglobal.html#SLibInitParameterValueAccessIdx">SLibInitParameterValueAccessIdx</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = ::CompiledModel.NumCoderDataGroups
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> group = ::CompiledModel.CoderDataGroup[idx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Even reusable top defines InstP, in ert_main</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/datagrouplib.html#SLibDataGroupStaticInit">SLibDataGroupStaticInit</a>(::CompiledModel.CoderDataGroup[idx]) &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/datagrouplib.html#SLibAllocatesCoderDataGroup">SLibAllocatesCoderDataGroup</a>(group) || !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>())
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> groupName = group.Name
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> groupToken = "CoderDataGroup" + groupName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> indexFieldName = groupToken + "VarGroupIndex"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(rootSystem, indexFieldName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_cacheutils.html#SLibCreatePrmBuffer">SLibCreatePrmBuffer</a>(groupToken, "Instance")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numElementsToken = "Num" + groupToken + "StructElements"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>(numElementsToken, INVALID_COUNTER)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_simulinkglobal.html#SLibResetParameterValueAccessIdx">SLibResetParameterValueAccessIdx</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varGroupIdx = <span class="tlc_bifunc">GETFIELD</span>(rootSystem, indexFieldName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> result = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetVarGroupInitValue">SLibGetVarGroupInitValue</a>(varGroupIdx[0])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> group.Initializer = result[0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.%<<span>numElementsToken</span>> = result[1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Also loop through and find all standalone subsystems to cache values</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> sysIdx = (numsys-1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> system = ::CompiledModel.System[sysIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> system.StandaloneSubsystem
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(system, indexFieldName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varGroupIdx = <span class="tlc_bifunc">GETFIELD</span>(system, indexFieldName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> res = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#SLibGetVarGroupInitValue">SLibGetVarGroupInitValue</a>(varGroupIdx[0])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fieldName = "Standalone" + groupToken + "Init"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#LibSetSystemField">LibSetSystemField</a>(system, fieldName, res[0])>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>  
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_simulinkglobal.html#SLibResetParameterValueAccessIdx">SLibResetParameterValueAccessIdx</a>()</span>>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% FcnGenAllSimulinkGlobalPrmDecls</span>
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FcnGenOneSimulinkGlobalPrmStructDecl<span style="padding-left:9.5px"></span>==============================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Generate<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>structure<span style="padding-left:9.5px"></span>declaration<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>given<span style="padding-left:9.5px"></span>system.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGenOneSimulinkGlobalPrmStructDecl" class="tlc_func">FcnGenOneSimulinkGlobalPrmStructDecl</a>(sysIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numsys = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetNumSystemsForCodeGen">GetNumSystemsForCodeGen</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> result = ["", ""]
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonbodlib.html#SLibSystemHasOwnDataScope">SLibSystemHasOwnDataScope</a>(System[sysIdx])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> parameterBuff = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_simulinkglobal.html#SLibGetSystemParameters">SLibGetSystemParameters</a>(sysIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> userTypeAndPrmStructDecl = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> prmStructTypedef = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (sysIdx < (numsys-1))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> identifierType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSysVarGroupType">FcnSysVarGroupType</a>(System[sysIdx],"Parameter")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> comment
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span>  <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/system_private_api.html#LibSystemIsReusedLibraryFcn">LibSystemIsReusedLibraryFcn</a>(System[sysIdx]) &amp;&amp; <span class="tlc_bifunc">ISFIELD</span>(System[sysIdx], "RLSCommentName")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysNameForComment = System[sysIdx].RLSCommentName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> BlockCommentType == "BlockSIDComment"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysNameForComment = ::CompiledModel.System[sysIdx].SIDCommentName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> System[sysIdx].Synthesized
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> origBlkSet = <span class="tlc_bifunc">ISFIELD</span>(::CompiledModel.System[sysIdx],"OriginatorBlock")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> origBlkSet
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> origBlockName = ::CompiledModel.System[sysIdx].OriginatorBlock
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysNameForComment = "'" + origBlockName + "'"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysNameForComment = "'" + System[sysIdx].Name + "'"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>       
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysNameForComment = "'" + System[sysIdx].Name + "'"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Parameters for system: %<<span>sysNameForComment</span>> */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> comment
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span> <span class="tlc_comment">%% RootSystem (sysIdx == numsys-1)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span>  identifierType = ::tParametersType
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> comment
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Parameters (%<::AutoOrDefaultStorageClass> storage) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> comment
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> userTypes = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibDumpTypedefsCache">LibDumpTypedefsCache</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> sysIdx == (numsys-1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.TypedefsCache = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Insert user-defined types before defining the parameter structure</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> userTypes!=""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> userTypeAndPrmStructDecl = userTypeAndPrmStructDecl + userTypes
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> parameterBuff[1] > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Generate the structure declaration</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> prmStructDecl
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> align = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.ModelParameters.StructAlignment > 0 &amp;&amp; structAlign
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structName = identifierType + "_"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> align = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#SLibGetAlignmentSyntax">SLibGetAlignmentSyntax</a>(::CompiledModel.Name, structName, "", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.ModelParameters.StructAlignment, "DATA_ALIGNMENT_WHOLE_STRUCT")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>comment</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% This is required to guard types for parameters.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%KS: We do not guard any types with inline variants DWork or BlockIO and hence I am keeping it</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% consistent for parameters as well. outer guarding</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIfSystemVariantCondition">SLibIfSystemVariantCondition</a>(System[sysIdx])></span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isModelClassNamespace = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#SLibIsSystemTypesModelClassNamespace">SLibIsSystemTypesModelClassNamespace</a>(System[sysIdx])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> identifierTypeDecl = identifierType
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !isModelClassNamespace
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> identifierTypeDecl = identifierTypeDecl + "_"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> align != ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_switch">%switch</span>(structDAFlag.position)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "DATA_ALIGNMENT_PREDIRECTIVE"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>align</span>> struct %<<span>identifierTypeDecl</span>> {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<parameterBuff[0]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "DATA_ALIGNMENT_POSTDIRECTIVE"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct %<<span>identifierTypeDecl</span>> {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<parameterBuff[0]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} %<<span>align</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "DATA_ALIGNMENT_PRECEDING_STATEMENT"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>align</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct %<<span>identifierTypeDecl</span>> {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<parameterBuff[0]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "DATA_ALIGNMENT_FOLLOWING_STATEMENT"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct %<<span>identifierTypeDecl</span>> {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<parameterBuff[0]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>align</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct %<<span>identifierTypeDecl</span>> {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<parameterBuff[0]>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibEndIfSystemVariantCondition">SLibEndIfSystemVariantCondition</a>(System[sysIdx])> </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> prmStructDecl
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> userTypeAndPrmStructDecl = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;userTypeAndPrmStructDecl + prmStructDecl
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Generate the structure typedef</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !isModelClassNamespace
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> prmStructTypedef
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>comment</span>> /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typedef struct %<<span>identifierType</span>>_ %<<span>identifierType</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> prmStructTypedef
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> result[0] = "%<<span>prmStructTypedef</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> result[1] = "%<<span>userTypeAndPrmStructDecl</span>>"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> result
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% FcnGenOneSimulinkGlobalPrmStructDecl</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FcnGenSimulinkGlobalPrmInstance<span style="padding-left:9.5px"></span>===================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Generate<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>instantiation<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>parameters<span style="padding-left:9.5px"></span>structure
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGenSimulinkGlobalPrmInstance" class="tlc_func">FcnGenSimulinkGlobalPrmInstance</a>(groupName) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> prmIdx = ::CompiledModel.ModelParameters.NumParameters
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(::CompiledModel.ModelParameters.Parameter[prmIdx], "ValueAccessIdx")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> ::CompiledModel.ModelParameters.Parameter[prmIdx] ValueAccessIdx 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.ModelParameters.Parameter[prmIdx].ValueAccessIdx = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> result = FcnScopeParameters(NumSystems-2, 0, groupName)
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> result = FcnScopeParameters(NumSystems-1, 0, groupName)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> prmIdx = ::CompiledModel.ModelParameters.NumParameters
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CompiledModel.ModelParameters.Parameter[prmIdx].ValueAccessIdx = 0
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> result
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% FcnGenSimulinkGlobalPrmInstance</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%Function:<span style="padding-left:9.5px"></span>SLibGetSystemParameters<span style="padding-left:9.5px"></span>============================================
+</span> <br><span class="tlc_comment">%%Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>contents<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>systems<span style="padding-left:9.5px"></span>parameter<span style="padding-left:9.5px"></span>structure.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetSystemParameters" class="tlc_func">SLibGetSystemParameters</a>(sysIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> paramBuff = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#SLibGetSystemDataDefUsingVarGroup">SLibGetSystemDataDefUsingVarGroup</a>(sysIdx,"Parameter", TLC_FALSE)
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> paramBuff
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGetSystemParameters</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibParametersStructIsEmpty<span style="padding-left:9.5px"></span>========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>NOTE:<span style="padding-left:9.5px"></span>All<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>could<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>modified<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>to
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>(::CompiledModel.NumPrmStructElements<span style="padding-left:9.5px"></span>==<span style="padding-left:9.5px"></span>0).<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>However,<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>facilitate
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>readability,<span style="padding-left:9.5px"></span>we<span style="padding-left:9.5px"></span>will<span style="padding-left:9.5px"></span>keep<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>wrapper<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>now.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibParametersStructIsEmpty" class="tlc_func">LibParametersStructIsEmpty</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(::CompiledModel,"NumPrmStructElements")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Counter should not be accessed before it has been set.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (::CompiledModel.NumPrmStructElements != INVALID_COUNTER)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> (::CompiledModel.NumPrmStructElements == 0)
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_TRUE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibParametersStructIsConst</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibModelParametersStructIsEmpty" class="tlc_func">SLibModelParametersStructIsEmpty</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> (::CompiledModel.HasParametersArg == 0)
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibAreSimulinkGlobalParamsUnstructured<span style="padding-left:9.5px"></span>==========================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>In<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>following<span style="padding-left:9.5px"></span>cases,<span style="padding-left:9.5px"></span>we<span style="padding-left:9.5px"></span>treat<span style="padding-left:9.5px"></span>SimulinkGlobal<span style="padding-left:9.5px"></span>parameters<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>they<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>were<span style="padding-left:9.5px"></span>ExportedGlobal<span style="padding-left:9.5px"></span>(unstructured):
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>-<span style="padding-left:9.5px"></span>For<span style="padding-left:9.5px"></span>models<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>reference<span style="padding-left:9.5px"></span>submodels.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>-<span style="padding-left:9.5px"></span>For<span style="padding-left:9.5px"></span>models<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>contain<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>reference<span style="padding-left:9.5px"></span>blocks
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>-<span style="padding-left:9.5px"></span>For<span style="padding-left:9.5px"></span>models<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>contain<span style="padding-left:9.5px"></span>standalone<span style="padding-left:9.5px"></span>subsystems.
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibAreSimulinkGlobalParamsUnstructured" class="tlc_func">SLibAreSimulinkGlobalParamsUnstructured</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> Accelerator
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> (InlineParameters == 1 &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>() || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#HasModelReferenceBlocks">HasModelReferenceBlocks</a>()))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_TRUE
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> 
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibIsParamUnstructured<span style="padding-left:9.5px"></span>==========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>true<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>given<span style="padding-left:9.5px"></span>parameter<span style="padding-left:9.5px"></span>should<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>unstructured.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>flag<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>models,<span style="padding-left:9.5px"></span>except<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>parameters<span style="padding-left:9.5px"></span>owned<span style="padding-left:9.5px"></span>by
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>blocks<span style="padding-left:9.5px"></span>when<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>top<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>inline<span style="padding-left:9.5px"></span>parameters<span style="padding-left:9.5px"></span>off.
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibIsParamUnstructured" class="tlc_func">SLibIsParamUnstructured</a>(param)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> Accelerator
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(param, "TestpointIndex") &amp;&amp; param.TestpointIndex >= 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ((<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>() || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#HasModelReferenceBlocks">HasModelReferenceBlocks</a>())) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (param.InModelRefGlobalSection)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(param.WorkspaceVarName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% if param.WorkspaceVarName is empty, we are dealing with a </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% pseudo workspace variable generated for a mask parameter </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% whose value expression is not tunable. We should treat such </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% parameters exactly like a block parameter, and hence always</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% structured.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> !<span class="tlc_bifunc">ISFIELD</span>(param, "VarGroupIdx") || param.VarGroupIdx[0] < 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br><span class="tlc_fkw">%endfunction</span> 
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span> <span class="tlc_comment">%% <span class="tlc_bifunc">EXISTS</span>("_PRM_SIMULINKGLOBAL_")</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/prm_simulinkglobal.html">prm_simulinkglobal.tlc</a>
+</span> <br></body></html>

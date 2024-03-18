@@ -1,0 +1,564 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2019<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Library<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>create<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>sample<span style="padding-left:9.5px"></span>main<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>ERT<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>format
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>given<span style="padding-left:9.5px"></span>model.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FcnCallExportWrapperFunction
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Provide<span style="padding-left:9.5px"></span>sample<span style="padding-left:9.5px"></span>usage<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>exported<span style="padding-left:9.5px"></span>functions
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnCallExportWrapperFunction" class="tlc_func">FcnCallExportWrapperFunction</a>(sysId, callEl, fcnType) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> fcnType
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "OutputUpdate"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnId = System[sysId].OutputUpdateFcn
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Enable"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnId = System[sysId].EnableFcn
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Disable"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnId = System[sysId].DisableFcn
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Invalid function type %<<span>fcnType</span>>."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibBlockReportFatalError">LibBlockReportFatalError</a>([], errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnAbstract = "Example use case for call to exported function:"
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> callEl == -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnAbstract = fcnAbstract + "/n" + "  %<<span>fcnId</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "sample_usage_%<<span>fcnId</span>>"
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnAbstract = fcnAbstract + "/n" + "  /"<fcnId>/" at call element %<<span>callEl</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "sample_usage_%<<span>fcnId</span>>_%<<span>callEl</span>>"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span> 
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnReturns = "void"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = "void"
+ <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> fcnRec {Name fcnName; Returns fcnReturns; Params fcnParams; Abstract fcnAbstract; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;Category "main"; GeneratedBy "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmain_expfcn.html">ertmain_expfcn.tlc</a>"; Type "Utility"}
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDumpFunctionBanner">SLibDumpFunctionBanner</a>(fcnRec)>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> fcnRec
+ <br>&nbsp;&nbsp;extern  %<<span>fcnReturns</span>> %<<span>fcnName</span>>(%<<span>fcnParams</span>>); 
+ <br>&nbsp;&nbsp;%<<span>fcnReturns</span>> %<<span>fcnName</span>>(%<<span>fcnParams</span>>)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> needsInput = TLC_FALSE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> NumModelInputs > 0 &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(System[sysId], "ExternalInputs")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = <span class="tlc_bifunc">SIZE</span>(System[sysId].ExternalInputs, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> extInp  = ExternalInputs.ExternalInput[System[sysId].ExternalInputs[idx]]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataTypeEnum = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeEnumFromId">LibGetDataTypeEnumFromId</a>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetRecordDataTypeId">SLibGetRecordDataTypeId</a>(extInp))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (!<span class="tlc_bifunc">ISFIELD</span>(extInp, "Inactive")) &amp;&amp; (dataTypeEnum != "SS_FCN_CALL")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> needsInput = TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> needsInput &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(fcnType == "OutputUpdate" || fcnType == "Disable")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Set function inputs here:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* (No external inputs.) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Call to function
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> callEl == -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>fcnId</span>>();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>fcnId</span>>(%<<span>callEl</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> needsOutput = TLC_FALSE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> origBlockFcn = ::BlockFcn
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::BlockFcn = "RegistrationAndStart"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#LibSetGlobalSysFcnsForArgAccess">LibSetGlobalSysFcnsForArgAccess</a>([])>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> System[NumSystems-1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> NumModelOutputs > 0 &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>(System[sysId], "ExternalOutputs")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% we learn this code from SLibInitExternalOutputs</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = <span class="tlc_bifunc">SIZE</span>(System[sysId].ExternalOutputs, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> extOut       = ExternalOutputs.ExternalOutput[System[sysId].ExternalOutputs[idx]]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (!<span class="tlc_bifunc">ISFIELD</span>(extOut, "Inactive"))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> needsOutput = TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::BlockFcn = origBlockFcn 
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> needsOutput &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(fcnType == "OutputUpdate" || fcnType == "Disable")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Read function outputs here
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* (No external outputs.) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>     
+ <br>&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% FcnCallExportWrapperFunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>true<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>first<span style="padding-left:9.5px"></span>TID<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>same<span style="padding-left:9.5px"></span>as
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>contained<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>second<span style="padding-left:9.5px"></span>TID
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/exportFcns/tExportFcnsWithInlineVariants.m
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="TIDisSameOrIsContainedIn" class="tlc_func">TIDisSameOrIsContainedIn</a>(tid1, tid2)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span>(tid1 == tid2)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_TRUE
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sampleTime = SampleTime[tid2]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> sampleTime.IsUnionTs == "yes"    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numContainedTsIdx = sampleTime.NumContainedTs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> containedTsIdx = numContainedTsIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> containedTs = sampleTime.ContainedTs[containedTsIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span>(tid1 == containedTs)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FcnCallWriteInputs
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Emit<span style="padding-left:9.5px"></span>place-holder<span style="padding-left:9.5px"></span>comment<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>anchor<span style="padding-left:9.5px"></span>where<span style="padding-left:9.5px"></span>user's<span style="padding-left:9.5px"></span>input<span style="padding-left:9.5px"></span>task<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>should<span style="padding-left:9.5px"></span>go.
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnCallWriteInputs" class="tlc_func">FcnCallWriteInputs</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* Set task inputs here:
+ <br>&nbsp;&nbsp;*/
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%%FcnCallWriteInputs</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FcnCallReadOutputs
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Emit<span style="padding-left:9.5px"></span>place-holder<span style="padding-left:9.5px"></span>comment<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>anchor<span style="padding-left:9.5px"></span>where<span style="padding-left:9.5px"></span>user's<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>reading<span style="padding-left:9.5px"></span>task<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>should<span style="padding-left:9.5px"></span>go.
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnCallReadOutputs" class="tlc_func">FcnCallReadOutputs</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* Read function outputs here
+ <br>&nbsp;&nbsp;*/
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%%FcnCallReadOutputs</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FcnCallExportTaskFunction
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Provide<span style="padding-left:9.5px"></span>sample<span style="padding-left:9.5px"></span>usage<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>exported<span style="padding-left:9.5px"></span>task<span style="padding-left:9.5px"></span>step<span style="padding-left:9.5px"></span>functions
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnCallExportTaskFunction" class="tlc_func">FcnCallExportTaskFunction</a>(tid) <span class="tlc_fkw">Output</span>  
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysNameForAsync = ""
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnReturns = "void"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = "void"
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnAbstract = "Example use case for call to exported tasks:"
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibIsPeriodicRateGrouping">SLibIsPeriodicRateGrouping</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnAbstract = fcnAbstract + "/n" + <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmodelarg.html#SLibModelStepFcnName">SLibModelStepFcnName</a>("")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "sample_usage_%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmodelarg.html#SLibModelStepFcnName">SLibModelStepFcnName</a>("")>"
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> tid < NumRuntimeExportedRates
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnAbstract = fcnAbstract + <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmodelarg.html#SLibModelStepFcnName">SLibModelStepFcnName</a>(tid)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "sample_usage_%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmodelarg.html#SLibModelStepFcnName">SLibModelStepFcnName</a>(tid)>"
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootSystem = System[NumSystems-1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> id = rootSystem.NumChildSystems
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> systemId = rootSystem.ChildSystems[id][0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> system = System[systemId]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> system.Type == "function-call" &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;system.DescSysNonTrigTID[0] == tid
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysNameForAsync = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(System[systemId])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> sysNameForAsync != ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnAbstract = fcnAbstract + "/n" + sysNameForAsync
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "sample_usage_%<<span>sysNameForAsync</span>>"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> fcnRec {Name fcnName; Returns fcnReturns; Params fcnParams; Abstract fcnAbstract; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;Category "main"; GeneratedBy "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmain_expfcn.html">ertmain_expfcn.tlc</a>"; Type "Utility"}
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDumpFunctionBanner">SLibDumpFunctionBanner</a>(fcnRec)>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> fcnRec
+ <br>&nbsp;&nbsp;extern %<<span>fcnReturns</span>> %<<span>fcnName</span>>(%<<span>fcnParams</span>>);
+ <br>&nbsp;&nbsp;%<<span>fcnReturns</span>> %<<span>fcnName</span>>(%<<span>fcnParams</span>>)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmain_expfcn.html#FcnCallWriteInputs">FcnCallWriteInputs</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibIsPeriodicRateGrouping">SLibIsPeriodicRateGrouping</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmodelarg.html#SLibModelStepFcnName">SLibModelStepFcnName</a>("")>(%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmodelarg.html#SLibModelFcnArgs">SLibModelFcnArgs</a>("OutputUpdate",TLC_TRUE,tid)>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> tid < NumRuntimeExportedRates <span class="tlc_comment">%% synchronous task</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Call to task step function
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmodelarg.html#SLibModelStepFcnName">SLibModelStepFcnName</a>(tid)>(%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmodelarg.html#SLibModelFcnArgs">SLibModelFcnArgs</a>("OutputUpdate",TLC_TRUE,tid)>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>sysNameForAsync</span>>();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmain_expfcn.html#FcnCallReadOutputs">FcnCallReadOutputs</a>()</span>>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%%FcnCallExportSyncTaskFunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/exportFcns/tExportFcnsWithInlineVariants.m
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnCallExportExportFcnDiagram" class="tlc_func">FcnCallExportExportFcnDiagram</a>(externalInput) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsExportFcnDiagram">SLibIsExportFcnDiagram</a>())
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> GenerateClassInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> entryFcnName = ::CPPObjectName + "." + externalInput.AsyncOutputUpdateFcn
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> entryFcnName = externalInput.AsyncOutputUpdateFcn
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "sample_usage_" + externalInput.AsyncOutputUpdateFcn
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnReturns = "void"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = "void" 
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnAbstract = "Example use case for call to exported function:" + "/n" + entryFcnName
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> UsingMalloc &amp;&amp; MultiInstanceERTCode
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsSelfStructured">SLibIsSelfStructured</a>() <span class="tlc_comment">%% Multi-instance export functions should have self</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = "%<::tSimStructType> *const %<::tSimStruct>"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> fcnRec {Name fcnName; Returns fcnReturns; Params fcnParams; Abstract fcnAbstract; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;Category "main"; GeneratedBy "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmain_expfcn.html">ertmain_expfcn.tlc</a>"; Type "Utility"}
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDumpFunctionBanner">SLibDumpFunctionBanner</a>(fcnRec)>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> fcnRec
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> MultiInstanceERTCode
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpBlockFcn = ::BlockFcn
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::BlockFcn = "OutputUpdate"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootSystem = System[NumSystems-1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpCurrentTID = rootSystem.CurrentTID
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootSystem.CurrentTID = externalInput.TID
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> entryFcnParams = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmodelarg.html#SLibModelFcnArgs">SLibModelFcnArgs</a>("OutputUpdate", TLC_TRUE, externalInput.TID)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootSystem.CurrentTID = tmpCurrentTID
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::BlockFcn = tmpBlockFcn
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> entryFcnParams = ""
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;extern %<<span>fcnReturns</span>> %<<span>fcnName</span>>(%<<span>fcnParams</span>>);
+ <br>&nbsp;&nbsp;%<<span>fcnReturns</span>> %<<span>fcnName</span>>(%<<span>fcnParams</span>>)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmain_expfcn.html#FcnCallWriteInputs">FcnCallWriteInputs</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ppIf = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibVariantConditionForTID">SLibVariantConditionForTID</a>(externalInput.TID)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;* Call to exported function
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% we need to protect the calling site with pre-processor conditionals because</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% export function itself is guarded and we cannot make the call if function is </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% not present.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(ppIf)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIfVariantConditionForm">SLibIfVariantConditionForm</a>(ppIf)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>entryFcnName</span>>(%<<span>entryFcnParams</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(ppIf)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibEndIfVariantConditionForm">SLibEndIfVariantConditionForm</a>(ppIf)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmain_expfcn.html#FcnCallReadOutputs">FcnCallReadOutputs</a>()</span>>
+ <br>&nbsp;&nbsp;}
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%%FcnCallExportExportFcnDiagram</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/inlineVariants/variantSource/systemtests/tmg1396738_inlined_VC1.m
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/exportFcns/-tExportFcnsWithInlineVariants.m
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/CondExecutedVSS/tMdlRefWithFcnOnDataAsVSSChoice.m
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnExportFcnMain" class="tlc_func">FcnExportFcnMain</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "main"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnReturns = "int_T"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = "int_T argc, const char *argv[]"
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> fcnAbstract
+ <br>The example "main" function illustrates what is required by your
+ <br>application code to initialize, execute, and terminate the generated code.
+ <br>Attaching exported functions to a real-time clock is target specific.  
+ <br>This example illustrates how you do this relative to initializing the model. 
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> fcnAbstract
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> fcnRec {Name fcnName; Returns fcnReturns; Params fcnParams; Abstract fcnAbstract; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;Category "model"; GeneratedBy "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmain_expfcn.html">ertmain_expfcn.tlc</a>"; Type "Main"}
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDumpFunctionBanner">SLibDumpFunctionBanner</a>(fcnRec)>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> fcnRec
+ <br>&nbsp;&nbsp;%<<span>fcnReturns</span>> %<<span>fcnName</span>>(%<<span>fcnParams</span>>)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootSystem = System[NumSystems-1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> reqInsts = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#LibGetSystemField">LibGetSystemField</a>(rootSystem, "ReqRootPrmHdrDataInsts")
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> UsingMalloc
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !reqInsts.SimStructInst &amp;&amp; !::CompiledModel.EmptyRealTimeObject
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<::tSimStructType> *%<::tSimStruct>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ExtMode == 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !ExtModeXCP || ExtModeXCPClassicInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* External mode */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtParseArgsForExtMode(argc, argv);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extmodeErrorCode_T errorCode = EXTMODE_SUCCESS;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Parse External Mode command line arguments */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;errorCode = extmodeParseArgs(argc, argv);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (errorCode != EXTMODE_SUCCESS) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return (errorCode);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Unused arguments */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(void)(argc);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(void)(argv);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> UsingMalloc
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> simstructArg = ::tSimStruct
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmainlib.html#FcnGenerateModelRegistration">FcnGenerateModelRegistration</a>()</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (%<<span>simstructArg</span>> == NULL) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(void)fprintf(stderr,"Memory allocation error during model "
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"registration");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return(1);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !SuppressErrorStatus
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (rtmGetErrorStatus(%<<span>simstructArg</span>>) != NULL) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(void)fprintf(stderr,"Error during model registration: %s/n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtmGetErrorStatus(%<<span>simstructArg</span>>));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return(1);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertlib.html#FcnPackModelDataIntoRTM">FcnPackModelDataIntoRTM</a>()</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Initialize model */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> GenerateClassInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>CPPObjectName</span>>.initialize();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmodelarg.html#GenerateModelInitFcnName">GenerateModelInitFcnName</a>()</span>>(%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmodelarg.html#SLibModelFcnArgs">SLibModelFcnArgs</a>("Initialize",TLC_TRUE,"")>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> needsOutput = TLC_FALSE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> origBlockFcn = ::BlockFcn
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::BlockFcn = "RegistrationAndStart"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#LibSetGlobalSysFcnsForArgAccess">LibSetGlobalSysFcnsForArgAccess</a>([])>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> System[NumSystems-1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (NumModelOutputs > 0) &amp;&amp; !GenerateClassInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% we learn this code from SLibInitExternalOutputs</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = ExternalOutputs.NumExternalOutputs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> extOut       = ExternalOutputs.ExternalOutput[idx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% ignore inactive ports marked by inline variants</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (!<span class="tlc_bifunc">ISFIELD</span>(extOut, "Inactive"))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> needsOutput = TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::BlockFcn = origBlockFcn
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> needsOutput
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* First time initialization of system output variables. 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Constant and invariant outputs will not be updated 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* after this step.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> forceOneStep = <span class="tlc_bifunc">EXISTS</span>("ForceSimulatedRTOneStep")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootSystem = System[NumSystems-1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> reqInsts = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#LibGetSystemField">LibGetSystemField</a>(rootSystem,"ReqRootPrmHdrDataInsts")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !reqInsts.SimStructInst &amp;&amp; !EmptyRealTimeObject
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> simstructArg = ::tSimStruct
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> simstructArg = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !SuppressErrorStatus
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> GenerateClassInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while (rtmGetErrorStatus(%<<span>CPPObjectName</span>>.getRTM()) == %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetNullDefinitionFromTfl">SLibGetNullDefinitionFromTfl</a>()</span>>) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*  Perform application tasks here. */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while (%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetErrStat">RTMGetErrStat</a>()</span>> == %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetNullDefinitionFromTfl">SLibGetNullDefinitionFromTfl</a>()</span>>) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*  Perform application tasks here. */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% If SuppressErrorStatus is true, <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetErrStat">RTMGetErrStat</a>() </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% is always (void 0). The following code is </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% dead code. Should not generate</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> SuppressErrorStatus
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* The option 'Remove error status field in real-time model data structure' 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* is selected, therefore the following code does not need to execute.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#if 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmainlib.html#FcnGenerateModelTerminate">FcnGenerateModelTerminate</a>()</span>>/       
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> IncludeMdlTerminateFcn
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Terminate model */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> GenerateClassInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>CPPObjectName</span>>.terminate();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmodelarg.html#GenerateNonClassicInterfaceModelTermFcnName">GenerateNonClassicInterfaceModelTermFcnName</a>()</span>>(%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmodelarg.html#SLibModelFcnArgs">SLibModelFcnArgs</a>("Terminate",TLC_TRUE,"")>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;}
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/exportFcns/tExportFcnsWithInlineVariants.m
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnExpFcnSampleMain" class="tlc_func">FcnExpFcnSampleMain</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> GenerateClassInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> serviceVarsStr = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> NamespaceName != ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> namespaceStr = "%<<span>NamespaceName</span>>" + "::"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> namespaceStr = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootSystem = System[<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootModule = ::CompiledModel.RTWCGModules.RTWCGModule[rootSystem.CGIRModuleIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnIdx = <span class="tlc_bifunc">ISFIELD</span>(rootModule,"SystemFunctionTypes") &amp;&amp; <span class="tlc_bifunc">ISFIELD</span>(rootModule.SystemFunctionTypes,"ModelConstructor") ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;? <span class="tlc_bifunc">GETFIELD</span>(rootModule.SystemFunctionTypes,"ModelConstructor") : -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ctorArgs = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> fcnIdx > -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> constrFcn = rootModule.Function[fcnIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comma = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> argIdx = constrFcn.NumArgs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> 0 == constrFcn.ArgAccessed[argIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> argName = constrFcn.ArgNames[argIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> idnum = <span class="tlc_bifunc">IDNUM</span>(constrFcn.ArgSource[argIdx])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = fcnParams + comma + argName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comma = ", "
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpServiceBuf = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/servicelib.html#SLibDeclareServicePortGlobalVarForCPPClass">SLibDeclareServicePortGlobalVarForCPPClass</a>(constrFcn, argIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(tmpServiceBuf)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> serviceVarsStr = serviceVarsStr + tmpServiceBuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(fcnParams)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ctorArgs = "(" + fcnParams + ")"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(serviceVarsStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>serviceVarsStr</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;static %<<span>namespaceStr</span>>%<<span>CPPClassName</span>> %<<span>CPPObjectName</span>>%<<span>ctorArgs</span>>;
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (ExportFunctionsMode == 1) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootSystem = System[NumSystems-1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> id = rootSystem.NumChildSystems
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> systemId = rootSystem.ChildSystems[id][0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> system = System[systemId]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> system.Type == "function-call" &amp;&amp; (system.Exported == "yes")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonbodlib.html#FcnDeclareCPIIfNeeded">FcnDeclareCPIIfNeeded</a>(system, "OutputUpdate")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> triggerPort = system.Block[system.TriggerBlkIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> triggerPort
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> callEl = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalWidth">LibBlockOutputSignalWidth</a>(0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmain_expfcn.html#FcnCallExportWrapperFunction">FcnCallExportWrapperFunction</a>(systemId, callEl, "OutputUpdate")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonbodlib.html#LibSystemFcnIsEmpty">LibSystemFcnIsEmpty</a>(system,"OutputUpdate")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmain_expfcn.html#FcnCallExportWrapperFunction">FcnCallExportWrapperFunction</a>(systemId, -1, "OutputUpdate")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonbodlib.html#LibSystemFcnIsEmpty">LibSystemFcnIsEmpty</a>(system,"Enable")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmain_expfcn.html#FcnCallExportWrapperFunction">FcnCallExportWrapperFunction</a>(systemId, -1, "Enable")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonbodlib.html#LibSystemFcnIsEmpty">LibSystemFcnIsEmpty</a>(system,"Disable")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmain_expfcn.html#FcnCallExportWrapperFunction">FcnCallExportWrapperFunction</a>(systemId, -1, "Disable")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsExportFcnDiagram">SLibIsExportFcnDiagram</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = ExternalInputs.NumExternalInputs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> externalInput = ExternalInputs.ExternalInput[idx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> externalInput.FunctionCallInitiator == "yes"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmain_expfcn.html#FcnCallExportExportFcnDiagram">FcnCallExportExportFcnDiagram</a>(externalInput)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> tid = NumSampleTimes
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmain_expfcn.html#FcnCallExportTaskFunction">FcnCallExportTaskFunction</a>(tid)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmain_expfcn.html#FcnExportFcnMain">FcnExportFcnMain</a>()</span>>/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> tmpFcnBuf
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/exportFcns/tExportFcnsWithInlineVariants.m
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGenerateExpFcnMainFunctions" class="tlc_func">FcnGenerateExpFcnMainFunctions</a>(retDesc) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> delim = "*   "
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retDesc ? ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>delim</span>>Embedded Coder example main assuming/n" ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>delim</span>>no operating system./n" : ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmain_expfcn.html#FcnExpFcnSampleMain">FcnExpFcnSampleMain</a>()
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/exportFcns/tExportFcnsWithInlineVariants.m
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibCreateSampleMainForExportFcns" class="tlc_func">SLibCreateSampleMainForExportFcns</a>() <span class="tlc_fkw">void</span>  
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmainlib.html#LibERTMainDeclareVariables">LibERTMainDeclareVariables</a>(TLC_TRUE, TLC_TRUE)>/
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmodelarg.html#SLibDeclareModelFcnArgs">SLibDeclareModelFcnArgs</a>(TLC_TRUE)>/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mainSrc_data_defn", tmpFcnBuf)>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;* Auto generated example main program for model: %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmainlib.html#FcnMdlName">FcnMdlName</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;&nbsp;* Simulink Coder version : %<<span>Version</span>>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> GenerateFullHeader
+ <br>&nbsp;&nbsp;&nbsp;* %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#CorCPPForBuildLogsandComments">CorCPPForBuildLogsandComments</a>()</span>> source code generated on : %<<span>TLC_TIME</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;&nbsp;* Description:
+ <br>&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmain_expfcn.html#FcnGenerateExpFcnMainFunctions">FcnGenerateExpFcnMainFunctions</a>(1)>/
+ <br>&nbsp;&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;&nbsp;* For more information:
+ <br>&nbsp;&nbsp;&nbsp;*   o Simulink Coder User's Guide
+ <br>&nbsp;&nbsp;&nbsp;*   o Embedded Coder User's Guide
+ <br>&nbsp;&nbsp;&nbsp;*   o matlabroot/rtw/c/ert/ert_main.c
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> TargetOS == "VxWorksExample"
+ <br>&nbsp;&nbsp;&nbsp;*   o matlabroot/rtw/c/tornado/rt_main.c
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;*   o Type 'ecodertutorial' in MATLAB
+ <br>&nbsp;&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> TargetOS == "BareBoardExample"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* For a real-time operating system deployment example, reconfigure the
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* "Target operating system" option to "VxWorksExample".
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> TargetOS == "VxWorksExample"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* For a bare board (i.e., no real-time operating system) deployment
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* example, reconfigure the "Target operating system" option to
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* "BareBoardExample".
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> TargetOS == "NativeThreadsExample"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Unsupported TargetOS: %<<span>TargetOS</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Unknown TargetOS: %<<span>TargetOS</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>(errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mainSrc_ban", tmpFcnBuf)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mainSrc_fcn_defn", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmain_expfcn.html#FcnGenerateExpFcnMainFunctions">FcnGenerateExpFcnMainFunctions</a>(0))>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpFcnBuf
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> TargetOS == "BareBoardExample"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> PurelyIntegerCode
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibExternInFcnDecls">LibExternInFcnDecls</a>()</span>>int printf(const char *, ...); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibExternInFcnDecls">LibExternInFcnDecls</a>()</span>>int fflush(void *);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> !MatFileLogging &amp;&amp; !ExtMode
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#include <stdio.h> /* This ert_main.c example uses printf/fflush */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#include <stdio.h>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;#include "%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmainlib.html#FcnGetPublicModelHeaderFile">FcnGetPublicModelHeaderFile</a>()</span>>" /* Model's header file */
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibIncludeUsedCoderTypesFilenames">SLibIncludeUsedCoderTypesFilenames</a>()</span>>
+ <br>&nbsp;&nbsp;#include "stddef.h"
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ExtMode
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !ExtModeXCP || ExtModeXCPClassicInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#include "ext_work.h" /* External mode header file */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#include "ext_mode.h" /* External mode header file */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mainSrc_incl", tmpFcnBuf)>
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br></body></html>

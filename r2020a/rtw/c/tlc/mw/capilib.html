@@ -1,0 +1,1196 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Library<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>generating<span style="padding-left:9.5px"></span>C<span style="padding-left:9.5px"></span>API<span style="padding-left:9.5px"></span>files
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2019<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_CAPILIB_") == 0
+ <br><span class="tlc_assign">%assign</span> _CAPILIB_ = 1
+ <br>&nbsp; <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>reuse<span style="padding-left:9.5px"></span>CodeInfo<span style="padding-left:9.5px"></span>coder.types<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>RTW.DataInterface<span style="padding-left:9.5px"></span>creation
+</span> <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codeinfolib.html">codeinfolib.tlc</a>"
+ <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertlib.html">ertlib.tlc</a>" <span class="tlc_comment">%% <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertlib.html#SLibUseBackwardCompatibleReusableInterface">SLibUseBackwardCompatibleReusableInterface</a>()</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>IsRootInportConditional<span style="padding-left:9.5px"></span>========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract<span style="padding-left:9.5px"></span>:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Checks<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>root<span style="padding-left:9.5px"></span>inport<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>generation<span style="padding-left:9.5px"></span>variant<span style="padding-left:9.5px"></span>condition<span style="padding-left:9.5px"></span>expression.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/variantBus/tVariantBusGecks.m
+</span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="IsRootInportConditional" class="tlc_func">IsRootInportConditional</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> isRootInpConditional = TLC_FALSE
+ <br><span class="tlc_comment">%%First<span style="padding-left:9.5px"></span>check<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>root<span style="padding-left:9.5px"></span>inports<span style="padding-left:9.5px"></span>have<span style="padding-left:9.5px"></span>CGVCE<span style="padding-left:9.5px"></span>set<span style="padding-left:9.5px"></span>on<span style="padding-left:9.5px"></span>them.
+</span> <br>&nbsp; <br><span class="tlc_assign">%assign</span> nInportBlks = ExternalInputs.NumExternalInputs
+ <br><span class="tlc_foreach">%foreach</span> idx = nInportBlks
+ <br>&nbsp;<span class="tlc_assign">%assign</span> extInp = ExternalInputs.ExternalInput[idx]
+ <br>&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(extInp, "Inactive")
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;<span class="tlc_endif">%endif</span> 
+ <br>&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(extInp, "VariantCondition") &amp;&amp; !<span class="tlc_bifunc">ISEMPTY</span>(extInp.VariantCondition)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isRootInpConditional = TLC_TRUE
+ <br>&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_return">%return</span> isRootInpConditional
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%%IsRootInportConditional</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>IsRootOutportConditional<span style="padding-left:9.5px"></span>========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract<span style="padding-left:9.5px"></span>:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Checks<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>root<span style="padding-left:9.5px"></span>inport<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>generation<span style="padding-left:9.5px"></span>variant<span style="padding-left:9.5px"></span>condition<span style="padding-left:9.5px"></span>expression.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/variantBus/tVariantBusGecks.m
+</span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="IsRootOutportConditional" class="tlc_func">IsRootOutportConditional</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> isRootOutConditional = TLC_FALSE
+ <br><span class="tlc_comment">%%First<span style="padding-left:9.5px"></span>check<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>root<span style="padding-left:9.5px"></span>outports<span style="padding-left:9.5px"></span>have<span style="padding-left:9.5px"></span>CGVCE<span style="padding-left:9.5px"></span>set<span style="padding-left:9.5px"></span>on<span style="padding-left:9.5px"></span>them.
+</span> <br>&nbsp; <br><span class="tlc_assign">%assign</span> nOutportBlks = ExternalOutputs.NumExternalOutputs
+ <br><span class="tlc_foreach">%foreach</span> idx = nOutportBlks
+ <br>&nbsp;<span class="tlc_assign">%assign</span> extOut = ExternalOutputs.ExternalOutput[idx]
+ <br>&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(extOut, "Inactive")
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(extOut, "LocalCGVCEIdx") &amp;&amp; (extOut.LocalCGVCEIdx != -1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isRootOutConditional = TLC_TRUE
+ <br>&nbsp;<span class="tlc_endif">%endif</span> 
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_return">%return</span> isRootOutConditional
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%%IsRootOutportConditional</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>IsStateConditional<span style="padding-left:9.5px"></span>========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract<span style="padding-left:9.5px"></span>:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Checks<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>states<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>generation<span style="padding-left:9.5px"></span>variant<span style="padding-left:9.5px"></span>condition<span style="padding-left:9.5px"></span>expression.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester<span style="padding-left:9.5px"></span>:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/inlineVariants/variantSource/codeGen/CAPI/tInlineVariantsWithCAPI.m<span style="padding-left:9.5px"></span>-testspec:test_dwork_guard
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester<span style="padding-left:9.5px"></span>:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/inlineVariants/variantSource/codeGen/CAPI/tInlineVariantsWithCAPI.m<span style="padding-left:9.5px"></span>-testspec:test_dwork_vssAndIV
+</span> <br><span class="tlc_fkw">%function</span> <a id="IsStateConditional" class="tlc_func">IsStateConditional</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> isStateConditional = TLC_FALSE
+ <br><span class="tlc_comment">%%First<span style="padding-left:9.5px"></span>check<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>state<span style="padding-left:9.5px"></span>have<span style="padding-left:9.5px"></span>CGVCE<span style="padding-left:9.5px"></span>set<span style="padding-left:9.5px"></span>on<span style="padding-left:9.5px"></span>them.
+</span> <br>&nbsp; <br><span class="tlc_assign">%assign</span> nDWorks = ::CompiledModel.DWorks.NumDWorks
+ <br><span class="tlc_foreach">%foreach</span> idx = nDWorks
+ <br>&nbsp;<span class="tlc_assign">%assign</span> dWork = ::CompiledModel.DWorks.DWork[idx]
+ <br>&nbsp;<span class="tlc_comment">%% In the presence of IV, a dwork can have either net or local cond. To determine if a state is conditional get the net condition of the data.</span>
+ <br>&nbsp;<span class="tlc_comment">%% Note that we have unified the handling of dworks with vss and iv. That is we will write out the "NetVariantConditionForData" field even for states</span>
+ <br>&nbsp;<span class="tlc_comment">%% inside vss choice. Hence, this would work even for states inside vss choices (prop off, gpc on)</span>
+ <br>&nbsp;<span class="tlc_comment">%% TopTester: test/toolbox/simulink/variants/inlineVariants/variantSource/codeGen/CAPI/tInlineVariantsWithCAPI.m -testspec:testDynamicCAPIwithVSSandHaveIVTrue</span>
+ <br>&nbsp;<span class="tlc_comment">%% TopTester: test/toolbox/simulink/variants/inlineVariants/variantSource/codeGen/CAPI/tInlineVariantsWithCAPI.m -testspec:testCAPIsForNetCondOnDWork</span>
+ <br>&nbsp;<span class="tlc_assign">%assign</span> vcRecord = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetDataInlineVariantNetConditions">SLibGetDataInlineVariantNetConditions</a>(dWork)   
+ <br>&nbsp;<span class="tlc_if">%if</span> vcRecord.hasConds
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isStateConditional = TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_return">%return</span> isStateConditional
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%%IsStateConditional</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>IsSignalConditional<span style="padding-left:9.5px"></span>========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract<span style="padding-left:9.5px"></span>:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Checks<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>signal<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>generation<span style="padding-left:9.5px"></span>variant<span style="padding-left:9.5px"></span>condition<span style="padding-left:9.5px"></span>expression.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Signals<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>4<span style="padding-left:9.5px"></span>types<span style="padding-left:9.5px"></span>:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>SignalType<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>|<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Present<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>model_capi.c<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>|<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>guarding<span style="padding-left:9.5px"></span>status<span style="padding-left:9.5px"></span>(as<span style="padding-left:9.5px"></span>on<span style="padding-left:9.5px"></span>11/11/2016)
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>========================|============================|===========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>a)<span style="padding-left:9.5px"></span>GlobalBlockOutputs<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>|<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Yes<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>|<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Yes
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>b)<span style="padding-left:9.5px"></span>LocalBlockOutputs<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>|<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>No<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>|<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>No<span style="padding-left:9.5px"></span>(locals<span style="padding-left:9.5px"></span>guarding)
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>c)<span style="padding-left:9.5px"></span>ExternalBlockOutputs<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>|<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Yes<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>|<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>No
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>d)<span style="padding-left:9.5px"></span>ConstBlockOutputs<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>|<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Yes<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>|<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>No
+</span> <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Note<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>though<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>declarations<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>externalBlockOutputs<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>ConstBlockOutputs<span style="padding-left:9.5px"></span>signals<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>unguarded<span style="padding-left:9.5px"></span>today
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>we<span style="padding-left:9.5px"></span>will<span style="padding-left:9.5px"></span>guard<span style="padding-left:9.5px"></span>these<span style="padding-left:9.5px"></span>signals<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>model_capi.c<span style="padding-left:9.5px"></span>file.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Hence,<span style="padding-left:9.5px"></span>we<span style="padding-left:9.5px"></span>will<span style="padding-left:9.5px"></span>guard<span style="padding-left:9.5px"></span>all<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>signal<span style="padding-left:9.5px"></span>types<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>show<span style="padding-left:9.5px"></span>up<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>model_capi.c<span style="padding-left:9.5px"></span>file
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester<span style="padding-left:9.5px"></span>:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/inlineVariants/variantSource/codeGen/CAPI/tInlineVariantsWithCAPI.m<span style="padding-left:9.5px"></span>-testspec:test_signal_globalBO
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester<span style="padding-left:9.5px"></span>:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/inlineVariants/variantSource/codeGen/CAPI/tInlineVariantsWithCAPI.m<span style="padding-left:9.5px"></span>-testspec:test_signal_externalBO
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester<span style="padding-left:9.5px"></span>:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/inlineVariants/variantSource/codeGen/CAPI/tInlineVariantsWithCAPI.m<span style="padding-left:9.5px"></span>-testspec:test_signal_constBO
+</span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="IsSignalConditional" class="tlc_func">IsSignalConditional</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> isSignalConditional = TLC_FALSE
+ <br><span class="tlc_with">%with</span> ::CompiledModel.BlockOutputs
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Check<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>outputs<span style="padding-left:9.5px"></span>have<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>non-empty<span style="padding-left:9.5px"></span>variant<span style="padding-left:9.5px"></span>condition
+</span> <br><span class="tlc_assign">%assign</span> nGlobalBO = NumGlobalBlockOutputs
+ <br><span class="tlc_foreach">%foreach</span> idx = nGlobalBO
+ <br>&nbsp;<span class="tlc_assign">%assign</span> record = GlobalBlockOutput[idx]
+ <br>&nbsp;<span class="tlc_comment">%% Skip records removed in IR   </span>
+ <br>&nbsp;<span class="tlc_if">%if</span> record.IsRemovedInIR 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>   
+ <br>&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;<span class="tlc_comment">%% A signal can be conditional either due to vss or due to iv conditions.   </span>
+ <br>&nbsp;<span class="tlc_assign">%assign</span> vcRecord = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetDataInlineVariantNetConditions">SLibGetDataInlineVariantNetConditions</a>(record)
+ <br>&nbsp;<span class="tlc_if">%if</span> vcRecord.hasConds
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isSignalConditional = TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br><span class="tlc_if">%if</span> isSignalConditional
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> isSignalConditional
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Check<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>external<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>outputs<span style="padding-left:9.5px"></span>have<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>non-empty<span style="padding-left:9.5px"></span>variant<span style="padding-left:9.5px"></span>condition
+</span> <br><span class="tlc_assign">%assign</span> nExternalBO = NumExternalBlockOutputs
+ <br><span class="tlc_foreach">%foreach</span> idx = nExternalBO
+ <br>&nbsp;<span class="tlc_assign">%assign</span> record = ExternalBlockOutput[idx]
+ <br>&nbsp;<span class="tlc_if">%if</span> record.IsRemovedInIR 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>   
+ <br>&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;<span class="tlc_assign">%assign</span> vcRecord = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetDataInlineVariantNetConditions">SLibGetDataInlineVariantNetConditions</a>(record)
+ <br>&nbsp;<span class="tlc_if">%if</span> vcRecord.hasConds
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isSignalConditional = TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br><span class="tlc_if">%if</span> isSignalConditional
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> isSignalConditional
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Check<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>const<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>outputs<span style="padding-left:9.5px"></span>have<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>non-empty<span style="padding-left:9.5px"></span>variant<span style="padding-left:9.5px"></span>condition
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Note<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>today<span style="padding-left:9.5px"></span>const<span style="padding-left:9.5px"></span>BO<span style="padding-left:9.5px"></span>have<span style="padding-left:9.5px"></span>no<span style="padding-left:9.5px"></span>"VariantCondition"<span style="padding-left:9.5px"></span>field<span style="padding-left:9.5px"></span>written<span style="padding-left:9.5px"></span>out.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Hence,<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>constBO<span style="padding-left:9.5px"></span>will<span style="padding-left:9.5px"></span>always<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>unguarded<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>capi<span style="padding-left:9.5px"></span>file.
+</span> <br><span class="tlc_assign">%assign</span> nConstBO = NumConstBlockOutputs
+ <br><span class="tlc_foreach">%foreach</span> idx = nConstBO
+ <br>&nbsp;<span class="tlc_assign">%assign</span> record = ConstBlockOutput[idx]
+ <br>&nbsp;<span class="tlc_if">%if</span> record.IsRemovedInIR 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>   
+ <br>&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;<span class="tlc_assign">%assign</span> vcRecord = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetDataInlineVariantNetConditions">SLibGetDataInlineVariantNetConditions</a>(record)
+ <br>&nbsp;<span class="tlc_if">%if</span> vcRecord.hasConds
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isSignalConditional = TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endwith">%endwith</span>
+ <br><span class="tlc_return">%return</span> isSignalConditional
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%%IsSignalConditional</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FcnDynamicAPI<span style="padding-left:9.5px"></span>================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Are<span style="padding-left:9.5px"></span>we<span style="padding-left:9.5px"></span>creating<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>API<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>face<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>variants?
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnDynamicAPI" class="tlc_func">FcnDynamicAPI</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create Dynamic C APIs for the following </span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% a) Model has variants  AND</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% b) Inline Variants when root io have CGVCE (gpc on) and we are generating C APIs for RootIO</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% c) States when states have either vss or iv condition and we are generating capis</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% d) Signals when signals have either vss or iv condition and we are generating capis </span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% We will create dynamic capis for signals/parameters/states once globals guarding is implemented </span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% TopTester : test/toolbox/simulink/variants/inlineVariants/variantSource/codeGen/CAPI/tInlineVariantsWithCAPI.m -testspec:test_Signals_GPCoff</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% TopTester : test/toolbox/simulink/variants/inlineVariants/variantSource/codeGen/CAPI/tInlineVariantsWithCAPI.m -testspec:test_RootIO</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> codeVariantsPresent      = ::CompiledModel.HasVariants
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !codeVariantsPresent
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> RootIOisConditional      = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#IsRootInportConditional">IsRootInportConditional</a>() || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#IsRootOutportConditional">IsRootOutportConditional</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dynaCAPIforRootIODueToIV = RTWCAPIRootIO &amp;&amp; <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#FcnCAPIRootIOSupport">FcnCAPIRootIOSupport</a>() &amp;&amp; RootIOisConditional
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dynaCAPIforStatesDueToIV = RTWCAPIStates &amp;&amp; <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#IsStateConditional">IsStateConditional</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dynaCAPIforSignalsDueToIV = RTWCAPISignals &amp;&amp; <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#IsSignalConditional">IsSignalConditional</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> (dynaCAPIforRootIODueToIV || dynaCAPIforStatesDueToIV || dynaCAPIforSignalsDueToIV)
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FcnCAPIRootIOSupport<span style="padding-left:9.5px"></span>================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Are<span style="padding-left:9.5px"></span>Root<span style="padding-left:9.5px"></span>Inputs/Outputs<span style="padding-left:9.5px"></span>supported<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>C<span style="padding-left:9.5px"></span>API?
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnCAPIRootIOSupport" class="tlc_func">FcnCAPIRootIOSupport</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> MultiInstanceERTCode &amp;&amp; !(UsingMalloc &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.RootIOFormat == "Part of model data structure")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibFcnProtoCtrlActive">SLibFcnProtoCtrlActive</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibAutosarActive">SLibAutosarActive</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_TRUE
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>SLibGenDataMapInfoSubstruct<span style="padding-left:9.5px"></span>=======================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>DataMapInfo<span style="padding-left:9.5px"></span>substructure<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>added<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>rtModel<span style="padding-left:9.5px"></span>structure
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Called<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>FcnGetDTypeName.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/variantBus/tVariantBusGecks.m
+</span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibGenDataMapInfoSubstruct" class="tlc_func">SLibGenDataMapInfoSubstruct</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;* DataMapInfo: 
+ <br>&nbsp;&nbsp;&nbsp;* The following substructure contains information regarding
+ <br>&nbsp;&nbsp;&nbsp;* structures generated in the model's C API.                   
+ <br>&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp;struct {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtwCAPI_ModelMappingInfo mmi;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Declare memory for the logging instance info</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtwCAPI_ModelMapLoggingInstanceInfo mmiLogInstanceInfo;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsMultiInstanceERTOrModelReference">IsMultiInstanceERTOrModelReference</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.NumDataAddrInMap > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void* dataAddress[%<::CompiledModel.NumDataAddrInMap>];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int32_T* vardimsAddress[%<::CompiledModel.NumDataAddrInMap>];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RTWLoggingFcnPtr loggingPtrs[%<::CompiledModel.NumDataAddrInMap>];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::NumModelBlocksWithCAPI > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtwCAPI_ModelMappingInfo* childMMI[%<::NumModelBlocksWithCAPI>];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% This is the system ran breadcrumb</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysRanDwork = SubsystemRanBC.SysRanDWork
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nElem       = <span class="tlc_bifunc">SIZE</span>(sysRanDwork, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> nElem > 0 &amp;&amp; <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sysRanDType* systemRan[%<<span>nElem</span>>];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T        systemTid[%<<span>nElem</span>>];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;} /
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> tmpFcnBuf
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGenDataMapInfoSubstruct</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FcnGetDataOrientation<span style="padding-left:9.5px"></span>============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>orientation<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>based<span style="padding-left:9.5px"></span>on<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>rows<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>columns.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Value<span style="padding-left:9.5px"></span>is
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>rtwCAPI_SCALAR,<span style="padding-left:9.5px"></span>rtwCAPI_VECTOR,<span style="padding-left:9.5px"></span>rtwCAPI_MATRIX_ROW_MAJOR,<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>rtwCAPI_MATRIX_COL_MAJOR<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>rtwCAPI_MATRIX_COL_MAJOR_ND
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/blocks/tmux_blkDialog.m
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGetDataOrientation" class="tlc_func">FcnGetDataOrientation</a>(data) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> data.Class
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "scalar"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "rtwCAPI_SCALAR"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "vector"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "rtwCAPI_VECTOR"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "col-mat"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "rtwCAPI_MATRIX_COL_MAJOR"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "row-mat"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "rtwCAPI_MATRIX_ROW_MAJOR"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "col-mat-nd"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "rtwCAPI_MATRIX_COL_MAJOR_ND"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "row-mat-nd"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "rtwCAPI_MATRIX_ROW_MAJOR_ND"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Unhandled Data Orientation: %<<span>data.Class</span>>. The /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;orientation specified for /"%<<span>data.Name</span>>/" is not supported for /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;generating C-API. /n/tIf /"%<<span>data.Name</span>>/" is a Custom Storage class /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;object, the DataAccess method for layout of the custom class should /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return one of the following strings: /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/"scalar/" | /"vector/" | /"col-mat/" | /"row-mat/"|/"col-mat-nd/"|/"row-mat-nd/""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportError">LibReportError</a>(errTxt)>
+ <br>&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br><span class="tlc_fkw">%endfunction</span>  <span class="tlc_comment">%% FcnGetDataOrientation </span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>FcnGetDataTypeMapIdx<span style="padding-left:9.5px"></span>==============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>DataTypeMap<span style="padding-left:9.5px"></span>structure.<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>structure<span style="padding-left:9.5px"></span>fields<span style="padding-left:9.5px"></span>include
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>o<span style="padding-left:9.5px"></span>cDataName
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>o<span style="padding-left:9.5px"></span>mwDataName
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>o<span style="padding-left:9.5px"></span>numElements
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>o<span style="padding-left:9.5px"></span>elemMapIndex
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>o<span style="padding-left:9.5px"></span>slDataId
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>o<span style="padding-left:9.5px"></span>dataSize
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>o<span style="padding-left:9.5px"></span>isComplex
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Use<span style="padding-left:9.5px"></span>Hash<span style="padding-left:9.5px"></span>table<span style="padding-left:9.5px"></span>approach<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>check<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>type<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>already<span style="padding-left:9.5px"></span>mapped<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>InstMap<span style="padding-left:9.5px"></span>(im).<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>mapped<span style="padding-left:9.5px"></span>->return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>value<span style="padding-left:9.5px"></span>associated<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>table.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>mapped<span style="padding-left:9.5px"></span>-><span style="padding-left:9.5px"></span>add<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>DataTypeMap,<span style="padding-left:9.5px"></span>add<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>new<span style="padding-left:9.5px"></span>entry<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>hash<span style="padding-left:9.5px"></span>table<span style="padding-left:9.5px"></span>(im.DTypeKeys)<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>new<span style="padding-left:9.5px"></span>value.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/tvss_masked_linked_change_active_variant.m
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/blocks/A/assignment/tassign_loop.m
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/codevariants/tcodevariants9.m<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGetDataTypeMapIdx" class="tlc_func">FcnGetDataTypeMapIdx</a>(dataTypeIdx, isComplex, isPointer, im) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> keyIdx =  dataTypeIdx
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Get base type of filtered alias type</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsAliasDataType">LibIsAliasDataType</a>(dataTypeIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> keyIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonmaplib.html#SLibGetBaseDataTypeIdForFilteredType">SLibGetBaseDataTypeIdForFilteredType</a>(dataTypeIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (DataTypes.DataType[%<<span>keyIdx</span>>].IsFixedPoint == 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% For Fixed Point data types, look for the storage data type</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% For e.g: A sfix_16 data type will be stored as a int16.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> keyIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeStorageIdFromId">LibGetDataTypeStorageIdFromId</a>(keyIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Define Key </span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeKey = "DType%<<span>keyIdx</span>>C%<<span>isComplex</span>>P%<<span>isPointer</span>>"
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Check if Key Exists</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(im.DTypeKeys,dTypeKey)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeMapIdx     = <span class="tlc_bifunc">GETFIELD</span>(im.DTypeKeys,dTypeKey)
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isStruct        = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsStructDataType">LibIsStructDataType</a>(keyIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isString        = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsStringDataType">LibIsStringDataType</a>(keyIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isComplex || isStruct
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cDataName     = "struct"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> isString
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cDataName     = "char"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cDataName     = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetANSICDataTypeFromId">SLibGetANSICDataTypeFromId</a>(keyIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isComplex  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mwDataName    = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeComplexNameFromId">LibGetDataTypeComplexNameFromId</a>(keyIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mwDataType    = mwDataName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mwDataName    = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeNameFromId">LibGetDataTypeNameFromId</a>(keyIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mwDataName    = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#SLibGetBaseTypeNameIfVariableSizeLUTParam">SLibGetBaseTypeNameIfVariableSizeLUTParam</a>(mwDataName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mwDataType    = mwDataName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numElem         = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibDataTypeNumElements">LibDataTypeNumElements</a>(keyIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> elemIdx         = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#FcnGetElementMapIdx">FcnGetElementMapIdx</a>(keyIdx, im)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> enumStorageType = "0"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isStruct
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> slDataId      = "SS_STRUCT"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span>  <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsEnumDataType">LibIsEnumDataType</a>(keyIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> slDataId      = "SS_ENUM_TYPE"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> storageID = -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsEnumTypeStoredAsInt">LibIsEnumTypeStoredAsInt</a>(keyIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> storageID = 6 <span class="tlc_comment">%% int32</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> storageID = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetEnumTypeStorageType">LibGetEnumTypeStorageType</a>(keyIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> enumStorageType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeEnumFromId">LibGetDataTypeEnumFromId</a>(storageID)      
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> isString
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Use UINT8 before we introduce SS_CHAR or SS_STRING</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% TODO: Update this after string type is added to simstruc.h</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> slDataId      = "SS_UINT8"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> slDataId      = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeEnumFromId">LibGetDataTypeEnumFromId</a>(keyIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> slDataId == ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> slDataId    = "SS_STRUCT"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> mwDataType == "string"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataSize      = "sizeof(char_T)"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataSize      = "sizeof(%<<span>mwDataType</span>>)"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.DataTypeMap  = im.DataTypeMap + ...
+ <br>"{/"%<<span>cDataName</span>>/", /"%<<span>mwDataName</span>>/", %<<span>numElem</span>>, %<<span>elemIdx</span>>, %<<span>dataSize</span>>, %<<span>slDataId</span>>, %<<span>isComplex</span>>, %<<span>isPointer</span>>, %<<span>enumStorageType</span>>}"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeMapIdx     = im.NumDataTypes
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.NumDataTypes = im.NumDataTypes + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(im.DTypeKeys, dTypeKey, dTypeMapIdx)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>    
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> dTypeMapIdx
+ <br><span class="tlc_fkw">%endfunction</span>   <span class="tlc_comment">%% FcnGetDataTypeMapIdx</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>FcnGetElementMapIdx<span style="padding-left:9.5px"></span>==============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>ElementMap<span style="padding-left:9.5px"></span>structure.<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>structure<span style="padding-left:9.5px"></span>fields<span style="padding-left:9.5px"></span>include
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>o<span style="padding-left:9.5px"></span>elementName
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>o<span style="padding-left:9.5px"></span>elementOffset
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>o<span style="padding-left:9.5px"></span>dataTypeIndex
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>o<span style="padding-left:9.5px"></span>dimIndex
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>o<span style="padding-left:9.5px"></span>fxpIndex
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Use<span style="padding-left:9.5px"></span>Hash<span style="padding-left:9.5px"></span>table<span style="padding-left:9.5px"></span>approach<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>check<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>element<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>already<span style="padding-left:9.5px"></span>mapped<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>InstMap<span style="padding-left:9.5px"></span>(im).<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>mapped<span style="padding-left:9.5px"></span>->return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>value<span style="padding-left:9.5px"></span>associated<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>table.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>mapped<span style="padding-left:9.5px"></span>-><span style="padding-left:9.5px"></span>add<span style="padding-left:9.5px"></span>element<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>ElementMap,<span style="padding-left:9.5px"></span>add<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>new<span style="padding-left:9.5px"></span>entry<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>hash<span style="padding-left:9.5px"></span>table<span style="padding-left:9.5px"></span>(im.ElementKeys)<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>new<span style="padding-left:9.5px"></span>value.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/tvss_masked_linked_change_active_variant.m
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGetElementMapIdx" class="tlc_func">FcnGetElementMapIdx</a>(dataTypeIdx, im) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsStructDataType">LibIsStructDataType</a>(dataTypeIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> 0
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetDataTypeNameFromId">LibGetDataTypeNameFromId</a>(dataTypeIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> busHashKey = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalmaplib.html#StripDollarCharFromLUTType">StripDollarCharFromLUTType</a>(structName)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> elemKey    = "E" + busHashKey
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(im.ElementKeys, elemKey)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> elemIdx   = <span class="tlc_bifunc">GETFIELD</span>(im.ElementKeys, elemKey)
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Get the BusStructure record from GlobalMemoryMap</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> gmmBusIdx       =  ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">GETFIELD</span>(GlobalMemoryMap.NonVirtualStructures.BusStructureHash, busHashKey)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Assert that the bus exists in GlobalMemoryMap</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (gmmBusIdx >= 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> gmmBusStruct    = GlobalMemoryMap.NonVirtualStructures.Bus[gmmBusIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numElem         = gmmBusStruct.NumElements
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> elemMapTemp     = []
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> eIdx = numElem
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> gmmBusElem    = gmmBusStruct.BusElement[eIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> elemName      = gmmBusElem.Name
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structName    = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#SLibGetBaseTypeNameIfVariableSizeLUTParam">SLibGetBaseTypeNameIfVariableSizeLUTParam</a>(structName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> addrOffset    = "rt_offsetof(%<<span>structName</span>>, %<<span>elemName</span>>)"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> elemDTypeId   = gmmBusElem.DataTypeIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> elemIsCplx    = gmmBusElem.IsComplex
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeMapIdx   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#FcnGetDataTypeMapIdx">FcnGetDataTypeMapIdx</a>(elemDTypeId,elemIsCplx,0,im)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimIdx        = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#FcnGetDimensionMapIdx">FcnGetDimensionMapIdx</a>(gmmBusElem, im, "", "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> gmmBusElem.IsFixedPoint
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fxpIdx      = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#FcnGetFxpMapIdx">FcnGetFxpMapIdx</a>(gmmBusElem, im)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fxpIdx      = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> elemMapTemp  = elemMapTemp + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"{/"%<<span>elemName</span>>/", %<<span>addrOffset</span>>, %<<span>dTypeMapIdx</span>>, %<<span>dimIdx</span>>, %<<span>fxpIdx</span>>}"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> eIdx = numElem
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.ElemMap   = im.ElemMap + elemMapTemp[eIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> elemIdx        = im.NumElements
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.NumElements = im.NumElements + numElem
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(im.ElementKeys, elemKey, elemIdx)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> elemIdx
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>FcnGetDimensionArrayIdx<span style="padding-left:9.5px"></span>===========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>DimensionArray.<span style="padding-left:9.5px"></span>Used<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>FcnGetDimensionMapIdx
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/blocks/tmux_blkDialog.m
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/CondExecutedVSS/tContPortFcnCall3.m<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGetDimensionArrayIdx" class="tlc_func">FcnGetDimensionArrayIdx</a>(data,im) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nDims           = data.NumDimensions
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimArrayKey     = "DA"
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> nDims < 3
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimArrayKey   = dimArrayKey + "D%<<span>data.NumRows</span>>" + "D%<<span>data.NumCols</span>>"
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> dimsIdx      = nDims
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimArrayKey = dimArrayKey + "D%<data.Dimensions[dimsIdx]>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(im.DimArrayKeys, dimArrayKey)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimArrayIdx    = <span class="tlc_bifunc">GETFIELD</span>(im.DimArrayKeys, dimArrayKey)
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimArrayIdx    = im.NumDimArray
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> nDims < 3
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.DimArray    = im.DimArray + data.NumRows + data.NumCols
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.DimArrayComments = im.DimArrayComments + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>im.NumDimArray</span>>" + "%<im.NumDimArray+1>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.NumDimArray = im.NumDimArray + 2
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> dimsIdx = nDims
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.DimArray  = im.DimArray + data.Dimensions[dimsIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.DimArrayComments = im.DimArrayComments + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"%<im.NumDimArray+dimsIdx>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.NumDimArray = im.NumDimArray + nDims
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(im.DimArrayKeys, dimArrayKey, dimArrayIdx)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> dimArrayIdx
+ <br><span class="tlc_fkw">%endfunction</span>    <span class="tlc_comment">%% FcnGetDimensionArrayIdx</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>FcnGetVirtSigDimensionArrayIdx<span style="padding-left:9.5px"></span>===================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>DimensionArray.<span style="padding-left:9.5px"></span>Used<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>FcnGetVirtSigDimensionMapIdx
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGetVirtSigDimensionArrayIdx" class="tlc_func">FcnGetVirtSigDimensionArrayIdx</a>(regDims, im) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nDims           = <span class="tlc_bifunc">SIZE</span>(regDims,1)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimArrayKey     = "DA"
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> dimsIdx      = nDims
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimArrayKey = dimArrayKey + "D%<regDims[dimsIdx]>"
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(im.DimArrayKeys, dimArrayKey)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimArrayIdx    = <span class="tlc_bifunc">GETFIELD</span>(im.DimArrayKeys, dimArrayKey)
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimArrayIdx    = im.NumDimArray
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> dIdx = nDims
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.DimArray         = im.DimArray + regDims[dIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.DimArrayComments = im.DimArrayComments+"%<im.NumDimArray+dIdx>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.NumDimArray = im.NumDimArray + nDims
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(im.DimArrayKeys, dimArrayKey, dimArrayIdx)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> dimArrayIdx
+ <br><span class="tlc_fkw">%endfunction</span>    <span class="tlc_comment">%% FcnGetDimensionArrayIdx</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>FcnGetVarDimsAddrIdx<span style="padding-left:9.5px"></span>===========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>VarDimsAddr.<span style="padding-left:9.5px"></span>Used<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>FcnGetDimensionMapIdx
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/string/tStringSupport.m<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGetVarDimsAddrIdx" class="tlc_func">FcnGetVarDimsAddrIdx</a>(vardimsAddr,vardimsKey, im, ppIf, ppFi) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(im.VarDimsAddrKeys, vardimsKey)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vardimsAddrIdx         = <span class="tlc_bifunc">GETFIELD</span>(im.VarDimsAddrKeys, vardimsKey)
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vardimsAddrIdx         = im.NumVarDimsAddr
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.VarDimsAddrMap      = im.VarDimsAddrMap + vardimsAddr
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.NumVarDimsAddr      = im.NumVarDimsAddr + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(im, "VarDimsAddrMapIf")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.VarDimsAddrMapIf    = im.VarDimsAddrMapIf + ppIf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.VarDimsAddrMapEndIf = im.VarDimsAddrMapEndIf + ppFi
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(im.VarDimsAddrKeys, vardimsKey, vardimsAddrIdx)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> vardimsAddrIdx
+ <br><span class="tlc_fkw">%endfunction</span>    <span class="tlc_comment">%% FcnGetVarDimAddrIdx</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>FcnGetDimensionMapIdx<span style="padding-left:9.5px"></span>=============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>DimensionMap<span style="padding-left:9.5px"></span>structure
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Use<span style="padding-left:9.5px"></span>Hash<span style="padding-left:9.5px"></span>table<span style="padding-left:9.5px"></span>approach<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>check<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>dimension<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>already<span style="padding-left:9.5px"></span>mapped<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>InstMap<span style="padding-left:9.5px"></span>(im).<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>mapped<span style="padding-left:9.5px"></span>->return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>value<span style="padding-left:9.5px"></span>associated<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>table.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>mapped<span style="padding-left:9.5px"></span>-><span style="padding-left:9.5px"></span>add<span style="padding-left:9.5px"></span>element<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>DimensionMap,<span style="padding-left:9.5px"></span>add<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>new<span style="padding-left:9.5px"></span>entry<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>hash<span style="padding-left:9.5px"></span>table<span style="padding-left:9.5px"></span>(im.DimensionKeys)<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>new<span style="padding-left:9.5px"></span>value.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/blocks/tmux_blkDialog.m
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/CondExecutedVSS/tContPortFcnCall3.m<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGetDimensionMapIdx" class="tlc_func">FcnGetDimensionMapIdx</a>(data, im, ppIf, ppFi) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> orientation   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#FcnGetDataOrientation">FcnGetDataOrientation</a>(data)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numDims       = data.NumDimensions
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimArrayIndex = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#FcnGetDimensionArrayIdx">FcnGetDimensionArrayIdx</a>(data,im)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(data, "IsVarDims") &amp;&amp; data.IsVarDims
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vardimsAddrIndex = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#FcnGetVarDimsAddrIdx">FcnGetVarDimsAddrIdx</a>(data.VarDimsBaseAddr, data.VarDimsKey, im, ppIf, ppFi)
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vardimsAddrIndex = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#FcnGetVarDimsAddrIdx">FcnGetVarDimsAddrIdx</a>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetNullDefinitionFromTfl">SLibGetNullDefinitionFromTfl</a>(), "NULL", im, ppIf, ppFi)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimKey        = "DM%<<span>orientation</span>>%<<span>dimArrayIndex</span>>N%<<span>numDims</span>>%<<span>vardimsAddrIndex</span>>"
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(im.DimKeys,dimKey)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimMapIdx           = <span class="tlc_bifunc">GETFIELD</span>(im.DimKeys,dimKey)
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimMapIdx           = im.NumDimensionMaps
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.NumDimensionMaps = im.NumDimensionMaps + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.DimensionMap     = im.DimensionMap + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{%<<span>orientation</span>>, %<<span>dimArrayIndex</span>>, %<<span>numDims</span>>, %<<span>vardimsAddrIndex</span>>}"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(im.DimKeys, dimKey, dimMapIdx)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(im, "DimensionMapIf")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.DimensionMapIf    = im.DimensionMapIf + ppIf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.DimensionMapEndIf = im.DimensionMapEndIf + ppFi
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> dimMapIdx
+ <br><span class="tlc_fkw">%endfunction</span>    <span class="tlc_comment">%% FcnGetDimensionMapIdx</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>FcnGetVirtSigDimensionMapIdx<span style="padding-left:9.5px"></span>=====================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/string/tStringSupport.m<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGetVirtSigDimensionMapIdx" class="tlc_func">FcnGetVirtSigDimensionMapIdx</a>(regDims, im, ppIf, ppFi) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%%assign orientation   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#FcnGetDataOrientation">FcnGetDataOrientation</a>(data)</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numDims = <span class="tlc_bifunc">SIZE</span>(regDims,1)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> numDims > 2
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> orientation = "rtwCAPI_MATRIX_COL_MAJOR_ND"
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> regDims[0] > 1 &amp;&amp; regDims[1] > 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> orientation = "rtwCAPI_MATRIX_COL_MAJOR"
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> regDims[0] == 1 &amp;&amp; regDims[1] == 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> orientation = "rtwCAPI_SCALAR"
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> orientation = "rtwCAPI_VECTOR"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimArrayIndex = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#FcnGetVirtSigDimensionArrayIdx">FcnGetVirtSigDimensionArrayIdx</a>(regDims,im)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vardimsAddrIndex = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#FcnGetVarDimsAddrIdx">FcnGetVarDimsAddrIdx</a>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetNullDefinitionFromTfl">SLibGetNullDefinitionFromTfl</a>(), "NULL", im, ppIf, ppFi)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimKey        = "DM%<<span>orientation</span>>%<<span>dimArrayIndex</span>>N%<<span>numDims</span>>%<<span>vardimsAddrIndex</span>>"
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(im.DimKeys,dimKey)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimMapIdx            = <span class="tlc_bifunc">GETFIELD</span>(im.DimKeys,dimKey)
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimMapIdx            = im.NumDimensionMaps
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.NumDimensionMaps  = im.NumDimensionMaps + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.DimensionMap      = im.DimensionMap + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{%<<span>orientation</span>>, %<<span>dimArrayIndex</span>>, %<<span>numDims</span>>, %<<span>vardimsAddrIndex</span>>}"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(im.DimKeys, dimKey, dimMapIdx)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.DimensionMapIf    = im.DimensionMapIf + ppIf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.DimensionMapEndIf = im.DimensionMapEndIf + ppFi
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> dimMapIdx
+ <br><span class="tlc_fkw">%endfunction</span>    <span class="tlc_comment">%% FcnGetDimensionMapIdx</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>FcnRegionDimsEqualDataDims<span style="padding-left:9.5px"></span>=====================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/codevariants/tcodevariants9.m<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnRegionDimsEqualDataDims" class="tlc_func">FcnRegionDimsEqualDataDims</a>(regDims, data) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numDims = <span class="tlc_bifunc">SIZE</span>(regDims,1)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> numDims != data.NumDimensions
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> numDims > 2
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> dIdx = numDims
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> regDims[dIdx] != data.Dimensions[dIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> regDims[0] > 1 &amp;&amp; regDims[1] > 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> (regDims[0] == data.NumRows) ? (regDims[1]==data.NumCols) : TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> (regDims[0]*regDims[1] == data.NumRows*data.NumCols)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_TRUE
+ <br><span class="tlc_fkw">%endfunction</span>    <span class="tlc_comment">%%  FcnRegionDimsEqualDataDims</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>FcnGetFxpMapIdx<span style="padding-left:9.5px"></span>==================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>fixPtMap<span style="padding-left:9.5px"></span>array<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>structures
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Use<span style="padding-left:9.5px"></span>Hash<span style="padding-left:9.5px"></span>table<span style="padding-left:9.5px"></span>approach<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>check<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>Fixed<span style="padding-left:9.5px"></span>Point<span style="padding-left:9.5px"></span>information<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>already<span style="padding-left:9.5px"></span>mapped<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>InstMap<span style="padding-left:9.5px"></span>(im).<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>mapped<span style="padding-left:9.5px"></span>->return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>value<span style="padding-left:9.5px"></span>associated<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>table.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>mapped<span style="padding-left:9.5px"></span>-><span style="padding-left:9.5px"></span>add<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>element<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>FixPtMap,<span style="padding-left:9.5px"></span>add<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>new<span style="padding-left:9.5px"></span>entry<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>hash<span style="padding-left:9.5px"></span>table<span style="padding-left:9.5px"></span>(im.FxpKeys)<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>new<span style="padding-left:9.5px"></span>value.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Note:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Only,Fixed<span style="padding-left:9.5px"></span>point<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>Uniform<span style="padding-left:9.5px"></span>Scaling<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>mapped<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>API
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Non-Uniform<span style="padding-left:9.5px"></span>scaling<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>mapped<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>API.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/codevariants/tcodevariants9.m<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGetFxpMapIdx" class="tlc_func">FcnGetFxpMapIdx</a>(data, im) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fxpRec = data.FixedPointInfo 
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> fxpRec.Scaling == "uniform"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Create a Hash Key for the Fix Pt Values</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Hash key is Sum of</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%    "U" - for uniform</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%    exponent - EN prepended for negative, E prepend for Positive</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%    FractionalSlope</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%    Bias</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%    IsSigned</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%    WordLength</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> %<<span>fxpRec.FixedExp</span>> < 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> exp    = "EN%<-fxpRec.FixedExp>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> exp    = "E%<<span>fxpRec.FixedExp</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> biasIdx  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#FcnGetStoredDoublesIdx">FcnGetStoredDoublesIdx</a>(im, fxpRec.Bias)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> slopeIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#FcnGetStoredDoublesIdx">FcnGetStoredDoublesIdx</a>(im, fxpRec.FracSlope)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fxpKey   = "U" + exp + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"S%<<span>slopeIdx</span>>B%<<span>biasIdx</span>>S%<<span>fxpRec.IsSigned</span>>N%<<span>fxpRec.NumRequiredBits</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Check if the Hash key exists in FxpKeys record</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(im.FxpKeys, fxpKey)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fxpMapIdx      = <span class="tlc_bifunc">GETFIELD</span>(im.FxpKeys,fxpKey)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fxpMapIdx      = im.NumFixPoint
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.NumFixPoint = im.NumFixPoint + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> slopeStr       = "(const void *) &amp;rtcapiStoredFloats[%<<span>slopeIdx</span>>]"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> slopeStr       = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(slopeStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> biasStr        = "(const void *) &amp;rtcapiStoredFloats[%<<span>biasIdx</span>>]"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> biasStr        = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(biasStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.FixPointMap = im.FixPointMap + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"{%<<span>slopeStr</span>>, %<<span>biasStr</span>>, rtwCAPI_FIX_UNIFORM_SCALING, " ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>fxpRec.NumRequiredBits</span>>, %<<span>fxpRec.FixedExp</span>>, %<<span>fxpRec.IsSigned</span>>}"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(im.FxpKeys, fxpKey, fxpMapIdx)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fxpMapIdx = 0
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> fxpMapIdx
+ <br><span class="tlc_fkw">%endfunction</span>  <span class="tlc_comment">%% FcnGetFxpMapIdx</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>FcnGetStoredDoublesIdx<span style="padding-left:9.5px"></span>============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGetStoredDoublesIdx" class="tlc_func">FcnGetStoredDoublesIdx</a>(im, value) <span class="tlc_fkw">void</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create a hash key from the value </span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> value == rtInf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hashKey = "Pinf"
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> value == 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hashKey = "K0"
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> value < 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Format Value as a double with %g format specifier</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cValue = <span class="tlc_bifunc">SPRINTF</span>("%g",-value)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> value > -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hashKey = "N" + <span class="tlc_bifunc">FEVAL</span>("regexprep", cValue, "[.-]", "n")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hashKey = "N" + <span class="tlc_bifunc">FEVAL</span>("regexprep", cValue, "[.+]", "p")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cValue = <span class="tlc_bifunc">SPRINTF</span>("%g",value)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> value < 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hashKey = "P" + <span class="tlc_bifunc">FEVAL</span>("regexprep", cValue, "[.-]", "n")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hashKey = "P" + <span class="tlc_bifunc">FEVAL</span>("regexprep", cValue, "[.+]", "p")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span> 
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Check if hashKey already exists in DoubleKeys</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(im.DoubleKeys, hashKey)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% if exists, return the value associated with the key</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retValue = <span class="tlc_bifunc">GETFIELD</span>(im.DoubleKeys, hashKey)
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% add the value to DoublesMap and return the appended value</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retValue      = im.NumDoubles
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.DoublesMap = im.DoublesMap + value
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(im.DoubleKeys, hashKey, retValue)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.NumDoubles = im.NumDoubles + 1
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% return the index of the double number in the Doubles Array</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retValue
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>FcnGetCAPIGrndAddr<span style="padding-left:9.5px"></span>===========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGetCAPIGroundAddr" class="tlc_func">FcnGetCAPIGroundAddr</a>(im, dtIdx, isComplex, regDims) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nDims = <span class="tlc_bifunc">SIZE</span>(regDims,1)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width = 1
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> dimsIdx      = nDims
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width = width*regDims[dimsIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Create a hash key from the value </span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hashKey = "GRND_DT%<<span>dtIdx</span>>_%<<span>isComplex</span>>_W%<<span>width</span>>"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> optWidth = (width > 1) ? "[%<<span>width</span>>]": ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Check if hashKey already exists in DoubleKeys</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(im.GroundKeys, hashKey)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% if exists, return the value associated with the key</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> value = <span class="tlc_bifunc">GETFIELD</span>(im.GroundKeys, hashKey)
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% add the defn to groundsMap and return the appended value</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dt    = ::CompiledModel.DataTypes.DataType[dtIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isComplex
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> value = "static %<<span>dt.ComplexName</span>> %<<span>hashKey</span>>%<<span>optWidth</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> value = "static %<<span>dt.Name</span>> %<<span>hashKey</span>>%<<span>optWidth</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.GroundsMap = im.GroundsMap + value
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(im.GroundKeys, hashKey, value)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.NumGrounds = im.NumGrounds + 1
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% return the address</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retValue = (width > 1) ? "%<<span>hashKey</span>>[0]" : hashKey
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> "&amp;(%<<span>retValue</span>>)"
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>FcnGetSampTimeIdx<span style="padding-left:9.5px"></span>=========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/codevariants/tcodevariants9.m<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/string/tStringSupport.m<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGetSampTimeIdx" class="tlc_func">FcnGetSampTimeIdx</a>(tID, isFrame, im) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% for constant, parameter and triggered signals TID < 0</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> tID < 0 || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibParameterChangeEventTID">SLibParameterChangeEventTID</a>(tID)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tID > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidKey = "TN%<<span>tID</span>>F%<<span>isFrame</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidKey = "TN%<-tID>F%<<span>isFrame</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(im.STimeKeys, tidKey)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sTimeIdx =  <span class="tlc_bifunc">GETFIELD</span>(im.STimeKeys, tidKey)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sTimeIdx          = im.NumSampleTimes
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.NumSampleTimes = im.NumSampleTimes + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.SampleTimeMap  = im.SampleTimeMap + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"{%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetNullDefinitionFromTfl">SLibGetNullDefinitionFromTfl</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetNullDefinitionFromTfl">SLibGetNullDefinitionFromTfl</a></a>()</span>>,%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetNullDefinitionFromTfl">SLibGetNullDefinitionFromTfl</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetNullDefinitionFromTfl">SLibGetNullDefinitionFromTfl</a></a>()</span>>, %<<span>tID</span>>, %<<span>isFrame</span>>}"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(im.STimeKeys, tidKey, sTimeIdx)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tidKey = "T%<<span>tID</span>>F%<<span>isFrame</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(im.STimeKeys, tidKey)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sTimeIdx =  <span class="tlc_bifunc">GETFIELD</span>(im.STimeKeys, tidKey)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sTimeIdx          = im.NumSampleTimes
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sTimeRec          = ::CompiledModel.SampleTime[tID]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> sTimeRec.IsUnionTs == "no"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.NumSampleTimes = im.NumSampleTimes + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% use -3.0 for init, term, and reset events' periods</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibInitResetTermEventTID">SLibInitResetTermEventTID</a>(tID)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sPeriodIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#FcnGetStoredDoublesIdx">FcnGetStoredDoublesIdx</a>(im,-3.0) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sPeriodIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#FcnGetStoredDoublesIdx">FcnGetStoredDoublesIdx</a>(im,sTimeRec.PeriodAndOffset[0])          
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sPeriodStr = "(const void *) &amp;rtcapiStoredFloats[%<<span>sPeriodIdx</span>>]"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sPeriodStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(sPeriodStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sOffsetIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#FcnGetStoredDoublesIdx">FcnGetStoredDoublesIdx</a>(im,sTimeRec.PeriodAndOffset[1])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sOffsetStr = "(const void *) &amp;rtcapiStoredFloats[%<<span>sOffsetIdx</span>>]"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sOffsetStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#FcnReplaceCCastWithStaticCastForCPP">FcnReplaceCCastWithStaticCastForCPP</a>(sOffsetStr)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> im.SampleTimeMap  = im.SampleTimeMap + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"{%<<span>sPeriodStr</span>>, %<<span>sOffsetStr</span>>, %<<span>sTimeRec.TID</span>>, %<<span>isFrame</span>>}"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(im.STimeKeys, tidKey, sTimeIdx)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> sTimeIdx
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>=========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Walks<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>.rtw<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>caches<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>bus<span style="padding-left:9.5px"></span>signals<span style="padding-left:9.5px"></span>and
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>elements<span style="padding-left:9.5px"></span>array<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>busInfo.
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnDumpBusElements" class="tlc_func">FcnDumpBusElements</a>(busInfo, offset, blkPath, portIdx) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> RealNumElements = 0 <span class="tlc_comment">%% Some elements in the port obj may be unconnected,</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% so we need to keep track of RealNumElements</span>
+ <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> foo {}
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> reg = NumRegions
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> Region[reg]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> busIdx = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portObj = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#SLibCreateDummyPortRecord">SLibCreateDummyPortRecord</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> Type == "Bus"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> shdIdx = SigHierIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> BlockHierarchyMap.NumSignalHierarchyDescriptors > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> busIdx = BlockHierarchyMap.SignalHierarchyDescriptor[shdIdx].HierarchyNode[0].rtwCAPIBusIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> foo elements {type "rtwCAPI_bus" ; index busIdx}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> RealNumElements = RealNumElements + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> shdIdx = SigHierIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(BlockHierarchyMap.SignalHierarchyDescriptor[shdIdx].HierarchyNode[0], "rtwCAPIAddrMapIdx")          
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> capiIdx = BlockHierarchyMap.SignalHierarchyDescriptor[shdIdx].HierarchyNode[0].rtwCAPIAddrMapIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> foo elements {type "rtwCAPI_signal" ; index capiIdx}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> RealNumElements = RealNumElements + 1        
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span> <span class="tlc_comment">%% Region</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_undef">%undef</span> portObj
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span> <span class="tlc_comment">%% </span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> RealNumElements > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> busElement = "{/"%<<span>SignalLabel</span>>/", /"%<<span>blkPath</span>>/", %<<span>portIdx</span>>, %<<span>RealNumElements</span>>, &amp;rtBusElements[%<<span>offset</span>>]},"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> busInfo busElements {str busElement ; indicies %<<span>foo</span>>}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nextOffset = offset + RealNumElements
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> nextOffset
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> offset
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/codevariants/tcodevariants3.m<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/CondExecutedVSS/tContPortFcnCall4.m
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGetRTWTimingObject" class="tlc_func">FcnGetRTWTimingObject</a>(CAPIHooks, tid) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Figure out the exact TID</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (<span class="tlc_bifunc">TYPE</span>(tid) == "Number")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceRTWTarget">IsModelReferenceRTWTarget</a>() &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(::CompiledModel.AllSampleTimesInherited == "yes")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tid = "inherited"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <span class="tlc_bifunc">FEVAL</span>("get_param", <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibGetModelName">LibGetModelName</a>(), "SampleTimeConstraint") == "STIndependent"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tid = "inherited"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> ( <span class="tlc_bifunc">ISEQUAL</span>(SolverType, "FixedStep") &amp;&amp; (FixedStepOpts.TID01EQ) &amp;&amp; (tid == 0) )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tid = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tid = tid
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> (tid == "constant")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Do nothing. Ensure that u dont have any arbitrary string</span>
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <span class="tlc_bifunc">ISEQUAL</span>(tid, "continuous")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Do nothing. Ensure that u dont have any arbitrary string</span>
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <span class="tlc_bifunc">ISEQUAL</span>(tid, "inherited")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Do nothing. Ensure that u dont have any arbitrary string</span>
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <span class="tlc_bifunc">ISEQUAL</span>(tid, "trigger")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Do nothing. Ensure that u dont have any arbitrary string</span>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("CodeInfo TID: Incorrect TID specified")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> timeObj = "time_%<<span>tid</span>>"
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(CAPIHooks.TimingInterfaceMap, timeObj)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Do nothing. This object has already been created.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Just return the name of the object</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Create a default object. Note the default TimingMode is PERIODIC</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comment = "% Timing Information: %<<span>timeObj</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>%<<span>comment</span>>
+ <br>%<<span>timeObj</span>> = RTW.TimingInterface;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (<span class="tlc_bifunc">TYPE</span>(tid) == "Number")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% This TID should correspond to a SampleTime record</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ( (tid < 0) || (tid >= ::CompiledModel.NumSampleTimes) )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Error out if this TID is greater than NumSampleTimes</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("CodeInfo TID: Incorrect TID specified")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Get the appropriate SampleTime record</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sTimeRec = ::CompiledModel.SampleTime[tid]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span>( sTimeRec.Asynchronous == "no")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% If corresponds to Synchronous task, set period and offset.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% The current Simulink design assumes a Synchronous task as</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% always periodic.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>timeObj</span>>.SamplePeriod =  %<sTimeRec.PeriodAndOffset[0]>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>timeObj</span>>.SampleOffset =  %<sTimeRec.PeriodAndOffset[1]>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>timeObj</span>>.NonFcnCallPartitionName = '%<<span>sTimeRec.NonFcnCallPartitionName</span>>';
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Mark as asynchronous</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(sTimeRec, "EventSourceType") &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sTimeRec.EventSourceType == "PowerUpEvent"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>timeObj</span>>.TimingMode = 'INITIALIZE'; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <span class="tlc_bifunc">ISFIELD</span>(sTimeRec, "EventSourceType") &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sTimeRec.EventSourceType == "ResetEvent"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>timeObj</span>>.TimingMode = 'RESET'; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <span class="tlc_bifunc">ISFIELD</span>(sTimeRec, "EventSourceType") &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sTimeRec.EventSourceType == "ResetWithInitEvent"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>timeObj</span>>.TimingMode = 'RESETWITHINIT'; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <span class="tlc_bifunc">ISFIELD</span>(sTimeRec, "EventSourceType") &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sTimeRec.EventSourceType == "PowerDownEvent"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>timeObj</span>>.TimingMode = 'TERMINATE';
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>timeObj</span>>.TimingMode = 'ASYNCHRONOUS';
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISNAN</span>(sTimeRec.PeriodAndOffset[0])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>timeObj</span>>.SamplePeriod =  %<sTimeRec.PeriodAndOffset[0]>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISNAN</span>(sTimeRec.PeriodAndOffset[1])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>timeObj</span>>.SampleOffset =  %<sTimeRec.PeriodAndOffset[1]>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (sTimeRec.PriorityAssigned == "yes")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% If priority is assigned, set the priority</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>timeObj</span>>.Priority = %<<span>sTimeRec.Priority</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (sTimeRec.ExplicitTasking == "yes")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>timeObj</span>>.TaskingMode = 'EXPLICIT_TASKING';
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> (tid == "constant")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% This TID should correspond to a "ONESHOT"</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>timeObj</span>>.TimingMode = 'ONESHOT'; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> (tid == "continuous")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% This TID should correspond to a "CONTINUOUS"</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>timeObj</span>>.TimingMode = 'CONTINUOUS';
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> (tid == "inherited")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% This TID should correspond to a "INHERITED"</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>timeObj</span>>.TimingMode = 'INHERITED';
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> (tid == "trigger")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% triggered sample times do not have a TimingInterface representation</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>timeObj</span>> = RTW.TimingInterface.empty;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Safety check. This path should never be reached.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("CodeInfo TID: Incorrect TID specified")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(CAPIHooks.TimingInterfaceMap, timeObj, tid)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> timeObj
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>FcnAddSignalDataInterface<span style="padding-left:9.5px"></span>=======================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract<span style="padding-left:9.5px"></span>:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>creates<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>RTW.DataInterface<span style="padding-left:9.5px"></span>object<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>C<span style="padding-left:9.5px"></span>API<span style="padding-left:9.5px"></span>signal<span style="padding-left:9.5px"></span>record
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>adds<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>list<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>interfaces.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>process<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>creation<span style="padding-left:9.5px"></span>here<span style="padding-left:9.5px"></span>means<span style="padding-left:9.5px"></span>emitting<span style="padding-left:9.5px"></span>out<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>MATLAB<span style="padding-left:9.5px"></span>syntax<span style="padding-left:9.5px"></span>which<span style="padding-left:9.5px"></span>can<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>create<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>object<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>MATLAB.<span style="padding-left:9.5px"></span>`
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MATLAB<span style="padding-left:9.5px"></span>syntax<span style="padding-left:9.5px"></span>is
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>dataInterface<span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>RTW.DataInterface(blockSID,<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>signalName,<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>implementation,
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>timing)
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>blockSID<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>-<span style="padding-left:9.5px"></span>SID<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>feeding<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>signal
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>signalName<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>-<span style="padding-left:9.5px"></span>Label<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>signal
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>implementation<span style="padding-left:9.5px"></span>-<span style="padding-left:9.5px"></span>Code<span style="padding-left:9.5px"></span>implementation<span style="padding-left:9.5px"></span>-<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>RTW.Variable<span style="padding-left:9.5px"></span>object.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>timing<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>-<span style="padding-left:9.5px"></span>A<span style="padding-left:9.5px"></span>RTW.TimingInterface<span style="padding-left:9.5px"></span>object,<span style="padding-left:9.5px"></span>giving<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>sample<span style="padding-left:9.5px"></span>rate
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>signal
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/inlineVariants/ivGeneral/tIVfcnCall_neg.m
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnAddSignalDataInterface" class="tlc_func">FcnAddSignalDataInterface</a>(CAPIHooks, blkSID, portIdx, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;storageClass, cgTypeIdx, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frameData, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TID, isPointer, addrMapIdx, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataOutputPortSignalLabel) void
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Assumptions:</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% 1) Block is always non-virtual and therefore never has multiple regions / need </span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% for ArrayExpressions.</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Limitations:</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% 1) Custom storage classes are not supported and will result in an </span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%    empty Implementation.</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% 2) Triggered sample times result in an empty TimingInterface.</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> dataInterfaceBuffer   
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> CAPIHooks.Data.NumDataInterfaces = CAPIHooks.Data.NumDataInterfaces + 1
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataInterfaceIdx = CAPIHooks.Data.NumDataInterfaces
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sigId = "Sig%<<span>dataInterfaceIdx</span>>"
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> regObj = "RTW.DataImplementation.empty"
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Skip Custom Storage Classes</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (storageClass != "Custom")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% create array expression for DataInterface.Implementation which will access into the </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% C API address map</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> addrExpr = "capi_%<<span>sigId</span>>AddrExpr"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>addrExpr</span>> = RTW.ArrayExpression(capi_dataAddrExpr, %<<span>addrMapIdx</span>>, capi_voidptr);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> regObj = addrExpr
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% create the coder.types for DataInterface.Type</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% default type qualifers</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sigConst  = 0
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sigVolatile = 0
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeObj = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codeinfolib.html#SLibGetCoderTypeObject">SLibGetCoderTypeObject</a>(cgTypeIdx, sigConst, sigVolatile)     
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEQUAL</span>(frameData, "no")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeObj = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codeinfolib.html#FcnGetMatrixFrameTypeObj">FcnGetMatrixFrameTypeObj</a>(typeObj)
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isPointer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% add level of indirection to the typeObj</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ptrExpr = "capi_%<<span>sigId</span>>Pointer"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>ptrExpr</span>> = coder.types.Pointer; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>ptrExpr</span>>.BaseType = %<<span>typeObj</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeObj = ptrExpr
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ( (<span class="tlc_bifunc">TYPE</span>(TID) == "Number") &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(::CompiledModel.SampleTime[TID].PeriodAndOffset[0] == 0.0) )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> timeObj = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#FcnGetRTWTimingObject">FcnGetRTWTimingObject</a>(CAPIHooks, "continuous")
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> timeObj = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#FcnGetRTWTimingObject">FcnGetRTWTimingObject</a>(CAPIHooks, TID)
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comment = "% C API Data Interface: %<<span>dataInterfaceIdx</span>>"
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkSID = ::CompiledModel.Name + ":" + blkSID + "#out:" + "%<portIdx+1>"
+ <br>&nbsp;&nbsp;&nbsp;%<<span>comment</span>>    
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% escape ' for MATLAB</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(dataOutputPortSignalLabel)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataOutputPortSignalLabel = <span class="tlc_bifunc">FEVAL</span>("strrep", dataOutputPortSignalLabel, "'", "''")
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;dataInterface = RTW.DataInterface('%<<span>blkSID</span>>', '%<<span>dataOutputPortSignalLabel</span>>', %<<span>regObj</span>>, %<<span>timeObj</span>>);
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% set Type derived from CGType</span>
+ <br>&nbsp;&nbsp;&nbsp;dataInterface.Type = %<<span>typeObj</span>>;
+ <br>&nbsp;&nbsp;&nbsp;dataInterfaces = [dataInterfaces, dataInterface];
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> dataInterfaceBuffer
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% extend existing definition</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> CAPIHooks.Data.DataInterfaceDef = CAPIHooks.Data.DataInterfaceDef + dataInterfaceBuffer
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>FcnCAPIHookInit<span style="padding-left:9.5px"></span>=========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:<span style="padding-left:9.5px"></span>Initialize<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>C-API<span style="padding-left:9.5px"></span>Hooks<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>structure
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/codevariants/tcodevariants9.m<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnCAPIHookInit" class="tlc_func">FcnCAPIHookInit</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% default initialization</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% TimingInterfaceMap stores the names of TimingInterface objects that </span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% have already been created to avoid duplication</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> CAPIHooks { /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enabled TLC_FALSE;     /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hooks   [];            /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Data    [];            /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TimingInterfaceMap {}  /
+ <br>&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>() || ::isRAccel || ::isRSim)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% add required hook implementations</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% include the C-API MAT-file hooks</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> CAPIHooks.Hooks = ["<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capimathooks.html">capimathooks.tlc</a>"]   
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>   
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% if there are hook implementations, enable CAPIHooks</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/obsoletelib.html#LibIsEmpty">LibIsEmpty</a>(CAPIHooks.Hooks)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% reset state of <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codeinfolib.html">codeinfolib.tlc</a> which is also used by CodeInfo processing</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codeinfolib.html#SLibResetCodeInfoLib">SLibResetCodeInfoLib</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> CAPIHooks.Enabled = TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% initialize Data</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> Data {                   /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DataInterfaceDef "dataInterfaces = [];"; /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NumDataInterfaces 0 /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% add generic part of DataInterfaceDef that represents the </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% dataAddrMap - see example below</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% /* Real-time Model Data Structure */</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% struct mpil_signal_logging_bo_RT_MODEL {</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%   const char_T * volatile errorStatus;</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%   /*</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%    * DataMapInfo:</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%    * The following substructure contains information regarding</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%    * structures generated in the model's C API.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%    */</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%   struct {</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%     rtwCAPI_ModelMappingInfo mmi;</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%   } DataMapInfo;</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% };            </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> dataInterfaceBuffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% void * [] type of dataAddrMap</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_voidtype     = coder.types.Char; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_voidptr      = coder.types.Pointer; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_voidptr.BaseType = capi_voidtype;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_voidptrArray = coder.types.Matrix; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_voidptrArray.BaseType = capi_voidptr; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% allow for (unknown) int32 dataAddrMap size</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_voidptrArray.Dimensions = [%<<span>INT32MAX</span>>,1];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% dataAddrMap element of mmi</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_dataAddrElem = coder.types.AggregateElement; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_dataAddrElem.Identifier = 'InstanceMap.dataAddrMap'; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_dataAddrElem.Type = capi_voidptrArray;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% mmi with dataAddrMap element</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_mmiType = coder.types.Struct; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_mmiType.Elements = capi_dataAddrElem;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_mmiType.Identifier = 'rtwCAPI_ModelMappingInfo';
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_mmiElem = coder.types.AggregateElement; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_mmiElem.Type = capi_mmiType; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_mmiElem.Identifier = 'mmi';
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% DataMapInfo with mmi element</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_dmiType = coder.types.Struct;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_dmiType.Identifier = 'DataMapInfo';
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_dmiType.Elements   = capi_mmiElem;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_dmiElem = coder.types.AggregateElement;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_dmiElem.Type = capi_dmiType; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_dmiElem.Identifier = 'DataMapInfo';
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% RT_MODEL with DataMapInfo element</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_rtmType = coder.types.Struct;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_rtmType.Identifier = 'RT_MODEL';
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_rtmType.Elements = capi_dmiElem;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Construct rtMVar</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% assume rtM will be defined</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ownerName = "defined"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> needRtmPtrType = TLC_FALSE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !GenerateClassInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% determine the RTM variable name</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% use RT_MODEL directly for model reference single instance</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelRefScalableBuild">IsModelRefScalableBuild</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtmType = "capi_rtmType"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootMdlRefDWorkVar = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.System[<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()].Interface.tsysMdlrefDWork   
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtMVarName = rootMdlRefDWorkVar + ".rtm"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% use pointer to RT_MODEL for model reference multi-instance</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtmType = "capi_rtmPtrType"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> needRtmPtrType = TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtMVarName = "RTModel_ptr"  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>      
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% always use pointer to RT_MODEL </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% for standalone non-reusable &amp; reusable</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtmType = "capi_rtmPtrType"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> needRtmPtrType = TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtMVarName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetModelSS">RTMGetModelSS</a>()   
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% set RTM varname as model object "getRTM" expression </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtMVarName = "ModelMDLOBJ.getRTM()"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtMVarName = "%<::CompiledModel.GlobalScope.tModelObject>.getRTM()"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtmType = "capi_rtmPtrType"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> needRtmPtrType = TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> needRtmPtrType
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_rtmPtrType = coder.types.Pointer;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_rtmPtrType.BaseType = capi_rtmType; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_rtmPtrType.ReadOnly = 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_rtMVar = RTW.Variable(%<<span>rtmType</span>>, '%<<span>rtMVarName</span>>', '%<<span>ownerName</span>>');  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Construct intermediate expressions: rtM-> | DataMapInfo. | mmi. | InstanceMap.dataAddrMap</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_dmiStructExpr = RTW.StructExpression(capi_dmiElem, capi_rtMVar);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_mmiStructExpr = RTW.StructExpression(capi_mmiElem, capi_dmiStructExpr);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;capi_dataAddrExpr = RTW.StructExpression(capi_dataAddrElem, capi_mmiStructExpr);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> dataInterfaceBuffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> Data.DataInterfaceDef = Data.DataInterfaceDef + dataInterfaceBuffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> CAPIHooks.Data = Data
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_return">%return</span> CAPIHooks
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>FcnCAPIHookAddSignal<span style="padding-left:9.5px"></span>=========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:<span style="padding-left:9.5px"></span>Add<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>signal<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>C-API<span style="padding-left:9.5px"></span>Hooks<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>structure
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/codevariants/tcodevariants9.m<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnCAPIHookAddSignal" class="tlc_func">FcnCAPIHookAddSignal</a>(CAPIHooks,    /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;portIdx,      /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addrMapIdx,   /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isPointer,    /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;storageClass, /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cgTypeIdx, /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frameData, /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TID, /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blkSID, /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataOutputPortSignalLabel) void
+ <br><span class="tlc_if">%if</span> CAPIHooks.Enabled
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% add a RTW.DataInterface definition</span>
+ <br>&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html#FcnAddSignalDataInterface">FcnAddSignalDataInterface</a>(CAPIHooks, /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blkSID, /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;portIdx, /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;storageClass, /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cgTypeIdx, /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frameData, /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TID, /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isPointer, /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addrMapIdx, /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataOutputPortSignalLabel)>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>FcnCAPIHookExecute<span style="padding-left:9.5px"></span>=========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:<span style="padding-left:9.5px"></span>Call<span style="padding-left:9.5px"></span>each<span style="padding-left:9.5px"></span>registered<span style="padding-left:9.5px"></span>C-API<span style="padding-left:9.5px"></span>hook<span style="padding-left:9.5px"></span>function
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/codevariants/tcodevariants9.m<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnCAPIHookExecute" class="tlc_func">FcnCAPIHookExecute</a>(CAPIHooks) <span class="tlc_fkw">void</span>
+ <br><span class="tlc_if">%if</span> CAPIHooks.Enabled      
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> HookIdx = <span class="tlc_bifunc">SIZE</span>(CAPIHooks.Hooks)[1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> CAPIHookType = "CAPIHook"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> CAPIHook = CAPIHooks.Hooks[HookIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_generatefile">%generatefile</span> "%<<span>CAPIHookType</span>>" "%<<span>CAPIHook</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span class="tlc_bifunc">GENERATE_TYPE</span>(CAPIHooks.Data, "FcnCAPIHook", "%<<span>CAPIHookType</span>>")>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span>  <span class="tlc_comment">%% <span class="tlc_bifunc">EXISTS</span>("_CAPILIB_") == 0</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>EOF<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/capilib.html">capilib.tlc</a><span style="padding-left:9.5px"></span>============================================================
+</span> <br></body></html>

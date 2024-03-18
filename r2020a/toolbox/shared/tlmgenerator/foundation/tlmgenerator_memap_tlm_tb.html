@@ -1,0 +1,321 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>defines<span style="padding-left:9.5px"></span>buffers<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>memory<span style="padding-left:9.5px"></span>map<span style="padding-left:9.5px"></span>options.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>It<span style="padding-left:9.5px"></span>must<span style="padding-left:9.5px"></span>define<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>following<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>variables:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>tlmg_buf_decl_tb<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>tlmg_buf_init_tb
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>tlmg_buf_wrimpl_tb
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>tlmg_buf_rdimpl_tb
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>2009-2010<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+</span> <br><span class="tlc_openfile">%openfile</span> l_wrimpl_comment_header
+ <br>// --------------------------------------------------
+ <br>// Send TLM generic payload transactions.
+ <br>// --------------------------------------------------
+ <br>// Based on the selected 'TLM Generation' options for the memory
+ <br>// map, we will send input data sets with no address, a single
+ <br>// address representing the entire input data set, or loop
+ <br>// through individual addresses of each input signal.
+ <br>//
+ <br><span class="tlc_closefile">%closefile</span> l_wrimpl_comment_header
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+</span> <br><span class="tlc_openfile">%openfile</span> l_rdimpl_comment_header
+ <br>// --------------------------------------------------
+ <br>// Send TLM generic payload transactions.
+ <br>// --------------------------------------------------
+ <br>// Based on the selected 'TLM Generation' options for the memory
+ <br>// map, we will read output data sets with no address, a single
+ <br>// address representing the entire output data set, or loop
+ <br>// through individual addresses of each output signal.
+ <br>//
+ <br><span class="tlc_closefile">%closefile</span> l_rdimpl_comment_header
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+</span> <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+</span> <br><span class="tlc_openfile">%openfile</span> l_init_comment_header
+ <br>&nbsp;&nbsp;// --------------------------------
+ <br>&nbsp;&nbsp;// initialize the C datatype fields:
+ <br>&nbsp;&nbsp;//   pcf    : pointer to the field in the C structure 
+ <br>&nbsp;&nbsp;//   cfsize : size of the field in the C structure
+ <br>&nbsp;&nbsp;//   tlmaddr: TLM address of field in the C structure
+ <br>&nbsp;&nbsp;// --------------------------------
+ <br><span class="tlc_closefile">%closefile</span> l_init_comment_header
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>tlmg_public_xxx_tb
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>+++++++++++++++++<span style="padding-left:9.5px"></span>decl<span style="padding-left:9.5px"></span>+++++++++++++++++
+</span> <br><span class="tlc_openfile">%openfile</span> tlmg_sock_decl_tb
+ <br><span class="tlc_foreach">%foreach</span> loopId = tlmg_memap.SockNum 
+ <br>tlm_utils::simple_initiator_socket<%<<span>tbname</span>>,%<tlmg_memap.SockList[loopId].SockName>_BUSWIDTH>  %<tlmg_memap.SockList[loopId].SockName>;
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_foreach">%foreach</span> loopId1 = tlmg_memap.PortNum 
+ <br><span class="tlc_if">%if</span> tlmg_memap.PortList[loopId1].WriteAccess
+ <br><span class="tlc_if">%if</span> %<tlmg_memap.PortList[loopId1].Dim> > 1
+ <br>sc_out<%<tlmg_memap.PortList[loopId1].Type>[%<tlmg_memap.PortList[loopId1].Dim>]> %<tlmg_memap.PortList[loopId1].PortName>;
+ <br><span class="tlc_else">%else</span>
+ <br>sc_out<%<tlmg_memap.PortList[loopId1].Type>> %<tlmg_memap.PortList[loopId1].PortName>;
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endif">%endif</span> 
+ <br><span class="tlc_if">%if</span> tlmg_memap.PortList[loopId1].ReadAccess
+ <br><span class="tlc_if">%if</span> %<tlmg_memap.PortList[loopId1].Dim> > 1
+ <br>sc_in<%<tlmg_memap.PortList[loopId1].Type>[%<tlmg_memap.PortList[loopId1].Dim>]> %<tlmg_memap.PortList[loopId1].PortName>;
+ <br><span class="tlc_else">%else</span>
+ <br>sc_in<%<tlmg_memap.PortList[loopId1].Type>> %<tlmg_memap.PortList[loopId1].PortName>;
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_closefile">%closefile</span> tlmg_sock_decl_tb
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>+++++++++++++++++<span style="padding-left:9.5px"></span>ctor<span style="padding-left:9.5px"></span>+++++++++++++++++
+</span> <br><span class="tlc_openfile">%openfile</span> tlmg_sock_ctor_tb
+ <br><span class="tlc_foreach">%foreach</span> loopId = tlmg_memap.SockNum 
+ <br>%<tlmg_memap.SockList[loopId].SockName>("%<tlmg_memap.SockList[loopId].Name>"),
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_closefile">%closefile</span> tlmg_sock_ctor_tb
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>+++++++++++++++++<span style="padding-left:9.5px"></span>init<span style="padding-left:9.5px"></span>+++++++++++++++++
+</span> <br><span class="tlc_openfile">%openfile</span> tlmg_sock_init_tb
+ <br><span class="tlc_foreach">%foreach</span> loopId = tlmg_memap.SockNum 
+ <br>%<tlmg_memap.SockList[loopId].SockName>.register_nb_transport_bw( this,&amp;%<<span>tbname</span>>::nb_transport_bw );
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_closefile">%closefile</span> tlmg_sock_init_tb
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>+++++++++++++++++<span style="padding-left:9.5px"></span>mainbind<span style="padding-left:9.5px"></span>+++++++++++++++++
+</span> <br><span class="tlc_openfile">%openfile</span> tlmg_sock_mainbind_tb
+ <br><span class="tlc_foreach">%foreach</span> loopId = tlmg_memap.SockNum 
+ <br>testbench.%<tlmg_memap.SockList[loopId].SockName>(model.%<tlmg_memap.SockList[loopId].SockName>);
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_foreach">%foreach</span> loopId1 = tlmg_memap.PortNum 
+ <br><span class="tlc_if">%if</span> %<tlmg_memap.PortList[loopId1].Dim> > 1
+ <br>sc_signal<%<tlmg_memap.PortList[loopId1].Type>[%<tlmg_memap.PortList[loopId1].Dim>]> %<tlmg_memap.PortList[loopId1].PortName>_signal;
+ <br><span class="tlc_else">%else</span>
+ <br>sc_signal<%<tlmg_memap.PortList[loopId1].Type>> %<tlmg_memap.PortList[loopId1].PortName>_signal;
+ <br><span class="tlc_endif">%endif</span> 
+ <br>testbench.%<tlmg_memap.PortList[loopId1].PortName>(%<tlmg_memap.PortList[loopId1].PortName>_signal);
+ <br>model.%<tlmg_memap.PortList[loopId1].PortName>(%<tlmg_memap.PortList[loopId1].PortName>_signal);
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>&nbsp; <br><span class="tlc_closefile">%closefile</span> tlmg_sock_mainbind_tb
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>+++++++++++++++++<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>+++++++++++++++++
+</span> <br><span class="tlc_openfile">%openfile</span> tlmg_sock_if_tb
+ <br><span class="tlc_foreach">%foreach</span> loopId = tlmg_memap.SockNum 
+ <br>mw_tr_tb  tr_data_%<tlmg_memap.SockList[loopId].Name>(m_utils, sync, reinterpret_cast<mw_tlmsocket_tb*>(&amp;%<tlmg_memap.SockList[loopId].SockName>));
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgCommandStatusRegOnOffInoutput,"on") || <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgTestAndSetRegOnOffInoutput,"on")
+ <br><span class="tlc_foreach">%foreach</span> loopId = tlmg_memap.SockNum 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tlmg_memap.SockList[loopId].HasTestSet || tlmg_memap.SockList[loopId].HasComStat
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_tr_tb tr_ctrl(m_utils, sync, reinterpret_cast<mw_tlmsocket_tb*>(&amp;%<tlmg_memap.SockList[loopId].SockName>));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_closefile">%closefile</span> tlmg_sock_if_tb
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>tlmg_buf_xxx_tb
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>+++++++++++++++++<span style="padding-left:9.5px"></span>decl<span style="padding-left:9.5px"></span>+++++++++++++++++
+</span> <br><span class="tlc_openfile">%openfile</span> tlmg_buf_wrdecl_tb
+ <br>&nbsp;<span class="tlc_if">%if</span> tlmg_info.InStruct.NumPorts > 0
+ <br>&nbsp;&nbsp;%<<span>tlmg_info.InStruct.DataType</span>> inputStruct;
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_closefile">%closefile</span> tlmg_buf_wrdecl_tb
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_openfile">%openfile</span> tlmg_buf_rddecl_tb
+ <br>&nbsp;&nbsp;// declare data members which hold output data set, and 
+ <br>&nbsp;&nbsp;// expected output data set (from MAT file)
+ <br>&nbsp;&nbsp;//
+ <br><span class="tlc_if">%if</span> tlmg_info.OutStruct.NumPorts > 0
+ <br>&nbsp;&nbsp;%<<span>tlmg_info.OutStruct.DataType</span>> outputStruct;
+ <br>&nbsp;&nbsp;%<<span>tlmg_info.OutStruct.DataType</span>> outputStruct_expected;
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_closefile">%closefile</span> tlmg_buf_rddecl_tb
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>+++++++++++++++++<span style="padding-left:9.5px"></span>init<span style="padding-left:9.5px"></span>+++++++++++++++++
+</span> <br><span class="tlc_openfile">%openfile</span> tlmg_buf_wrinit_tb
+ <br>%<<span>l_init_comment_header</span>>
+ <br>&nbsp;&nbsp;// initialize the structure for info about the input data set
+ <br>&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> loopId = tlmg_info.InStruct.NumPorts
+ <br>&nbsp;&nbsp;m_inFieldInfo[%<<span>loopId</span>>].pcf    = (unsigned char *)&amp;inputStruct.%<tlmg_info.InStruct.Port[loopId].Name>;
+ <br>&nbsp;&nbsp;m_inFieldInfo[%<<span>loopId</span>>].cfsize = sizeof(inputStruct.%<tlmg_info.InStruct.Port[loopId].Name>);
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;// Since we have generated a TLM with a single input, we do 
+ <br>&nbsp;&nbsp;&nbsp;// not need to initialize a structure to hold the TLM addresses for
+ <br>&nbsp;&nbsp;&nbsp;// individual inputs.  We will directly specify the appropriate
+ <br>&nbsp;&nbsp;&nbsp;// address argument when sending TLM transactions.
+ <br>&nbsp;&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;&nbsp;// Initialize the input TLM addresses:  not needed
+ <br>&nbsp;&nbsp;&nbsp;//
+ <br><span class="tlc_closefile">%closefile</span> tlmg_buf_wrinit_tb
+ <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> tlmg_buf_rdinit_tb
+ <br>&nbsp;%<<span>l_init_comment_header</span>>
+ <br>&nbsp;&nbsp;// initialize the structure for the info about the output data set
+ <br>&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> loopId = tlmg_info.OutStruct.NumPorts
+ <br>&nbsp;&nbsp;m_actOutFieldInfo[%<<span>loopId</span>>].pcf    = (unsigned char *)&amp;outputStruct.%<tlmg_info.OutStruct.Port[loopId].Name>;
+ <br>&nbsp;&nbsp;m_actOutFieldInfo[%<<span>loopId</span>>].cfsize = sizeof(outputStruct.%<tlmg_info.OutStruct.Port[loopId].Name>);
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;// same with the expected output data set--we use this when doing a data
+ <br>&nbsp;&nbsp;// comparison.
+ <br>&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> loopId = tlmg_info.OutStruct.NumPorts
+ <br>&nbsp;&nbsp;m_expOutFieldInfo[%<<span>loopId</span>>].pcf    = (unsigned char *)&amp;outputStruct_expected.%<tlmg_info.OutStruct.Port[loopId].Name>;
+ <br>&nbsp;&nbsp;m_expOutFieldInfo[%<<span>loopId</span>>].cfsize = sizeof(outputStruct_expected.%<tlmg_info.OutStruct.Port[loopId].Name>);
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;// Since we have generated a TLM with a single output address, we do 
+ <br>&nbsp;&nbsp;&nbsp;// not need to initialize a structure to hold the TLM addresses for
+ <br>&nbsp;&nbsp;&nbsp;// individual outputs.  We will directly specify the appropriate
+ <br>&nbsp;&nbsp;&nbsp;// address argument when sending TLM transactions.
+ <br>&nbsp;&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;&nbsp;// Initialize the output TLM addresses: not needed
+ <br>&nbsp;&nbsp;&nbsp;//
+ <br><span class="tlc_closefile">%closefile</span> tlmg_buf_rdinit_tb
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>+++++++++++++++++<span style="padding-left:9.5px"></span>impl<span style="padding-left:9.5px"></span>+++++++++++++++++
+</span> <br><span class="tlc_openfile">%openfile</span> tlmg_buf_wrimpl_tb
+ <br>%<<span>l_wrimpl_comment_header</span>>
+ <br><span class="tlc_foreach">%foreach</span> loopId1 = tlmg_memap.PortNum 
+ <br><span class="tlc_if">%if</span> tlmg_memap.PortList[loopId1].IsInput
+ <br>%<tlmg_memap.PortList[loopId1].PortName>.write(inputStruct.%<tlmg_memap.PortList[loopId1].MW.InputName>);
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br><span class="tlc_foreach">%foreach</span> loopId1 = tlmg_memap.SockNum 
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].HasInput
+ <br>&nbsp; <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].HasRegister
+ <br><span class="tlc_foreach">%foreach</span> loopId2 = tlmg_memap.SockList[loopId1].BankNum
+ <br><span class="tlc_foreach">%foreach</span> loopId3 = tlmg_memap.SockList[loopId1].Bank[loopId2].RegNum 
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].IsInput
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].TypeName> inputReg;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitFieldNum> > 0 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> loopId4 = tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitFieldNum
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].IsInput
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64_T* data64 = (uint64_T*)&amp;(((uint8_T*)&amp;inputReg)[%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].ByteOffset>]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64_T field =0; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64_T mask = ~0;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;memcpy(&amp;field,&amp;inputStruct.%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].MW.InputName>,%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].ByteDim>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask = mask >> (64 - %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].BitWidthName>); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;field = field &amp; mask;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;field = field << (%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].BitOffsetName> - %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].ByteOffset> * 8); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask = mask << (%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].BitOffsetName> - %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].ByteOffset> * 8); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*data64 = *data64 &amp; ~mask; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*data64 = *data64 | field;        
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;memcpy(&amp;inputReg,&amp;inputStruct.%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].MW.InputName>,sizeof(inputReg));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;tr_data_%<tlmg_memap.SockList[loopId1].Name>.sendTlmWriteTransaction(%<tlmg_memap.SockList[loopId1].Bank[loopId2].AddrName> + %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].AddrName>, (unsigned char *)&amp;inputReg,sizeof(inputReg));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_if">%if</span> !tlmg_memap.SockList[loopId1].HasRegister
+ <br><span class="tlc_foreach">%foreach</span> loopId2 = tlmg_memap.SockList[loopId1].BankNum
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].HasInput
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<tlmg_memap.SockList[loopId1].Bank[loopId2].TypeName> inputStructSock;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> loopId3 = tlmg_memap.SockList[loopId1].Bank[loopId2].RegNum   
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;memcpy(&amp;inputStructSock.%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name>,&amp;inputStruct.%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].MW.InputName>,sizeof(inputStruct.%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].MW.InputName>));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_if">%if</span> !tlmg_memap.SockList[loopId1].HasAddress
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;tr_data_%<tlmg_memap.SockList[loopId1].Name>.sendTlmWriteTransaction(0, (unsigned char *) &amp;inputStructSock,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sizeof(inputStructSock));
+ <br><span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;tr_data_%<tlmg_memap.SockList[loopId1].Name>.sendTlmWriteTransaction(%<tlmg_memap.SockList[loopId1].Bank[loopId2].AddrName>, (unsigned char *) &amp;inputStructSock,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sizeof(inputStructSock));
+ <br><span class="tlc_endif">%endif</span>
+ <br>}
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_closefile">%closefile</span> tlmg_buf_wrimpl_tb
+ <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> tlmg_buf_rdimpl_tb
+ <br>%<<span>l_rdimpl_comment_header</span>>
+ <br><span class="tlc_foreach">%foreach</span> loopId1 = tlmg_memap.SockNum 
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].HasOutput > 0
+ <br>&nbsp; <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].HasRegister
+ <br><span class="tlc_foreach">%foreach</span> loopId2 = tlmg_memap.SockList[loopId1].BankNum
+ <br><span class="tlc_foreach">%foreach</span> loopId3 = tlmg_memap.SockList[loopId1].Bank[loopId2].RegNum 
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].IsOutput
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].TypeName> outputReg;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;tr_data_%<tlmg_memap.SockList[loopId1].Name>.sendTlmReadTransaction(%<tlmg_memap.SockList[loopId1].Bank[loopId2].AddrName> + %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].AddrName>, (unsigned char *)&amp;outputReg,sizeof(outputReg));
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitFieldNum> > 0        
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> loopId4 = tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitFieldNum
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].IsOutput
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64_T data64 = *(uint64_T*)&amp;(((uint8_T*)&amp;outputReg)[%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].ByteOffset>]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64_T field = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint64_T mask = ~0;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask = mask >> (64 - %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].BitWidthName>); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data64 = data64 >> (%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].BitOffsetName> - %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].ByteOffset> * 8);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;field = data64 &amp; mask;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].IsSignExt
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mask = ~(mask >> 1);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(field &amp; mask)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;field = field | mask; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;memcpy(&amp;outputStruct.%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].MW.OutputName>,&amp;field,%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].ByteDim>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;memcpy(&amp;outputStruct.%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].MW.OutputName>,&amp;outputReg,sizeof(outputStruct.%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].MW.OutputName>));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_if">%if</span> !tlmg_memap.SockList[loopId1].HasRegister
+ <br><span class="tlc_foreach">%foreach</span> loopId2 = tlmg_memap.SockList[loopId1].BankNum
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].HasOutput
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<tlmg_memap.SockList[loopId1].Bank[loopId2].TypeName> outputStructSock;
+ <br><span class="tlc_if">%if</span> !tlmg_memap.SockList[loopId1].HasAddress
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;tr_data_%<tlmg_memap.SockList[loopId1].Name>.sendTlmReadTransaction(0, (unsigned char *) &amp;outputStructSock,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sizeof(outputStructSock));
+ <br><span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;tr_data_%<tlmg_memap.SockList[loopId1].Name>.sendTlmReadTransaction(%<tlmg_memap.SockList[loopId1].Bank[loopId2].AddrName>, (unsigned char *) &amp;outputStructSock,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sizeof(outputStructSock));
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> loopId3 = tlmg_memap.SockList[loopId1].Bank[loopId2].RegNum   
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;memcpy(&amp;outputStruct.%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].MW.OutputName>,&amp;outputStructSock.%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name>,sizeof(outputStruct.%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].MW.OutputName>));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>}
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br><span class="tlc_foreach">%foreach</span> loopId1 = tlmg_memap.PortNum 
+ <br><span class="tlc_if">%if</span> tlmg_memap.PortList[loopId1].IsOutput
+ <br>outputStruct.%<tlmg_memap.PortList[loopId1].MW.OutputName> = %<tlmg_memap.PortList[loopId1].PortName>.read();
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_closefile">%closefile</span> tlmg_buf_rdimpl_tb
+ <br>&nbsp; <br></body></html>

@@ -1,0 +1,230 @@
+<html>
+<head>
+
+<style>
+p {color : black; font-family:courier; font-size: 80%;}
+body {line-height: 100%; font-family:courier;}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_function {color: green;}.tlc_endfunction {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}
+.tlc_bifunc {color: brown;}
+</style>
+
+</head>
+<body>
+%%
+ <br>%%  
+ <br>%% 
+ <br>%%
+ <br>%% Abstract:
+ <br>%%      TLC file for the VxWorks Asynchronous Double Buffer Block.
+ <br>%% Author:
+ <br>%%      Jim Carrick
+ <br>%% Date:
+ <br>%%      10-15-97
+ <br>%%
+ <br>%% Copyright 1994-2005 The MathWorks, Inc.
+ <br>&nbsp; <br><span class="tlc_implements">%implements</span> "xpcbuffer" "C"
+ <br>&nbsp; <br>%%include "vxlib.tlc"
+ <br>&nbsp; <br>%% Function: BlockInstanceSetup ===============================================
+ <br>%% Abstract:
+ <br>%%        Perform test to make sure that 2 and only 2 Double Buffer Blocks are
+ <br>%%        connected.  Generate code for .h, .prm. Only one of the pair needs to
+ <br>%%        do these.
+ <br><span class="tlc_function">%function</span> <a id="BlockInstanceSetup" class="tlc_func">BlockInstanceSetup</a>(block, system) void
+ <br>&nbsp;&nbsp;%% Determine unmangled subsystem block name for error reporting.
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("SLName")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> BufferBlockName = <span class="tlc_bifunc">STRING</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibUnmangledPathName">LibUnmangledPathName</a>(SLName))
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> BufferBlockName = <span class="tlc_bifunc">STRING</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibUnmangledPathName">LibUnmangledPathName</a>(Name))
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DbWrite = 0
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DbRead = 0
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> Connections.DirectDstConn[0] == "yes"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% Get downstream block
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dsSysIdx = /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Connections.DataOutputPort[0].ConnPoint[0].DstBlockAndPortEl[0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dsBlkIdx = /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Connections.DataOutputPort[0].ConnPoint[0].DstBlockAndPortEl[1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DownstreamBlockRef = CompiledModel.System[dsSysIdx].Block[dsBlkIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> DownstreamBlockRef.Type == "S-Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sfuncName = DownstreamBlockRef.ParamSettings.FunctionName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> sfuncName == "xpcbuffer"
+ <br>&nbsp;%% This is a valid Write Buffer
+ <br>&nbsp;<span class="tlc_assign">%assign</span> DbWrite = 1
+ <br>&nbsp;<span class="tlc_assign">%assign</span> DownstreamBlock = [%&lt;dsSysIdx&gt;, %&lt;dsBlkIdx&gt;]
+ <br>&nbsp;<span class="tlc_assign">%assign</span> block = block + DownstreamBlock
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> Connections.DirectSrcConn[0] == "yes"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% Get upstream block
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> UpstreamBlockRef = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/obsoletelib.html#LibSourceSignalBlock">LibSourceSignalBlock</a>(DataInputPort.SignalSrc[0])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> UpstreamBlockRef.Type == "S-Function"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sfuncName = UpstreamBlockRef.ParamSettings.FunctionName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> sfuncName == "xpcbuffer"
+ <br>&nbsp;%% This is a valid Read Buffer
+ <br>&nbsp;<span class="tlc_assign">%assign</span> DbRead = 1
+ <br>&nbsp;%% Get system and block indices
+ <br>&nbsp;<span class="tlc_assign">%assign</span> signal    = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#SLibGetSourceRecord">SLibGetSourceRecord</a>(DataInputPort, 0)
+ <br>&nbsp;<span class="tlc_assign">%assign</span> usSysIdx  = signal.SigSrc[0]
+ <br>&nbsp;<span class="tlc_assign">%assign</span> usBlkIdx  = signal.SigSrc[2]
+ <br>&nbsp;<span class="tlc_assign">%assign</span> UpstreamBlock = [%&lt;usSysIdx&gt;, %&lt;usBlkIdx&gt;]
+ <br>&nbsp;<span class="tlc_assign">%assign</span> block = block + UpstreamBlock
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;%% Cache info in this block
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> block = block + DbWrite
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> block = block + DbRead
+ <br>&nbsp;&nbsp;%% For more readable comments in generated code
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> block = block + BufferBlockName
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%% Check if connections are incorrect first, as this is the simpler mistake.
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (DbWrite && DbRead)  || (!DbWrite && !DbRead )  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "The Simulink Real-Time Double Buffer block '%&lt;BufferBlockName&gt;' "/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"is not connected correctly. It should be only used in Write/Read pairs "/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"with no other blocks connected between the pair."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_exit">%exit</span> %&lt;errTxt&gt;
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%% Verify user used a Read side as reader and a Write side as a writer.
+ <br>&nbsp;&nbsp;%% I.E. Want the work vectors to only appear for the Read side.
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "The Simulink Real-Time Double Buffer block '%&lt;BufferBlockName&gt;' "/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"is not connected correctly. It should be only used in pairs with the "/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"Write Side driving the Read Side."
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> DbRead
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> IWork[0] != 3
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Should have been 3 IWorks created by C-Mex file for Read side.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_exit">%exit</span> %&lt;errTxt&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% DbWrite
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> IWork[0] > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_exit">%exit</span> %&lt;errTxt&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%% Finally, check that at least 1 block of the pair is in a function-call SS
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "The Simulink Real-Time Double Buffer block '%&lt;BufferBlockName&gt;' "/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"is not used correctly. One or both of the pair needs to be inside "/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"a function-call subsystem."
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> system.Type != "function-call"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> DbRead
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% DbRead
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% The Upstream block has to be in a function-call SS
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> signal = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#SLibGetSourceRecord">SLibGetSourceRecord</a>(DataInputPort, 0)            
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> signal.RecordType != "BlockOutput"
+ <br>&nbsp;<span class="tlc_exit">%exit</span> Internal error, expected mapSource == "B"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> usSysIdx = signal.SigSrc[0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> System[usSysIdx].Type != "function-call"
+ <br>&nbsp;<span class="tlc_exit">%exit</span> %&lt;errTxt&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% DbWrite
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% The Downstream block has to be in a function-call SS
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> System[dsSysIdx].Type != "function-call"
+ <br>&nbsp;<span class="tlc_exit">%exit</span> %&lt;errTxt&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_function">%function</span> <a id="Start" class="tlc_func">Start</a>(block, system) Output
+ <br>&nbsp;&nbsp;%% Cache code for the shared control variables into MdlStart 
+ <br>&nbsp;&nbsp;%% for this double buffer pair.
+ <br>&nbsp;&nbsp;%% Only one of pair needs to do this, so read side will do it.
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> DbRead
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> usSysIdx  = UpstreamBlock[0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> usBlkIdx  = UpstreamBlock[1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> UpstreamBlockRef = CompiledModel.System[usSysIdx].Block[usBlkIdx] 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Setup variables used by: %&lt;BufferBlockName&gt; (Reader) and*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* %&lt;UpstreamBlockRef.BufferBlockName&gt; (Writer) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Reading,"","",0)&gt; = -1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Writing,"","",0)&gt; = -1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Last,"","",0)&gt; = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% Use Write side BIO vector for one of the 2 buffers,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% need to be in Write side block scope to access it.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> CompiledModel.System[usSysIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> UpstreamBlockRef 
+ <br>&nbsp;<span class="tlc_assign">%assign</span> tmpVar = "&%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", "", 0)>;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span> %% CompiledModel.System[usSysIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>("","","",0)&gt; = %&lt;tmpVar&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>("","","",1)&gt; = &%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockRWork">LibBlockRWork</a>("","","",0)&gt;;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_function">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block, system) Output
+ <br>&nbsp;&nbsp;%% This code is generated for each occurrence of double buffer pairs
+ <br>&nbsp;&nbsp;%% in the model.  At some # of pairs in a model, it may be better to
+ <br>&nbsp;&nbsp;%% do a function call to reduce code size.
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> DbRead
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% This is the Read block
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* %&lt;Type&gt; Block: %&lt;Name&gt; (Reader)*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%int lockkey = intLock();
+ <br>&nbsp;&nbsp;&nbsp;_asm { cli };
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Writing,"","",0)&gt; == 0) {
+ <br>&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Reading,"","",0)&gt; = 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else if (%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Writing,"","",0)&gt; == 1) {
+ <br>&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Reading,"","",0)&gt; = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a></a>(Reading,"","",0)&gt; = %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a></a>(Last,"","",0)&gt;;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%intUnlock(lockkey);
+ <br>&nbsp;&nbsp;&nbsp;_asm { sti };
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpVar = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Reading,"","",0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Use memcpy because its fast and vector is contiguous.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Read 1 of the 2 buffers and Write to output*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(void) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMemFcnCall">LibGenMemFcnCall</a>("memcpy", "&%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", "", 0)>", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>("",tmpVar,"",""),"%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/obsoletelib.html#LibDataOutputPortWidth">LibDataOutputPortWidth</a>(0)&gt; * sizeof(real_T)")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%lockkey = intLock();
+ <br>&nbsp;&nbsp;&nbsp;_asm { cli };
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Reading,"","",0)&gt; = -1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%intUnlock(lockkey);
+ <br>&nbsp;&nbsp;&nbsp;_asm { sti };
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% This is the Write block, but run control sections in scope 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% of Read block to use it's LibBlock*Works.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dsSysIdx  = DownstreamBlock[0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dsBlkIdx  = DownstreamBlock[1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> DownstreamBlockRef = CompiledModel.System[dsSysIdx].Block[dsBlkIdx] 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* %&lt;Type&gt; Block: %&lt;Name&gt; (Writer)*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> DownstreamBlockRef
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;real_T *currentBuf;
+ <br>&nbsp;%%int lockkey = intLock();
+ <br>&nbsp;_asm { cli };
+ <br>&nbsp;&nbsp; <br>&nbsp;if (%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Reading,"","",0)&gt; == 0) {
+ <br>&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Writing,"","",0)&gt; = 1;
+ <br>&nbsp;} else if (%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Reading,"","",0)&gt; == 1) {
+ <br>&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Writing,"","",0)&gt; = 0;
+ <br>&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a></a>(Writing,"","",0)&gt; = !%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a></a>(Last,"","",0)&gt;;
+ <br>&nbsp;}
+ <br>&nbsp;%%intUnlock(lockkey);
+ <br>&nbsp;_asm { sti };
+ <br>&nbsp; <br>&nbsp;%% Generate code which uses PWork[IWork.Writing] of Read block
+ <br>&nbsp;<span class="tlc_assign">%assign</span> tmpVar  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Writing,"","",0)
+ <br>&nbsp;currentBuf = (real_T *)(%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockPWork">LibBlockPWork</a>("", tmpVar, "", "")>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;%% Use roll since input to the Write block can be discontiguous.
+ <br>&nbsp;%% Since Output vector is accessed via 1 of 2 elements of the Reader
+ <br>&nbsp;%% blocks PWork, use only index portion of LibBlockOutputSignal.
+ <br>&nbsp;<span class="tlc_assign">%assign</span> rollVars = ["U"]
+ <br>&nbsp;<span class="tlc_roll">%roll</span> sigIdx = RollRegions, lcv = RollThreshold, block, "Roller", rollVars
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", lcv, sigIdx)
+ <br>&nbsp;&nbsp;&nbsp;%% Instead of using a rolled [index] for currentBuf, use ++ to so
+ <br>&nbsp;&nbsp;&nbsp;%% each region continues where previous left off.
+ <br>&nbsp;&nbsp;&nbsp;*currentBuf++ = %&lt;u&gt;;
+ <br>&nbsp;<span class="tlc_endroll">%endroll</span>
+ <br>&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> DownstreamBlockRef
+ <br>&nbsp;%%lockkey = intLock();
+ <br>&nbsp;_asm { cli };
+ <br>&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a></a>(Last,"","",0)&gt; = %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>"><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a></a>(Writing,"","",0)&gt;;
+ <br>&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blocklib.html#LibBlockIWork">LibBlockIWork</a>(Writing,"","",0)&gt; = -1;
+ <br>&nbsp;%%intUnlock(lockkey);
+ <br>&nbsp;_asm { sti };
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>    
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>%% [EOF] <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/xpcobsolete/xpcbuffer.html">xpcbuffer.tlc</a>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>&nbsp; <br></body></html>

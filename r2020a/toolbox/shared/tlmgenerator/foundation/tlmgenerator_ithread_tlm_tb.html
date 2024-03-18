@@ -1,0 +1,160 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>defines<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>top-level<span style="padding-left:9.5px"></span>intitiator<span style="padding-left:9.5px"></span>threads.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>It<span style="padding-left:9.5px"></span>must<span style="padding-left:9.5px"></span>define<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>following<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>variables:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>tlmg_ithread_single_decl_tb
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>tlmg_ithread_single_init_tb
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>tlmg_ithread_single_impl_tb
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>NOTE:<span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>contains<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>high-level<span style="padding-left:9.5px"></span>initiator<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>so<span style="padding-left:9.5px"></span>actually<span style="padding-left:9.5px"></span>makes
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>direct<span style="padding-left:9.5px"></span>use<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>tb_entry_xxx<span style="padding-left:9.5px"></span>buffers.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Currently<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>uses<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>following:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<<span>tb_entry_trig_in_setupcall</span>>
+</span> <br><span class="tlc_comment">%%<<span>tb_entry_trig_out_setupcall</span>>
+</span> <br><span class="tlc_comment">%%<<span>tb_entry_trig_in_usecall</span>>
+</span> <br><span class="tlc_comment">%%<<span>tb_entry_trig_out_usecall</span>>
+</span> <br><span class="tlc_comment">%%<<span>tb_entry_sync_tmode_setupcall</span>>
+</span> <br><span class="tlc_comment">%%<<span>tb_entry_sync_syncobj_setupcall</span>>
+</span> <br><span class="tlc_comment">%%<<span>tb_entry_sync_tdrcall</span>>
+</span> <br><span class="tlc_comment">%%<<span>tb_entry_memap_wrimpl</span>>
+</span> <br><span class="tlc_comment">%%<<span>tb_entry_memap_rdimpl</span>>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>2009-2010<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>some<span style="padding-left:9.5px"></span>local<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>variables<span style="padding-left:9.5px"></span>used<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>both<span style="padding-left:9.5px"></span>single<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>reader/writer<span style="padding-left:9.5px"></span>threads
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+</span> <br><span class="tlc_openfile">%openfile</span> l_ithread_tbobj_setupcall
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// Instantiate thread-specific testbench support objects.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// Each initiator thread needs to keep track of their local time
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// independently.  Here, we instantiate the main time-dependent testbench
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// helper objects for TLM transactions and a command/status register 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// interface.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// mw_tr_tb  : Interface for executing TLM transactions based on current tb
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//             timing mode.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// mw_csr_tb : Interface for executing command/status register TLM
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//             transactions and higher-level CSR functions such as polling.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tb_entry_sock_if</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgCommandStatusRegOnOffInoutput, "on")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_csr_tb        csr(m_utils, sync, tr_ctrl, (%<<span>rtwname</span>>_COMSTAT_BANK_ADDR + %<<span>rtwname</span>>_COMSTAT_REG_ADDR), m_mutex);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_comstatreg_tb csreg;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_closefile">%closefile</span> l_ithread_tbobj_setupcall
+ <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> l_ithread_endofsim_chks
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// Simulation summary.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgCommandStatusRegOnOffInoutput, "on")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// We check for any buffer under/overflows.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sync.syncToLocalTime();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;csreg = csr.readStatus();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (csreg &amp; (OUTBUF_OVFLW_BIT_MASK | OUTBUF_UNFLW_BIT_MASK |
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INBUF_OVFLW_BIT_MASK  | INBUF_UNFLW_BIT_MASK) ) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printErr(TLMG_ERR_OVFLW_UNFLW,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## ERROR: Saw buffer underflow or overflow./n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// We cannot check buffer status bits without a command/status register.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;sync.syncToLocalTime();
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;if (!endOfVectors) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_END_OF_SIM,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## Error condition caused pre-mature end to vector replay.  Terminating simulation./n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_vecmat.terminate();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sc_stop();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_END_OF_SIM,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## end of data...Terminating initiator thread./n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br><span class="tlc_closefile">%closefile</span> l_ithread_endofsim_chks
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>SINGLE<span style="padding-left:9.5px"></span>WRITER/READER<span style="padding-left:9.5px"></span>THREAD
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>+++++<span style="padding-left:9.5px"></span>Declaration<span style="padding-left:9.5px"></span>+++++
+</span> <br><span class="tlc_openfile">%openfile</span> tlmg_ithread_single_decl_tb
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;void singleInitiatorThread();  // initiator
+ <br><span class="tlc_closefile">%closefile</span> tlmg_ithread_single_decl_tb
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>+++++<span style="padding-left:9.5px"></span>Initialization<span style="padding-left:9.5px"></span>+++++
+</span> <br><span class="tlc_openfile">%openfile</span> tlmg_ithread_single_init_tb
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;SC_THREAD(singleInitiatorThread);
+ <br><span class="tlc_closefile">%closefile</span> tlmg_ithread_single_init_tb
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>+++++<span style="padding-left:9.5px"></span>Implementation<span style="padding-left:9.5px"></span>+++++
+</span> <br><span class="tlc_openfile">%openfile</span> tlmg_ithread_single_impl_tb
+ <br>// ------------------------------------------------------------------------
+ <br>// SINGLE INITIATOR THREAD
+ <br>//
+ <br>// This thread is a simple writer and reader thread.  It is used when the 'TLM
+ <br>// Testbench' and 'TLM Generation' options indicate a simple target component.
+ <br>// It will write a single input data set, wait for the algorithm processing to
+ <br>// be complete, then read the output data set for comparison with the Simulink
+ <br>// data.  It does not use buffering or CSR buffer status.
+ <br>//
+ <br>// If you choose more complex 'TLM Generation' options, such as buffering and
+ <br>// inclusion of a command/status register, a separate writer and reader thread 
+ <br>// will be created for use by the testbench.
+ <br>// ------------------------------------------------------------------------
+ <br>void %<<span>tbname</span>>::singleInitiatorThread(void) {
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_START_OF_SIM,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## Start of vectors from MAT file.  Will display '.' for every 100 vectors played./n");
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tb_entry_sync_tmode_setupcall</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tb_entry_sync_syncobj_setupcall</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>l_ithread_tbobj_setupcall</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tb_entry_trig_in_setupcall</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tb_entry_trig_out_setupcall</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;bool endOfVectors = false;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;while (!endOfVectors) {
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endOfVectors = m_vecmat.getNextInput();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!endOfVectors) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tb_entry_memap_wrimpl</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tb_entry_trig_in_usecall</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tb_entry_sync_tdrcall</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tb_entry_trig_out_usecall</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tb_entry_memap_rdimpl</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// We compare the actual results with the expected results from the
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Simulink vector generation.  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_vecmat.putNextActualOutput();                 // write actual output to MAT file
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endOfVectors = m_vecmat.getNextExpectedOutput();// read expeced output from MAT file
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_vecmat.compareResult();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>l_ithread_endofsim_chks</span>>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;m_vecmat.terminate();
+ <br>&nbsp; <br><span class="tlc_if">%if</span> !(tlmg_info.InStruct.NumPorts > 0) &amp;&amp; <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgInputBufferTriggerMode,"Automatic")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sc_stop();
+ <br><span class="tlc_endif">%endif</span>
+ <br>}
+ <br><span class="tlc_closefile">%closefile</span> tlmg_ithread_single_impl_tb
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>SEPARATE<span style="padding-left:9.5px"></span>WRITER/READER<span style="padding-left:9.5px"></span>THREADS<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+</span> <br>&nbsp; <br>&nbsp; <br>&nbsp; <br></body></html>

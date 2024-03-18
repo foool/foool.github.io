@@ -1,0 +1,350 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2016<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:<span style="padding-left:9.5px"></span>Opaque<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>target<span style="padding-left:9.5px"></span>file
+</span> <br>&nbsp; <br><span class="tlc_implements">%implements</span> Opaque "C"
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>BlockTypeSetup<span style="padding-left:9.5px"></span>====================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="BlockTypeSetup" class="tlc_func">BlockTypeSetup</a>(block,system) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> protoBuf  = GetModelUserFcnPrototypes()
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("baseMdl_data_typedef", protoBuf)>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Fucntion:<span style="padding-left:9.5px"></span>generateType<span style="padding-left:9.5px"></span>======================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="generateType" class="tlc_func">generateType</a>(block, system, fcnType) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileName = TLCFileName + "_" + fcnType
+ <br>&nbsp;&nbsp;%<<span class="tlc_bifunc">GENERATE_TYPE</span>(block, fcnType, fileName, system)>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> unused = UNLOAD_GENERATE_TYPE(block, fileName)
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Fucntion:<span style="padding-left:9.5px"></span>generateTypeForTID<span style="padding-left:9.5px"></span>================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="generateTypeForTID" class="tlc_func">generateTypeForTID</a>(block, system, fcnType,tid) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileName = TLCFileName + "_" + fcnType
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "%<<span>fcnType</span>>ForTID"
+ <br>&nbsp;&nbsp;%<<span class="tlc_bifunc">GENERATE_TYPE</span>(block, fcnName, fileName, system,tid)>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> unused = UNLOAD_GENERATE_TYPE(block, fileName)
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Fucntion:<span style="padding-left:9.5px"></span>generateTypeForSetDims<span style="padding-left:9.5px"></span>============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="generateTypeForSetDims" class="tlc_func">generateTypeForSetDims</a>(block, system, fcnType, oidx, ridx) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileName = TLCFileName + "_" + fcnType
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "%<<span>fcnType</span>>"
+ <br>&nbsp;&nbsp;%<<span class="tlc_bifunc">GENERATE_TYPE</span>(block, fcnName, fileName, system, oidx, ridx)>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> unused = UNLOAD_GENERATE_TYPE(block, fileName)
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>BlockInstanceSetup<span style="padding-left:9.5px"></span>================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="BlockInstanceSetup" class="tlc_func">BlockInstanceSetup</a>(block, system) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/block_api.html#LibBlockSetIsExpressionCompliant">LibBlockSetIsExpressionCompliant</a>(block)>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/block_api.html#LibBlockSetCustomStorageComplianceLevel">LibBlockSetCustomStorageComplianceLevel</a>(block, 2)>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> GenerateASAP2
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Create a parameter group for ASAP2 data definition</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> prmIdx = Parameters[0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> Parameter[prmIdx].Name == "InputValues"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> group   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asamlib.html#SLibCreateParameterGroup">SLibCreateParameterGroup</a>(block,"Lookup1D")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpVar  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asamlib.html#SLibAddMember">SLibAddMember</a>(block,group,Parameter[prmIdx])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpVar  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asamlib.html#SLibAddMember">SLibAddMember</a>(block,group,Parameter[prmIdx+1])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> Parameter[prmIdx].Name == "RowIndex"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> group   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asamlib.html#SLibCreateParameterGroup">SLibCreateParameterGroup</a>(block,"Lookup2D")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpVar  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asamlib.html#SLibAddMember">SLibAddMember</a>(block, group, Parameter[prmIdx])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpVar  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asamlib.html#SLibAddMember">SLibAddMember</a>(block, group, Parameter[prmIdx+1])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpVar  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asamlib.html#SLibAddMember">SLibAddMember</a>(block, group, Parameter[prmIdx+2])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> skipLast = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> moduleIdx = ::CompiledModel.RTWCGModules.NumRTWCGModules - (skipLast ? 1 : 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> moduleRec   = ::CompiledModel.RTWCGModules.RTWCGModule[moduleIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> moduleRec.RTWFcnConst.HasInstanceSetup == "yes"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileName    = "%<<span>moduleRec.TLCFileName</span>>_BlockInstanceSetup"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> origModuleIdx = ::CurrentModuleIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CurrentModuleIdx = system.CGIRModuleIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span class="tlc_bifunc">GENERATE_TYPE</span>(block, "BlockInstanceSetup", fileName, system)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::CurrentModuleIdx = origModuleIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> unused = UNLOAD_GENERATE_TYPE(block, fileName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Start<span style="padding-left:9.5px"></span>=============================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>start<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>opaques
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>implementation.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Start" class="tlc_func">Start</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> block.OpaqueBlockMethode.HasStart
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateType">generateType</a>(block, system, "Start")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>SetupRuntimeResources<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>opaque<span style="padding-left:9.5px"></span>block's<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>implementation.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SetupRuntimeResources" class="tlc_func">SetupRuntimeResources</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> block.OpaqueBlockMethode.HasSetupRuntimeResources
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateType">generateType</a>(block, system, "SetupRuntimeResources")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>InitializeConditions<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>=============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>initialize<span style="padding-left:9.5px"></span>conditions<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>opaques<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>implementation.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="InitializeConditions" class="tlc_func">InitializeConditions</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> block.OpaqueBlockMethode.HasInitializeConditions
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateType">generateType</a>(block, system, "InitializeConditions")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SystemInitialize<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>=============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>initialize<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>opaques<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>implementation.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SystemInitialize" class="tlc_func">SystemInitialize</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> block.OpaqueBlockMethode.HasSystemInitialize
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateType">generateType</a>(block, system, "SystemInitialize")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SystemReset<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>=============================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>reset<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>opaques<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>implementation.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SystemReset" class="tlc_func">SystemReset</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> block.OpaqueBlockMethode.HasSystemReset
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateType">generateType</a>(block, system, "SystemReset")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>OpaqueBlkSingleRateBecauseTID01EQ<span style="padding-left:9.5px"></span>=============================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Absbract:<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>true<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>opaque<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>two<span style="padding-left:9.5px"></span>tids<span style="padding-left:9.5px"></span>[0,1],<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>tid01eq<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>true
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="OpaqueBlkSingleRateBecauseTID01EQ" class="tlc_func">OpaqueBlkSingleRateBecauseTID01EQ</a>(block)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tid01Eq = <span class="tlc_bifunc">ISEQUAL</span>(SolverType, "FixedStep") &amp;&amp; FixedStepOpts.TID01EQ
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% ModelReference target ignore tid01eq flag.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>() &amp;&amp; tid01Eq
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> block
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">SIZE</span>(TID,1) == 2 &amp;&amp; TID[0] == 0 &amp;&amp; TID[1] == 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Update<span style="padding-left:9.5px"></span>============================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>update<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>opaques
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>implementation.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Update" class="tlc_func">Update</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> block.OpaqueBlockMethode.HasUpdate
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateType">generateType</a>(block, system, "Update")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>UpdateForTID<span style="padding-left:9.5px"></span>======================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generate<span style="padding-left:9.5px"></span>updateForTID<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>opaque<span style="padding-left:9.5px"></span>block.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>similar<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>Update,<span style="padding-left:9.5px"></span>except<span style="padding-left:9.5px"></span>only<span style="padding-left:9.5px"></span>generating<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>specific<span style="padding-left:9.5px"></span>tid.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="UpdateForTID" class="tlc_func">UpdateForTID</a>(block, system, tid) <span class="tlc_fkw">Output</span> 
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(<span class="tlc_bifunc">SIZE</span>(block.TID,1) > 1) 
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> block.OpaqueBlockMethode.HasUpdate
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#OpaqueBlkSingleRateBecauseTID01EQ">OpaqueBlkSingleRateBecauseTID01EQ</a>(block)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%    If the opaque block is single rate because tid01eq is true,</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%  call Outputs function instead of OutputForTID function. </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%  Call Outputs function only when tid=0 because code of tid0 </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%  and tid1 is grouped together and put with tid0. </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tid == 0 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateType">generateType</a>(block, system, "Update")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(tid == 0 || tid == 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateTypeForTID">generateTypeForTID</a>(block, system, "Update", tid)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Outputs<span style="padding-left:9.5px"></span>===========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>opaques
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>implementation.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block, system) <span class="tlc_fkw">Output</span> 
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> block.OpaqueBlockMethode.HasOutputs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateType">generateType</a>(block, system, "Outputs")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>OutputsForTID<span style="padding-left:9.5px"></span>=====================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>similar<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>Outputs,<span style="padding-left:9.5px"></span>except<span style="padding-left:9.5px"></span>only<span style="padding-left:9.5px"></span>generating<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>specific<span style="padding-left:9.5px"></span>tid.<span style="padding-left:9.5px"></span>When<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>rate<span style="padding-left:9.5px"></span>grouped,<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>called
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>instead<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>Outputs
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="OutputsForTID" class="tlc_func">OutputsForTID</a>(block, system, tid) <span class="tlc_fkw">Output</span> 
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(<span class="tlc_bifunc">SIZE</span>(block.TID,1) > 1) 
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> block.OpaqueBlockMethode.HasOutputs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#OpaqueBlkSingleRateBecauseTID01EQ">OpaqueBlkSingleRateBecauseTID01EQ</a>(block)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%    If the opaque block is single rate because tid01eq is true,</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%  call Outputs function instead of OutputForTID function. </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%  Call Outputs function only when tid=0 because code of tid0 </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%  and tid1 is grouped together and put with tid0. </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tid == 0 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateType">generateType</a>(block, system, "Outputs")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(tid == 0 || tid == 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateTypeForTID">generateTypeForTID</a>(block, system, "Outputs", tid)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Derivatives<span style="padding-left:9.5px"></span>=======================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>derivatives<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>opaques
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>implementation.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Derivatives" class="tlc_func">Derivatives</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> block.OpaqueBlockMethode.HasDerivatives
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateType">generateType</a>(block, system, "Derivatives")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>ForcingFunction<span style="padding-left:9.5px"></span>===================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>forcing<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>opaques
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>implementation.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="ForcingFunction" class="tlc_func">ForcingFunction</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> block.OpaqueBlockMethode.HasForcingFunction
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateType">generateType</a>(block, system, "ForcingFunction")>
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> ::CompiledModel.ModelIsLinearlyImplicit == "yes" 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/private/sfunwiz_template.html#Derivatives">Derivatives</a>(block, system)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>MassMatrix<span style="padding-left:9.5px"></span>========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>mass<span style="padding-left:9.5px"></span>matrix<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>opaques
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>implementation.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="MassMatrix" class="tlc_func">MassMatrix</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> block.OpaqueBlockMethode.HasMassMatrix
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateType">generateType</a>(block, system, "MassMatrix")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Projection<span style="padding-left:9.5px"></span>========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>projection<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>opaques
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>implementation.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Projection" class="tlc_func">Projection</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> block.OpaqueBlockMethode.HasProjection
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateType">generateType</a>(block, system, "Projection")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>ZeroCrossings<span style="padding-left:9.5px"></span>=====================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>zero<span style="padding-left:9.5px"></span>crossings<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>opaques
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>implementation.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="ZeroCrossings" class="tlc_func">ZeroCrossings</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> block.OpaqueBlockMethode.HasZeroCrossings
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateType">generateType</a>(block, system, "ZeroCrossings")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Enable<span style="padding-left:9.5px"></span>============================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>enable<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>opaques
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>implementation.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Enable" class="tlc_func">Enable</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> block.OpaqueBlockMethode.HasEnable
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateType">generateType</a>(block, system, "Enable")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Disable<span style="padding-left:9.5px"></span>===========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>disable<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>opaques
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>implementation.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Disable" class="tlc_func">Disable</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> block.OpaqueBlockMethode.HasDisable
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateType">generateType</a>(block, system, "Disable")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>CleanupRuntimeResources<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>opaque<span style="padding-left:9.5px"></span>block's<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>implementation.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="CleanupRuntimeResources" class="tlc_func">CleanupRuntimeResources</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> block.OpaqueBlockMethode.HasCleanupRuntimeResources
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateType">generateType</a>(block, system, "CleanupRuntimeResources")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Terminate<span style="padding-left:9.5px"></span>=========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>terminate<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>opaques
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>implementation.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Terminate" class="tlc_func">Terminate</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> block.OpaqueBlockMethode.HasTerminate
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateType">generateType</a>(block, system, "Terminate")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SetDims<span style="padding-left:9.5px"></span>===========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>setdims<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>opaques
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>implementation.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SetDims" class="tlc_func">SetDims</a>(block, system, oidx, ridx) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> block.OpaqueBlockMethode.HasSetDims
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateTypeForSetDims">generateTypeForSetDims</a>(block, system, "SetDims", oidx, ridx)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FinalizeAllDims<span style="padding-left:9.5px"></span>===================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>finalizealldims<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>opaques
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>implementation.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FinalizeAllDims" class="tlc_func">FinalizeAllDims</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> block.OpaqueBlockMethode.HasFinalizeAllDims
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateType">generateType</a>(block, system, "FinalizeAllDims")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>ConstCode<span style="padding-left:9.5px"></span>=====================-===================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>ConstCode<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>opaques
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>implementation.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Instead<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>putting<span style="padding-left:9.5px"></span>constant<span style="padding-left:9.5px"></span>tid<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>tid0,<span style="padding-left:9.5px"></span>opaque<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>puts<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>constant<span style="padding-left:9.5px"></span>tid<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>seperate<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>ConstCode.<span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>called<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>generate<span style="padding-left:9.5px"></span>constant<span style="padding-left:9.5px"></span>tid<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>Start<span style="padding-left:9.5px"></span>function.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="ConstCode" class="tlc_func">ConstCode</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> block.OpaqueBlockMethode.HasConstCode
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html#generateType">generateType</a>(block, system, "ConstCode")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/blocks/opaque.html">opaque.tlc</a>
+</span> <br></body></html>

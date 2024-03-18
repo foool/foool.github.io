@@ -1,0 +1,99 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_SFCNUTIL_") == 0
+ <br><span class="tlc_assign">%assign</span> _SFCNUTIL_ = 1
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibGetSFcnNonFinite" class="tlc_func">SLibGetSFcnNonFinite</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tBuff
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibRealNonFinitesRequired">SLibRealNonFinitesRequired</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMathFcnCall">LibGenMathFcnCall</a>("initnonfinite", <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#FcnGetDataTypeIdFromName">FcnGetDataTypeIdFromName</a>("double"),...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"sizeof(real_T)", "")>;
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tBuff
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> nonFinitesBuffer
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(tBuff)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* non-finites */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tBuff</span>>/
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> nonFinitesBuffer
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> nonFinitesBuffer
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibNoninlinedSfcnStaticFcn<span style="padding-left:9.5px"></span>===============
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Generate<span style="padding-left:9.5px"></span>static<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>used<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>noninlined<span style="padding-left:9.5px"></span>sfunctions.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibNoninlinedSfcnStaticFcn" class="tlc_func">SLibNoninlinedSfcnStaticFcn</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> retBuf
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "RegNumInputPorts"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnReturns = "static int_T"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = "SimStruct *S, int_T nInputPorts"
+ <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> fcnRec {Name fcnName; Returns fcnReturns; Params fcnParams; Abstract ""; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;Category "utility"; GeneratedBy "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sfcnutil.html">sfcnutil.tlc</a>"}
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDumpFunctionBanner">SLibDumpFunctionBanner</a>(fcnRec)>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> fcnRec
+ <br>&nbsp;&nbsp;#if defined(MATLAB_MEX_FILE) || defined(RT_MALLOC)
+ <br>&nbsp;&nbsp;%<<span>fcnReturns</span>> %<<span>fcnName</span>>(%<<span>fcnParams</span>>) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;_ssSetNumInputPorts(S,nInputPorts);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return true;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "RegNumOutputPorts"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnReturns = "static int_T"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = "SimStruct *S, int_T nOutputPorts"
+ <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> fcnRec {Name fcnName; Returns fcnReturns; Params fcnParams; Abstract ""; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;Category "utility"; GeneratedBy "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sfcnutil.html">sfcnutil.tlc</a>"}
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDumpFunctionBanner">SLibDumpFunctionBanner</a>(fcnRec)>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> fcnRec
+ <br>&nbsp;&nbsp;%<<span>fcnReturns</span>> %<<span>fcnName</span>>(%<<span>fcnParams</span>>) {    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;_ssSetNumOutputPorts(S,nOutputPorts);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return true;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = "FcnSetErrorStatus"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnReturns = "static int_T"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnParams = "const SimStruct *S, DTypeId arg2"
+ <br>&nbsp;&nbsp;<span class="tlc_createrecord">%createrecord</span> fcnRec {Name fcnName; Returns fcnReturns; Params fcnParams; Abstract ""; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;Category "utility"; GeneratedBy "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sfcnutil.html">sfcnutil.tlc</a>"}
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibDumpFunctionBanner">SLibDumpFunctionBanner</a>(fcnRec)>
+ <br>&nbsp;&nbsp;<span class="tlc_undef">%undef</span> fcnRec
+ <br>&nbsp;&nbsp;%<<span>fcnReturns</span>> %<<span>fcnName</span>>(%<<span>fcnParams</span>>) 
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;static char msg[256];
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;if (strlen(ssGetModelName(S)) < 128) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf(msg, "S-function %s does not have a tlc file. ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;It cannot use macros that access regDataType field in simstruct.", ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ssGetModelName(S));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf(msg, "A S-function does not have a tlc file. ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;It cannot use macros that access regDataType field in simstruct.");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;ssSetErrorStatus(S, msg);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/genrtdefines.html#UNUSED_PARAMETER">UNUSED_PARAMETER</a>(arg2);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return 0;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> retBuf
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retBuf
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibNoninlinedSfcnStaticFcn</span>
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span> <span class="tlc_comment">%% _SFCNUTIL_ </span>
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sfcnutil.html">sfcnutil.tlc</a>
+</span> <br></body></html>

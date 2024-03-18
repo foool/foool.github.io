@@ -1,0 +1,506 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>makes<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>format<span style="padding-left:9.5px"></span>independent<span style="padding-left:9.5px"></span>pass<span style="padding-left:9.5px"></span>through<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>model.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2019<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_COMMONPASS_") == 0
+ <br><span class="tlc_assign">%assign</span> _COMMONPASS_ = 1
+ <br>&nbsp; <br><span class="tlc_selectfile">%selectfile</span> STDOUT
+ <br><span class="tlc_if">%if</span> RTWVerbose
+ <br>### Initial pass through model to cache user defined code
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("InCommonPass",1)>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Propagate<span style="padding-left:9.5px"></span>Model<span style="padding-left:9.5px"></span>reference<span style="padding-left:9.5px"></span>blocks'<span style="padding-left:9.5px"></span>interfaces<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>CompiledModel
+</span> <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#PropModelReferenceBlocksInterface">PropModelReferenceBlocksInterface</a>()</span>>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Validate<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>binding<span style="padding-left:9.5px"></span>between<span style="padding-left:9.5px"></span>CGTypes<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>SLTypes
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/variantBus/tVariantBusGecks.m
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_assign">%assign</span> numBuiltInTypes = ::CompiledModel.DataTypes.NumSLBuiltInDataTypes
+ <br><span class="tlc_with">%with</span> ::CompiledModel.CGTypes
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> i = numBuiltInTypes
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(CGType[i], "SLTypeIdx") || CGType[i].SLTypeIdx != i
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_error">%error</span> "Invalide Type binding of CGType[%<<span>i</span>>]."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endwith">%endwith</span>
+ <br><span class="tlc_undef">%undef</span> numBuiltInTypes
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibFcnProtoCtrlActive">SLibFcnProtoCtrlActive</a>() || GenerateClassInterface
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::RTWCPPStepPrototypeRecord = ""
+ <br>&nbsp;&nbsp;<span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html">ertfcnprotocontrol.tlc</a>"
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>execute<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>instance<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>type<span style="padding-left:9.5px"></span>setup
+</span> <br><span class="tlc_comment">%%
+</span> <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/blocksetuplib.html#BlockSetupAndCompatibilityCheck">BlockSetupAndCompatibilityCheck</a>()</span>>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>=============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Loop<span style="padding-left:9.5px"></span>through<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>Block<span style="padding-left:9.5px"></span>Output<span style="padding-left:9.5px"></span>records<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>attach<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>following<span style="padding-left:9.5px"></span>three<span style="padding-left:9.5px"></span>fields
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>each<span style="padding-left:9.5px"></span>record:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>RequiredInBlockIO:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>setting<span style="padding-left:9.5px"></span>determines<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>needs<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>declared<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>BlockIO<span style="padding-left:9.5px"></span>structure.<span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>true<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>a)<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>TestPoint,<span style="padding-left:9.5px"></span>b)<span style="padding-left:9.5px"></span>it
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>constant<span style="padding-left:9.5px"></span>valued<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>required<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>scope.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>RequiredInConstBlockIO:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>setting<span style="padding-left:9.5px"></span>determines<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>needs<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>declared<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>ConstBlockIO<span style="padding-left:9.5px"></span>structure.<span style="padding-left:9.5px"></span>Firstly<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>initial<span style="padding-left:9.5px"></span>value<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>setting
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>depends<span style="padding-left:9.5px"></span>on<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>level<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>InlineInvariantSignals<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>set<span style="padding-left:9.5px"></span>to,<span style="padding-left:9.5px"></span>i.e.,
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>-><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>InlineInvariantSignals=0,<span style="padding-left:9.5px"></span>then<span style="padding-left:9.5px"></span>RequiredInConstBlockIO=1<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>all
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>invaraint<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>outputs.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>-><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>InlineInvariantSignals=1,<span style="padding-left:9.5px"></span>then<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>assumed<span style="padding-left:9.5px"></span>(at<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>time)<span style="padding-left:9.5px"></span>that
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>none<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>invariant<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>outputs<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>required<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>ConstBlockIO
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>structure,<span style="padding-left:9.5px"></span>i.e.,<span style="padding-left:9.5px"></span>we<span style="padding-left:9.5px"></span>expect<span style="padding-left:9.5px"></span>all<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>these<span style="padding-left:9.5px"></span>signals<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>#def'ed<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>their
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>(invariant)<span style="padding-left:9.5px"></span>initial<span style="padding-left:9.5px"></span>values<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>model.h<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>assumption<span style="padding-left:9.5px"></span>will<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>corrected
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>during<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>process<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>generation,<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>those<span style="padding-left:9.5px"></span>invaraint<span style="padding-left:9.5px"></span>signals<span style="padding-left:9.5px"></span>that
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>referenced<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>their<span style="padding-left:9.5px"></span>address.<span style="padding-left:9.5px"></span>Hence<span style="padding-left:9.5px"></span>after<span style="padding-left:9.5px"></span>all<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>been
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>model.c<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>model.prm,<span style="padding-left:9.5px"></span>we<span style="padding-left:9.5px"></span>will<span style="padding-left:9.5px"></span>end<span style="padding-left:9.5px"></span>up<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>*minimal*
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>invariant<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>outputs<span style="padding-left:9.5px"></span>marked<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>required<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>ConstBlockIO<span style="padding-left:9.5px"></span>structure.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Also<span style="padding-left:9.5px"></span>keep<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>count<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>a)<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>signals<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>BlockIO<span style="padding-left:9.5px"></span>structure,
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>b)<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>signals<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>ConstBlockIO<span style="padding-left:9.5px"></span>structure,<span style="padding-left:9.5px"></span>c)<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>number
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>signals<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>invariant<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>BlockIO<span style="padding-left:9.5px"></span>structure,<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>d)<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>number
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>external<span style="padding-left:9.5px"></span>signals.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/blocks/CPPCodeGen/tsmlk_core_cpp_coverage.m
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/rtw/targets/ert/tcodevariants.m
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/inlineVariants/ivGeneral/tIVfcnCall_neg.m
+</span> <br><span class="tlc_comment">%%
+</span> <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(BlockOutputs, "NumModelReferenceRootOutput", 0)>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(BlockOutputs, "NumSignalsInBlockIO", 0)>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(BlockOutputs, "NumSignalsInConstBlockIO", 0)>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(BlockOutputs, "NumExportedGlobalSignals", 0)>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(BlockOutputs, "NumImportedExternSignals", 0)>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(BlockOutputs, "NumImportedExternPointerSignals", 0)>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(BlockOutputs, "NumInPlaceOPTSignals", 0)>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(BlockOutputs, "NumAccessibleSignals", 0)>
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> nMdlRefOut    = 0
+ <br><span class="tlc_assign">%assign</span> nInBlkIO      = BlockOutputs.NumGlobalBlockOutputs
+ <br><span class="tlc_assign">%assign</span> nConstExpr    = BlockOutputs.NumConstOutputExpr
+ <br><span class="tlc_assign">%assign</span> nInConstBlkIO = 0
+ <br><span class="tlc_assign">%assign</span> nExtGlobal    = 0
+ <br><span class="tlc_assign">%assign</span> nImpExtern    = 0
+ <br><span class="tlc_assign">%assign</span> nImpExternPtr = 0
+ <br><span class="tlc_assign">%assign</span> nCustom       = 0
+ <br><span class="tlc_assign">%assign</span> nPRPortVar    = 0
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> baseSystemIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()
+ <br>&nbsp; <br><span class="tlc_with">%with</span> ::CompiledModel.ZcRec
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numZc = 0
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> blkIdx = NumBlkZcRecs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkRec = BlkZcRec[blkIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numZc = numZc + blkRec.NumZcSignalInfos
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numEntries = 2*numZc
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::ZcRecMap = Vector(%<<span>numEntries</span>>) [0@%<<span>numEntries</span>>]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mapIdx = 0
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> blkIdx = NumBlkZcRecs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkRec = BlkZcRec[blkIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> sigIdx = blkRec.NumZcSignalInfos
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::ZcRecMap[mapIdx * 2] = blkIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::ZcRecMap[mapIdx * 2 + 1] = sigIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mapIdx = mapIdx + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endwith">%endwith</span>
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> intf = System[baseSystemIdx].Interface
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = intf.NumCanonicalInputArgDefs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> argdef = intf.CanonicalInputArgDef[idx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> argdef.ConnectedToSimulinkFunction == "yes"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#LibAccessThisSysFcnArg">LibAccessThisSysFcnArg</a>(argdef, "Start", "Global")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#SLibAccessArg">SLibAccessArg</a>(argdef, "Start", 0, 0)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = intf.NumCanonicalOutputArgDefs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> argdef = intf.CanonicalOutputArgDef[idx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> argdef.ConnectedToSimulinkFunction == "yes"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#LibAccessThisSysFcnArg">LibAccessThisSysFcnArg</a>(argdef, "Start", "Global")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#SLibAccessArg">SLibAccessArg</a>(argdef, "Start", 0, 0)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_foreach">%foreach</span> boIdx = BlockOutputs.NumGlobalBlockOutputs
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> globalBO = BlockOutputs.GlobalBlockOutput[boIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> reqInBlkIO = 0
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">SIZE</span>(globalBO.SigSrc,1) > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srcSys = ::CompiledModel.System[globalBO.SigSrc[0]]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srcBlk = srcSys.Block[globalBO.SigSrc[2]]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(srcBlk.TID, "constant") 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Mark this block so that its Outputs function gets</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% generated in mdlStart outside of #if 0 ... #endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span class="tlc_bifunc">SETFIELD</span>(srcBlk, "NeedOutputsFcnInMdlStart", 1)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% TopTester: test/toolbox/rtw/targets/ert/tcodevariants.m</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% TopTester: test/toolbox/simulink/variants/inlineVariants/variantSink/tmVarSinkRateTransBlk_VC1.m</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% TopTester: test/toolbox/simulink/variants/inlineVariants/simulinkFunction/tVariantSimulinkFunctionAutoInherit.m</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> globalBO.OwnerSysIdx[0] != -1 &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;globalBO.OwnerSysIdx[0] > baseSystemIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% This signal is allocated by the parent, and should not be initialized</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Currently this is the case for buffers feeding the root output</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% ports of referenced models</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>())
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nMdlRefOut = nMdlRefOut + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> reqInBlkIO = 1
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> required = [%<!<span class="tlc_bifunc">ISEMPTY</span>(globalBO.SigSrc)>, %<<span>reqInBlkIO</span>>]  
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(globalBO, "RequiredInBlockIO", required)>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_assign">%assign</span> BlockOutputs.NumModelReferenceRootOutput = nMdlRefOut
+ <br>&nbsp; <br><span class="tlc_foreach">%foreach</span> boIdx = BlockOutputs.NumExternalBlockOutputs
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> externBO = BlockOutputs.ExternalBlockOutput[boIdx]
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">SIZE</span>(externBO.SigSrc,1) > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srcSys = ::CompiledModel.System[externBO.SigSrc[0]]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srcBlk = srcSys.Block[externBO.SigSrc[2]]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(srcBlk.TID, "constant")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Mark this block so that its Outputs function gets</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% generated in mdlStart outside of #if 0 ... #endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span class="tlc_bifunc">SETFIELD</span>(srcBlk, "NeedOutputsFcnInMdlStart", 1)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> externBO.StorageClass
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "ExportedGlobal"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nExtGlobal = nExtGlobal + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "ImportedExtern"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nImpExtern = nImpExtern + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "ImportedExternPointer"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nImpExternPtr = nImpExternPtr + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Custom"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nCustom = nCustom + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Only removed reusable CSC can be of Auto storage class.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibOmitRecord">SLibOmitRecord</a>(externBO)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Unknown storage class: %<<span>externBO.StorageClass</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>(errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(externBO, "AutosarPRPortVarIdx")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nPRPortVar = nPRPortVar + 1
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>    
+ <br>&nbsp; <br><span class="tlc_foreach">%foreach</span> boIdx = BlockOutputs.NumConstBlockOutputs
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> constBO = BlockOutputs.ConstBlockOutput[boIdx]
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> constBO.RequiredInConstBlockIO
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nInConstBlkIO = nInConstBlkIO + 1
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> InlineInvariantSignals == 0 || ::CompiledModel.PadderActive
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> constBO.RequiredInConstBlockIO = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nInConstBlkIO = nInConstBlkIO + 1
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">SIZE</span>(constBO.SigSrc,1) > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srcSys = ::CompiledModel.System[constBO.SigSrc[0]]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srcBlk = srcSys.Block[constBO.SigSrc[2]]
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% If the initial value is empty then it implies that SL and the normal</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% TLC library functions cannot initialize this signal. This could be due</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% to the fact that the data type of signal is not known to Simulink. In</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% such an event, check if the block target file has "BlockInitialValues"</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% method, that can provide the required initialization. If this method</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% does not exist in the block target file, then mark the block so that</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% its Outputs function gets generated in mdlStart outside the #if 0 ...</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% #endif statements.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% TopTester: test/toolbox/simulink/blocks/CPPCodeGen/tsmlk_core_cpp_coverage.m</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% TopTester: test/toolbox/simulink/variants/CondExecutedVSS/tContPortFcnCall3.m</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% TopTester: test/toolbox/simulink/variants/flexibleVariants/tFlexibleVariantsCodeGen2.m</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% TopTester: test/toolbox/simulink/variants/codevariants/tcodevariants9.m</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(constBO.InitialValue)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initInMdlStart = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibBlockFunctionExists">LibBlockFunctionExists</a>(srcBlk, "BlockInitialValues")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vType = "Y%<constBO.SigSrc[3]>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> srcSys
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initVal = <span class="tlc_bifunc">GENERATE</span>(srcBlk,"BlockInitialValues",srcSys,vType)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span> <span class="tlc_comment">%% srcSys</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">WHITE_SPACE</span>(initVal)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> warnTxt = "Ignoring bogus initial output value."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportWarning">LibReportWarning</a>(warnTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initInMdlStart = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(constBO, "CustomInitialValue", initVal)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initInMdlStart = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> initInMdlStart
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initVal = [0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(constBO, "CustomInitialValue", initVal)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> constBO.RequiredInConstBlockIO = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> constBO.DoNotConstify = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nInConstBlkIO = nInConstBlkIO + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span class="tlc_bifunc">SETFIELD</span>(srcBlk, "NeedOutputsFcnInMdlStart", 1)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_undef">%undef</span> initInMdlStart, vType, initVal
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::GenCPP
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> constBO.DoNotConstify = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> BlockOutputs.NumSignalsInBlockIO             = nInBlkIO
+ <br><span class="tlc_assign">%assign</span> BlockOutputs.NumSignalsInConstBlockIO        = nInConstBlkIO
+ <br><span class="tlc_assign">%assign</span> BlockOutputs.NumExportedGlobalSignals        = nExtGlobal
+ <br><span class="tlc_assign">%assign</span> BlockOutputs.NumImportedExternSignals        = nImpExtern
+ <br><span class="tlc_assign">%assign</span> BlockOutputs.NumImportedExternPointerSignals = nImpExternPtr
+ <br><span class="tlc_assign">%assign</span> BlockOutputs.NumInPlaceOPTSignals            = nCustom + nPRPortVar
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>A<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>signal<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>included<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>memory<span style="padding-left:9.5px"></span>map<span style="padding-left:9.5px"></span>if
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>written<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>more<span style="padding-left:9.5px"></span>than<span style="padding-left:9.5px"></span>one<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>(reused).
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_assign">%assign</span> nInBlkIOExtMode = 0
+ <br><span class="tlc_foreach">%foreach</span> boIdx = BlockOutputs.NumGlobalBlockOutputs
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> BlockOutputs.GlobalBlockOutput[boIdx].NumReusedBlockOutputs == 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nInBlkIOExtMode = nInBlkIOExtMode + 1
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Total<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>accessible<span style="padding-left:9.5px"></span>signals<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>external<span style="padding-left:9.5px"></span>mode.
+</span> <br><span class="tlc_assign">%assign</span> BlockOutputs.NumAccessibleSignals            = ...
+ <br>&nbsp;&nbsp;nInBlkIOExtMode + nExtGlobal + nImpExtern + nImpExternPtr + nCustom
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>=============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Loop<span style="padding-left:9.5px"></span>through<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>ExternalInputs<span style="padding-left:9.5px"></span>records<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>attach<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>following<span style="padding-left:9.5px"></span>to
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>determine<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>external<span style="padding-left:9.5px"></span>signals.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/blocks/CPPCodeGen/tsmlk_core_cpp_coverage.m
+</span> <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(ExternalInputs, "NumAutoSignals", 0)>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(ExternalInputs, "NumExportedGlobalSignals", 0)>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(ExternalInputs, "NumImportedExternSignals", 0)>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(ExternalInputs, "NumImportedExternPointerSignals", 0)>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(ExternalInputs, "NumInPlaceOPTSignals", 0)>
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> nAuto         = 0
+ <br><span class="tlc_assign">%assign</span> nExtGlobal    = 0
+ <br><span class="tlc_assign">%assign</span> nImpExtern    = 0
+ <br><span class="tlc_assign">%assign</span> nImpExternPtr = 0
+ <br><span class="tlc_assign">%assign</span> nPRPortVar    = 0
+ <br>&nbsp; <br><span class="tlc_foreach">%foreach</span> eiIdx = ExternalInputs.NumExternalInputs
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ei = ExternalInputs.ExternalInput[eiIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> ei.StorageClass
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Auto"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nAuto = nAuto + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "ExportedGlobal"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nExtGlobal = nExtGlobal + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "ImportedExtern"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nImpExtern = nImpExtern + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "ImportedExternPointer"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nImpExternPtr = nImpExternPtr + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Custom"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nCustom = nCustom + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Unknown storage class: %<<span>ei.StorageClass</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>(errTxt)>
+ <br>&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(ei, "AutosarPRPortVarIdx")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nPRPortVar = nPRPortVar + 1
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br><span class="tlc_assign">%assign</span> ExternalInputs.NumAutoSignals                  = nAuto
+ <br><span class="tlc_assign">%assign</span> ExternalInputs.NumExportedGlobalSignals        = nExtGlobal
+ <br><span class="tlc_assign">%assign</span> ExternalInputs.NumImportedExternSignals        = nImpExtern
+ <br><span class="tlc_assign">%assign</span> ExternalInputs.NumImportedExternPointerSignals = nImpExternPtr
+ <br><span class="tlc_assign">%assign</span> ExternalInputs.NumInPlaceOPTSignals            = nCustom + nPRPortVar
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>=============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Loop<span style="padding-left:9.5px"></span>through<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>ExternalOutputs<span style="padding-left:9.5px"></span>records<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>attach<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>following<span style="padding-left:9.5px"></span>to
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>determine<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>external<span style="padding-left:9.5px"></span>signals.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(ExternalOutputs, "NumAutoSignals", 0)>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(ExternalOutputs, "NumExportedGlobalSignals", 0)>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(ExternalOutputs, "NumImportedExternSignals", 0)>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(ExternalOutputs, "NumImportedExternPointerSignals", 0)>
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddIdentifier">LibAddIdentifier</a>(ExternalOutputs, "NumInPlaceOPTSignals", 0)>
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> nAuto         = 0
+ <br><span class="tlc_assign">%assign</span> nExtGlobal    = 0
+ <br><span class="tlc_assign">%assign</span> nImpExtern    = 0
+ <br><span class="tlc_assign">%assign</span> nImpExternPtr = 0
+ <br><span class="tlc_assign">%assign</span> nPRPortVar    = 0
+ <br>&nbsp; <br><span class="tlc_foreach">%foreach</span> eoIdx = ExternalOutputs.NumExternalOutputs
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> eo = ExternalOutputs.ExternalOutput[eoIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> eo.StorageClass
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Auto"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nAuto = nAuto + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "ExportedGlobal"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nExtGlobal = nExtGlobal + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "ImportedExtern"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nImpExtern = nImpExtern + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "ImportedExternPointer"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nImpExternPtr = nImpExternPtr + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "Custom"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nCustom = nCustom + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Unknown storage class: %<<span>eo.StorageClass</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>(errTxt)>
+ <br>&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(eo, "AutosarPRPortVarIdx")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nPRPortVar = nPRPortVar + 1
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br><span class="tlc_assign">%assign</span> ExternalOutputs.NumAutoSignals                  = nAuto
+ <br><span class="tlc_assign">%assign</span> ExternalOutputs.NumExportedGlobalSignals        = nExtGlobal
+ <br><span class="tlc_assign">%assign</span> ExternalOutputs.NumImportedExternSignals        = nImpExtern
+ <br><span class="tlc_assign">%assign</span> ExternalOutputs.NumImportedExternPointerSignals = nImpExternPtr
+ <br><span class="tlc_assign">%assign</span> ExternalOutputs.NumInPlaceOPTSignals            = nCustom + nPRPortVar
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>=============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Add<span style="padding-left:9.5px"></span>total<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>external<span style="padding-left:9.5px"></span>signals<span style="padding-left:9.5px"></span>(block<span style="padding-left:9.5px"></span>io<span style="padding-left:9.5px"></span>+<span style="padding-left:9.5px"></span>external<span style="padding-left:9.5px"></span>inputs)<span style="padding-left:9.5px"></span>to
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>::CompiledModel<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>future<span style="padding-left:9.5px"></span>reference.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("NumInPlaceOPTSignals", ...
+ <br>&nbsp;&nbsp;BlockOutputs.NumInPlaceOPTSignals + ...
+ <br>&nbsp;&nbsp;ExternalInputs.NumInPlaceOPTSignals + ...
+ <br>&nbsp;&nbsp;ExternalOutputs.NumInPlaceOPTSignals )>
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("NumExportedGlobalSignals", ...
+ <br>&nbsp;&nbsp;BlockOutputs.NumExportedGlobalSignals + ...
+ <br>&nbsp;&nbsp;ExternalInputs.NumExportedGlobalSignals + ...
+ <br>&nbsp;&nbsp;ExternalOutputs.NumExportedGlobalSignals)>
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("NumImportedExternSignals", ...
+ <br>&nbsp;&nbsp;BlockOutputs.NumImportedExternSignals + ...
+ <br>&nbsp;&nbsp;ExternalInputs.NumImportedExternSignals + ...
+ <br>&nbsp;&nbsp;ExternalOutputs.NumImportedExternSignals)>
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("NumImportedExternPointerSignals", ...
+ <br>&nbsp;&nbsp;BlockOutputs.NumImportedExternPointerSignals + ...
+ <br>&nbsp;&nbsp;ExternalInputs.NumImportedExternPointerSignals + ...
+ <br>&nbsp;&nbsp;ExternalOutputs.NumImportedExternPointerSignals)>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>=============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Add<span style="padding-left:9.5px"></span>total<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>external<span style="padding-left:9.5px"></span>dwork<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>::CompiledModel<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>future<span style="padding-left:9.5px"></span>reference.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_assign">%assign</span> nCustom       = 0
+ <br><span class="tlc_assign">%assign</span> nExtGlobal    = 0
+ <br><span class="tlc_assign">%assign</span> nImpExtern    = 0
+ <br><span class="tlc_assign">%assign</span> nImpExternPtr = 0
+ <br><span class="tlc_assign">%assign</span> nActDWork     = 0
+ <br><span class="tlc_assign">%assign</span> numDWorks = ::CompiledModel.DWorks.NumDWorks
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>FcnSetOptimizedAwayInTLC<span style="padding-left:9.5px"></span>==========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Optimize<span style="padding-left:9.5px"></span>away<span style="padding-left:9.5px"></span>some<span style="padding-left:9.5px"></span>dworks<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>TLC,<span style="padding-left:9.5px"></span>e.g.<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>reference<span style="padding-left:9.5px"></span>block
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>whose<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>interface<span style="padding-left:9.5px"></span>reveals<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>does<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>have<span style="padding-left:9.5px"></span>dwork.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>should<span style="padding-left:9.5px"></span>only<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>used<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>dworks<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>reference<span style="padding-left:9.5px"></span>blocks,<span style="padding-left:9.5px"></span>since
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>NumDWorks<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>subject<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>misinterpretation<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>respect<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>optimization.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>We<span style="padding-left:9.5px"></span>have<span style="padding-left:9.5px"></span>made<span style="padding-left:9.5px"></span>sure<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>where<span style="padding-left:9.5px"></span>NumDWorks<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>used<span style="padding-left:9.5px"></span>we<span style="padding-left:9.5px"></span>take<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>optimization<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>account<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>assumption<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>will<span style="padding-left:9.5px"></span>only
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>apply<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>dworks<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>reference<span style="padding-left:9.5px"></span>blocks.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/codevariants/tcodevariants6.m
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/codevariants/tcodevariants9.m
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/rtw/targets/AUTOSAR/Variants/tValueVariants.m
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/tvss_sim_code_match_g984892.m
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnSetOptimizedAwayInTLC" class="tlc_func">FcnSetOptimizedAwayInTLC</a>(dwRec) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> 0 == dwRec.IsLocalScratchDWork &amp;&amp; !<span class="tlc_bifunc">ISFIELD</span>(dwRec, "VarGroupIdx")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> dwRec.StorageClass == "Auto"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dwRec.OptimizedAwayInTLC = 1
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> dwRec.SigSrc[0] != -1 &amp;&amp; dwRec.SigSrc[2] != -1 &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">ISFIELD</span>( System[dwRec.SigSrc[0]], "Block")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% It is possible that the system contains no block when there</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% are terminate blocks</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> block = ::CompiledModel.System[dwRec.SigSrc[0]].Block[dwRec.SigSrc[2]]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> 1 == block.DeletedInIR
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dwRec.OptimizedAwayInTLC = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> "ModelReference" == block.Type
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Model reference block SIM target always registers one dwork. </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% However, the dwork may be optimized for the target.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockInterface = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetModelrefInterface">GetModelrefInterface</a>(block)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !blockInterface.HasDWork
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isDimSizeDWork = TLC_FALSE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(dwRec, "MdlRefBlkOutputDimSize")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isDimSizeDWork = (dwRec.MdlRefBlkOutputDimSize == 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% If the dwork is used as a dimsize dwork, do not optimize out</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isMassMatrixDWork = TLC_FALSE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> blockInterface.ModelIsLinearlyImplicit
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isMassMatrixDWork = (dwRec.Origin == "MASSMATRIX")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% If the dwork is used for Mass Matrix offset, do not optimize out</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hasPWork = (dwRec.Origin == "PWORK")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% If there is a pwork, do not optimize out</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isInitStatusDWork = TLC_FALSE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(dwRec, "DWorkForInitStatus")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isInitStatusDWork = (dwRec.DWorkForInitStatus == 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% If dwork is used to track initialization status, do not optimize out.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !isDimSizeDWork &amp;&amp; !isMassMatrixDWork &amp;&amp; !hasPWork &amp;&amp; !isInitStatusDWork
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dwRec.OptimizedAwayInTLC = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_foreach">%foreach</span> dwIdx = numDWorks
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dwRec = ::CompiledModel.DWorks.DWork[dwIdx]
+ <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> dwRec.StorageClass
+ <br>&nbsp;&nbsp;<span class="tlc_case">%case</span> "Custom"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nCustom = nCustom + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;<span class="tlc_case">%case</span> "ExportedGlobal"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nExtGlobal = nExtGlobal + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;<span class="tlc_case">%case</span> "ImportedExtern"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nImpExtern = nImpExtern + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;<span class="tlc_case">%case</span> "ImportedExternPointer"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nImpExternPtr = nImpExternPtr + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>   
+ <br>&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Only removed reusable CSC can be of Auto storage class.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibOmitRecord">SLibOmitRecord</a>(dwRec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonpass.html#FcnSetOptimizedAwayInTLC">FcnSetOptimizedAwayInTLC</a>(dwRec)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !dwRec.OptimizedAwayInTLC &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(!dwRec.IsLocalScratchDWork || dwRec.VarGroupVarIdx > -1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nActDWork = nActDWork + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("NumCustomDWork", nCustom)>
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("NumExportedGlobalDWork", nExtGlobal)>
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("NumImportedExternDWork", nImpExtern)>
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("NumImportedExternPointerDWork", nImpExternPtr)>
+ <br>&nbsp; <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAddToCompiledModel">LibAddToCompiledModel</a>("NumNonExternalDWork", nActDWork)>
+ <br>&nbsp; <br><span class="tlc_undef">%undef</span> bo, boIdx, nInBlkIO, nInConstBlkIO, currentStackSize
+ <br><span class="tlc_undef">%undef</span> ei, eiIdx, nAuto, nExtGlobal, nImpExtern, nImpExternPtr, nActDWork
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> ::CompiledModel.InCommonPass = 0
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span>  <span class="tlc_comment">%% _COMMONPASS_</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonpass.html">commonpass.tlc</a>
+</span> <br></body></html>

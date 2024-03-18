@@ -1,0 +1,375 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>2016-2017<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:<span style="padding-left:9.5px"></span>Library<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>generating<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>MDX<span style="padding-left:9.5px"></span>file.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_MDXLIB_") == 0
+ <br><span class="tlc_assign">%assign</span> _MDXLIB_ = 1
+ <br>&nbsp; <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Common<span style="padding-left:9.5px"></span>entry<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>MDX<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>generation
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibMDXCommonEntry" class="tlc_func">SLibMDXCommonEntry</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>(::GenerateMDXInterface) &amp;&amp; 1 == ::GenerateMDXInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXDumpXMLFile">SLibMDXDumpXMLFile</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>(::CustomMDXEntryFcnDefined) &amp;&amp; 1 == ::CustomMDXEntryFcnDefined
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>CustomMDXEntryFcn()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibMDXCommonEntry</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Dump<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>example<span style="padding-left:9.5px"></span>MDX<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>MATLAB<span style="padding-left:9.5px"></span>fike<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>testing
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibMDXDumpXMLFile" class="tlc_func">SLibMDXDumpXMLFile</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>() || !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXIsClass">SLibMDXIsClass</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_selectfile">%selectfile</span> STDOUT
+ <br>### Generating example MDX MATLAB file: %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibGetModelName">LibGetModelName</a>()</span>>_mdx.m  
+ <br>&nbsp;&nbsp;<span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> mdxFile = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibGetModelName">LibGetModelName</a>() + "_mdx.m"
+ <br>function retVal = %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibGetModelName">LibGetModelName</a>()</span>>_mdx()
+ <br>&nbsp;&nbsp;retVal = %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXTraverseSelfStructure">SLibMDXTraverseSelfStructure</a>()</span>>;
+ <br>end
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> mdxFile
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibMDXDumpXMLFile</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>true<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>current<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>C<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>MDX<span style="padding-left:9.5px"></span>class
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibMDXIsClass" class="tlc_func">SLibMDXIsClass</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">ISFIELD</span>(::CompiledModel.ConfigSet, "MDXIsClass") ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp; 1 == ::CompiledModel.ConfigSet.MDXIsClass &amp;&amp; <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibMDXIsClass</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>true<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>current<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>C<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>public<span style="padding-left:9.5px"></span>MDX<span style="padding-left:9.5px"></span>class
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibMDXIsPublicClass" class="tlc_func">SLibMDXIsPublicClass</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">ISFIELD</span>(::CompiledModel.ConfigSet, "MDXIsPrivate") ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp; 0 == ::CompiledModel.ConfigSet.MDXIsPrivate
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibMDXIsPublicClass</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>true<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>current<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>C<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>multi<span style="padding-left:9.5px"></span>instance
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>MDX<span style="padding-left:9.5px"></span>class
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibMDXIsMultiInstanceClass" class="tlc_func">SLibMDXIsMultiInstanceClass</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <span class="tlc_bifunc">ISFIELD</span>(::CompiledModel, "OkToMultiInstanceModelref") ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp; 1 == ::CompiledModel.OkToMultiInstanceModelref
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibMDXIsMultiInstanceClass</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>implementation<span style="padding-left:9.5px"></span>name<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>model
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibMDXImplementationName" class="tlc_func">SLibMDXImplementationName</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> ::CompiledModel.ConfigSet.CustomUserTokenString
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibMDXIsCoderGroupElement" class="tlc_func">SLibMDXIsCoderGroupElement</a>(id)  <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> "PCDG" == id || "RCDG" == id
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibMDXIsCoderGroupElement</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibMDXIsCoderGroupReference" class="tlc_func">SLibMDXIsCoderGroupReference</a>(id)  <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> "RCDG" == id
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibMDXGetCoderGroup" class="tlc_func">SLibMDXGetCoderGroup</a>(aGroupIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> aGroupIdx < ::CompiledModel.NumCoderDataGroups
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> ::CompiledModel.CoderDataGroup[aGroupIdx]
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibMDXGetCoderGroupName" class="tlc_func">SLibMDXGetCoderGroupName</a>(aGroupIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetCoderGroup">SLibMDXGetCoderGroup</a>(aGroupIdx).UserProvidedName
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibMDXGetVarGroup" class="tlc_func">SLibMDXGetVarGroup</a>(aVarGroupIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> aVarGroupIdx < ::CompiledModel.VarGroups.NumVarGroups
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> ::CompiledModel.VarGroups.VarGroup[aVarGroupIdx]
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibMDXGetVarGroupCoderGroupIdx" class="tlc_func">SLibMDXGetVarGroupCoderGroupIdx</a>(aVarGroupIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varGroup = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetVarGroup">SLibMDXGetVarGroup</a>(aVarGroupIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(varGroup, "CoderDataGroupIndex")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> varGroup.CoderDataGroupIndex
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> -1
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibMDXGetVarGroupNumElements" class="tlc_func">SLibMDXGetVarGroupNumElements</a>(aVarGroupIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupNumElements">SLibVarGroupNumElements</a>(aVarGroupIdx)
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibMDXGetVarGroupElement" class="tlc_func">SLibMDXGetVarGroupElement</a>(aVarGroupIdx, aElementIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupElementSource">SLibVarGroupElementSource</a>(aVarGroupIdx, aElementIdx)
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibMDXGetVarGroupCGType" class="tlc_func">SLibMDXGetVarGroupCGType</a>(aVarGroupIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetVarGroup">SLibMDXGetVarGroup</a>(aVarGroupIdx).CGTypeIdx
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibMDXGetVarGroupElementCGType" class="tlc_func">SLibMDXGetVarGroupElementCGType</a>(aVarGroupIdx, aElementIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupElementType">SLibVarGroupElementType</a>(aVarGroupIdx, aElementIdx)
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibMDXGetVarGroupElementCGType</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibMDXGetVarGroupElementName" class="tlc_func">SLibMDXGetVarGroupElementName</a>(aVarGroupIdx, aElementIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibVarGroupElementName">SLibVarGroupElementName</a>(aVarGroupIdx, aElementIdx)
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibMDXGetVarGroupElementName</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibMDXIsOMLClass" class="tlc_func">SLibMDXIsOMLClass</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXIsClass">SLibMDXIsClass</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> selfVarGroupIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetSelfCoderDataGroupVarGroupIndex">SLibGetSelfCoderDataGroupVarGroupIndex</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> 0 > selfVarGroupIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> selfGroupIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetVarGroupCoderGroupIdx">SLibMDXGetVarGroupCoderGroupIdx</a>(selfVarGroupIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> groupName    = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetCoderGroupName">SLibMDXGetCoderGroupName</a>(selfGroupIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numElements  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetVarGroupNumElements">SLibMDXGetVarGroupNumElements</a>(selfVarGroupIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> mIdx = numElements
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> idnum = <span class="tlc_bifunc">IDNUM</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetVarGroupElement">SLibMDXGetVarGroupElement</a>(selfVarGroupIdx, mIdx))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id = idnum[0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXIsCoderGroupReference">SLibMDXIsCoderGroupReference</a>(idnum[0])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_TRUE
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibMDXIsOMLClass</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>vargroup<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>child<span style="padding-left:9.5px"></span>vargoup<span style="padding-left:9.5px"></span>or<span style="padding-left:9.5px"></span>-1
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibMDXGetChildVarGroupIdx" class="tlc_func">SLibMDXGetChildVarGroupIdx</a>(aVarGroupIdx, aMemberIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> idnum = <span class="tlc_bifunc">IDNUM</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetVarGroupElement">SLibMDXGetVarGroupElement</a>(aVarGroupIdx, aMemberIdx))
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> "VG" == idnum[0] || "RVG" == idnum[0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> idnum[1]
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXIsCoderGroupElement">SLibMDXIsCoderGroupElement</a>(idnum[0])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> childGroup = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetCoderGroup">SLibMDXGetCoderGroup</a>(idnum[1])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> memberType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeScalarBaseType">LibCGTypeScalarBaseType</a>(...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetVarGroupElementCGType">SLibMDXGetVarGroupElementCGType</a>(aVarGroupIdx, aMemberIdx))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numVarGroups = ::CompiledModel.VarGroups.NumVarGroups
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> vgIdx = numVarGroups
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varGroup = ::CompiledModel.VarGroups.VarGroup[vgIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetVarGroupCGType">SLibMDXGetVarGroupCGType</a>(vgIdx) == memberType ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp; childGroup.GroupIndex == varGroup.CoderDataGroupIndex
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> vgIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> !<span class="tlc_bifunc">ISEMPTY</span>(<span class="tlc_bifunc">FEVAL</span>("strfind",idnum[0],"SLF"))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Ungrouped data structures are not suppoted as part" ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ " of a MDX class code generation. Please assign a" ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ " Simulink.CoderGroup to the 'Group internal:' parameter in the" ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ " MDX code generation dialog."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>(errTxt)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> -1
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibMDXBaseTypeName" class="tlc_func">SLibMDXBaseTypeName</a>(aCGTypeIdx, aObjectType) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> baseType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeScalarBaseType">LibCGTypeScalarBaseType</a>(aCGTypeIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> slType   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeToSLType">LibCGTypeToSLType</a>(baseType)
+ <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> slType
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_DOUBLE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "A_FLOAT64"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_SINGLE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "A_FLOAT32"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_UINT8
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "A_UINT8"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_UINT16
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "A_UINT16"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_UINT32
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "A_UINT32"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_BOOLEAN
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> aObjectType == 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% case Variable / Signal</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "A_BIT"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% case Calprm / Parameter</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "A_UINT8"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_INT8
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "A_INT8"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_INT16
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "A_INT16"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> tSS_INT32
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "A_INT32"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeIsStruct">LibCGTypeIsStruct</a>(baseType)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeName">LibCGTypeName</a>(baseType)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "NoBaseTypeFound" 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibMDXEmitSignalsForVarGroup" class="tlc_func">SLibMDXEmitSignalsForVarGroup</a>(aVarGroupIdx) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> coderGroupIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetVarGroupCoderGroupIdx">SLibMDXGetVarGroupCoderGroupIdx</a>(aVarGroupIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> 0 > coderGroupIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> memLocation = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetCoderGroupName">SLibMDXGetCoderGroupName</a>(coderGroupIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numMembers  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetVarGroupNumElements">SLibMDXGetVarGroupNumElements</a>(aVarGroupIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> modelName   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibGetModelName">LibGetModelName</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> mIdx = numMembers
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vgIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetChildVarGroupIdx">SLibMDXGetChildVarGroupIdx</a>(aVarGroupIdx, mIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> vgIdx > -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXEmitSignalsForVarGroup">SLibMDXEmitSignalsForVarGroup</a>(vgIdx)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/vargrouplib.html#SLibDefineVarGroupElement">SLibDefineVarGroupElement</a>(aVarGroupIdx, mIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> idnum = <span class="tlc_bifunc">IDNUM</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetVarGroupElement">SLibMDXGetVarGroupElement</a>(aVarGroupIdx, mIdx))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> "P" == idnum[0] || "RTM" == idnum[0] || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXIsCoderGroupElement">SLibMDXIsCoderGroupElement</a>(idnum[0])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>      
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> memberType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetVarGroupElementCGType">SLibMDXGetVarGroupElementCGType</a>(aVarGroupIdx, mIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span>    mdxType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXBaseTypeName">SLibMDXBaseTypeName</a>(memberType, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> memberName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetVarGroupElementName">SLibMDXGetVarGroupElementName</a>(aVarGroupIdx, mIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> variableRef = modelName + "/" + memberName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct( %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'SWVariablePrototypeRef', '%<<span>variableRef</span>>', %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'SWDataDefProps', struct( %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'SWAddrMehodRef', '%<<span>memLocation</span>>', %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'BaseTypeRef', '%<<span>mdxType</span>>' %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibMDXEmitSignalsForVarGroup</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibMDXIsLookupTableObj" class="tlc_func">SLibMDXIsLookupTableObj</a>(aParamRec) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> 1 == aParamRec.IsLUTObject
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibMDXLookupTableObjMapType" class="tlc_func">SLibMDXLookupTableObjMapType</a>(aTypeIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeIsStruct">LibCGTypeIsStruct</a>(aTypeIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numMembers = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeNumMembers">LibCGTypeNumMembers</a>(aTypeIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXBaseTypeName">SLibMDXBaseTypeName</a>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeMemberCGTypeIdx">LibCGTypeMemberCGTypeIdx</a>(aTypeIdx, numMembers-1), 0)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXBaseTypeName">SLibMDXBaseTypeName</a>(aTypeIdx, 0)
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibMDXIsLookupTableObjNumAxis" class="tlc_func">SLibMDXIsLookupTableObjNumAxis</a>(aTypeIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numAxis = 0
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeIsStruct">LibCGTypeIsStruct</a>(aTypeIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> memberIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeNumMembers">LibCGTypeNumMembers</a>(aTypeIdx) - 1 <span class="tlc_comment">%% exclude last</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> "1" != <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeSymbolicWidth">LibCGTypeSymbolicWidth</a>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeMemberCGTypeIdx">LibCGTypeMemberCGTypeIdx</a>(aTypeIdx, memberIdx))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numAxis = numAxis + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> numAxis
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibMDXLookupTableObjAxisType" class="tlc_func">SLibMDXLookupTableObjAxisType</a>(aTypeIdx, aAxisIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeIsStruct">LibCGTypeIsStruct</a>(aTypeIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> axisIdx = 0
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> memberIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeNumMembers">LibCGTypeNumMembers</a>(aTypeIdx) - 1 <span class="tlc_comment">%% exclude last</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> memberType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeMemberCGTypeIdx">LibCGTypeMemberCGTypeIdx</a>(aTypeIdx, memberIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> "1" != <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeSymbolicWidth">LibCGTypeSymbolicWidth</a>(memberType)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> aAxisIdx == axisIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXBaseTypeName">SLibMDXBaseTypeName</a>(memberType, 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> axisIdx = axisIdx + 1      
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>  
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("Invalid Axis data type")>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> -1
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibMDXEmitParametersForVarGroup" class="tlc_func">SLibMDXEmitParametersForVarGroup</a>(aVarGroupIdx) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> coderGroupIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetVarGroupCoderGroupIdx">SLibMDXGetVarGroupCoderGroupIdx</a>(aVarGroupIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> 0 > coderGroupIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>  
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> memLocation = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetCoderGroupName">SLibMDXGetCoderGroupName</a>(coderGroupIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numMembers  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetVarGroupNumElements">SLibMDXGetVarGroupNumElements</a>(aVarGroupIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> modelName   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibGetModelName">LibGetModelName</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> mIdx = numMembers
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vgIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetChildVarGroupIdx">SLibMDXGetChildVarGroupIdx</a>(aVarGroupIdx, mIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> vgIdx > -1
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXEmitParametersForVarGroup">SLibMDXEmitParametersForVarGroup</a>(vgIdx)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> idnum = <span class="tlc_bifunc">IDNUM</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetVarGroupElement">SLibMDXGetVarGroupElement</a>(aVarGroupIdx, mIdx))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> "P" != idnum[0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span>     dataRec = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#SLibGetDataRecForVarGroupMember">SLibGetDataRecForVarGroupMember</a>(idnum[0], idnum[1])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span>  memberType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetVarGroupElementCGType">SLibMDXGetVarGroupElementCGType</a>(aVarGroupIdx, mIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span>    baseType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeScalarBaseType">LibCGTypeScalarBaseType</a>(memberType)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span>  memberName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetVarGroupElementName">SLibMDXGetVarGroupElementName</a>(aVarGroupIdx, mIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> variableRef = modelName + "/" + memberName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXIsLookupTableObj">SLibMDXIsLookupTableObj</a>(dataRec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mapType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXLookupTableObjMapType">SLibMDXLookupTableObjMapType</a>(baseType)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numAxis = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXIsLookupTableObjNumAxis">SLibMDXIsLookupTableObjNumAxis</a>(baseType)            
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct( %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Category', '%<numAxis == 1 ? "CURVE" : "MAP">', %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'SWCalprmPrototypeRef', '%<<span>variableRef</span>>', %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'SWDataDefProps', struct( %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'SWAddrMehodRef', '%<<span>memLocation</span>>', %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'BaseTypeRef', '%<<span>mapType</span>>', %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'SWCalprmAxisSet', struct( 'SWCalprmAxis', [ %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> axisIdx = numAxis
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> axisType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXLookupTableObjAxisType">SLibMDXLookupTableObjAxisType</a>(baseType, axisIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct( %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'SWAxisIndex', %<axisIdx+1>, %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'BaseTypeRef', '%<<span>axisType</span>>' %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]) %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mdxType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXBaseTypeName">SLibMDXBaseTypeName</a>(memberType, 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct( %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'Category', 'VALUE', %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'SWCalprmPrototypeRef', '%<<span>variableRef</span>>', %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'SWDataDefProps', struct( %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'SWAddrMehodRef', '%<<span>memLocation</span>>', %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'BaseTypeRef', '%<<span>mdxType</span>>' %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibMDXTraverseSelfStructure" class="tlc_func">SLibMDXTraverseSelfStructure</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> coderGroupIdx   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetSelfCoderDataGroupIndex">SLibGetSelfCoderDataGroupIndex</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> selfVarGroupIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetSelfCoderDataGroupVarGroupIndex">SLibGetSelfCoderDataGroupVarGroupIndex</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> 0 > selfVarGroupIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;struct( %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;'SWClassAttrImpls', struct( %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ShortName', '%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXImplementationName">SLibMDXImplementationName</a>()</span>>', %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'SWDataDefProps', struct( %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'SWAddrMethodRef', '%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXGetCoderGroupName">SLibMDXGetCoderGroupName</a>(coderGroupIdx)>', %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'IsOMLClass',  %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXIsOMLClass">SLibMDXIsOMLClass</a>() ? "true" : "false">,        %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'IsPublicClass', %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXIsPublicClass">SLibMDXIsPublicClass</a>() ? "true" : "false">,   %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'IsNClass', %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXIsMultiInstanceClass">SLibMDXIsMultiInstanceClass</a>() ? "true" : "false">) %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;), %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;'SWVariableImpls', struct('SWVariableImpl', [ %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXEmitSignalsForVarGroup">SLibMDXEmitSignalsForVarGroup</a>(selfVarGroupIdx)> ]), %<"..."> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;'SWCalprmImpls', struct('SWCalprmImpl', [ %<"...">
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html#SLibMDXEmitParametersForVarGroup">SLibMDXEmitParametersForVarGroup</a>(selfVarGroupIdx)> ]))/
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibMDXTraverseSelfStructure</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibAddDamosHeaderModelTypes" class="tlc_func">SLibAddDamosHeaderModelTypes</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Adds DAMOS-generated <FC name>_dat.h file to model_types.h buffer, since </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% enabling preprocessor variants trigger generation of this file (g1755246)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.HasVariants
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buff
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(::CompiledModel.ConfigSet.MDXOwner) &amp;&amp; !%<::CompiledModel.ConfigSet.MDXIsClass>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%The FC name is the compiled model name</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#include "%<::CompiledModel.Name>_dat.h"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> !<span class="tlc_bifunc">ISEMPTY</span>(::CompiledModel.ConfigSet.MDXOwner) &amp;&amp; %<::CompiledModel.ConfigSet.MDXIsClass>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%The FC name is the MDX owner</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#include "%<::CompiledModel.ConfigSet.MDXOwner>_dat.h"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> %<::CompiledModel.ConfigSet.MDXIsClass>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errstr = "Class model '%<::CompiledModel.Name>' must specify an owning FC via the 'MDXOwner' model configuration parameter."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>(errstr)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errstr = "Model configuraiton parameter 'MDXOwner' must be empty for FC model '%<::CompiledModel.Name>'."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>(errstr)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> buff
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("data_typedef_incl",buff)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibAddDamosHeaderModelTypes</span>
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span> <span class="tlc_comment">%% _MDXLIB_</span>
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/mdxlib.html">mdxlib.tlc</a>
+</span> <br>&nbsp; <br>&nbsp; <br></body></html>

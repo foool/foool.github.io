@@ -1,0 +1,132 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+&nbsp;<span class="tlc_comment">%%</span>
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>Bypass<span style="padding-left:9.5px"></span>Interrupt<span style="padding-left:9.5px"></span>block
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>2019<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br>&nbsp; <br><span class="tlc_implements">%implements</span> "sxcpipbypass" "C"
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="BlockTypeSetup" class="tlc_func">BlockTypeSetup</a>(block, system) <span class="tlc_fkw">void</span>
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Add<span style="padding-left:9.5px"></span>any<span style="padding-left:9.5px"></span>header<span style="padding-left:9.5px"></span>files<span style="padding-left:9.5px"></span>needed<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>block.
+</span> <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("slrealtime") &amp;&amp; slrealtime
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("sharedxcp/xcpip/xcpSfuncIFC.hpp")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("sys/siginfo.h")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("sys/neutrino.h")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("Logger.hpp")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("ModelInfo.hpp")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("StartCallbackAPI.h")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_exit">%exit</span> Code generation error: Code generation for XCP-Over-UDP is only supported in Simulink Real-Time.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>BlockInstanceSetup<span style="padding-left:9.5px"></span>===============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>allows<span style="padding-left:9.5px"></span>one<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>subsystem<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>output,<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>called
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>thread<span style="padding-left:9.5px"></span>wakeup.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>1.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Creates<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>sends<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>pulse<span style="padding-left:9.5px"></span>adds<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>as<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>bypass<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>associated<span style="padding-left:9.5px"></span>DAQ<span style="padding-left:9.5px"></span>List<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>2.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Creates<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>contains<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>subsystem<span style="padding-left:9.5px"></span>code
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>3.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Defines<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>thread<span style="padding-left:9.5px"></span>priority<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>pulse
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>4.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Registers<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>subsystem<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>descriptor
+</span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="BlockInstanceSetup" class="tlc_func">BlockInstanceSetup</a>(block, system) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> block AsyncCallerGenCode TLC_TRUE
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Need to find the downstream function-call subsystems.  There is</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% only one output port on the s-function.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Simulink will have already verified that, if connected at all,</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% it is a function-call subsystem and that it is the only destination.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% The remaining test is whether the destination has other function-call</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% sources besides this Interrupt block which is not allowed since the</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%  block installs it as an ISR.</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% That test can done by checking <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordWidth">LibGetRecordWidth</a>(ssBlock.ControlInputPort).</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> "%<SFcnSystemOutputCall[0].BlockToCall>" == "unconnected"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> wrnTxt = "No code will be generated for the XCP UDP Bypass " ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"block since it is not connected to a system."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_warning">%warning</span> %<<span>wrnTxt</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> blockdefs
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockname = <span class="tlc_bifunc">FEVAL</span>("slrealtime.internal.async.mslrtblockname", "%<<span>Name</span>>")
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;struct {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32_T coid;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32_T pri;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;} %<<span>blockname</span>>_D;
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> blockdefs
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibCacheDefine">LibCacheDefine</a>(blockdefs)>r
+ <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Outputs
+</span> <br>=============================================================================
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Create<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>ISR<span style="padding-left:9.5px"></span>function,<span style="padding-left:9.5px"></span>must<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>Outputs<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>generate<span style="padding-left:9.5px"></span>the
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>correct<span style="padding-left:9.5px"></span>code.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>( block, system ) <span class="tlc_fkw">Output</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockname = <span class="tlc_bifunc">FEVAL</span>("slrealtime.internal.async.mslrtblockname", "%<<span>Name</span>>")
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> "%<SFcnSystemOutputCall[0].BlockToCall>" != "unconnected"
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> system.CurrentTID == -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Create an ISR to execute the function call</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> funcbuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* SimulinkRealTime Bypass Interrupt Block '%<<span>Name</span>>' */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// This function is the 'task' that runs inside a thread created
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// in our slrealtime startup code.
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void %<<span>blockname</span>>_fc(void)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#LibBlockExecuteFcnCall">LibBlockExecuteFcnCall</a>( block, 0 )>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> funcbuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> srcFile = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibGetModelDotCFile">LibGetModelDotCFile</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibSetSourceFileSection">LibSetSourceFileSection</a>(srcFile, "Functions", funcbuf)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Start
+</span> <br>=============================================================================
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Add<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>function-call<span style="padding-left:9.5px"></span>subystem<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>descriptor<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>register<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>associated<span style="padding-left:9.5px"></span>DAQ<span style="padding-left:9.5px"></span>List
+</span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="Start" class="tlc_func">Start</a>( block, system ) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blockname = <span class="tlc_bifunc">FEVAL</span>("slrealtime.internal.async.mslrtblockname", "%<<span>Name</span>>")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> "%<SFcnSystemOutputCall[0].BlockToCall>" != "unconnected"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Sending the pulse runs the thread at this priority.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> priority = %<<span>SFcnParamSettings.Priority</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>blockname</span>>_D.pri = %<<span>priority</span>>;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> SSBlock = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/asynclib.html#LibGetFcnCallBlock">LibGetFcnCallBlock</a>( block, 0 )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> block ssBlock SSBlock
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tid = block.ssBlock.AsyncShellTID
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> TaskID = SampleTime[tid].TaskIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> function = "%<<span>blockname</span>>_fc"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/asynclib.html#FcnAddAsyncFunctionToCodeDescriptor">FcnAddAsyncFunctionToCodeDescriptor</a>( function, TaskID, priority )>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// TaskID is %<<span>TaskID</span>>, tid is %<<span>tid</span>> for %<<span>blockname</span>>_fc
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%Note: cannot put the following code in the Start trailer because the code for a function-call</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%      subsystem will still be placed after the trailer.  Using the StartCallbackService instead.</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* XCP UDP Data Acquisition Block (%<<span>ParamSettings.FunctionName</span>>) - '%<<span>Name</span>>' - Start Callback*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* The following code must execute after all daq lists have been configured */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;auto xcpBypassStartCB = []() {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;auto bypassTriggerFcn = std::bind(slrealtime::triggerAsyncSubRate, %<<span>TaskID</span>> );
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xcp::master::bypass::addDAQBypassFcn("%<<span>SFcnParamSettings.DLTag</span>>", bypassTriggerFcn, %<<span>priority</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*CB Priority must be higher than the start cb for the XCP UDP Configuration block*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;slrealtime::StartCallbackService::registerCB(xcpBypassStartCB, 1);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/toolbox/shared/xcp/xcpmex/tlc_c/sxcpipbypass.html">sxcpipbypass.tlc</a>
+</span> <br></body></html>

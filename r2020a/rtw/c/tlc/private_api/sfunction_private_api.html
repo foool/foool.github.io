@@ -1,0 +1,86 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("::_SFUNCTION_PRIVATE_API_") == 0
+ <br><span class="tlc_assign">%assign</span> ::_SFUNCTION_PRIVATE_API_ = 1
+ <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>2019<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Global<span style="padding-left:9.5px"></span>Variable<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>cache<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>existence<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>files
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>FILE_EXISTS<span style="padding-left:9.5px"></span>can<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>very<span style="padding-left:9.5px"></span>slow.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Once<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>known<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>exists,
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>much<span style="padding-left:9.5px"></span>quicker<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>look<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>cache.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_assert">%assert</span> !<span class="tlc_bifunc">EXISTS</span>("::GblInlinedTLCFileAccessed")
+ <br><span class="tlc_createrecord">%createrecord</span> ::GblInlinedTLCFileAccessed {}
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function{Block<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span>LibBlockSFunctionFileExists
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>LibBlockSFunctionFileExists<span style="padding-left:9.5px"></span>determines<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>an
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>S-function<span style="padding-left:9.5px"></span>exists.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Because<span style="padding-left:9.5px"></span>FILE_EXISTS<span style="padding-left:9.5px"></span>can<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>very<span style="padding-left:9.5px"></span>slow<span style="padding-left:9.5px"></span>especially
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>over<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>network,<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>existence<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>cached<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>global<span style="padding-left:9.5px"></span>variable.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Subsequent<span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>same<span style="padding-left:9.5px"></span>S-Function<span style="padding-left:9.5px"></span>will<span style="padding-left:9.5px"></span>execute<span style="padding-left:9.5px"></span>much<span style="padding-left:9.5px"></span>quicker.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibBlockSFunctionFileExists" class="tlc_func">LibBlockSFunctionFileExists</a>(sfuncName) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% check cache to see if file existence has already been checked</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(::GblInlinedTLCFileAccessed, sfuncName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileExists = 1
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <span class="tlc_bifunc">FILE_EXISTS</span>(::<span class="tlc_bifunc">GENERATE_FILENAME</span>(sfuncName))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileExists = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span class="tlc_bifunc">SETFIELD</span>(GblInlinedTLCFileAccessed, sfuncName, 1)>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileExists = 0
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> fileExists
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibBlockSFunctionFileExists</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function{Block<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span>LibSFunctionLevel
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Determine<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>S-function<span style="padding-left:9.5px"></span>version<span style="padding-left:9.5px"></span>level<span style="padding-left:9.5px"></span>{Level1,<span style="padding-left:9.5px"></span>Level2,<span style="padding-left:9.5px"></span>RTWLevel2}
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibSFunctionLevel" class="tlc_func">LibSFunctionLevel</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("ParamSettings.RTWGenerated")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "RTWLevel2"
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <span class="tlc_bifunc">EXISTS</span>("SFcnParamSettings")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% For backwards compatibility with R11</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("SFcnParamSettings.RTWGenerated")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "RTWLevel2"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> ParamSettings.FunctionLevel == 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "Level1"
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "Level2"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibSFunctionLevel</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function{Block<span style="padding-left:9.5px"></span>Functions}:<span style="padding-left:9.5px"></span>SLibSfcnHasBranchFcnCall
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>returns<span style="padding-left:9.5px"></span>true<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>sfcn<span style="padding-left:9.5px"></span>fcn-call
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>generator<span style="padding-left:9.5px"></span>emits<span style="padding-left:9.5px"></span>branched<span style="padding-left:9.5px"></span>fcn-call.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibSfcnHasBranchFcnCall" class="tlc_func">SLibSfcnHasBranchFcnCall</a>(sfcnBlk)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(sfcnBlk, "NumSFcnSysOutputCalls") ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp; <span class="tlc_bifunc">ISFIELD</span>(sfcnBlk, "NumSFcnSysOutputCallDsts")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> (sfcnBlk.NumSFcnSysOutputCallDsts > sfcnBlk.NumSFcnSysOutputCalls)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span> <span class="tlc_comment">%% _SFUNCTION_PRIVATE_API_</span>
+ <br></body></html>

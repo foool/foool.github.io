@@ -1,0 +1,303 @@
+<html>
+<head>
+
+<style>
+p {color : black; font-family:courier; font-size: 80%;}
+body {line-height: 100%; font-family:courier;}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_function {color: green;}.tlc_endfunction {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}
+.tlc_bifunc {color: brown;}
+</style>
+
+</head>
+<body>
+%% ============================================================================
+ <br>%% 
+ <br>%% 
+ <br>%% 
+ <br>%%
+ <br>%% Copyright 1996-2018 The MathWorks, Inc.
+ <br>%%
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_RLOPTIONS_") == 0
+ <br><span class="tlc_assign">%assign</span> ::_RLOPTIONS_ = 1
+ <br>&nbsp; <br><span class="tlc_realformat">%realformat</span> "CONCISE"
+ <br>&nbsp; <br><span class="tlc_with">%with</span> CompiledModel
+ <br>&nbsp; <br><span class="tlc_if">%if</span> CompiledModel.ModelReferenceTargetType == "NONE"
+ <br><span class="tlc_selectfile">%selectfile</span> STDOUT
+ <br><span class="tlc_if">%if</span> RTWVerbose
+ <br>### Creating xpcoptions.h.
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> xpcOptHdrDef = "__" "%&lt;CompiledModel.Name&gt;" "_XPCOPTIONS_H___"
+ <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> RLOptionsDotHeader = "xpcoptions.h"
+ <br>#ifndef %&lt;xpcOptHdrDef&gt;
+ <br>#define %&lt;xpcOptHdrDef&gt;
+ <br>&nbsp; <br>#include "simstruc_types.h"
+ <br>#ifndef MT
+ <br>#define MT 0                    /* MT may be undefined by simstruc_types.h */
+ <br>#endif
+ <br>&nbsp; <br>#include "%&lt;CompiledModel.Name&gt;.h"
+ <br>&nbsp; <br><span class="tlc_if">%if</span> !<span class="tlc_bifunc">EXISTS</span>("xpcDblBuff")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> xpcDblBuff=0
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_assign">%assign</span> sizeofParams = "(int)sizeof(%&lt;tParametersType&gt;)"
+ <br><span class="tlc_if">%if</span> xpcDblBuff != 1
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sizeofParams = "(-1 * %&lt;sizeofParams&gt;)"
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>%%if (<span class="tlc_bifunc">ISFIELD</span>(CompiledModel,"NumModelReferenceBlocks") == TLC_TRUE)
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>(CompiledModel.ModelReferenceBlocks)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numDSM = CompiledModel.NumDataStoresPushedToTopModel
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> numDSM > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibReportErrorWithId">SLibReportErrorWithId</a>("xPCTarget:modeloptions:GlobalDataStores")&gt;
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (<span class="tlc_bifunc">SIZE</span>(mdlRefBlks,0) > 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sizeofParams = 0
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> CompiledModel.ModelParameters.NumInrtP==0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sizeofParams = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> CompiledModel.ModelParameters.NumInrtP==0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sizeofParams = 0
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibIsCoreAffinityRequired">LibIsCoreAffinityRequired</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibReportErrorWithId">SLibReportErrorWithId</a>("xPCTarget:modeloptions:CoreAffinityRequired")&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>%%%%SLibIsCustomizationRequired()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> MAXNUMXPCMDLTHREAD = 64  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStr         = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comma           = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numSubrateTasks = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nTaskGroups     = %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#LibDeploymentGetNumTaskGroups">LibDeploymentGetNumTaskGroups</a>()&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numPeriodicTriggers = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> tgIdx = nTaskGroups
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tg = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#LibDeploymentGetTaskGroup">LibDeploymentGetTaskGroup</a>(tgIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tg.Periodicity.Type, "PeriodicTrigger")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numPeriodicTriggers = numPeriodicTriggers + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEQUAL</span>(numPeriodicTriggers, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibReportErrorWithId">SLibReportErrorWithId</a>("xPCTarget:modeloptions:MultiPeriodicTriggers")&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(tg, "Task")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibReportErrorWithId">SLibReportErrorWithId</a>("xPCTarget:modeloptions:BlocksMappedToTrigger")&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numSubrateTasks = numSubrateTasks + <span class="tlc_bifunc">SIZE</span>(tg.Task, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> tIdx = <span class="tlc_bifunc">SIZE</span>(tg.Task, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> task = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#LibDeploymentGetTask">LibDeploymentGetTask</a>(tIdx, tgIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> period =  task.Period  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>( period, rtInf )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% skip initialize and terminate functions which have rtInf period
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> st = NumSampleTimes
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(CompiledModel.SampleTime[st].PeriodAndOffset[0], period)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tid = st
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStr = initStr +"%&lt;comma&gt;%&lt;tid&gt;" 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comma = ","
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (numSubrateTasks > MAXNUMXPCMDLTHREAD)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errArgs = ["%&lt;numSubrateTasks&gt;", "%&lt;MAXNUMXPCMDLTHREAD&gt;"]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibReportErrorWithIdAndArgs">SLibReportErrorWithIdAndArgs</a>("xPCTarget:modeloptions:NumSubrateTasks", errArgs)> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T XPCWHICHSAMPLE[%&lt;numSubrateTasks&gt;] = {%&lt;initStr&gt;};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#define XPCMDSSUPPORT 1
+ <br>&nbsp;&nbsp;&nbsp;#define MDSTASKSNUM %&lt;numSubrateTasks&gt; 
+ <br><span class="tlc_else">%else</span> 
+ <br>&nbsp;&nbsp;#define XPCMDSSUPPORT 0	  
+ <br>&nbsp;&nbsp;#define MDSTASKSNUM 0
+ <br><span class="tlc_endif">%endif</span>  
+ <br>&nbsp; <br>%%%#define FULLMULTITHREAD           0
+ <br><span class="tlc_if">%if</span> ConcurrentTasks == "yes"
+ <br>#define FULLMULTITHREAD           1
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_if">%if</span> ConcurrentTasks == "no"
+ <br>#define FULLMULTITHREAD           0
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>#define SIZEOF_PARAMS %&lt;sizeofParams&gt;
+ <br>&nbsp; <br><span class="tlc_if">%if</span> RL32ModeModifier=="Real-Time"
+ <br>#define SIMMODE          0
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_if">%if</span> RL32ModeModifier=="Freerun"
+ <br>#define SIMMODE          1
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_if">%if</span> RL32LogTETModifier==1
+ <br>#define LOGTET           1
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_if">%if</span> RL32LogTETModifier==0
+ <br>#define LOGTET           0
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>#define LOGBUFSIZE       %&lt;RL32LogBufSizeModifier&gt;
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>(ConfigSet.CodeExecutionProfiling)
+ <br><span class="tlc_if">%if</span> ConfigSet.CodeExecutionProfiling==1
+ <br>#define PROFILINGFLAG           1
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_if">%if</span> ConfigSet.CodeExecutionProfiling==0
+ <br>#define PROFILINGFLAG           0
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_else">%else</span> %%<span class="tlc_bifunc">EXISTS</span>(ConfigSet.CodeExecutionProfiling)
+ <br><span class="tlc_if">%if</span> xPCTaskExecutionProfile==1
+ <br>#define PROFILINGFLAG           1
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_if">%if</span> xPCTaskExecutionProfile==0
+ <br>#define PROFILINGFLAG           0
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endif">%endif</span> %%<span class="tlc_bifunc">EXISTS</span>(ConfigSet.CodeExecutionProfiling)
+ <br>&nbsp; <br>#define EVENTNUMBER        %&lt;xPCRL32EventNumber&gt;
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">TYPE</span>(RL32IRQSourceModifier)=="String" && RL32IRQSourceModifier=="Timer"
+ <br>#define IRQ_NO          0
+ <br>#define IO_IRQ          0
+ <br><span class="tlc_elseif">%elseif</span> <span class="tlc_bifunc">TYPE</span>(RL32IRQSourceModifier)=="String" && RL32IRQSourceModifier=="Auto (PCI only)"
+ <br>#define IRQ_NO          2
+ <br>#define IO_IRQ          1
+ <br><span class="tlc_else">%else</span>
+ <br>#define IRQ_NO          %&lt;RL32IRQSourceModifier&gt;
+ <br>#define IO_IRQ          1
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_if">%if</span> !<span class="tlc_bifunc">EXISTS</span>("xpcWWWAccessLevel")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> xpcWWWAccessLevel = 0
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>#define WWW_ACCESS_LEVEL %&lt;xpcWWWAccessLevel&gt;
+ <br>&nbsp; <br><span class="tlc_if">%if</span> !<span class="tlc_bifunc">EXISTS</span>("xpcCPUClockPoll")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> xpcCPUClockPoll = 0
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>#define CPUCLOCK %&lt;xpcCPUClockPoll&gt;
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_if">%if</span> !<span class="tlc_bifunc">EXISTS</span>("xPCMaxOverloads")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> xPCMaxOverloads = 0
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>#define MAXOVERLOAD %&lt;xPCMaxOverloads&gt;
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_if">%if</span> !<span class="tlc_bifunc">EXISTS</span>("xPCMaxOverloadLen")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> xPCMaxOverloadLen = %&lt;xPCMaxOverloads&gt;
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>#define MAXOVERLOADLEN %&lt;xPCMaxOverloadLen&gt;
+ <br>&nbsp; <br><span class="tlc_if">%if</span> !<span class="tlc_bifunc">EXISTS</span>("xPCModelStackSizeKB")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%% default stack size for every model
+ <br>&nbsp;<span class="tlc_assign">%assign</span> xPCModelStackSizeKB = 2048
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>#define XPCMODELSTACKSIZEKB %&lt;xPCModelStackSizeKB&gt;
+ <br>&nbsp; <br><span class="tlc_if">%if</span> !<span class="tlc_bifunc">EXISTS</span>("xPCStartupFlag")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> xPCStartupFlag = 1
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>#define XPCSTARTUPFLAG %&lt;xPCStartupFlag&gt;
+ <br>#define PTLOADPARAMFLAG  %&lt;xPCLoadParamSetFile&gt;
+ <br>#define DOUBLEBUFFERING  %&lt;xpcDblBuff&gt;
+ <br>&nbsp; <br><span class="tlc_if">%if</span> !<span class="tlc_bifunc">EXISTS</span>("SLRTFTZOFF")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> SLRTFTZOFF = 0
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>#define SLRTFTZOFFFLAG %&lt;SLRTFTZOFF&gt;
+ <br>&nbsp; <br>%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmdlreftiming.html#FcnGenChangeStepSizesFcn">FcnGenChangeStepSizesFcn</a>()&gt;
+ <br>&nbsp; <br>void XPCCALLCONV changeStepSize(real_T stepSize) {
+ <br>&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmdlreftiming.html#FcnCallChangeStepSizesFcn">FcnCallChangeStepSizesFcn</a>("stepSize")&gt;
+ <br>}
+ <br>&nbsp; <br>void XPCCALLCONV SLRTSetErrorStatus(const char * errMsg) {
+ <br>&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMSetErrStat">RTMSetErrStat</a>("errMsg")&gt;;
+ <br>}
+ <br>&nbsp; <br>#endif /* %&lt;xpcOptHdrDef&gt; */
+ <br>&nbsp; <br><span class="tlc_closefile">%closefile</span> RLOptionsDotHeader
+ <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_selectfile">%selectfile</span> STDOUT
+ <br><span class="tlc_if">%if</span> RTWVerbose
+ <br>### Creating slrt_task_info.m.
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> SLRTTaskInfoDotM = "slrt_task_info.m"
+ <br>function [taskInfo, numtask, isDeploymentDiagram]=slrt_task_info()
+ <br><span class="tlc_assign">%assign</span> RTTASKPRIORITYBASE = 9
+ <br><span class="tlc_assign">%assign</span> ModelThreadHighestPriority = NumSampleTimes + RTTASKPRIORITYBASE - 1
+ <br><span class="tlc_assign">%assign</span> stOneBased = 1
+ <br><span class="tlc_assign">%assign</span> ntask = 0
+ <br><span class="tlc_assign">%assign</span> isDeploymentDiagram = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsDeploymentDiagram">LibIsDeploymentDiagram</a>()
+ <br><span class="tlc_if">%if</span> isDeploymentDiagram
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nTaskGroups     = %&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#LibDeploymentGetNumTaskGroups">LibDeploymentGetNumTaskGroups</a>()&gt;
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> tgIdx = nTaskGroups
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tg = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#LibDeploymentGetTaskGroup">LibDeploymentGetTaskGroup</a>(tgIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tg.Periodicity.Type, "PeriodicTrigger")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> tIdx = <span class="tlc_bifunc">SIZE</span>(tg.Task, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> task = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#LibDeploymentGetTask">LibDeploymentGetTask</a>(tIdx, tgIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> period =  task.Period
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>( period, rtInf )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% skip initialize and terminate functions which have rtInf period
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> taskname = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTaskName">LibGetTaskName</a>(tgIdx, tIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/obsoletelib.html#LibIsEqual">LibIsEqual</a>(taskname, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> taskname = task.FunctionName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> st = NumSampleTimes
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(CompiledModel.SampleTime[st].PeriodAndOffset[0], period)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpPrio = %&lt;ModelThreadHighestPriority&gt; - st
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> entryPointStrs = "" 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numEntryPoints = <span class="tlc_bifunc">SIZE</span>(task.EntryPointInfo,1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> nEntryPoint = numEntryPoints
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysIdx = task.EntryPointInfo[nEntryPoint].BlockIdx[0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkIdx = task.EntryPointInfo[nEntryPoint].BlockIdx[2]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> entryPointStrs != ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> entryPointStrs = entryPointStrs + ", "
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> entryPointStrs = entryPointStrs + "'" + <span class="tlc_bifunc">STRING</span>(System[sysIdx].Block[blkIdx].TLCBlockSID) + "'"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;taskInfo(%&lt;stOneBased&gt;).samplePeriod = %&lt;period&gt;;
+ <br>&nbsp;&nbsp;&nbsp;taskInfo(%&lt;stOneBased&gt;).sampleOffset = 0;
+ <br>&nbsp;&nbsp;&nbsp;taskInfo(%&lt;stOneBased&gt;).taskPrio = %&lt;tmpPrio&gt;;
+ <br>&nbsp;&nbsp;&nbsp;taskInfo(%&lt;stOneBased&gt;).taskName = '%&lt;taskname&gt;';
+ <br>&nbsp;&nbsp;&nbsp;taskInfo(%&lt;stOneBased&gt;).entryPoints = {%&lt;entryPointStrs&gt;};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stOneBased = stOneBased + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>  %%%foreach tIdx = <span class="tlc_bifunc">SIZE</span>(tg.Task, 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>   %%%foreach tgIdx = nTaskGroups
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ntask = stOneBased - 1
+ <br><span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> st = NumSampleTimes
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% skip if sampletime is either 0.0 or infinite
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !(<span class="tlc_bifunc">ISEQUAL</span>(0.0, SampleTime[st].PeriodAndOffset[0]) || <span class="tlc_bifunc">ISEQUAL</span>( rtInf, SampleTime[st].PeriodAndOffset[0]) )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpPrio = %&lt;ModelThreadHighestPriority&gt; - %&lt;SampleTime[st].TID&gt;
+ <br>&nbsp;&nbsp;&nbsp;taskInfo(%&lt;stOneBased&gt;).samplePeriod = %&lt;SampleTime[st].PeriodAndOffset[0]&gt;;
+ <br>&nbsp;&nbsp;&nbsp;taskInfo(%&lt;stOneBased&gt;).sampleOffset = %&lt;SampleTime[st].PeriodAndOffset[1]&gt;;
+ <br>&nbsp;&nbsp;&nbsp;taskInfo(%&lt;stOneBased&gt;).taskPrio = %&lt;tmpPrio&gt;;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(1, %&lt;stOneBased&gt;)
+ <br>&nbsp;&nbsp;&nbsp;taskInfo(%&lt;stOneBased&gt;).taskName = 'BaseRate';
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmprate = stOneBased - 1
+ <br>&nbsp;&nbsp;&nbsp;taskInfo(%&lt;stOneBased&gt;).taskName = ['SubRate' '%&lt;tmprate&gt;'];        
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;taskInfo(%&lt;stOneBased&gt;).entryPoints = {};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stOneBased = stOneBased + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ntask = stOneBased - 1
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(0, ntask)
+ <br>&nbsp;&nbsp;&nbsp;taskInfo(1).samplePeriod = %&lt;SampleTime[0].PeriodAndOffset[0]&gt;;
+ <br>&nbsp;&nbsp;&nbsp;taskInfo(1).sampleOffset = %&lt;SampleTime[0].PeriodAndOffset[1]&gt;;
+ <br>&nbsp;&nbsp;&nbsp;taskInfo(1).taskPrio = %&lt;RTTASKPRIORITYBASE&gt;;
+ <br>&nbsp;&nbsp;&nbsp;taskInfo(1).taskName = 'BaseRate';
+ <br>&nbsp;&nbsp;&nbsp;taskInfo(1).entryPoints = {};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ntask = 1
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;numtask = %&lt;ntask&gt;;
+ <br>&nbsp;&nbsp;&nbsp;for i = 1:numtask
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ( 0 == isnumeric(taskInfo(i).samplePeriod) )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;taskInfo(i).samplePeriod = evalin('base', taskInfo(i).samplePeriod);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ( isempty(taskInfo(i).taskName) )
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;taskInfo(i).taskName = ['AutoGen' i ];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end
+ <br>&nbsp;&nbsp;&nbsp;end
+ <br>&nbsp;&nbsp;&nbsp;isDeploymentDiagram = %&lt;isDeploymentDiagram&gt;;
+ <br>end %%%function slrt_task_info()
+ <br><span class="tlc_closefile">%closefile</span> SLRTTaskInfoDotM
+ <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br><span class="tlc_endwith">%endwith</span> %% CompiledModel
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span> %% _RLOPTIONS_
+ <br>&nbsp; <br>%% [EOF] <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcoptions.html">xpcoptions.tlc</a> 
+ <br></body></html>

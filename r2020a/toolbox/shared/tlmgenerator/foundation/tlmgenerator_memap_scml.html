@@ -1,0 +1,315 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>2009-2010<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br>&nbsp; <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_comment">%%Memory<span style="padding-left:9.5px"></span>Map<span style="padding-left:9.5px"></span>Constant
+</span> <br><span class="tlc_openfile">%openfile</span> tlmg_memap_buf_const
+ <br>&nbsp; <br><span class="tlc_foreach">%foreach</span> loopId1 = tlmg_memap.SockNum 
+ <br>//========= %<tlmg_memap.SockList[loopId1].SockName> SOCKET =========
+ <br>#define %<tlmg_memap.SockList[loopId1].SockName>_BUSWIDTH %<tlmg_memap.SockList[loopId1].BitWidth>
+ <br><span class="tlc_foreach">%foreach</span> loopId2 = tlmg_memap.SockList[loopId1].BankNum
+ <br>//========= %<tlmg_memap.SockList[loopId1].Bank[loopId2].Name> BANK =========
+ <br>//Bank base address
+ <br>#define %<tlmg_memap.SockList[loopId1].Bank[loopId2].AddrName>   %<tlmg_memap.SockList[loopId1].Bank[loopId2].AddrHexStr>
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].HasRegister
+ <br>//========= REGISTERS =========
+ <br>//Address of the registers
+ <br><span class="tlc_foreach">%foreach</span> loopId3 = tlmg_memap.SockList[loopId1].Bank[loopId2].RegNum 
+ <br>#define %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].AddrName>   %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].AddrHexStr>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br>//========= DATA =========
+ <br><span class="tlc_foreach">%foreach</span> loopId3 = tlmg_memap.SockList[loopId1].Bank[loopId2].RegNum 
+ <br>#define %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].DimName>    %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Dim>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br><span class="tlc_foreach">%foreach</span> loopId3 = tlmg_memap.SockList[loopId1].Bank[loopId2].RegNum 
+ <br><span class="tlc_if">%if</span> %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Dim> > 1
+ <br>typedef %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Type>   %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].TypeName>[%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].DimName>];
+ <br><span class="tlc_else">%else</span>
+ <br>typedef %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Type>   %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].TypeName>;
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br><span class="tlc_foreach">%foreach</span> loopId2 = tlmg_memap.SockList[loopId1].BankNum
+ <br><span class="tlc_foreach">%foreach</span> loopId3 = tlmg_memap.SockList[loopId1].Bank[loopId2].RegNum 
+ <br><span class="tlc_if">%if</span> %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitFieldNum> > 0 
+ <br>//========= BIT FIELDS =========
+ <br><span class="tlc_break">%break</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_break">%break</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br><span class="tlc_foreach">%foreach</span> loopId2 = tlmg_memap.SockList[loopId1].BankNum
+ <br><span class="tlc_foreach">%foreach</span> loopId3 = tlmg_memap.SockList[loopId1].Bank[loopId2].RegNum 
+ <br><span class="tlc_if">%if</span> %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitFieldNum> > 0 
+ <br>//Register %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name> bit fields
+ <br><span class="tlc_foreach">%foreach</span> loopId4 = tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitFieldNum
+ <br>#define %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].BitOffsetName> %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].BitOffset>
+ <br>#define %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].BitWidthName> %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].BitWidth>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br><span class="tlc_closefile">%closefile</span> tlmg_memap_buf_const
+ <br>&nbsp; <br><span class="tlc_comment">%%Public<span style="padding-left:9.5px"></span>Declaration
+</span> <br><span class="tlc_openfile">%openfile</span> tlmg_memap_public_decl
+ <br>&nbsp; <br><span class="tlc_foreach">%foreach</span> loopId1 = tlmg_memap.SockNum 
+ <br>tlm::tlm_target_socket< %<tlmg_memap.SockList[loopId1].SockName>_BUSWIDTH >  %<tlmg_memap.SockList[loopId1].SockName>;
+ <br>scml2::tlm2_gp_target_adapter< %<tlmg_memap.SockList[loopId1].SockName>_BUSWIDTH > %<tlmg_memap.SockList[loopId1].SockName>_adapter;
+ <br>scml2::router< %<tlmg_memap.SockList[loopId1].SCMLType> > %<tlmg_memap.SockList[loopId1].SockName>_router;
+ <br><span class="tlc_foreach">%foreach</span> loopId2 = tlmg_memap.SockList[loopId1].BankNum
+ <br>scml2::memory< %<tlmg_memap.SockList[loopId1].SCMLType> > %<tlmg_memap.SockList[loopId1].Bank[loopId2].Name>;
+ <br><span class="tlc_foreach">%foreach</span> loopId3 = tlmg_memap.SockList[loopId1].Bank[loopId2].RegNum 
+ <br>scml2::reg< %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType> > %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name>;
+ <br><span class="tlc_foreach">%foreach</span> loopId4 = tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitFieldNum
+ <br>scml2::bitfield< %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType> > %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].Name>;
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br><span class="tlc_foreach">%foreach</span> loopId1 = tlmg_memap.PortNum 
+ <br><span class="tlc_if">%if</span> tlmg_memap.PortList[loopId1].WriteAccess
+ <br><span class="tlc_if">%if</span> %<tlmg_memap.PortList[loopId1].Dim> > 1
+ <br>sc_in<%<tlmg_memap.PortList[loopId1].Type>[%<tlmg_memap.PortList[loopId1].Dim>]> %<tlmg_memap.PortList[loopId1].PortName>;
+ <br><span class="tlc_else">%else</span>
+ <br>sc_in<%<tlmg_memap.PortList[loopId1].Type>> %<tlmg_memap.PortList[loopId1].PortName>;
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endif">%endif</span> 
+ <br><span class="tlc_if">%if</span> tlmg_memap.PortList[loopId1].ReadAccess
+ <br><span class="tlc_if">%if</span> %<tlmg_memap.PortList[loopId1].Dim> > 1
+ <br>sc_out<%<tlmg_memap.PortList[loopId1].Type>[%<tlmg_memap.PortList[loopId1].Dim>]> %<tlmg_memap.PortList[loopId1].PortName>;
+ <br><span class="tlc_else">%else</span>
+ <br>sc_out<%<tlmg_memap.PortList[loopId1].Type>> %<tlmg_memap.PortList[loopId1].PortName>;
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br><span class="tlc_if">%if</span> %<<span>tlmg_info.ParamStruct.NumPorts</span>> > 0
+ <br>&nbsp; <br><span class="tlc_foreach">%foreach</span> loopId = tlmg_info.ParamStruct.NumPorts 
+ <br>&nbsp; <br><span class="tlc_if">%if</span> %<tlmg_info.ParamStruct.Port[loopId].Dim> > 1
+ <br>typedef %<tlmg_info.ParamStruct.Port[loopId].DataType>[%<tlmg_info.ParamStruct.Port[loopId].Dim>] %<tlmg_info.ParamStruct.Port[loopId].Name>_T;
+ <br><span class="tlc_else">%else</span>
+ <br>typedef %<tlmg_info.ParamStruct.Port[loopId].DataType> %<tlmg_info.ParamStruct.Port[loopId].Name>_T;
+ <br><span class="tlc_endif">%endif</span>
+ <br>void SetParam_%<tlmg_info.ParamStruct.Port[loopId].Name>(const %<tlmg_info.ParamStruct.Port[loopId].Name>_T* p_%<tlmg_info.ParamStruct.Port[loopId].Name>);
+ <br>void GetParam_%<tlmg_info.ParamStruct.Port[loopId].Name>(%<tlmg_info.ParamStruct.Port[loopId].Name>_T* p_%<tlmg_info.ParamStruct.Port[loopId].Name>);
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_closefile">%closefile</span> tlmg_memap_public_decl
+ <br>&nbsp; <br><span class="tlc_comment">%%Memory<span style="padding-left:9.5px"></span>Map<span style="padding-left:9.5px"></span>Declaration
+</span> <br><span class="tlc_openfile">%openfile</span> tlmg_memap_private_decl
+ <br>&nbsp; <br><span class="tlc_foreach">%foreach</span> loopId1 = tlmg_memap.SockNum 
+ <br><span class="tlc_foreach">%foreach</span> loopId2 = tlmg_memap.SockList[loopId1].BankNum
+ <br><span class="tlc_foreach">%foreach</span> loopId3 = tlmg_memap.SockList[loopId1].Bank[loopId2].RegNum 
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitFieldNum == 0
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].ReadAccess
+ <br>bool %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name>_read_cb(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType>&amp; data, const %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType>&amp; byte_enable, sc_core::sc_time&amp; delay_time);
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].WriteAccess
+ <br>bool %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name>_write_cb(const %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType>&amp; data, const %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType>&amp; byte_enable, sc_core::sc_time&amp; delay_time); 
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_foreach">%foreach</span> loopId4 = tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitFieldNum
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].ReadAccess
+ <br>bool %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].Name>_read_cb(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType>&amp; data, sc_core::sc_time&amp; delay_time);
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].WriteAccess
+ <br>bool %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].Name>_write_cb(const %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType>&amp; data, sc_core::sc_time&amp; delay_time); 
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br><span class="tlc_foreach">%foreach</span> loopId1 = tlmg_memap.PortNum 
+ <br><span class="tlc_if">%if</span> tlmg_memap.PortList[loopId1].WriteAccess
+ <br>void %<tlmg_memap.PortList[loopId1].PortName>_cb(void);
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br><span class="tlc_closefile">%closefile</span> tlmg_memap_private_decl
+ <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> tlmg_memap_public_ctor
+ <br><span class="tlc_foreach">%foreach</span> loopId1 = tlmg_memap.SockNum 
+ <br>%<tlmg_memap.SockList[loopId1].SockName>("%<tlmg_memap.SockList[loopId1].SockName>"),
+ <br>%<tlmg_memap.SockList[loopId1].SockName>_adapter("%<tlmg_memap.SockList[loopId1].SockName>_adapter",%<tlmg_memap.SockList[loopId1].SockName>),
+ <br>%<tlmg_memap.SockList[loopId1].SockName>_router("%<tlmg_memap.SockList[loopId1].SockName>_router",%<tlmg_memap.SockList[loopId1].ByteDim>/sizeof(uint8_T[%<tlmg_memap.SockList[loopId1].SCMLByteDim>])),
+ <br><span class="tlc_foreach">%foreach</span> loopId2 = tlmg_memap.SockList[loopId1].BankNum
+ <br>%<tlmg_memap.SockList[loopId1].Bank[loopId2].Name>("%<tlmg_memap.SockList[loopId1].Bank[loopId2].Name>",%<tlmg_memap.SockList[loopId1].Bank[loopId2].ByteDim>/sizeof(uint8_T[%<tlmg_memap.SockList[loopId1].SCMLByteDim>])),
+ <br><span class="tlc_foreach">%foreach</span> loopId3 = tlmg_memap.SockList[loopId1].Bank[loopId2].RegNum 
+ <br>%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name>("%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name>",%<tlmg_memap.SockList[loopId1].Bank[loopId2].Name>,%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].AddrName>/sizeof(uint8_T[%<tlmg_memap.SockList[loopId1].SCMLByteDim>])),
+ <br><span class="tlc_foreach">%foreach</span> loopId4 = tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitFieldNum
+ <br>%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].Name>("%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].Name>",%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name>,%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].BitOffsetName>,%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].BitWidthName>),
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_closefile">%closefile</span> tlmg_memap_public_ctor
+ <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> tlmg_memap_private_ctor
+ <br><span class="tlc_closefile">%closefile</span> tlmg_memap_private_ctor
+ <br>&nbsp; <br><span class="tlc_comment">%%Memory<span style="padding-left:9.5px"></span>Map<span style="padding-left:9.5px"></span>Initialization
+</span> <br><span class="tlc_openfile">%openfile</span> tlmg_memap_init
+ <br><span class="tlc_foreach">%foreach</span> loopId1 = tlmg_memap.SockNum 
+ <br>%<tlmg_memap.SockList[loopId1].SockName>_adapter(%<tlmg_memap.SockList[loopId1].SockName>_router);
+ <br><span class="tlc_foreach">%foreach</span> loopId2 = tlmg_memap.SockList[loopId1].BankNum
+ <br>%<tlmg_memap.SockList[loopId1].SockName>_router.map(%<tlmg_memap.SockList[loopId1].Bank[loopId2].AddrHexStr>,%<tlmg_memap.SockList[loopId1].Bank[loopId2].ByteDim>,%<tlmg_memap.SockList[loopId1].Bank[loopId2].Name>,0x00);
+ <br><span class="tlc_foreach">%foreach</span> loopId3 = tlmg_memap.SockList[loopId1].Bank[loopId2].RegNum 
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitFieldNum == 0
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].ReadAccess
+ <br>scml2::set_read_callback(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name>, SCML2_CALLBACK(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name>_read_cb), scml2::AUTO_SYNCING);
+ <br>%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name> = 0;
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].WriteAccess
+ <br>scml2::set_write_callback(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name>, SCML2_CALLBACK(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name>_write_cb), scml2::AUTO_SYNCING);
+ <br>%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name> = 0;
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_foreach">%foreach</span> loopId4 = tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitFieldNum
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].ReadAccess
+ <br>scml2::set_read_callback(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].Name>, SCML2_CALLBACK(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].Name>_read_cb), scml2::AUTO_SYNCING);
+ <br>%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].Name> = 0;
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].WriteAccess
+ <br>scml2::set_write_callback(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].Name>, SCML2_CALLBACK(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].Name>_write_cb), scml2::AUTO_SYNCING);
+ <br>%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].Name> = 0;
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_foreach">%foreach</span> loopId1 = tlmg_memap.PortNum 
+ <br><span class="tlc_if">%if</span> tlmg_memap.PortList[loopId1].WriteAccess
+ <br>SC_METHOD(%<tlmg_memap.PortList[loopId1].PortName>_cb);
+ <br>dont_initialize();
+ <br>sensitive << %<tlmg_memap.PortList[loopId1].PortName>;
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br><span class="tlc_closefile">%closefile</span> tlmg_memap_init
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%Memory<span style="padding-left:9.5px"></span>Map<span style="padding-left:9.5px"></span>Implementation
+</span> <br><span class="tlc_openfile">%openfile</span> tlmg_memap_impl
+ <br><span class="tlc_foreach">%foreach</span> loopId1 = tlmg_memap.SockNum 
+ <br><span class="tlc_foreach">%foreach</span> loopId2 = tlmg_memap.SockList[loopId1].BankNum
+ <br><span class="tlc_foreach">%foreach</span> loopId3 = tlmg_memap.SockList[loopId1].Bank[loopId2].RegNum 
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitFieldNum == 0
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].ReadAccess
+ <br>bool %<<span>tlmname</span>>::%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name>_read_cb(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType>&amp; data, const %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType>&amp; byte_enable, sc_core::sc_time&amp; delay_time)
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;wait(delay_time);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;delay_time = sc_core::SC_ZERO_TIME;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;delay_time += AssertDelay(m_FirstReadTime());
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;data = %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return true;
+ <br>}
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].WriteAccess
+ <br>bool %<<span>tlmname</span>>::%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name>_write_cb(const %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType>&amp; data, const %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType>&amp; byte_enable, sc_core::sc_time&amp; delay_time)
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;delay_time += AssertDelay(m_FirstWriteTime());
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;wait(delay_time);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;delay_time = sc_core::SC_ZERO_TIME;
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].Name> = data;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].IsInput
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_input_refresh_reg.set(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].MW.InputPos>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if(m_input_refresh_reg.test())
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_input_refresh_reg.init(false);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmg_process_trigger</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return true;
+ <br>}
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_assign">%assign</span> firstWrite = 1
+ <br><span class="tlc_assign">%assign</span> firstRead = 1
+ <br><span class="tlc_foreach">%foreach</span> loopId4 = tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitFieldNum
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].ReadAccess
+ <br>bool %<<span>tlmname</span>>::%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].Name>_read_cb(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType>&amp; data, sc_core::sc_time&amp; delay_time)
+ <br>{
+ <br><span class="tlc_if">%if</span> firstRead
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;wait(delay_time);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;delay_time = sc_core::SC_ZERO_TIME;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;delay_time += AssertDelay(m_FirstReadTime());
+ <br><span class="tlc_assign">%assign</span> firstRead = 0
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;data = %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].Name>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return true;
+ <br>}
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].WriteAccess 
+ <br>bool %<<span>tlmname</span>>::%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].Name>_write_cb(const %<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].SCMLType>&amp; data, sc_core::sc_time&amp; delay_time)
+ <br>{
+ <br><span class="tlc_if">%if</span> firstWrite
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;delay_time += AssertDelay(m_FirstWriteTime());
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;wait(delay_time);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;delay_time = sc_core::SC_ZERO_TIME;
+ <br><span class="tlc_assign">%assign</span> firstWrite = 0
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].Name> = data;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].IsInput
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_input_refresh_reg.set(%<tlmg_memap.SockList[loopId1].Bank[loopId2].Reg[loopId3].BitField[loopId4].MW.InputPos>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if(m_input_refresh_reg.test())
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_input_refresh_reg.init(false);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmg_process_trigger</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;return true;
+ <br>}
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br><span class="tlc_foreach">%foreach</span> loopId1 = tlmg_memap.PortNum 
+ <br><span class="tlc_if">%if</span> tlmg_memap.PortList[loopId1].WriteAccess
+ <br>void %<<span>tlmname</span>>::%<tlmg_memap.PortList[loopId1].PortName>_cb(void)
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tlmg_memap.PortList[loopId1].IsInput
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmg_info.RTMStruct.Name</span>>->inputs->%<tlmg_memap.PortList[loopId1].MW.InputName> = %<tlmg_memap.PortList[loopId1].PortName>.read();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tlmg_memap.PortList[loopId1].IsParam
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmg_info.ParamStruct.Name</span>>.%<tlmg_memap.PortList[loopId1].MW.ParamName> = %<tlmg_memap.PortList[loopId1].PortName>.read();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tlmg_memap.PortList[loopId1].IsInput
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//Auto-buffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;m_input_refresh_reg.set(%<tlmg_memap.PortList[loopId1].MW.InputPos>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (m_input_refresh_reg.test()) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sc_core::sc_time delay_time = sc_core::SC_ZERO_TIME;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_input_refresh_reg.init(false);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>tlmg_process_trigger</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>}
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br><span class="tlc_if">%if</span> %<<span>tlmg_info.ParamStruct.NumPorts</span>> > 0
+ <br><span class="tlc_foreach">%foreach</span> loopId = tlmg_info.ParamStruct.NumPorts 
+ <br>void %<<span>tlmname</span>>::SetParam_%<tlmg_info.ParamStruct.Port[loopId].Name>(const %<tlmg_info.ParamStruct.Port[loopId].Name>_T* param)
+ <br>{
+ <br>&nbsp;&nbsp;memcpy(&amp;%<<span>tlmg_info.ParamStruct.Name</span>>.%<tlmg_info.ParamStruct.Port[loopId].Name>,param,sizeof(%<tlmg_info.ParamStruct.Port[loopId].Name>_T));
+ <br>}
+ <br>&nbsp; <br>void %<<span>tlmname</span>>::GetParam_%<tlmg_info.ParamStruct.Port[loopId].Name>(%<tlmg_info.ParamStruct.Port[loopId].Name>_T* param)
+ <br>{
+ <br>&nbsp;&nbsp;memcpy(param,&amp;%<<span>tlmg_info.ParamStruct.Name</span>>.%<tlmg_info.ParamStruct.Port[loopId].Name>,sizeof(%<tlmg_info.ParamStruct.Port[loopId].Name>_T));
+ <br>}
+ <br><span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_closefile">%closefile</span> tlmg_memap_impl
+ <br>&nbsp; <br>&nbsp; <br></body></html>

@@ -1,0 +1,359 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>2009-2019<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_FILEPACKAGINGLIB_") == 0
+ <br><span class="tlc_assign">%assign</span> _FILEPACKAGINGLIB_ = 1
+ <br>&nbsp; <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/fileoperations.html">fileoperations.tlc</a>"
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibIsCompactFileFormat">SLibIsCompactFileFormat</a>()<span style="padding-left:9.5px"></span>===============================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Is<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>package<span style="padding-left:9.5px"></span>foramt<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>compact<span style="padding-left:9.5px"></span>format<span style="padding-left:9.5px"></span>(including<span style="padding-left:9.5px"></span>compact<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>format<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>separate<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>file)?
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibIsCompactFileFormat" class="tlc_func">SLibIsCompactFileFormat</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ret = TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTTarget">SLibIsERTTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.ConfigSet.ERTFilePackagingFormat == "Compact" || ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;::CompiledModel.ConfigSet.ERTFilePackagingFormat == "CompactWithDataFile"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ret =  TLC_TRUE
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> ret
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibIsCompactFileFormat</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGenModelTypesFile">SLibGenModelTypesFile</a>()<span style="padding-left:9.5px"></span>===============================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>true<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>model_types.h<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>needed<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>Compact<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>format.<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Case<span style="padding-left:9.5px"></span>1:<span style="padding-left:9.5px"></span>there<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>Code<span style="padding-left:9.5px"></span>Variants<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Case<span style="padding-left:9.5px"></span>2:<span style="padding-left:9.5px"></span>there<span style="padding-left:9.5px"></span>are<span style="padding-left:9.5px"></span>non-shared<span style="padding-left:9.5px"></span>custom<span style="padding-left:9.5px"></span>files<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>custom<span style="padding-left:9.5px"></span>storage<span style="padding-left:9.5px"></span>class
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGenModelTypesFile" class="tlc_func">SLibGenModelTypesFile</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibIsCompactFileFormat">SLibIsCompactFileFormat</a>() &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/data_customdata.html#SLibGenCustomNonSharedHeaderFileForCSC">SLibGenCustomNonSharedHeaderFileForCSC</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_FALSE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> TLC_TRUE
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGenModelTypesFile</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGetFileNameTableID">FcnGetFileNameTableID</a>(codeGroupName)<span style="padding-left:9.5px"></span>====================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Lookup<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>id<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>name<span style="padding-left:9.5px"></span>table<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>codeGroupName.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGetFileNameTableID" class="tlc_func">FcnGetFileNameTableID</a>(codeGroupName)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> value = <span class="tlc_bifunc">GETFIELD</span>(::CompiledModel.FilePackagingTable, codeGroupName)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileName_ID = value[0]
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<span class="tlc_bifunc">TYPE</span>(fileName_ID)=="Number")
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> fileName_ID
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% FcnGetFileNameTableID</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileNameForCode">SLibGetFileNameForCode</a>(codeGroupName)<span style="padding-left:9.5px"></span>====================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Lookup<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>name<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>packaging<span style="padding-left:9.5px"></span>table<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>codeGroupName<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetFileNameForCode" class="tlc_func">SLibGetFileNameForCode</a>(codeGroupName)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> CGMODEL_ACCESS("FileRepository.getMoveFilePackagingTableFromTLC")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackagingtable.html#FcnMapCodeNamesToFileTypes">FcnMapCodeNamesToFileTypes</a>(codeGroupName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileName = CGMODEL_ACCESS("FileRepository.getModelFileName", fileType)
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileName_ID = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGetFileNameTableID">FcnGetFileNameTableID</a>(codeGroupName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileName = ::CompiledModel.FileNameTable.File%<<span>fileName_ID</span>>.Name
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> fileName
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGetFileNameForCode</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetSectionNameForCode">SLibGetSectionNameForCode</a>(codeGroupName)
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Lookup<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>section<span style="padding-left:9.5px"></span>name<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>packaging<span style="padding-left:9.5px"></span>table<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>codeGroupName
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetSectionNameForCode" class="tlc_func">SLibGetSectionNameForCode</a>(codeGroupName)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> value = <span class="tlc_bifunc">GETFIELD</span>(::CompiledModel.FilePackagingTable, codeGroupName)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sectionName_ID = value[1]
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(<span class="tlc_bifunc">TYPE</span>(sectionName_ID)=="Number")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sectionName = ::CompiledModel.FileSectionTable.Section%<<span>sectionName_ID</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> sectionName
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGetSectionNameForCode</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileRecForCode">SLibGetFileRecForCode</a>(codeGroupName)<span style="padding-left:9.5px"></span>=====================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>record<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>hold<span style="padding-left:9.5px"></span>specified<span style="padding-left:9.5px"></span>codeGroup.<span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>""<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>codeGroup<span style="padding-left:9.5px"></span>should<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>generated.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetFileRecForCode" class="tlc_func">SLibGetFileRecForCode</a>(codeGroupName)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileName_ID = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGetFileNameTableID">FcnGetFileNameTableID</a>(codeGroupName)
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<span class="tlc_bifunc">TYPE</span>(fileName_ID)=="Number")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileName = ::CompiledModel.FileNameTable.File%<<span>fileName_ID</span>>.Name
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(fileName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileCreator = ::CompiledModel.FileNameTable.File%<<span>fileName_ID</span>>.Creator
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> GroupName =  ::CompiledModel.FileNameTable.File%<<span>fileName_ID</span>>.Group
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> type = ::CompiledModel.FileNameTable.File%<<span>fileName_ID</span>>.Type
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileRec = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibAddModelFile">SLibAddModelFile</a>(type, fileCreator, fileName)
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(fileRec, "Group", GroupName)>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> fileRec
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGetFileRecForCode</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileRec">SLibGetFileRec</a>(FileType)<span style="padding-left:9.5px"></span>=====================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>record<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>given<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>type<span style="padding-left:9.5px"></span>-<span style="padding-left:9.5px"></span>new
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>packaging<span style="padding-left:9.5px"></span>infrastructure
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetFileRec" class="tlc_func">SLibGetFileRec</a>(FileType) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> modelFileIndex = CGMODEL_ACCESS("FileRepository.getModelFileIndex", FileType)
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> modelFileIndex == -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileRec = CGMODEL_ACCESS("FileRepository.createNewFileOrReturnExistingFile", FileType)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibUpdateCompiledModelFiles">LibUpdateCompiledModelFiles</a>(fileRec)
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ::CompiledModel.ModelFiles.ModelFile[modelFileIndex]
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGetFileRec</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>(codeGroupName,<span style="padding-left:9.5px"></span>buffer)<span style="padding-left:9.5px"></span>===============
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Place<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>right<span style="padding-left:9.5px"></span>section<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>right<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>record<span style="padding-left:9.5px"></span>according<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>package<span style="padding-left:9.5px"></span>table.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibCacheCodeToFile" class="tlc_func">SLibCacheCodeToFile</a>(codeGroupName, buffer) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileRec = ""
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> section = ""
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> CGMODEL_ACCESS("FileRepository.getMoveFilePackagingTableFromTLC")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileType = CGMODEL_ACCESS("FileRepository.getFileType", codeGroupName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileRec = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileRec">SLibGetFileRec</a>(fileType)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> section = CGMODEL_ACCESS("FileRepository.getFileSection", codeGroupName)
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileRec = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileRecForCode">SLibGetFileRecForCode</a>(codeGroupName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> section = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetSectionNameForCode">SLibGetSectionNameForCode</a>(codeGroupName)
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(buffer) &amp;&amp; !<span class="tlc_bifunc">ISEMPTY</span>(fileRec) &amp;&amp; !<span class="tlc_bifunc">ISEMPTY</span>(section)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(fileRec, section, buffer)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibCacheCodeToFile</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileNameForSystemCode">SLibGetFileNameForSystemCode</a>(codeGroupName,<span style="padding-left:9.5px"></span>system)<span style="padding-left:9.5px"></span>======
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Lookup<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>name<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>packaging<span style="padding-left:9.5px"></span>table<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>codeGroupName.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>record.<span style="padding-left:9.5px"></span>(Include<span style="padding-left:9.5px"></span><root><span style="padding-left:9.5px"></span>system)
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetFileNameForSystemCode" class="tlc_func">SLibGetFileNameForSystemCode</a>(codeGroupName, system)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> system.SystemSourceFileName != <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetRootSystemSourceFileName">GetRootSystemSourceFileName</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% go to separate subsystem file</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> systemSrcFileName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibGetSystemOutputSrcFileBaseName">SLibGetSystemOutputSrcFileBaseName</a>(system) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> systemHdrFileName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibGetSystemOutputHdrFileBaseName">SLibGetSystemOutputHdrFileBaseName</a>(system)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> systemPrivHdrFileName = systemHdrFileName
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% go to model file</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> systemHdrFileName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileNameForCode">SLibGetFileNameForCode</a>("mdl_hdr")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> systemSrcFileName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileNameForCode">SLibGetFileNameForCode</a>("mdl_src")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> systemPrivHdrFileName = systemHdrFileName + "_private"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%modify</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> subsystemDataFileName = systemSrcFileName + "_data"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> value = <span class="tlc_bifunc">GETFIELD</span>(::CompiledModel.systemFilePackagingTable, codeGroupName)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileName_ID = value[0]
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<span class="tlc_bifunc">TYPE</span>(fileName_ID)=="Number")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileNameString = ::CompiledModel.systemFileNameTable.File%<<span>fileName_ID</span>>.Name
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileName = %<<span>fileNameString</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> fileName
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGetFileNameForSystemCode</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetSectionNameForSystemCode">SLibGetSectionNameForSystemCode</a>(codeGroupName,system)<span style="padding-left:9.5px"></span>====
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Lookup<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>section<span style="padding-left:9.5px"></span>name<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>packaging<span style="padding-left:9.5px"></span>table<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>codeGroupName.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>record.<span style="padding-left:9.5px"></span>(Include<span style="padding-left:9.5px"></span><root><span style="padding-left:9.5px"></span>system)
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetSectionNameForSystemCode" class="tlc_func">SLibGetSectionNameForSystemCode</a>(codeGroupName, system)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> value = <span class="tlc_bifunc">GETFIELD</span>(::CompiledModel.systemFilePackagingTable, codeGroupName)  
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sectionName_ID = value[1]
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span>(<span class="tlc_bifunc">TYPE</span>(sectionName_ID)=="Number")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sectionName = ::CompiledModel.FileSectionTable.Section%<<span>sectionName_ID</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> sectionName
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGetSectionNameForSystemCode</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileRecForSystemCode">SLibGetFileRecForSystemCode</a>(codeGroupName,<span style="padding-left:9.5px"></span>system,<span style="padding-left:9.5px"></span>isRLS,<span style="padding-left:9.5px"></span>isGlobalServer)<span style="padding-left:9.5px"></span>=======
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>record<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>hold<span style="padding-left:9.5px"></span>specified<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>codeGroup.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>""<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>codeGroup<span style="padding-left:9.5px"></span>should<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>generated.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>record.<span style="padding-left:9.5px"></span>(Include<span style="padding-left:9.5px"></span><root><span style="padding-left:9.5px"></span>system)
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>isRLS,<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>goes<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>utilities<span style="padding-left:9.5px"></span>group.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>If<span style="padding-left:9.5px"></span>isGlobalServer<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>header<span style="padding-left:9.5px"></span>file,<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>goes<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>utilities<span style="padding-left:9.5px"></span>group.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetFileRecForSystemCode" class="tlc_func">SLibGetFileRecForSystemCode</a>(codeGroupName, system, isRLS, isGlobalServer)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileNameForSystemCode">SLibGetFileNameForSystemCode</a>(codeGroupName, system)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> value = <span class="tlc_bifunc">GETFIELD</span>(::CompiledModel.systemFilePackagingTable, codeGroupName)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileName_ID = value[0]
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<span class="tlc_bifunc">TYPE</span>(fileName_ID)=="Number")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> type = ::CompiledModel.systemFileNameTable.File%<<span>fileName_ID</span>>.Type
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> globalServerHeader = isGlobalServer &amp;&amp; (type == "SystemHeader")
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> globalServerHeader &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibIsCompactFileFormat">SLibIsCompactFileFormat</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileName = fileName + "_private"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(fileName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> fileName
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileRec = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibAddModelFile">SLibAddModelFile</a>(type, "Simulink", fileName)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> system.SystemSourceFileName == ::CompiledModel.System[<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()].SystemSourceFileName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(fileRec, "Group", "model")>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isRLS
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(fileRec, "Group", "utility")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(fileRec, "Group", "subsystem")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> fileRec
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibCacheSystemCodeToFile</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheSystemCodeToFile">SLibCacheSystemCodeToFile</a>(codeGroupName,<span style="padding-left:9.5px"></span>system,<span style="padding-left:9.5px"></span>buffer)<span style="padding-left:9.5px"></span>=========
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Place<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>right<span style="padding-left:9.5px"></span>section<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>right<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>record<span style="padding-left:9.5px"></span>according<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>package<span style="padding-left:9.5px"></span>table.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>record.<span style="padding-left:9.5px"></span>(Include<span style="padding-left:9.5px"></span><root><span style="padding-left:9.5px"></span>system)
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibCacheSystemCodeToFile" class="tlc_func">SLibCacheSystemCodeToFile</a>(codeGroupName, system, buffer) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonbodlib.html#LibIsSystemExistingLibrary">LibIsSystemExistingLibrary</a>(system)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span>(CGMODEL_ACCESS("CGModel.TLCServerBlockOperationsInCPP"))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysIdx = system.SystemIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/fileoperations.html#LibCacheSystemCodeToFile">LibCacheSystemCodeToFile</a>(codeGroupName, sysIdx, buffer)>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ownerFile = ::CompiledModel.System[system.FileNameOwnerIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isRls = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/system_private_api.html#LibSystemIsReusedLibraryFcn">LibSystemIsReusedLibraryFcn</a>(ownerFile)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isGlobalServer = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibIsGlobalServer">LibIsGlobalServer</a>(ownerFile)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileRec = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileRecForSystemCode">SLibGetFileRecForSystemCode</a>(codeGroupName, system, isRls, isGlobalServer)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sectionName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetSectionNameForSystemCode">SLibGetSectionNameForSystemCode</a>(codeGroupName, system)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(buffer) &amp;&amp; !<span class="tlc_bifunc">ISEMPTY</span>(fileRec) &amp;&amp; !<span class="tlc_bifunc">ISEMPTY</span>(sectionName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(fileRec, sectionName, buffer)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibCacheSystemCodeToFile</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileRecForUtilCode">SLibGetFileRecForUtilCode</a>(codeGroupName,<span style="padding-left:9.5px"></span>utilFileName)<span style="padding-left:9.5px"></span>============
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>record<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>hold<span style="padding-left:9.5px"></span>specified<span style="padding-left:9.5px"></span>utility<span style="padding-left:9.5px"></span>codeGroup.<span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>""<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>codeGroup<span style="padding-left:9.5px"></span>should<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>generated.<span style="padding-left:9.5px"></span>Return<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>passed-in<span style="padding-left:9.5px"></span>fileRec<span style="padding-left:9.5px"></span>if<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>instruced<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>packaging<span style="padding-left:9.5px"></span>table<span style="padding-left:9.5px"></span>("$pass_in_filename$"<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>FPT).
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetFileRecForUtilCode" class="tlc_func">SLibGetFileRecForUtilCode</a>(codeGroupName, utilFileName)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileName_ID = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGetFileNameTableID">FcnGetFileNameTableID</a>(codeGroupName)
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<span class="tlc_bifunc">TYPE</span>(fileName_ID)=="Number")
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileName = ::CompiledModel.FileNameTable.File%<<span>fileName_ID</span>>.Name
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(fileName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> fileName == "$pass_in_filename$"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileName = utilFileName
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileCreator = ::CompiledModel.FileNameTable.File%<<span>fileName_ID</span>>.Creator
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> GroupName =  ::CompiledModel.FileNameTable.File%<<span>fileName_ID</span>>.Group
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> type = ::CompiledModel.FileNameTable.File%<<span>fileName_ID</span>>.Type
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileRec = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibAddModelFile">SLibAddModelFile</a>(type, fileCreator, fileName)
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(fileRec, "Group", GroupName)>
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> fileRec
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibGetFileRecForUtilCode</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>(codeGroupName,<span style="padding-left:9.5px"></span>utilFileRec,<span style="padding-left:9.5px"></span>buffer)<span style="padding-left:9.5px"></span>======
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Place<span style="padding-left:9.5px"></span>utility<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>right<span style="padding-left:9.5px"></span>section<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>right<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>record<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>according<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>utility<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>package<span style="padding-left:9.5px"></span>table.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibCacheUtilCodeToFile" class="tlc_func">SLibCacheUtilCodeToFile</a>(codeGroupName, utilFileRec, buffer) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> utilRecName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibGetFileRecordName">LibGetFileRecordName</a>(utilFileRec)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileRec = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileRecForUtilCode">SLibGetFileRecForUtilCode</a>(codeGroupName, utilRecName)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sectionName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetSectionNameForCode">SLibGetSectionNameForCode</a>(codeGroupName)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(buffer) &amp;&amp; !<span class="tlc_bifunc">ISEMPTY</span>(fileRec) &amp;&amp; !<span class="tlc_bifunc">ISEMPTY</span>(sectionName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(fileRec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% if not specified in File Packaging Table, use the passed-in fileRec</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(utilFileRec, sectionName, buffer)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% if specifiled in File Packaging Table, do not use passed-in fileRec</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(fileRec, sectionName, buffer)>      
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibCacheUtilCodeToFile</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibFilterUtilSourceFile">SLibFilterUtilSourceFile</a>(utilFileRec)<span style="padding-left:9.5px"></span>=====
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Request<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>filter<span style="padding-left:9.5px"></span>out<span style="padding-left:9.5px"></span>utility<span style="padding-left:9.5px"></span>source<span style="padding-left:9.5px"></span>file.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibFilterUtilSourceFile" class="tlc_func">SLibFilterUtilSourceFile</a>(utilFileRec)  <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibIsCompactFileFormat">SLibIsCompactFileFormat</a>() || ::CompiledModel.GenUtilsSrcInSharedLocation == 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(utilFileRec, "Filter", 1)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibFilterUtilSourceFile</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheMacroToUtilityFile">SLibCacheMacroToUtilityFile</a>(macroName,macroBuf,codeGroup,fileRec)=
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Cache<span style="padding-left:9.5px"></span>macro<span style="padding-left:9.5px"></span>buf<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>fileRec<span style="padding-left:9.5px"></span>only<span style="padding-left:9.5px"></span>when<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>been<span style="padding-left:9.5px"></span>cached.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibCacheMacroToUtilityFile" class="tlc_func">SLibCacheMacroToUtilityFile</a>(macroName, macroBuf, codeGroup, fileRec) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> definedMacro = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibDirectAccessGetFileAttribute">SLibDirectAccessGetFileAttribute</a>(fileRec, "DefinedMacro")
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(<span class="tlc_bifunc">FEVAL</span>("strfind", definedMacro, macroName + ", "))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> newDefinedMacro = definedMacro + macroName + ", "
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibDirectAccessSetFileAttribute">SLibDirectAccessSetFileAttribute</a>(fileRec, "DefinedMacro", newDefinedMacro)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheUtilCodeToFile">SLibCacheUtilCodeToFile</a>(codeGroup, fileRec, macroBuf)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibCacheMacroToUtilityFile</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenOpenExternCForCPP">FcnGenOpenExternCForCPP</a>()<span style="padding-left:9.5px"></span>=========================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGenOpenExternCForCPP" class="tlc_func">FcnGenOpenExternCForCPP</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> GenCPP
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibIsCompactFileFormat">SLibIsCompactFileFormat</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extern "C" {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#ifdef __cplusplus
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extern "C" {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% FcnGenOpenExternCForCPP</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#FcnGenCloseExternCForCPP">FcnGenCloseExternCForCPP</a>()<span style="padding-left:9.5px"></span>========================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGenCloseExternCForCPP" class="tlc_func">FcnGenCloseExternCForCPP</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> GenCPP
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibIsCompactFileFormat">SLibIsCompactFileFormat</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} /* extern "C" */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#ifdef __cplusplus
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} /* extern "C" */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% FcnGenCloseExternCForCPP</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibIncludePrivateHeader">SLibIncludePrivateHeader</a>()<span style="padding-left:9.5px"></span>=========================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibIncludePrivateHeader" class="tlc_func">SLibIncludePrivateHeader</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mdlPrivHdrFileName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileNameForCode">SLibGetFileNameForCode</a>("mdl_priv_hdr")
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(mdlPrivHdrFileName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#include "%<<span>mdlPrivHdrFileName</span>>.h"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span> 
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibIncludePrivateHeader</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibIncludeModelTypesHeader">SLibIncludeModelTypesHeader</a>()<span style="padding-left:9.5px"></span>=========================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibIncludeModelTypesHeader" class="tlc_func">SLibIncludeModelTypesHeader</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mdlTypesHdrFileName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileNameForCode">SLibGetFileNameForCode</a>("mdl_types_hdr")
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(mdlTypesHdrFileName)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#include "%<<span>mdlTypesHdrFileName</span>>.h"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span> 
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibIncludeModelTypesHeader</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibIncludeModelHeader">SLibIncludeModelHeader</a>()<span style="padding-left:9.5px"></span>=========================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibIncludeModelHeader" class="tlc_func">SLibIncludeModelHeader</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mdlHeaderFile = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibGetFileNameForCode">SLibGetFileNameForCode</a>("mdl_hdr")
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(mdlHeaderFile)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#include "%<<span>mdlHeaderFile</span>>.h"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibIncludeModelHeader</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibIncludeRTnonFiniteHeader">SLibIncludeRTnonFiniteHeader</a>()<span style="padding-left:9.5px"></span>=====================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibIncludeRTnonFiniteHeader" class="tlc_func">SLibIncludeRTnonFiniteHeader</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibRealNonFinitesRequired">SLibRealNonFinitesRequired</a>() &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(!<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibIsCompactFileFormat">SLibIsCompactFileFormat</a>() || ::CompiledModel.GenUtilsSrcInSharedLocation == 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#include "rt_nonfinite.h"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% SLibIncludeRTnonFiniteHeader</span>
+ <br>&nbsp; <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackagingtable.html">filepackagingtable.tlc</a>"
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span> <span class="tlc_comment">%% _FILEPACKAGINGLIB_</span>
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html">filepackaginglib.tlc</a>
+</span> <br></body></html>

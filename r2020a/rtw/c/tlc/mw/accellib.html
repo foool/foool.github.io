@@ -1,0 +1,204 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2010<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Support<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>accelerator.<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Includes<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>caching<span style="padding-left:9.5px"></span>function
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>special<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>required<span style="padding-left:9.5px"></span>only<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>accelerator.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_ACCELLIB_") == 0
+ <br><span class="tlc_assign">%assign</span> _ACCELLIB_ = 1
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Protect<span style="padding-left:9.5px"></span>against<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>I/O<span style="padding-left:9.5px"></span>vector<span style="padding-left:9.5px"></span>changes<span style="padding-left:9.5px"></span>during<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>generation
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_if">%if</span> (MaxStackSize != rtInf) || (MaxStackVariableSize != rtInf)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Simulink Accelerator Error: MaxStackSize and/or " ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"MaxStackVariableSize TLC variables cannot be used."
+ <br>&nbsp;&nbsp;<span class="tlc_exit">%exit</span> %<<span>errTxt</span>>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibSetupFCSubsystemPtrs<span style="padding-left:9.5px"></span>==========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Used<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>setup<span style="padding-left:9.5px"></span>fcn<span style="padding-left:9.5px"></span>pointers<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>version<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>f-c<span style="padding-left:9.5px"></span>subsystems
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>each<span style="padding-left:9.5px"></span>noninlined<span style="padding-left:9.5px"></span>s-function<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>Accelerated<span style="padding-left:9.5px"></span>model.<span style="padding-left:9.5px"></span>Simulink<span style="padding-left:9.5px"></span>has
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>allocated<span style="padding-left:9.5px"></span>twice<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>width<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>port<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>callsysfcns<span style="padding-left:9.5px"></span>array
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>but<span style="padding-left:9.5px"></span>has<span style="padding-left:9.5px"></span>only<span style="padding-left:9.5px"></span>setup<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>first<span style="padding-left:9.5px"></span>half<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>point<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>SubsystemBlockOutput<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>subsystm.c.<span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>will<span style="padding-left:9.5px"></span>setup<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>second<span style="padding-left:9.5px"></span>half<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>array.<span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>allows<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>accelerator<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>use<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>version<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>f-c<span style="padding-left:9.5px"></span>subsystem<span style="padding-left:9.5px"></span>even
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>though<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>caller<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>mexed<span style="padding-left:9.5px"></span>s-function.<span style="padding-left:9.5px"></span>Instead<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>going<span style="padding-left:9.5px"></span>through<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>rt_callsys,<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>mex<span style="padding-left:9.5px"></span>s-function<span style="padding-left:9.5px"></span>will<span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>SubsystemBlockOutput<span style="padding-left:9.5px"></span>which<span style="padding-left:9.5px"></span>then
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>calls<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>generated<span style="padding-left:9.5px"></span>version<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>f-c<span style="padding-left:9.5px"></span>subsystem.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibSetupFCSubsystemPtrs" class="tlc_func">SLibSetupFCSubsystemPtrs</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> fcnbuffer
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> childIdx = NumChildSFunctions
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> thisBlock = ChildSFunctionList[childIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> thisBlock
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> NumSFcnSysOutputCalls > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sfuncName = ParamSettings.FunctionName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* %<<span>TypeLevel</span>> Block: '%<<span>Name</span>>' (%<<span>sfuncName</span>>) */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;childS      = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetIdxed">RTMGetIdxed</a>("SFunction", childIdx)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;callSysFcns = ssGetCallSystemOutputFcnList(childS);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pZeroWidth = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalWidth">LibBlockOutputSignalWidth</a>(0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portEl = -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> fcnCallIdx = NumSFcnSysOutputCallDsts
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> portEl == SFcnSystemOutputCall[fcnCallIdx].OutputElement
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portEl = SFcnSystemOutputCall[fcnCallIdx].OutputElement
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> SFcnSystemOutputCall[fcnCallIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">STRING</span>(BlockToCall) != "unconnected"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysIdx = BlockToCall[0]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkIdx = BlockToCall[1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ssBlock = ::CompiledModel.System[sysIdx].Block[blkIdx]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span>  tidVal = ParamSettings.SampleTimesToSet[0][1]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnCallFNI = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#LibGetFcnCallFNI">LibGetFcnCallFNI</a>(ssBlock, FcnPortElement, tidVal)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> fcnCallFNI != ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;callSysFcns[%<3*pZeroWidth> + %<<span>OutputElement</span>>] = (SysOutputFcn) ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>fcnCallFNI</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;callSysFcns[%<3*pZeroWidth> + %<<span>OutputElement</span>>] = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(SysOutputFcn) %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetNullDefinitionFromTfl">SLibGetNullDefinitionFromTfl</a>()</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Unconnected function-call */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;callSysFcns[%<3*pZeroWidth> + %<<span>OutputElement</span>>] = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(SysOutputFcn) %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetNullDefinitionFromTfl">SLibGetNullDefinitionFromTfl</a>()</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_undef">%undef</span> sysIdx, blkIdx, ssIdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>  <span class="tlc_comment">%% NumSFcnSysOutputCalls > 0</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>   <span class="tlc_comment">%% thisBlock</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>  <span class="tlc_comment">%% NumChildSFunctions</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> fcnbuffer
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(fcnbuffer)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> rtnbuffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* register function-calls */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SimStruct *childS;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SysOutputFcn *callSysFcns;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>fcnbuffer</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> rtnbuffer
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> rtnbuffer
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>SLibCallBlockInSimulink<span style="padding-left:9.5px"></span>===========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Call<span style="padding-left:9.5px"></span>into<span style="padding-left:9.5px"></span>Simulink<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>specified<span style="padding-left:9.5px"></span>block's<span style="padding-left:9.5px"></span>function.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Get<span style="padding-left:9.5px"></span>this<span style="padding-left:9.5px"></span>block's<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>index,<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>should
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>directly<span style="padding-left:9.5px"></span>map<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>Simulinks<span style="padding-left:9.5px"></span>callgraph<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>vector<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>sl_BlockDiagran<span style="padding-left:9.5px"></span>(or<span style="padding-left:9.5px"></span>execInfo<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>sl_Model)<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>should
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>directly<span style="padding-left:9.5px"></span>map<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>simBlockSortedList<span style="padding-left:9.5px"></span>index<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>execInfo.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibCallBlockInSimulink" class="tlc_func">SLibCallBlockInSimulink</a>(system,block,functionToCall) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Root is special</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> slSysIdx = System[block.BlockIdx[0]].SL_SystemIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> slBlkIdx = block.SL_BlockIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> callstr = "ssCallAccelRunBlock(%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetModelSS">RTMGetModelSS</a>()</span>>, %<<span>slSysIdx</span>>, " + /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>slBlkIdx</span>>, %<<span>functionToCall</span>>);"
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> callstr
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibCallMdlRefSystemInitializeInSimulink" class="tlc_func">SLibCallMdlRefSystemInitializeInSimulink</a>(system,block) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Root is special</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> slSysIdx = System[block.BlockIdx[0]].SL_SystemIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> slBlkIdx = block.SL_BlockIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> callstr = "slmrAccelRunBlockSystemInitialize(%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetModelSS">RTMGetModelSS</a>()</span>>, %<<span>slSysIdx</span>>, " + /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>slBlkIdx</span>>);"
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> callstr
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibCallMdlRefSystemResetInSimulink" class="tlc_func">SLibCallMdlRefSystemResetInSimulink</a>(system,block) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Root is special</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> slSysIdx = System[block.BlockIdx[0]].SL_SystemIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> slBlkIdx = block.SL_BlockIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> callstr = "slmrAccelRunBlockSystemReset(%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetModelSS">RTMGetModelSS</a>()</span>>, %<<span>slSysIdx</span>>, " + /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>slBlkIdx</span>>);"
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> callstr
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibCallSFcnSetDimsInSimulink" class="tlc_func">SLibCallSFcnSetDimsInSimulink</a>(system,block,oIdx,rIdx) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Root is special</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> slSysIdx = System[block.BlockIdx[0]].SL_SystemIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> slBlkIdx = block.SL_BlockIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> callstr = "ssCallAccelSetDims(%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetModelSS">RTMGetModelSS</a>()</span>>, %<<span>slSysIdx</span>>, " + /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>slBlkIdx</span>>, %<<span>oIdx</span>>, %<<span>rIdx</span>>);"
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> callstr
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibCopyCacheForIISInSimulink" class="tlc_func">SLibCopyCacheForIISInSimulink</a>(system,fromCache) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Root is special</span>
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>%assign<span style="padding-left:9.5px"></span>slSysIdx<span style="padding-left:9.5px"></span>=<span style="padding-left:9.5px"></span>System[block.BlockIdx[0]].SL_SystemIdx
+</span> <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> callstr = "ssCallAccelCopyCacheForIIS(%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetModelSS">RTMGetModelSS</a>()</span>>, %<<span>system</span>>, " + /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"(void *)%<<span>fromCache</span>>);"
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> callstr
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="SLibCallModelBlockFcnCallInputInSimulink" class="tlc_func">SLibCallModelBlockFcnCallInputInSimulink</a>(block, portIdx, tid, functionToCall) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Root is special</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> slSysIdx = System[block.BlockIdx[0]].SL_SystemIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> slBlkIdx = block.SL_BlockIdx
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> accFunction = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetAcceleratorStringForFunction">GetAcceleratorStringForFunction</a>(functionToCall)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> callstr = "ssCallAccelModelBlockFcnCallInput(%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetModelSS">RTMGetModelSS</a>()</span>>, %<<span>slSysIdx</span>>, " + /
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>slBlkIdx</span>>, %<<span>portIdx</span>>, %<<span>tid</span>>, %<<span>accFunction</span>>);"
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> callstr
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibGetAccelDisclaimer<span style="padding-left:9.5px"></span>=============================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Dump<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>standard<span style="padding-left:9.5px"></span>Accelerator<span style="padding-left:9.5px"></span>disclaimer
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibGetAccelDisclaimer" class="tlc_func">LibGetAccelDisclaimer</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtwLicensed = <span class="tlc_bifunc">FEVAL</span>("get_param", 0, "RTWLicensed")
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> rtwLicensed == "off"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#if 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;This file is not available for use in any application other than as a
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;MATLAB(R) MEX file for use with the Simulink(R) product.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;If you do not have the Simulink Coder licensed, this file contains
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;encrypted block names, etc.  If you purchase the Simulink Coder,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;this file will contain full block descriptions and improved variable
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;names.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* This file is not available for use in any application other than as a
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* MATLAB(R) MEX file for use with the Simulink(R) product.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibGetAccelDisclaimer</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>LibReportDiagnosticForAccel<span style="padding-left:9.5px"></span>===========================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Write<span style="padding-left:9.5px"></span>rt_ssSet_slErrMsg<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>rt_ssReportDiagnosticAsWarning
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="LibReportDiagnosticForAccel" class="tlc_func">LibReportDiagnosticForAccel</a>() <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;void rt_ssGetBlockPath(SimStruct* S, int_T sysIdx, int_T blkIdx, char_T **path) { _ssGetBlockPath(S, sysIdx, blkIdx, path); }
+ <br>&nbsp;&nbsp;void rt_ssSet_slErrMsg(SimStruct* S, void* diag) { if(!_ssIsErrorStatusAslErrMsg(S)) {_ssSet_slErrMsg(S, diag);} else {_ssDiscardDiagnostic(S, diag);}}
+ <br>&nbsp;&nbsp;void rt_ssReportDiagnosticAsWarning(SimStruct* S, void* diag) { _ssReportDiagnosticAsWarning(S, diag); }
+ <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%% LibReportDiagnosticForAccel</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_endif">%endif</span> <span class="tlc_comment">%% _ACCELLIB_</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/accellib.html">accellib.tlc</a>
+</span> <br></body></html>

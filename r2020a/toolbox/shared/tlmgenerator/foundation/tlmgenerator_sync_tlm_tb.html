@@ -1,0 +1,134 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>defines<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>can<span style="padding-left:9.5px"></span>be<span style="padding-left:9.5px"></span>used<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>instantiating<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>right
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>objects<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>support<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>specified<span style="padding-left:9.5px"></span>timing<span style="padding-left:9.5px"></span>mode.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>It<span style="padding-left:9.5px"></span>must<span style="padding-left:9.5px"></span>define<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>following<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>variables:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>tlmg_sync_tmode_setupcall_tb
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>tlmg_sync_syncobj_setupcall_tb
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>tlmg_sync_tdrcall_tb
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>2009-2010<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> tlmg_sync_tmode_setupcall_tb
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// Set core TLM component timing mode: Untimed or Timed.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// Set whether the target should return delays based on the specified timing
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// parameters in the 'TLM Generation' options or to just return '0' for all
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// transaction and algorithm delays.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// In your TLM environment, this can be dynamically programmed during
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// simulation execution, but for this testbench we set it just once at the
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// beginning of the simulation based on the 'TLM Testbench' configset
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// options. 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgRuntimeTimingMode, "With timing")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// m_backdoorcfg->SetTimingParam(mw_backdoorcfg_IF::UNTIMED);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_backdoorcfg->SetTimingParam(mw_backdoorcfg_IF::TIMED);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_backdoorcfg->SetTimingParam(mw_backdoorcfg_IF::UNTIMED);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// m_backdoorcfg->SetTimingParam(mw_backdoorcfg_IF::TIMED);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_closefile">%closefile</span> tlmg_sync_tmode_setupcall_tb
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br><span class="tlc_openfile">%openfile</span> tlmg_sync_syncobj_setupcall_tb
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// The timing mode also needs to be set up in a testbench support object.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// With timing    Testbench timing mode
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// -----------    ---------------------
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//     No         Untimed
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//     Yes        LooselyTimed
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// Untimed           : Sync to '0' delays after every transaction and for 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//                     every timed wait.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// Loosely Timed     : Sync to the delays returned from the target after
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//                     every transaction and use non-zero times for timed
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//                     waits.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgRuntimeTimingMode, "Without timing")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_sync_tb       sync(m_utils, mw_sync_tb::Untimed);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// mw_sync_tb       sync(m_utils, mw_sync_tb::LooselyTimed);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// mw_sync_tb       sync(m_utils, mw_sync_tb::Untimed);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mw_sync_tb       sync(m_utils, mw_sync_tb::LooselyTimed);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_closefile">%closefile</span> tlmg_sync_syncobj_setupcall_tb
+ <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> tlmg_sync_tdrcall_tb
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// --------------------------------------------------
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Wait until there is data to read.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// --------------------------------------------------
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// We can wait for data ready by either polling the INTR bit in the CSR,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// or by waiting for the IRQ signal attached to the m_int_ip port of the
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// testbench.  If neither is available, we can only do a timed wait.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgIrqPortOnOff, "on")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Using IRQ:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sync.syncToDataReady(m_int_ip);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Using CSR: 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// m_utils.printMsg(TLMG_PRINT_SYNC_TO_FUNCS,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//         "##/t polling status bit in register for data ready in output buffer.../n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// bool sawTimeout = csr.pollForStatus(INT_STAT_BIT_MASK, INT_STAT_BIT_MASK, csreg,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//                                     1000, sc_time(1000, SC_NS));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// if (sawTimeout) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//     m_utils.printErr(TLMG_ERR_SYNC_TIMEOUT,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//         "## ERROR: Timed-out waiting for buffer non-empty status./n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//     break;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// }
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgCommandStatusRegOnOffInoutput, "on")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Using IRQ:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// sync.syncToDataReady(m_int_ip);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Using CSR: 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printMsg(TLMG_PRINT_SYNC_TO_FUNCS,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"##/t polling status bit in register for data ready in output buffer.../n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool sawTimeout = csr.pollForStatus(INT_STAT_BIT_MASK, INT_STAT_BIT_MASK, csreg,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1000, sc_time(1000, SC_NS));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (sawTimeout) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printErr(TLMG_ERR_SYNC_TIMEOUT,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## ERROR: Timed-out waiting for buffer non-empty status./n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgRuntimeTimingMode, "Without timing")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Since we do not have an IRQ or CSR and we are untimed we must allow
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// the target thread to get through its synchronization points such that data
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// is ready.  This means to do two waits of zero time.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//sync.syncToExplicitTime(SC_ZERO_TIME);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//sync.syncToExplicitTime(SC_ZERO_TIME);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_utils.printErr(TLMG_ERR_NOT_SUPPORTED,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"## ERROR: Untimed simulation requires explicite synchronization like interrupt signal or command and status register./n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Since we do not have an IRQ or CSR, we do a timed wait.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgProcessingType,"Periodic SystemC Thread")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sync.syncToExplicitTime(sc_core::sc_time(%<<span>tlmg_info.PortRate</span>>, sc_core::SC_SEC));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sync.syncToExplicitTime(sc_time(ALG_PROC_TIME * 2, SC_NS));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_closefile">%closefile</span> tlmg_sync_tdrcall_tb
+ <br>&nbsp; <br></body></html>

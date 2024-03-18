@@ -1,0 +1,1209 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>==============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Generation<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>threaded<span style="padding-left:9.5px"></span>GRT<span style="padding-left:9.5px"></span>main.c<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>Posix<span style="padding-left:9.5px"></span>threads
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2014<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html">commonthreadlib.tlc</a>"
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="FcnDeclareProfileDataStruct" class="tlc_func">FcnDeclareProfileDataStruct</a>(isMac)
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> retBuf
+ <br>&nbsp;&nbsp;typedef struct {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int numSamples;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int maxNumSamples;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;long int startTime[%<::CompiledModel.ConcurrentExecutionProfileNumSamples>];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;long int endTime[%<::CompiledModel.ConcurrentExecutionProfileNumSamples>];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int coreID[%<::CompiledModel.ConcurrentExecutionProfileNumSamples>];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;} profileDataT;
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> retBuf
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retBuf
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="FcnDeclareProfileDataVar" class="tlc_func">FcnDeclareProfileDataVar</a>(numPeriodicMappedEntities, numPeriodicTriggers) 
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> retBuf
+ <br>&nbsp;&nbsp;profileDataT profileData[%<<span>numPeriodicMappedEntities</span>>]; 
+ <br>&nbsp;&nbsp;int counterSamples[%<<span>numPeriodicTriggers</span>>]; 
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> retBuf
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retBuf
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="FcnGenerateProfilingFunctions" class="tlc_func">FcnGenerateProfilingFunctions</a>(numPeriodicMappedEntities, isMac)
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> retBuf
+ <br>&nbsp;&nbsp;long int profileReadTimer(void) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;long int ret;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ret = mach_absolute_time();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;struct timespec tp;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int status;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;status = clock_gettime(CLOCK_REALTIME, &amp;tp);  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(status, "clock_gettime");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ret = (long int)(tp.tv_sec * 1000000000 + tp.tv_nsec);  /* Return time in nanoseconds */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return(ret); 
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;void initializeNumSamplesForProfiling(void) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int idx;   
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#SLibDeploymentDeclareSampleTimeHitIndexArrayForProfiling">SLibDeploymentDeclareSampleTimeHitIndexArrayForProfiling</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;for (idx = 0; idx < %<<span>numPeriodicMappedEntities</span>>; idx++) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;profileData[idx].numSamples = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;profileData[idx].maxNumSamples = (%<::CompiledModel.ConcurrentExecutionProfileNumSamples> -1) / sthId[idx] + 1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;void profile_task_start(int taskId) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (profileData[taskId].numSamples < profileData[taskId].maxNumSamples) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !isMac 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;profileData[taskId].coreID[profileData[taskId].numSamples] = sched_getcpu(); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;profileData[taskId].startTime[profileData[taskId].numSamples] = profileReadTimer(); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;} 
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;void profile_task_end(int taskId) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (profileData[taskId].numSamples < profileData[taskId].maxNumSamples) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;profileData[taskId].endTime[profileData[taskId].numSamples] = profileReadTimer(); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;profileData[taskId].numSamples++;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;} 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/paralleldeploymentlib.html#SLibDeploymentWriteProfilingDataToHtml">SLibDeploymentWriteProfilingDataToHtml</a>(numPeriodicMappedEntities, TLC_FALSE)>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> retBuf
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retBuf
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%==============================================================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGenerateUtilFunctionsAndGlobalVariables" class="tlc_func">FcnGenerateUtilFunctionsAndGlobalVariables</a>(isMac, numPeriodicTasks, ...
+ <br>&nbsp;&nbsp;numPeriodicTriggers) void
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> overrunDetection = !isMac 
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numPeriodicMappedEntities = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibGetNumPeriodicMappedEntities">SLibGetNumPeriodicMappedEntities</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibIsTaskProfilingOn">SLibIsTaskProfilingOn</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertposixthread.html#FcnDeclareProfileDataStruct">FcnDeclareProfileDataStruct</a>(isMac)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mainSrc_userTop", tmpFcnBuf)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;#define CHECK_STATUS(status, fcn) if (status != 0) {fprintf(stderr, "Call to %s returned error status (%d)./n", fcn, status); perror(fcn); fflush(stderr); exit(EXIT_FAILURE);}
+ <br>&nbsp;&nbsp; <br>&nbsp;&nbsp;/* Semaphores used for threads synchronization */
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> semDT = "sem_t"
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> semDT = "sem_t*"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;%<<span>semDT</span>> quitSem[%<<span>numPeriodicTriggers</span>>];     
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (numPeriodicTasks > 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>semDT</span>> periodicTaskStartSem[%<<span>numPeriodicTasks</span>>];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>semDT</span>> periodicTaskStopSem[%<<span>numPeriodicTasks</span>>];
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !isMac  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>semDT</span>> periodicTriggerSem[%<<span>numPeriodicTriggers</span>>]; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;timer_t timers[%<<span>numPeriodicTriggers</span>>];
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;int threadID[%<<span>numPeriodicMappedEntities</span>>];
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibIsTaskProfilingOn">SLibIsTaskProfilingOn</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertposixthread.html#FcnDeclareProfileDataVar">FcnDeclareProfileDataVar</a>(numPeriodicMappedEntities, numPeriodicTriggers)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::GenerateGRTWrapper  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>Name</span>>_rtModel *S;
+ <br>&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> !::GenerateClassInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<::tSimStructType> *S;
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mainSrc_data_defn", tmpFcnBuf)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;void MW_sem_wait(sem_t *sem)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int status;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;while (((status = sem_wait(sem)) == -1) &amp;&amp; (errno == EINTR))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Restart if interrupted by a signal */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(status, "sem_wait");
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;void MW_blockSignal(int sigNo, sigset_t *sigMask)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int ret;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sigaddset(sigMask, sigNo);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ret = pthread_sigmask(SIG_BLOCK, sigMask, NULL);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "pthread_sigmask");
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;void MW_sigWait(sigset_t *sigMask)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int ret;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isMac 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ret = sigwait(sigMask, NULL);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ret = sigwaitinfo(sigMask, NULL);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (ret == -1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fprintf(stderr, "Call to sigwait returned error./n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;perror("sigwait");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fflush(stderr);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit(EXIT_FAILURE);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !isMac
+ <br>&nbsp;&nbsp;void MW_setTaskPeriod(double periodInSeconds, int sigNo, int idx)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;struct sigevent sev;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;struct itimerspec its;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int ret;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Create a timer */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sev.sigev_notify          = SIGEV_SIGNAL;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sev.sigev_signo           = sigNo;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;sev.sigev_value.sival_int = idx;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ret = timer_create(CLOCK_REALTIME, &amp;sev, &amp;timers[idx]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "timer_create");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Real-time scheduling timer */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;its.it_value.tv_sec     = (time_t)periodInSeconds;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;its.it_value.tv_nsec    = (periodInSeconds - (time_t)periodInSeconds) * 1000000000;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;its.it_interval.tv_sec  = its.it_value.tv_sec;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;its.it_interval.tv_nsec = its.it_value.tv_nsec;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ret = timer_settime(timers[idx], 0, &amp;its, NULL);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "timer_settime");
+ <br>&nbsp;&nbsp;} 
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% For MAC platforms register Ctrl+C signal handler to clean the semaphore </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% before terminating the process </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;void CtrlCHandler(int signo)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int i, ret;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0; i < %<<span>numPeriodicTriggers</span>>; i++) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = sem_post(quitSem[i]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "sem_post");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> overrunDetection
+ <br>&nbsp;&nbsp;void MW_sem_waitTriggerWithOverrunDetection(sem_t *startSem, int triggerIdx)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int ret;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ret = sem_trywait(startSem);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (ret == -1) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (errno == EAGAIN) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MW_sem_wait(startSem);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fprintf(stderr, "Call to sem_trywait returned error./n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;perror("sigtimedwait");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fflush(stderr);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit(EXIT_FAILURE);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;} else {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("Overrun - periodic trigger %d base rate too fast./n", triggerIdx); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fflush(stdout);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (numPeriodicTasks > 0)
+ <br>&nbsp;&nbsp;void MW_sem_waitTaskWithOverrunDetection(sem_t *stopSem, int taskIdx)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int ret; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ret = sem_trywait(stopSem);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (ret == -1) { 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (errno == EAGAIN) {   
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("Overrun - rate for periodic task %d too fast./n", taskIdx); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fflush(stdout);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MW_sem_wait(stopSem);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fprintf(stderr, "Call to sem_trywait returned error./n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;perror(" sem_trywait");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fflush(stderr);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit(EXIT_FAILURE);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span> <span class="tlc_comment">%%  %if (numPeriodicTasks > 0)</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibIsTaskProfilingOn">SLibIsTaskProfilingOn</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertposixthread.html#FcnGenerateProfilingFunctions">FcnGenerateProfilingFunctions</a>(numPeriodicMappedEntities, isMac)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mainSrc_fcn_defn", tmpFcnBuf)>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%==============================================================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnMaskSignals" class="tlc_func">FcnMaskSignals</a>(isMac, triggerHandlerType, sigsetVarName, declareSigSetVar, ...
+ <br>&nbsp;&nbsp;maskTimerSignal)
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> maskSigBuf
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> aehIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggers">LibGetNumTriggers</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerType">LibGetTriggerType</a>(aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(evType, "PeriodicTrigger") 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> type = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerHandlerType">LibGetTriggerHandlerType</a>(aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEQUAL</span>(type, triggerHandlerType)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> targetObj = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerTargetObject">LibGetTriggerTargetObject</a>(aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(targetObj, "SignalNumber")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> errTxt = "Unsupported aperiodic event for native threads."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>(errTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sigNumber = targetObj.SignalNumber
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MW_blockSignal(%<sigNumber[0]>, &amp;%<<span>sigsetVarName</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MW_blockSignal(SIGRTMIN+%<sigNumber[0]>, &amp;%<<span>sigsetVarName</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> maskTimerSignal &amp;&amp; !isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;MW_blockSignal(SIGRTMIN, &amp;%<<span>sigsetVarName</span>>);
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> maskSigBuf
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> retBuf
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(maskSigBuf)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> declareSigSetVar
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sigset_t %<<span>sigsetVarName</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sigemptyset(&amp;%<<span>sigsetVarName</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>maskSigBuf</span>> 
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> retBuf
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retBuf
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%==============================================================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGeneratePeriodicTaskSchedulerFunction" class="tlc_func">FcnGeneratePeriodicTaskSchedulerFunction</a>(isMac, ehIdx, nTasks, ...
+ <br>&nbsp;&nbsp;stopCheck, semaphorePtr)  
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> overrunDetection = !isMac
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> retBuf
+ <br>&nbsp;&nbsp;void* %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerName">LibGetTriggerName</a>(ehIdx)>TaskScheduler(void *arg)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;volatile boolean_T noErr;  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int ret;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numTasks = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggerTasks">LibGetNumTriggerTasks</a>(ehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (numTasks > 1) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> indexVar = "i" 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T %<<span>indexVar</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Declare list of task indexes and task counters for tasks belonging to this</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% trigger</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStr  = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStr2 = ""  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStr3 = ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comma    = ""  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> triggerBaseRate = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerBaseRate">LibGetTriggerBaseRate</a>(ehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> taskIdx = numTasks
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStr  = initStr +"%<<span>comma</span>>0"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStr2 = initStr2 +"%<<span>comma</span>>%<<span>nTasks</span>>"  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (numTasks > 1) &amp;&amp; (!RootSystemIsSingleRate)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stIdx          = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerTaskSampleTimeIndex">LibGetTriggerTaskSampleTimeIndex</a>(ehIdx, taskIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> taskSampleTime = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibGetSampleTimePeriodAndOffset">LibGetSampleTimePeriodAndOffset</a>(stIdx, 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nTaskTicks     = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmdlreftiming.html#SLibComputeNumTaskTicks">SLibComputeNumTaskTicks</a>(taskSampleTime, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;triggerBaseRate)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStr3 = initStr3 + "%<<span>comma</span>>%<<span>nTaskTicks</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nTasks   = nTasks + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comma = ","
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (numTasks > 1) &amp;&amp; (!RootSystemIsSingleRate)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T taskCounters[%<<span>numTasks</span>>] = {%<<span>initStr</span>>};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T taskTicks[%<<span>numTasks</span>>] = {%<<span>initStr3</span>>};  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int_T taskId[%<<span>numTasks</span>>] = {%<<span>initStr2</span>>};  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertposixthread.html#FcnMaskSignals">FcnMaskSignals</a>(isMac, "isr", "ss", TLC_TRUE, TLC_TRUE)>   
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Unused arguments */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(void)(arg);
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;noErr = %<<span>stopCheck</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;while (noErr)  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> overrunDetection 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Wait for the next timer interrupt */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MW_sem_waitTriggerWithOverrunDetection(&amp;periodicTriggerSem[%<<span>ehIdx</span>>], %<<span>ehIdx</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> !isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Wait for the next timer interrupt */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MW_sem_wait(&amp;periodicTriggerSem[%<<span>ehIdx</span>>]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (numTasks > 1) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0; i < %<<span>numTasks</span>>; i++)     
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !RootSystemIsSingleRate
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (taskCounters[i] == 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> overrunDetection   
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MW_sem_waitTaskWithOverrunDetection(%<<span>semaphorePtr</span>>periodicTaskStopSem[taskId[i]], i);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MW_sem_wait(%<<span>semaphorePtr</span>>periodicTaskStopSem[taskId[i]]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !RootSystemIsSingleRate
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}     
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> overrunDetection   
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MW_sem_waitTaskWithOverrunDetection(%<<span>semaphorePtr</span>>periodicTaskStopSem[taskId[0]], 0);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MW_sem_wait(%<<span>semaphorePtr</span>>periodicTaskStopSem[taskId[0]]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;noErr = %<<span>stopCheck</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (noErr) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibIsTaskProfilingOn">SLibIsTaskProfilingOn</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counterSamples[%<<span>ehIdx</span>>]+=%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibGetNumClockTicksForTrigger">SLibGetNumClockTicksForTrigger</a>(ehIdx)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (numTasks > 1)  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0; i <%<<span>numTasks</span>>; i++)     
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{   
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !RootSystemIsSingleRate
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (taskCounters[i] == 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = sem_post(%<<span>semaphorePtr</span>>periodicTaskStartSem[taskId[i]]);  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "sem_post");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !RootSystemIsSingleRate
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = sem_post(%<<span>semaphorePtr</span>>periodicTaskStartSem[taskId[0]]); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "sem_post");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Advance task counters</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (numTasks > 1) &amp;&amp; (!RootSystemIsSingleRate)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0; i <%<<span>numTasks</span>>; i++) {     
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;taskCounters[i]++;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (taskCounters[i] > (taskTicks[i]-1)) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;taskCounters[i] = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (numTasks > 1) &amp;&amp; (!RootSystemIsSingleRate)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0; i < %<<span>numTasks</span>>; i++)     
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (taskCounters[i] != 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MW_sem_wait(%<<span>semaphorePtr</span>>periodicTaskStopSem[taskId[i]]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;} /* while */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;ret = sem_post(%<<span>semaphorePtr</span>>quitSem[%<<span>ehIdx</span>>]);  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "sem_post"); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = timer_delete(timers[%<<span>ehIdx</span>>]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "timer_delete");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return NULL;
+ <br>&nbsp;&nbsp;} 
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> retBuf
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retBuf
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%==============================================================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGeneratePeriodicTriggerFunction" class="tlc_func">FcnGeneratePeriodicTriggerFunction</a>(isMac, ehIdx, stopCheck, semaphorePtr)   
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> overrunDetection = !isMac
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> retBuf
+ <br>&nbsp;&nbsp;void* %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerName">LibGetTriggerName</a>(ehIdx)>(void *arg)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;volatile boolean_T noErr;    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int ret;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibIsTaskProfilingOn">SLibIsTaskProfilingOn</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int taskId = *((int *) arg);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertposixthread.html#FcnMaskSignals">FcnMaskSignals</a>(isMac, "isr", "ss", TLC_TRUE, TLC_TRUE)> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibIsTaskProfilingOn">SLibIsTaskProfilingOn</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Unused arguments */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(void)(arg);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;noErr = %<<span>stopCheck</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;while (noErr)  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> overrunDetection 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Wait for the next timer interrupt */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MW_sem_waitTriggerWithOverrunDetection(&amp;periodicTriggerSem[%<<span>ehIdx</span>>], %<<span>ehIdx</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> !isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Wait for the next timer interrupt */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MW_sem_wait(&amp;info.sigMask);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;noErr = %<<span>stopCheck</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (noErr) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{     
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibIsTaskProfilingOn">SLibIsTaskProfilingOn</a>()    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counterSamples[%<<span>ehIdx</span>>]+=%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibGetNumClockTicksForTrigger">SLibGetNumClockTicksForTrigger</a>(ehIdx)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibIsTaskProfilingOn">SLibIsTaskProfilingOn</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;profile_task_start(taskId);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibCallTriggerISR">LibCallTriggerISR</a>(ehIdx)> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibIsTaskProfilingOn">SLibIsTaskProfilingOn</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;profile_task_end(taskId);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;} /* while */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;ret = sem_post(%<<span>semaphorePtr</span>>quitSem[%<<span>ehIdx</span>>]); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "sem_post"); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = timer_delete(timers[%<<span>ehIdx</span>>]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "timer_delete");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return NULL;
+ <br>&nbsp;&nbsp;} 
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> retBuf
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retBuf
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%==============================================================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGenerateSignalHandlerFcnForTimer" class="tlc_func">FcnGenerateSignalHandlerFcnForTimer</a>(numPeriodicTriggers) 
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> retBuf
+ <br>&nbsp;&nbsp;void sigHandler_TimerSignal(int signo, siginfo_t *sigInfo, void *ctx)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int ret;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Unused arguments */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(void)(ctx);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(void)(signo);    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;switch ((*sigInfo).si_value.sival_int) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> ehIdx = numPeriodicTriggers
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case %<<span>ehIdx</span>>:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = sem_post(&amp;periodicTriggerSem[%<<span>ehIdx</span>>]); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "sem_post");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> retBuf
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> retBuf
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%==============================================================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGeneratePeriodicTaskWrapperFunctions" class="tlc_func">FcnGeneratePeriodicTaskWrapperFunctions</a>(isMac, numPeriodicTasks, ...
+ <br>&nbsp;&nbsp;numPeriodicTriggers) void
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stopCheck = "(%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetErrStat">RTMGetErrStat</a>()</span>> == %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetNullDefinitionFromTfl">SLibGetNullDefinitionFromTfl</a>()</span>>)" 
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMStopReqAccessed">RTMStopReqAccessed</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stopCheck = stopCheck + " &amp;&amp; !%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetStopRequested">RTMGetStopRequested</a>()</span>>"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> semaphorePtr = ""
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> semaphorePtr = "&amp;"
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span> 
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> (numPeriodicTasks > 0) 
+ <br>&nbsp;&nbsp;void* periodicTask(void *arg)
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int ret;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int taskId = *((int *) arg);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int_T taskIdT = *((int_T *) arg);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertposixthread.html#FcnMaskSignals">FcnMaskSignals</a>(isMac, "isr", "ss", TLC_TRUE, TLC_TRUE)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;while(1) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{          
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MW_sem_wait(%<<span>semaphorePtr</span>>periodicTaskStartSem[taskId]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibIsTaskProfilingOn">SLibIsTaskProfilingOn</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;profile_task_start(taskId);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::GenerateGRTWrapper || !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibSingleTasking">SLibSingleTasking</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MdlOutputs(taskIdT); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MdlUpdate(taskIdT); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MdlOutputs(); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MdlUpdate();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibIsTaskProfilingOn">SLibIsTaskProfilingOn</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;profile_task_end(taskId);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = sem_post(%<<span>semaphorePtr</span>>periodicTaskStopSem[taskId]); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "sem_post");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;return NULL;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> taskCounter = 0
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Generate task schedulers per periodic group</span>
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> ehIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggers">LibGetNumTriggers</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerType">LibGetTriggerType</a>(ehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(evType, "AperiodicTrigger") 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibIsTaskProfilingOn">SLibIsTaskProfilingOn</a>()   
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> finalStopCheck = stopCheck + " &amp;&amp; (counterSamples[%<<span>ehIdx</span>>] < %<::CompiledModel.ConcurrentExecutionProfileNumSamples>)"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> finalStopCheck = stopCheck
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEQUAL</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggerTasks">LibGetNumTriggerTasks</a>(ehIdx), 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertposixthread.html#FcnGeneratePeriodicTaskSchedulerFunction">FcnGeneratePeriodicTaskSchedulerFunction</a>(isMac, ehIdx, taskCounter, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;finalStopCheck, semaphorePtr)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> taskCounter = taskCounter + <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggerTasks">LibGetNumTriggerTasks</a>(ehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <span class="tlc_bifunc">ISEQUAL</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerHandlerType">LibGetTriggerHandlerType</a>(ehIdx), "isr")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertposixthread.html#FcnGeneratePeriodicTriggerFunction">FcnGeneratePeriodicTriggerFunction</a>(isMac, ehIdx, finalStopCheck, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;semaphorePtr)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span> <span class="tlc_comment">%% end for each periodic trigger</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertposixthread.html#FcnGenerateSignalHandlerFcnForTimer">FcnGenerateSignalHandlerFcnForTimer</a>(numPeriodicTriggers)>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mainSrc_fcn_defn",tmpFcnBuf)>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%==============================================================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGenerateAperiodicWrapperFunctions" class="tlc_func">FcnGenerateAperiodicWrapperFunctions</a>(isMac) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpFcnBuf 
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> aehIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggers">LibGetNumTriggers</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerType">LibGetTriggerType</a>(aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(evType, "PeriodicTrigger")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> targetObj = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerTargetObject">LibGetTriggerTargetObject</a>(aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sigNumber = targetObj.SignalNumber
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> aehName   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerName">LibGetTriggerName</a>(aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> type      = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerHandlerType">LibGetTriggerHandlerType</a>(aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <span class="tlc_bifunc">ISEQUAL</span>(type, "task") || <span class="tlc_bifunc">ISEQUAL</span>(type, "isr")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(type, "task")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> taskIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggerTasks">LibGetNumTriggerTasks</a>(aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void* %<<span>aehName</span>>_%<<span>taskIdx</span>>() 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sigset_t sigMask;  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertposixthread.html#FcnMaskSignals">FcnMaskSignals</a>(isMac, "isr", "ss", TLC_TRUE, TLC_TRUE)>     
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sigemptyset(&amp;sigMask);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isMac      
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sigaddset(&amp;sigMask, %<sigNumber[0]>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sigaddset(&amp;sigMask, SIGRTMIN + %<sigNumber[0]>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while(1) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MW_sigWait(&amp;sigMask);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibCallTriggerTask">LibCallTriggerTask</a>(aehIdx, taskIdx)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return NULL;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Generate ISR </span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("<signal.h>")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>("<errno.h>")> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isrFuncName = "sigHandler_%<<span>aehName</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Software Interrupt */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void %<<span>isrFuncName</span>>(int signo)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Unused argument */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(void)(signo);    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibCallTriggerISR">LibCallTriggerISR</a>(aehIdx)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>  
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mainSrc_fcn_defn",tmpFcnBuf)>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="FcnEnableSignalHandler" class="tlc_func">FcnEnableSignalHandler</a>(isMac) 
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuf
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> aehIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggers">LibGetNumTriggers</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerType">LibGetTriggerType</a>(aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(evType, "PeriodicTrigger")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> type = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerHandlerType">LibGetTriggerHandlerType</a>(aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(type, "isr") 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> targetObj   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerTargetObject">LibGetTriggerTargetObject</a>(aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sigNumber   = targetObj.SignalNumber
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> aehName     = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerName">LibGetTriggerName</a>(aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isrFuncName = "sigHandler_%<<span>aehName</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Connect and enable the signal handler: %<<span>isrFuncName</span>> */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct sigaction sa;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sa.sa_handler = &amp;%<<span>isrFuncName</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sigemptyset(&amp;sa.sa_mask);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggers">LibGetNumTriggers</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerType">LibGetTriggerType</a>(idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(evType, "PeriodicTrigger") || <span class="tlc_bifunc">ISEQUAL</span>(idx, aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> type = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerHandlerType">LibGetTriggerHandlerType</a>(idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(type, "isr")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> targetObjForMask = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerTargetObject">LibGetTriggerTargetObject</a>(idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sigNumberForMask = targetObjForMask.SignalNumber
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sigaddset(&amp;sa.sa_mask, %<sigNumberForMask[0]>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sigaddset(&amp;sa.sa_mask, SIGRTMIN+%<sigNumberForMask[0]>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>     
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sigaddset(&amp;sa.sa_mask, SIGRTMIN);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sa.sa_flags = SA_RESTART; /* Restart functions if interrupted by handler */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (sigaction(%<sigNumber[0]>, &amp;sa, NULL) == -1) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (sigaction(SIGRTMIN+%<sigNumber[0]>, &amp;sa, NULL) == -1) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fprintf(stderr, "Failed to register signal handler for signal %<sigNumber[0]> : %s/n", strerror(errno));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}     
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Enable Ctrl+C signal handler </span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct sigaction sa;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sa.sa_handler = &amp;CtrlCHandler;  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sigemptyset(&amp;sa.sa_mask);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sa.sa_flags = SA_RESTART; /* Restart functions if interrupted by handler */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (sigaction(SIGINT, &amp;sa, NULL) == -1) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fprintf(stderr, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Failed to register signal handler for signal SIGINT : %s/n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;strerror(errno));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Enable SIGRTMIN signal handler for timers notification</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Connect and enable the signal handler for timers notification */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct sigaction sa;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sa.sa_sigaction = &amp;sigHandler_TimerSignal;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sigemptyset(&amp;sa.sa_mask);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> aehIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggers">LibGetNumTriggers</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerType">LibGetTriggerType</a>(aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(evType, "AperiodicTrigger")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> type = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerHandlerType">LibGetTriggerHandlerType</a>(aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(type, "isr")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> targetObjForMask = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerTargetObject">LibGetTriggerTargetObject</a>(aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sigNumberForMask = targetObjForMask.SignalNumber
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sigaddset(&amp;sa.sa_mask, SIGRTMIN+%<sigNumberForMask[0]>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sa.sa_flags = SA_RESTART;  /* Restart functions if interrupted by handler */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sa.sa_flags |= SA_SIGINFO; /* Enable passing signal data to the handler */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (sigaction(SIGRTMIN, &amp;sa, NULL) == -1) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fprintf(stderr,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Failed to register signal handler for signal SIGRTMIN : %s/n", 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;strerror(errno));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuf
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> tmpBuf
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="FcnDisableSignalHandler" class="tlc_func">FcnDisableSignalHandler</a>(isMac) 
+ <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuf
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> aehIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggers">LibGetNumTriggers</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerType">LibGetTriggerType</a>(aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(evType, "PeriodicTrigger")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> type = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerHandlerType">LibGetTriggerHandlerType</a>(aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(type, "isr")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> targetObj = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerTargetObject">LibGetTriggerTargetObject</a>(aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sigNumber = targetObj.SignalNumber
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Restore the signal handler for signal: %<sigNumber[0]> */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct sigaction sa;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sa.sa_handler = SIG_DFL;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sigemptyset(&amp;sa.sa_mask);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sa.sa_flags = SA_RESTART; /* Restart functions if interrupted by handler */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (sigaction(%<sigNumber[0]>, &amp;sa, NULL) == -1) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (sigaction(SIGRTMIN+%<sigNumber[0]>, &amp;sa, NULL) == -1) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fprintf(stderr, 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Failed to restore default signal handler for signal %<sigNumber[0]> : %s/n",     
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;strerror(errno));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}   
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Disable Ctrl+C signal handler </span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct sigaction sa;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sa.sa_handler =  SIG_DFL;  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sigemptyset(&amp;sa.sa_mask);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sa.sa_flags = SA_RESTART; /* Restart functions if interrupted by handler */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (sigaction(SIGINT, &amp;sa, NULL) == -1) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fprintf(stderr, "Failed to register signal handler for signal SIGINT : %s/n", strerror(errno));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% Disable SIGRTMIN signal handler for timers notification</span>
+ <br>&nbsp;&nbsp;&nbsp;{  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Restore the signal handler for signal: SIGRTMIN */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;struct sigaction sa;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sa.sa_handler = SIG_DFL;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sigemptyset(&amp;sa.sa_mask);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sa.sa_flags = SA_RESTART;          /* Restart functions if interrupted by handler */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (sigaction(SIGRTMIN, &amp;sa, NULL) == -1) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fprintf(stderr,
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Failed to restore default signal handler for signal SIGRTMIN : %s/n",
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;strerror(errno));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpBuf
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> tmpBuf
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%==============================================================================
+</span> <br><span class="tlc_fkw">%function</span> <a id="FcnGenerateMainFunction" class="tlc_func">FcnGenerateMainFunction</a>(isMac, numPeriodicTasks, numPeriodicTriggers) <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numAperiodicTasks    = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibGetNumAperiodicTasks">SLibGetNumAperiodicTasks</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> schedPriority        = "40"
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> coreAffinityRequired = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibIsCoreAffinityRequired">LibIsCoreAffinityRequired</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> coreAffinityRequired &amp;&amp; isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportError">LibReportError</a>("The model contains blocks mapped to tasks which are scheduled rate monotonic on a single core which is not supported. The ''Allow tasks to execute concurrently on target'' check box on the Configuration Parameters - Solver pane  must be on for all referenced models.")>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;int main(int argc, char *argv[])
+ <br>&nbsp;&nbsp;{ 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTTarget">SLibIsERTTarget</a>() &amp;&amp; GenerateGRTWrapper
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> statusVar = "status"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const char_T *%<<span>statusVar</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> coreAffinityRequired
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int i, j;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int i;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (numPeriodicTasks > 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_t periodicThread[%<<span>numPeriodicTasks</span>>];  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;pthread_t periodicTriggerThread[%<<span>numPeriodicTriggers</span>>];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (numAperiodicTasks > 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pthread_t aperiodicThread[%<<span>numAperiodicTasks</span>>];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;struct sched_param sp;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;int ret, policy;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;pthread_attr_t attr;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;double periodicTriggerRate[%<<span>numPeriodicTriggers</span>>];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Find the maximum number of cores assigned to one of the tasks</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> coreAffinityRequired
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> maxNumberOfCoresPerTask = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibGetMaxNumberOfCoresPerTask">SLibGetMaxNumberOfCoresPerTask</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> maxNumberOfCoresPerTask > 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span> 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Declare threads priority based on rate monotonic assignment</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (numPeriodicTasks > 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int priority[%<<span>numPeriodicTasks</span>>];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> coreAffinityRequired
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int coreAffinity[%<<span>numPeriodicTasks</span>>][%<<span>maxNumberOfCoresPerTask</span>>];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int numCores;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Unused arguments */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(void)(argc);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;(void)(argv);    
+ <br>&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> asyncPr = 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (numAperiodicTasks > 0)  <span class="tlc_comment">%% Reserve highest priority to async</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> asyncPr = 2
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> idx = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> ehIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggers">LibGetNumTriggers</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerType">LibGetTriggerType</a>(ehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(evType, "AperiodicTrigger")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> taskIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggerTasks">LibGetNumTriggerTasks</a>(ehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> stId = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerTaskSampleTimeIndex">LibGetTriggerTaskSampleTimeIndex</a>(ehIdx, taskIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pt   = %<<span class="tlc_bifunc">CAST</span>("Number", schedPriority)> - %<<span>asyncPr</span>> - %<<span>stId</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;priority[%<<span>idx</span>>] = %<<span>pt</span>>;   
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> coreAffinityRequired
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> affinity = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTaskCoreAffinity">LibGetTaskCoreAffinity</a>(ehIdx, taskIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> index = maxNumberOfCoresPerTask
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(affinity) || <span class="tlc_bifunc">SIZE</span>(affinity,1)-1 < index
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;coreAffinity[%<<span>idx</span>>][%<<span>index</span>>] = -1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;coreAffinity[%<<span>idx</span>>][%<<span>index</span>>] = %<affinity[index]>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> idx = idx + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>        
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Declare rate of periodic triggers</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> idx = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> ehIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggers">LibGetNumTriggers</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerType">LibGetTriggerType</a>(ehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(evType, "AperiodicTrigger")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;periodicTriggerRate[%<<span>idx</span>>] = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerBaseRate">LibGetTriggerBaseRate</a>(ehIdx)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> idx = idx + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibIsTaskProfilingOn">SLibIsTaskProfilingOn</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0 ; i < %<<span>numPeriodicTriggers</span>>; i++) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counterSamples[i] = 0;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initializeNumSamplesForProfiling();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;printf("**starting the model**/n");      
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;fflush(stdout);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !SuppressErrorStatus
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMSetErrStat">RTMSetErrStat</a>(0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibIsRateMonotonicScheduling">SLibIsRateMonotonicScheduling</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#if !defined (_POSIX_THREAD_PRIORITY_SCHEDULING)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fprintf(stderr, "Priority scheduling is NOT supported by your system./n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fprintf(stderr, "The generated code will not run correctly because your/n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fprintf(stderr, "model contains multiple tasks/n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit(EXIT_FAILURE);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#endif
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Set scheduling policy of the main thread to SCHED_FIFO */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sp.sched_priority = sched_get_priority_max(SCHED_FIFO);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = sched_setscheduler(0, SCHED_FIFO, &amp;sp); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (ret == -1) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (errno == EPERM) {    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("To run the generated code correctly you need root privileges because/n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("the generated code requires FIFO scheduling for the rate monotonic tasks./n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("Try running the executable with the following command: sudo ./<executable name>./n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fflush(stdout);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Initialize semaphore used for thread synchronization */     
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0; i < %<<span>numPeriodicTriggers</span>>; i++)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char semName[32];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf(semName, "sem_quit_%x%x", i, getpid());
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;quitSem[i] = sem_open(semName, O_CREAT | O_EXCL, 0777, 0);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = sem_init(&amp;quitSem[i], 0, 0);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "sem_init:quitSem");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Create threads executing the Simulink model */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;pthread_attr_init(&amp;attr);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ret = pthread_attr_setinheritsched(&amp;attr, PTHREAD_INHERIT_SCHED);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "pthread_attr_setinheritsched");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ret = pthread_attr_setdetachstate(&amp;attr, PTHREAD_CREATE_DETACHED);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "pthread_attr_setdetachstate");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ret = pthread_attr_getschedpolicy(&amp;attr, &amp;policy);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "pthread_attr_getschedpolicy"); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (numAperiodicTasks > 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Block all aperiodic task signals */  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertposixthread.html#FcnMaskSignals">FcnMaskSignals</a>(isMac, "task", "aperiodicSigMask", TLC_TRUE, TLC_FALSE)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/************************
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Initialize the model *
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;************************/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::GenerateGRTWrapper
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S = %<<span>Name</span>>();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> ::UsingMalloc
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<::tSimStruct> = %<<span>Name</span>>();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (%<::tSimStruct> == NULL) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;puts("Memory allocation error during model "
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"registration");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return(EXIT_FAILURE);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S = %<::tSimStruct>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> ::GenerateClassInterface
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>Name</span>>_Obj.initialize();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S = %<::tSimStruct>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibCallModelInitialize">LibCallModelInitialize</a>()</span>>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;if (%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetErrStat">RTMGetErrStat</a>()</span>> != %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetNullDefinitionFromTfl">SLibGetNullDefinitionFromTfl</a>()</span>>) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;puts("Error during model registration");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit(EXIT_FAILURE);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::GenerateGRTWrapper
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.StopTime == rtInf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtmSetTFinal(S, -1.0);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtmSetTFinal(S, %<::CompiledModel.StopTime>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;MdlInitializeSizes();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;MdlInitializeSampleTimes();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTTarget">SLibIsERTTarget</a>() &amp;&amp; ::GenerateGRTWrapper
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>statusVar</span>> = rt_SimInitTimingEngine(rtmGetNumSampleTimes(S),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtmGetStepSize(S),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtmGetSampleTimePtr(S),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtmGetOffsetTimePtr(S),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtmGetSampleHitPtr(S),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtmGetSampleTimeTaskIDPtr(S),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rtmGetTStart(S),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;rtmGetSimTimeStep(S),
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;rtmGetTimingData(S));
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (%<<span>statusVar</span>> != NULL) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;puts("Failed to initialize sample time engine");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit(EXIT_FAILURE);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;MdlStart();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertposixthread.html#FcnEnableSignalHandler">FcnEnableSignalHandler</a>(isMac)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (numPeriodicTasks > 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> coreAffinityRequired
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;numCores = sysconf(_SC_NPROCESSORS_ONLN);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Create periodic threads */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0; i < %<<span>numPeriodicTasks</span>>; i++)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char semName[32];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf(semName, "sem_start_%x%x", i, getpid());
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;periodicTaskStartSem[i] = sem_open(semName, O_CREAT | O_EXCL, 0777, 0);  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf(semName, "sem_stop_%x%x", i, getpid());
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;periodicTaskStopSem[i] = sem_open(semName, O_CREAT | O_EXCL, 0777, 1);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = sem_init(&amp;periodicTaskStartSem[i], 0, 0);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "sem_init");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = sem_init(&amp;periodicTaskStopSem[i], 0, 1);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "sem_init");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;threadID[i] = i; 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (policy == SCHED_FIFO || policy == SCHED_RR) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sp.sched_priority = priority[i];    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = pthread_attr_setschedparam(&amp;attr, &amp;sp);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "pthread_attr_setschedparam"); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = pthread_create(&amp;periodicThread[i], &amp;attr, periodicTask, (void *) &amp;threadID[i]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret,"pthread_create");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> coreAffinityRequired
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Set the core affinity */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cpu_set_t cpuset;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPU_ZERO(&amp;cpuset);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(j = 0; j < %<<span>maxNumberOfCoresPerTask</span>>; j++) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if ((coreAffinity[i][j] >= 0) &amp;&amp; (coreAffinity[i][j] < numCores))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPU_SET(coreAffinity[i][j], &amp;cpuset); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(CPU_COUNT(&amp;cpuset) > 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = pthread_setaffinity_np(periodicThread[i], sizeof(cpu_set_t), &amp;cpuset);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "pthread_setaffinity_np");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>  <span class="tlc_comment">%% if (numPeriodicTasks > 0)</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (numAperiodicTasks > 0) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pt = %<<span class="tlc_bifunc">CAST</span>("Number", schedPriority)> -1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (policy == SCHED_FIFO || policy == SCHED_RR) { 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sp.sched_priority = %<<span>pt</span>>;   
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = pthread_attr_setschedparam(&amp;attr, &amp;sp); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "pthread_attr_setschedparam"); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Create asynchronously triggered tasks */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> idx = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> aehIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggers">LibGetNumTriggers</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerType">LibGetTriggerType</a>(aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(evType, "PeriodicTrigger")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> type = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerHandlerType">LibGetTriggerHandlerType</a>(aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(type, "task")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> aehName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerName">LibGetTriggerName</a>(aehIdx) 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> taskIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggerTasks">LibGetNumTriggerTasks</a>(aehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = pthread_create(&amp;aperiodicThread[%<<span>idx</span>>], &amp;attr, (void *(*)(void*)) &amp;%<<span>aehName</span>>_%<<span>taskIdx</span>>, NULL);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret,"pthread_create");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> idx = idx + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Initialize semaphores for periodic triggers */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0; i < %<<span>numPeriodicTriggers</span>>; i++) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = sem_init(&amp;periodicTriggerSem[i], 0, 0);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "sem_init");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Create periodic trigger threads */  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (policy == SCHED_FIFO || policy == SCHED_RR) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sp.sched_priority = %<<span class="tlc_bifunc">CAST</span>("Number", schedPriority)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = pthread_attr_setschedparam(&amp;attr, &amp;sp);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "pthread_attr_setschedparam"); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> periodicThreadIDCounter = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> ehIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggers">LibGetNumTriggers</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> evType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerType">LibGetTriggerType</a>(ehIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(evType, "AperiodicTrigger") 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetNumTriggerTasks">LibGetNumTriggerTasks</a>(ehIdx), 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> threadFcnName           = "%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerName">LibGetTriggerName</a>(ehIdx)>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> threadIdx               = numPeriodicTasks + periodicThreadIDCounter
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;threadID[%<<span>threadIdx</span>>]          = %<<span>threadIdx</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> periodicThreadIDCounter = periodicThreadIDCounter + 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> argStr                  = "(void *) &amp;threadID[%<<span>threadIdx</span>>]"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> threadFcnName = "%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#LibGetTriggerName">LibGetTriggerName</a>(ehIdx)>TaskScheduler"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> argStr        = "NULL"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = pthread_create(&amp;periodicTriggerThread[%<<span>ehIdx</span>>], &amp;attr, %<<span>threadFcnName</span>>, %<<span>argStr</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "pthread_create");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;pthread_attr_destroy(&amp;attr);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Create periodic timers */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0; i < %<<span>numPeriodicTriggers</span>>; i++) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MW_setTaskPeriod(periodicTriggerRate[i], SIGRTMIN, i);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Wait for a stopping condition. */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0; i < %<<span>numPeriodicTriggers</span>>; i++) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MW_sem_wait(quitSem[i]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MW_sem_wait(&amp;quitSem[i]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;printf("**stopping the model**/n");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;fflush(stdout);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !SuppressErrorStatus
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetErrStat">RTMGetErrStat</a>()</span>> != NULL)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fprintf(stderr, "/n**%s**/n", %<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/rtmdllib_obs.html#RTMGetErrStat">RTMGetErrStat</a>()</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;MdlTerminate();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertposixthread.html#FcnDisableSignalHandler">FcnDisableSignalHandler</a>(isMac)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (numPeriodicTasks > 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0; i < %<<span>numPeriodicTasks</span>>; i++)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{ 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char semName[32];  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf(semName, "sem_start_%x%x", i, getpid());  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = sem_unlink(semName);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "sem_unlink");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf(semName, "sem_stop_%x%x", i, getpid());
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = sem_unlink(semName);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "sem_unlink");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;} 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span> <span class="tlc_comment">%% if (numPeriodicTasks > 0)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0; i < %<<span>numPeriodicTriggers</span>>; i++)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;char semName[32];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sprintf(semName, "sem_quit_%x%x", i, getpid());
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = sem_unlink(semName);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "sem_unlink"); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>  
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (numPeriodicTasks > 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0; i < %<<span>numPeriodicTasks</span>>; i++)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;{ 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = sem_destroy(&amp;periodicTaskStartSem[i]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "sem_destroy");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = sem_destroy(&amp;periodicTaskStopSem[i]); 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "sem_destroy");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}   
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span> <span class="tlc_comment">%%if (numPeriodicTasks > 0)</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;for (i = 0; i < %<<span>numPeriodicTriggers</span>>; i++) { 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = sem_destroy(&amp;periodicTriggerSem[i]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "sem_destroy");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret = sem_destroy(&amp;quitSem[i]);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CHECK_STATUS(ret, "sem_destroy");
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibIsTaskProfilingOn">SLibIsTaskProfilingOn</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% write to MAT file</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;writeProfileDataToHTMLFile();
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;return 0;
+ <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mainSrc_fcn_defn", tmpFcnBuf)>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%**********************************************************************
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>entry<span style="padding-left:9.5px"></span>point<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>generating<span style="padding-left:9.5px"></span>main.c<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%**********************************************************************
+</span> <br><span class="tlc_fkw">%function</span> <a id="SLibGenerateThreadedMain" class="tlc_func">SLibGenerateThreadedMain</a>() <span class="tlc_fkw">void</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isMac = <span class="tlc_bifunc">FEVAL</span>("ismac")  
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numPeriodicTasks = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibGetNumPeriodicTasks">SLibGetNumPeriodicTasks</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numPeriodicTriggers = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibGetNumPeriodicTriggers">SLibGetNumPeriodicTriggers</a>()
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;* Code generation for Simulink model "%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmainlib.html#FcnMdlName">FcnMdlName</a>()</span>>"
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;* File version               : %<<span>Version</span>>
+ <br>&nbsp;&nbsp;* File generated on          : %<<span>GeneratedOn</span>>
+ <br>&nbsp;&nbsp;* C source code generated on : %<<span>TLC_TIME</span>>
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;* Compiler specified defines:
+ <br>&nbsp;&nbsp;*   RT
+ <br>&nbsp;&nbsp;*   MODEL           = %<::CompiledModel.Name>
+ <br>&nbsp;&nbsp;*   NUMST           = %<::CompiledModel.NumSampleTimes> (Number of sample times)
+ <br>&nbsp;&nbsp;*   NCSTATES        = %<::CompiledModel.NumContStates> (Number of continuous states)
+ <br>&nbsp;&nbsp;*   TID01EQ         = %<::CompiledModel.FixedStepOpts.TID01EQ> 
+ <br>&nbsp;&nbsp;*                     (Set to 1 if sample time task id's 0 and 1 have equal rates)
+ <br>&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;* For more information:
+ <br>&nbsp;&nbsp;*   o Simulink Coder User's Guide
+ <br>&nbsp;&nbsp;*/     
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mainSrc_ban", tmpFcnBuf)>
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !::GenCPP
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#define _GNU_SOURCE
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;#include <stdlib.h>
+ <br>&nbsp;&nbsp;#include <string.h>
+ <br>&nbsp;&nbsp;#include <unistd.h>  <span class="tlc_comment">%%_POSIX_THREAD_PRIORITY_SCHEDULING is defined here</span>
+ <br>&nbsp;&nbsp;#include <pthread.h>
+ <br>&nbsp;&nbsp;#include <sched.h>
+ <br>&nbsp;&nbsp;#include <semaphore.h>
+ <br>&nbsp;&nbsp;#include <errno.h>
+ <br>&nbsp;&nbsp;#include <signal.h>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !isMac
+ <br>&nbsp;&nbsp;#include <time.h>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsERTTarget">SLibIsERTTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#include "rtmodel.h"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::GenerateGRTWrapper
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#include "rt_sim.h"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;#include <stdlib.h>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonthreadlib.html#SLibIsTaskProfilingOn">SLibIsTaskProfilingOn</a>() &amp;&amp; isMac
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;#include <mach/mach_time.h>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mainSrc_incl", tmpFcnBuf)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpFcnBuf 
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::GenerateGRTWrapper
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmain_grtinterface.html#FcnGenerateCommonCodeForGRTWrapper">FcnGenerateCommonCodeForGRTWrapper</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmain_grtinterface.html#FcnGenerateCommonCodeForGRTSimplified">FcnGenerateCommonCodeForGRTSimplified</a>()</span>>
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::UsingMalloc
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<::tSimStructType> *%<::tSimStruct>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const char *RT_MEMORY_ALLOCATION_ERROR = "memory allocation error"; 
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%SLibDeclareModelFcnArgs is already called in <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmain_grtinterface.html">ertmain_grtinterface.tlc</a></span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%Check for reusable code to avoid duplicate definition</span>
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !(::MultiInstanceERTCode &amp;&amp; !::GenerateClassInterface)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmodelarg.html#SLibDeclareModelFcnArgs">SLibDeclareModelFcnArgs</a>(TLC_TRUE)>/
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmodelarg.html#SLibDeclareFcnProtoCtlGlobalVariables">SLibDeclareFcnProtoCtlGlobalVariables</a>()</span>>
+ <br>&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmodelarg.html#SLibDeclareGlobalVariablesForCPPClass">SLibDeclareGlobalVariablesForCPPClass</a>()</span>>/
+ <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpFcnBuf
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mainSrc_data_defn", tmpFcnBuf)>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertposixthread.html#FcnGenerateUtilFunctionsAndGlobalVariables">FcnGenerateUtilFunctionsAndGlobalVariables</a>(isMac, numPeriodicTasks, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;numPeriodicTriggers)>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertposixthread.html#FcnGeneratePeriodicTaskWrapperFunctions">FcnGeneratePeriodicTaskWrapperFunctions</a>(isMac, numPeriodicTasks, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;numPeriodicTriggers)>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertposixthread.html#FcnGenerateAperiodicWrapperFunctions">FcnGenerateAperiodicWrapperFunctions</a>(isMac)>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertposixthread.html#FcnGenerateMainFunction">FcnGenerateMainFunction</a>(isMac, numPeriodicTasks, numPeriodicTriggers)> 
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br></body></html>

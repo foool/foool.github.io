@@ -1,0 +1,80 @@
+<html>
+<head>
+
+<style>
+p {color : black; font-family:courier; font-size: 80%;}
+body {line-height: 100%; font-family:courier;}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_function {color: green;}.tlc_endfunction {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}
+.tlc_bifunc {color: brown;}
+</style>
+
+</head>
+<body>
+%% File: read-guide-<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/scope.html">scope.tlc</a>   (This line is a TLC Comment, and will not print)
+ <br>%% 
+ <br>%% To execute this file, type: tlc -v -r guide.rtw read-guide-<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/scope.html">scope.tlc</a>
+ <br>%% Set format for displaying real values (default is "EXPONENTIAL")
+ <br><span class="tlc_realformat">%realformat</span> "CONCISE"
+ <br>&nbsp; <br>Using TLC you can:
+ <br>* Directly access any field's value, e.g.
+ <br><span class="tlc_assign">%assign</span> td = "%" + "<Top.Date>"
+ <br>&nbsp;&nbsp;%&lt;td&gt; -- evaluates to:
+ <br>&nbsp;&nbsp;"%&lt;Top.Date&gt;"
+ <br>%%
+ <br>%% -> Add a statement below to make "Top.Employee" the current scope:
+ <br>%%
+ <br><span class="tlc_with">%with</span> Top.Employee
+ <br>&nbsp; <br>* Assign contents of a field to a variable, e.g.
+ <br>%%
+ <br>%% -> Modify identifiers below to account for the current %with scope:
+ <br>%%
+ <br>&nbsp;<span class="tlc_assign">%assign</span> worker = FirstName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%assign worker = FirstName"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;worker expands to FirstName = %&lt;worker&gt;
+ <br>&nbsp;&nbsp; <br>&nbsp;* Concatenate string values, e.g.
+ <br>&nbsp;<span class="tlc_assign">%assign</span> worker = worker + " " + LastName
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%assign worker = worker + " " + LastName"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;worker expands to worker + " " + LastName = "%&lt;worker&gt;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;* Perform arithmetic operations, e.g.
+ <br>&nbsp;<span class="tlc_assign">%assign</span> wageCost = PayRate * Overhead
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%assign wageCost = PayRate * Overhead"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wageCost expands to PayRate * Overhead ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<- %&lt;PayRate&gt; * %&lt;Overhead&gt; = %&lt;wageCost&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;%%
+ <br>&nbsp;%% -> Beware of the next %assign statement!
+ <br>&nbsp;%%
+ <br>&nbsp;* Put variables into a field, e.g.
+ <br>&nbsp;<span class="tlc_assign">%assign</span> Top.Employee.GrossRate = wageCost
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%assign Top.Employee.GrossRate = wageCost"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Top.Employee.GrossRate expands to wageCost = %&lt;GrossRate&gt;
+ <br>%%
+ <br>%% -> Add a statement below to restore global scope:
+ <br>%%
+ <br><span class="tlc_endwith">%endwith</span>
+ <br>%% -> Add a statement below to make "Top" the current scope:
+ <br>%%
+ <br><span class="tlc_with">%with</span> Top
+ <br>&nbsp; <br>&nbsp;* Index lists of values, e.g.
+ <br>&nbsp;<span class="tlc_assign">%assign</span> projects = Project[0].Name + ", " + Project[1].Name...
+ <br>&nbsp;+ ", " + Project[2].Name
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%assign projects = Project[0].Name + ", " + Project[1].Name..."
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ ", " + Project[2].Name"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;projects expands to Project[0].Name + ", " + Project[1].Name
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ ", " + Project[2].Name = %&lt;projects&gt;
+ <br>&nbsp;&nbsp; <br>&nbsp;* Traverse and manipulate list data via loops, e.g.
+ <br>&nbsp;<span class="tlc_assign">%assign</span> diffSum = 0.0
+ <br>&nbsp;<span class="tlc_foreach">%foreach</span> i = NumProject
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- At top of Loop, Project = %&lt;Project[i].Name&gt;; Difficulty =...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;Project[i].Difficulty&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> diffSum = diffSum + Project[i].Difficulty
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Bottom of Loop, i = %&lt;i&gt;; diffSum = %&lt;diffSum&gt;
+ <br>&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;<span class="tlc_assign">%assign</span> avgDiff = diffSum / NumProject
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Average Project Difficulty expands to diffSum / NumProject = %&lt;diffSum&gt; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ %&lt;NumProject&gt; = %&lt;avgDiff&gt;
+ <br>%%
+ <br>%% -> Add a statement below to restore global scope:
+ <br>%%
+ <br><span class="tlc_endwith">%endwith</span>
+ <br>&nbsp; <br>%% End of read-guide-<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/scope.html">scope.tlc</a> <br></body></html>

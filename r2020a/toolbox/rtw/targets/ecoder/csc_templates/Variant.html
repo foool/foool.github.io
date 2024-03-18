@@ -1,0 +1,272 @@
+<html>
+<head>
+
+<style>
+p {color : black; font-family:courier; font-size: 80%;}
+body {line-height: 100%; font-family:courier;}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_function {color: green;}.tlc_endfunction {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}
+.tlc_bifunc {color: brown;}
+</style>
+
+</head>
+<body>
+%% 
+ <br>%% 
+ <br>%% 
+ <br>%%
+ <br>%% Copyright 1994-2008 The MathWorks, Inc.
+ <br>&nbsp; <br>%% File Abstract ================================================================
+ <br>%%
+ <br>%% This is a generic template to be used as a starting point when implementing a
+ <br>%% a variant parameter custom storage class.
+ <br>&nbsp; <br>%% Disclaimer ===================================================================
+ <br>%%
+ <br>%% Custom storage classes are an advanced code generation feature, and provide 
+ <br>%% tremendous customization capability of data symbols in the generated code.  
+ <br>%% This file is an example of a way to implement parameter variants.  It may 
+ <br>%% need to be modified to work for your application.
+ <br>&nbsp; <br>%% Target language is C
+ <br><span class="tlc_implements">%implements</span> * "C"
+ <br>&nbsp; <br>&nbsp; <br>%% Function: DataAccess ================================================
+ <br>%% Abstract:
+ <br>%%   DataAccess provides an API for requesting code fragments or other
+ <br>%%   information corresponding to data of this custom storage class.
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="DataAccess" class="tlc_func">DataAccess</a>(record, request, idx, reim) void
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> PrefixModelToStructs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> prefix = "%&lt;CompiledModel.Name&gt;_"
+ <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> prefix = ""
+ <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structname = "%&lt;prefix&gt;%&lt;record.Object.Package&gt;_%&lt;record.Object.Class&gt;"
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> request
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "contents"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Access the data through the pointer to an element of an array of
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% structures
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "%&lt;structname&gt;->%&lt;id&gt;%&lt;idx&gt;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%break
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "address"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Access the data through the pointer to an element of an array of
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% structures
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "&%&lt;structname&gt;->%&lt;id&gt;%&lt;idx&gt;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%break
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "initialize"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Initialize external I/O to ground
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> gndValue = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetGroundValue">LibGetGroundValue</a>(record, tRealPart)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "%&lt;structname&gt;->%&lt;id&gt;%&lt;idx&gt; = %&lt;gndValue&gt;;"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%break
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "declComment"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% The data is not individually declared; the structure as a 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% whole is declared in the storage class setup.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ["", "", ""]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%break
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "declare"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% The data is not individually declared; the structure as a 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% whole is declared in the storage class setup.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%break
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "defnComment"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% The data is not individually defined; the structure as a 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% whole is defined in the storage class setup.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ["", "", ""]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%break
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "define"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% The data is not individually defined; the structure as a 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% whole is defined in the storage class setup.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%break
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "layout"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Uses The Mathworks' data layout.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibDefaultCustomStorageLayout">LibDefaultCustomStorageLayout</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%break
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "qualifier"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Uses a "const" type qualifier.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%break
+ <br>&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Unknown access type.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> LibDefaultCustomStorageUnknownDataAccessType ...
+ <br>&nbsp;(record, request, idx, reim)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%break
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>%% Function: ClassAccess =============================================
+ <br>%% Abstract:
+ <br>%%  SClassAccess provides an API for requesting information or action
+ <br>%%   corresponding to the custom storage class
+ <br>%%
+ <br><span class="tlc_function">%function</span> <a id="ClassAccess" class="tlc_func">ClassAccess</a>(record, request) void
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> request
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "setup"
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initFieldSep = ", "
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numData = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageClassRecordNumData">LibCustomStorageClassRecordNumData</a>(record)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Loop over all data of this custom storage class
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = numData
+ <br>&nbsp; <br>&nbsp;<span class="tlc_assign">%assign</span> item = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetDataRecord">LibGetDataRecord</a>(record, idx)
+ <br>&nbsp;<span class="tlc_assign">%assign</span> props = item.Object.ObjectProperties
+ <br>&nbsp;<span class="tlc_assign">%assign</span> variantProps = props.Variants.Object.ObjectProperties
+ <br>&nbsp; <br>&nbsp;%% When encountering the first data instance of this storage
+ <br>&nbsp;%% class, cache away some attributes
+ <br>&nbsp;<span class="tlc_if">%if</span> idx == 0
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;%% Make sure the record is non-complex parameter
+ <br>&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageVerifyRecordIsNonComplex">LibCustomStorageVerifyRecordIsNonComplex</a>(item)&gt;
+ <br>&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageVerifyRecordIsModelParameter">LibCustomStorageVerifyRecordIsModelParameter</a>(item)&gt;
+ <br>&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> objectPackage = item.Object.Package
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> objectClass = item.Object.Class
+ <br>&nbsp;&nbsp;&nbsp;%% Assign the structure name based on the model name, package,
+ <br>&nbsp;&nbsp;&nbsp;%% and class.  Edit this code to define a unique string if you
+ <br>&nbsp;&nbsp;&nbsp;%% prefer.
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> PrefixModelToStructs
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> prefix = "%&lt;CompiledModel.Name&gt;_"
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> prefix = ""
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structname = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%&lt;prefix&gt;%&lt;item.Object.Package&gt;_%&lt;item.Object.Class&gt;"
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typedef = "typedef struct %&lt;structname&gt;_tag {/n"
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;%% Obtain the pointer offset for the variant chosen
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> variantNames = <span class="tlc_bifunc">FIELDNAMES</span>(variantProps)
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numVariants = <span class="tlc_bifunc">SIZE</span>(variantNames,1)
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> command = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"cscvariantget('%&lt;CompiledModel.Name&gt;','%&lt;objectPackage&gt;.%&lt;objectClass&gt;')"
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> variant = <span class="tlc_bifunc">FEVAL</span>("eval",command)
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(variant)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> offset = 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_warning">%warning</span> assuming objects of class "%&lt;objectPackage&gt;.%&lt;objectClass&gt;" have their values set to their "%&lt;variantNames[0]&gt;" variant
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> jdx = numVariants
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> variant == variantNames[jdx]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> offset = jdx
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> jdx = numVariants
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> record variant_init%&lt;jdx&gt; ""
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;<span class="tlc_if">%if</span> idx == numData - 1
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initFieldSep = ""
+ <br>&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Build up typedef and initializer for array of parameter variants
+ <br>&nbsp;<span class="tlc_assign">%assign</span> id = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(item)
+ <br>&nbsp;<span class="tlc_assign">%assign</span> dtypeName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordCompositeDataTypeName">LibGetRecordCompositeDataTypeName</a>(item)
+ <br>&nbsp;<span class="tlc_assign">%assign</span> width = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalmaplib.html#LibGetDataWidth">LibGetDataWidth</a>(item)
+ <br>&nbsp;<span class="tlc_assign">%assign</span> dims = ""
+ <br>&nbsp;<span class="tlc_if">%if</span> width > 1
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dims = "[%&lt;width&gt;]"
+ <br>&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;<span class="tlc_assign">%assign</span> typedef = "%&lt;typedef&gt;%&lt;dtypeName&gt; %&lt;id&gt;%&lt;dims&gt;;/n"
+ <br>&nbsp; <br>&nbsp;%% Loop over each variant for this instance of data
+ <br>&nbsp;<span class="tlc_foreach">%foreach</span> jdx = numVariants
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> variantName = variantNames[jdx]
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> variantValue = <span class="tlc_bifunc">GETFIELD</span>(variantProps, variantName)
+ <br>&nbsp;&nbsp;&nbsp;%% Make sure the size of each variant matches the size of the
+ <br>&nbsp;&nbsp;&nbsp;%% value
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sizeVariantValue = <span class="tlc_bifunc">SIZE</span>(variantValue)
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> sizeVariantValue[0]*sizeVariantValue[1] != width
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>(...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"variant %&lt;variantName&gt; of parameter %&lt;id&gt; is not the right size")>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;%% Generate this parameter's variant's contribution to the structure
+ <br>&nbsp;&nbsp;&nbsp;%% initializer
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> width > 1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> data_init
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dummy = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">GENERATE_FORMATTED_VALUE</span>(variantValue, "%&lt;id&gt;, variant %&lt;variantName&gt;")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> data_init
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> data_init = "%&lt;data_init&gt;%&lt;initFieldSep&gt;/n"
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> data_init = ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%&lt;variantValue&gt;%&lt;initFieldSep&gt; /* %&lt;id&gt;, variant %&lt;variantName&gt; *//n"
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> record.variant_init%&lt;jdx&gt; = record.variant_init%&lt;jdx&gt; + data_init
+ <br>&nbsp; <br>&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structtype = "%&lt;structname&gt;_struct"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structarray = "%&lt;structname&gt;_array"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typedef = "%&lt;typedef&gt;} %&lt;structtype&gt;;/n/n"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structinit = "{"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> jdx = numVariants
+ <br>&nbsp;<span class="tlc_assign">%assign</span> structinit = structinit + "{" + record.variant_init%&lt;jdx&gt; + "}"
+ <br>&nbsp;<span class="tlc_if">%if</span> jdx < (numVariants - 1)
+ <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structinit = "%&lt;structinit&gt;,/n"
+ <br>&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> structinit = "%&lt;structinit&gt;}"
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mdlHdrFile   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseFile">GetBaseFile</a>("SystemHeader")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> baseFileName = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseFileName">GetBaseFileName</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataFileName = "%&lt;record.Name&gt;_data"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataFile = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibAddModelFile">SLibAddModelFile</a>("SystemBody","Simulink", dataFileName)
+ <br>&nbsp; <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> inclBuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#include "%&lt;baseFileName&gt;.h"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> inclBuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(dataFile, "Includes", inclBuf)>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> CompiledModel
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> bannerBuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* %&lt;dataFileName&gt;.c
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibCommonHeaderInfo">SLibCommonHeaderInfo</a>()&gt;/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> bannerBuf
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(dataFile, "Banner", bannerBuf)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Generate typedef for array holding sets of parameter variants
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(mdlHdrFile, "Typedefs", typedef)>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Declare array holding sets of parameter variants 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(mdlHdrFile, "Declarations", ...
+ <br>&nbsp;"/* Array containing sets of variant parameter values *//n" + ...
+ <br>&nbsp;"extern const %&lt;structtype&gt; %&lt;structarray&gt;[%&lt;numVariants&gt;];/n/n")>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Define array holding sets of parameter variants
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(dataFile, "Definitions", ...
+ <br>&nbsp;"/* Array containing sets of variant parameter values *//n" + ...
+ <br>&nbsp;"const %&lt;structtype&gt; %&lt;structarray&gt;[%&lt;numVariants&gt;] = /n%&lt;structinit&gt;;/n/n")>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Declare pointer to element of array holding sets of parameter variants
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(mdlHdrFile, "Declarations", ...
+ <br>&nbsp;"/* Pointer to set of variant parameter values selected *//n" + ...
+ <br>&nbsp;"extern const %&lt;structtype&gt; *%&lt;structname&gt;;/n/n")>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Define pointer to element of array holding sets of parameter variants
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(dataFile, "Definitions", ...
+ <br>&nbsp;"/* Pointer to set of variant parameter values selected *//n" + ...
+ <br>&nbsp;"const %&lt;structtype&gt; *%&lt;structname&gt;;/n/n")>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Declare offset into array holding sets of parameter variants
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(mdlHdrFile, "Declarations", ...
+ <br>&nbsp;"/* Offset into array containing sets of variants *//n" + ...
+ <br>&nbsp;"extern unsigned char %&lt;structname&gt;_offset;/n/n")>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Define offset into array holding sets of parameter variants
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibSetModelFileAttribute">SLibSetModelFileAttribute</a>(dataFile, "Definitions", ...
+ <br>&nbsp;"/* Offset into array containing sets of variants *//n" + ...
+ <br>&nbsp;"unsigned char %&lt;structname&gt;_offset = %&lt;offset&gt;;/n/n")>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Initialize pointer to element of array holding sets of parameter 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% variants
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>(...
+ <br>&nbsp;"/* Initialize pointer to set of variant parameter values selected *//n","trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/hookslib.html#LibMdlStartCustomCode">LibMdlStartCustomCode</a>(...
+ <br>&nbsp;"%&lt;structname&gt; = %&lt;structarray&gt; + %&lt;structname&gt;_offset;/n/n","trailer")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%break
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "comment"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%break
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "typeComment"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%break
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "declComment"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%break
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "defnComment"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%break
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% Unknown access type.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> LibDefaultCustomStorageUnknownClassAccessType ...
+ <br>&nbsp;(record, request)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%%break
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp; <br>&nbsp; <br><span class="tlc_endfunction">%endfunction</span>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp; <br>%% [EOF] Struct.tlc
+ <br></body></html>

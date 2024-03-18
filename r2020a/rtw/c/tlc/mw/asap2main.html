@@ -1,0 +1,107 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2014<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Master<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>Simulink<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>ASAP2<span style="padding-left:9.5px"></span>format<span style="padding-left:9.5px"></span>(model.a2l)
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Create<span style="padding-left:9.5px"></span>empty<span style="padding-left:9.5px"></span>Templates<span style="padding-left:9.5px"></span>Record<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>add<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>::CompiledModel
+</span> <br><span class="tlc_assign">%assign</span> tmpVar = Templates{ NumTemplates 0 }
+ <br><span class="tlc_assign">%assign</span> ::CompiledModel = ::CompiledModel + Templates
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Create<span style="padding-left:9.5px"></span>empty<span style="padding-left:9.5px"></span>CompuMethods<span style="padding-left:9.5px"></span>Record<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>add<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>::CompiledModel
+</span> <br><span class="tlc_assign">%assign</span> tmpVar = CompuMethods{ NumCompuMethods 0 }
+ <br><span class="tlc_assign">%assign</span> ::CompiledModel = ::CompiledModel + CompuMethods
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Create<span style="padding-left:9.5px"></span>empty<span style="padding-left:9.5px"></span>CompuMethodsHash<span style="padding-left:9.5px"></span>Record<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>add<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>::CompiledModel.CompuMethods
+</span> <br><span class="tlc_assign">%assign</span> tmpVar = CompuMethodsHash { }
+ <br><span class="tlc_assign">%assign</span> ::CompiledModel.CompuMethods =  ::CompiledModel.CompuMethods + CompuMethodsHash
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Create<span style="padding-left:9.5px"></span>empty<span style="padding-left:9.5px"></span>ASAP2Groups<span style="padding-left:9.5px"></span>Record<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>add<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>::CompiledModel
+</span> <br><span class="tlc_assign">%assign</span> tmpVar = ASAP2Groups{ NumASAP2Groups 0 }
+ <br><span class="tlc_assign">%assign</span> ::CompiledModel = ::CompiledModel + ASAP2Groups
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Create<span style="padding-left:9.5px"></span>empty<span style="padding-left:9.5px"></span>ASAP2RecordLayouts<span style="padding-left:9.5px"></span>Record<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>add<span style="padding-left:9.5px"></span>it<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>::CompiledModel
+</span> <br><span class="tlc_assign">%assign</span> tmpVar = ASAP2RecordLayouts{ NumRecordLayouts 0; RecordLayouts {} }
+ <br><span class="tlc_assign">%assign</span> ::CompiledModel = ::CompiledModel + ASAP2RecordLayouts
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Load<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>functions<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>generating<span style="padding-left:9.5px"></span>ASAP2<span style="padding-left:9.5px"></span>file
+</span> <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html">asap2lib.tlc</a>"
+ <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2grouplib.html">asap2grouplib.tlc</a>"
+ <br><span class="tlc_include">%include</span> "<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lookuplib.html">asap2lookuplib.tlc</a>"
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Load<span style="padding-left:9.5px"></span>user-defined<span style="padding-left:9.5px"></span>setup<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>generating<span style="padding-left:9.5px"></span>ASAP2<span style="padding-left:9.5px"></span>file
+</span> <br><span class="tlc_assign">%assign</span> setupFileName = "asap2setup.tlc"
+ <br><span class="tlc_assign">%assign</span> setupFile = <span class="tlc_bifunc">FEVAL</span>("which", setupFileName)
+ <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">TYPE</span>(setupFile) == "String"
+ <br>&nbsp;&nbsp;<span class="tlc_include">%include</span> setupFile
+ <br><span class="tlc_else">%else</span> 
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% START_ASSERT</span>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibReportErrorWithIdAndArgs">SLibReportErrorWithIdAndArgs</a>("RTW:tlc:NoASAP2Setup", setupFileName)>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%% END_ASSERT</span>
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp; <br><span class="tlc_assign">%assign</span> ASAP2EnableTestPointSignals   = ASAP2EnableTestPoints
+ <br><span class="tlc_assign">%assign</span> ASAP2EnableTestPointStateflow = ASAP2EnableTestPoints
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Populate<span style="padding-left:9.5px"></span>modelref<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>variant<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>(in<span style="padding-left:9.5px"></span>BHM)<span style="padding-left:9.5px"></span>with<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>information
+</span> <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#FcnUpdateBHMForModelRefCodeVariants">FcnUpdateBHMForModelRefCodeVariants</a>()</span>>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Add<span style="padding-left:9.5px"></span>model<span style="padding-left:9.5px"></span>argument<span style="padding-left:9.5px"></span>identifier<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>canonical<span style="padding-left:9.5px"></span>parameters
+</span> <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#FcnAddModelArgIdentifierToCanParams">FcnAddModelArgIdentifierToCanParams</a>()</span>>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Generate<span style="padding-left:9.5px"></span>canonical<span style="padding-left:9.5px"></span>dependency<span style="padding-left:9.5px"></span>list<span style="padding-left:9.5px"></span>file
+</span> <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#FcnGenerateCanonicalDependencyList">FcnGenerateCanonicalDependencyList</a>()</span>>
+ <br>&nbsp; <br><span class="tlc_selectfile">%selectfile</span> STDOUT
+ <br><span class="tlc_if">%if</span> RTWVerbose
+ <br>### Creating ASAP2 file: %<<span>ASAP2FileName</span>>
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Create<span style="padding-left:9.5px"></span>groups<span style="padding-left:9.5px"></span>based<span style="padding-left:9.5px"></span>on<span style="padding-left:9.5px"></span>graphical<span style="padding-left:9.5px"></span>hierarchy<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>model
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>-------------------------------------------------------
+</span> <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2grouplib.html#LibASAP2CreateGraphicalGroups">LibASAP2CreateGraphicalGroups</a>()</span>>
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> ASAP2FullFileName = ASAP2FileName
+ <br><span class="tlc_openfile">%openfile</span> ModelASAP2File = ASAP2FullFileName
+ <br><span class="tlc_openfile">%openfile</span> ASAP2List = "asap2.lis"
+ <br><span class="tlc_selectfile">%selectfile</span> ModelASAP2File
+ <br>%<<span>ASAP2UserFcnWriteFileHead()</span>>
+ <br><span class="tlc_assign">%assign</span> asap2Version = ASAP2UserFcnASAP2Version()
+ <br><span class="tlc_assign">%assign</span> VersionNo = asap2Version[0]
+ <br><span class="tlc_assign">%assign</span> UpgradeNo = asap2Version[1]
+ <br>&nbsp;ASAP2_VERSION  %<<span>VersionNo</span>> %<<span>UpgradeNo</span>>   /* Version %<<span>VersionNo</span>>.%<<span>UpgradeNo</span>> */
+ <br>&nbsp;&nbsp; <br>/begin PROJECT %<<span>ASAP2ProjectName</span>> "%<<span>ASAP2ProjectComment</span>>"
+ <br>&nbsp; <br>&nbsp;&nbsp;%<<span>ASAP2UserFcnWriteHeader()</span>>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;/begin MODULE %<<span>ASAP2ModuleName</span>>  "%<<span>ASAP2ModuleComment</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>ASAP2UserFcnWriteHardwareInterface()</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2lib.html#SLibASAP2WriteDynamicContents">SLibASAP2WriteDynamicContents</a>()</span>>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2grouplib.html#SLibOutputGroups">SLibOutputGroups</a>()</span>>
+ <br>&nbsp;&nbsp;/end MODULE
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp; <br>/end PROJECT
+ <br>%<<span>ASAP2UserFcnWriteFileTail()</span>>/
+ <br><span class="tlc_closefile">%closefile</span> ASAP2List
+ <br><span class="tlc_closefile">%closefile</span> ModelASAP2File
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibAddGeneratedFileToList">SLibAddGeneratedFileToList</a>(ASAP2FileName,"interface","a2l","")>
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> indentOutput = <span class="tlc_bifunc">FEVAL</span>("asap2indent", ASAP2FullFileName)
+ <br><span class="tlc_selectfile">%selectfile</span> STDOUT
+ <br><span class="tlc_if">%if</span> RTWVerbose
+ <br>%<<span>indentOutput</span>>/
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/asap2main.html">asap2main.tlc</a>
+</span> <br></body></html>

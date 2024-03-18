@@ -1,0 +1,111 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>defines<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>that<span style="padding-left:9.5px"></span>handles<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>triggers.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>It<span style="padding-left:9.5px"></span>must<span style="padding-left:9.5px"></span>define<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>following<span style="padding-left:9.5px"></span>buffer<span style="padding-left:9.5px"></span>variables:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>tlmg_trig_in_setupcall_tb
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>tlmg_trig_in_usecall_tb
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>tlmg_trig_out_setupcall_tb
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>tlmg_trig_out_usecall_tb
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>2009<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>----------------------------------------------------
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Calls
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>----------------------------------------------------
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>----------<span style="padding-left:9.5px"></span>input<span style="padding-left:9.5px"></span>buffers<span style="padding-left:9.5px"></span>-----------
+</span> <br><span class="tlc_openfile">%openfile</span> tlmg_trig_in_setupcall_tb
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// Set the buffer triggering mode.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// The core component can be programmed as to how to move input data sets
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// from an input register to the input buffers for execution by the
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// RTW-generated algorithm.  The default is for the register to be moved
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// automatically upon the write of a full input dataset.  However, one can
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// also setup the core component to require a manual CSR command to move the
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// data.  Such a manual mode is helpful if the initiator is using a full
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// input/output memory map and wants to incrementally change the input data 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// sets between algorithm executions.  (For example, the initiator knows
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// that only input number 2 is changing values between samples.)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// In your TLM environment, this mode can be changed dynamically during
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// simulation, but for this testbench we set it just once at the beginning
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// of the simulation based on the 'TLM Testbench' configset options.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgInputBufferTriggerMode,"Automatic")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;csr.readModifyWrite(INPUT_AUTMOD_BIT_MASK, INPUT_AUTMOD_BIT_MASK); // auto mode
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// csr.readModifyWrite(INPUT_AUTMOD_BIT_MASK, 0); // manual mode
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// csr.readModifyWrite(INPUT_AUTMOD_BIT_MASK, INPUT_AUTMOD_BIT_MASK); // auto mode
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;csr.readModifyWrite(INPUT_AUTMOD_BIT_MASK, 0); // manual mode
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_closefile">%closefile</span> tlmg_trig_in_setupcall_tb
+ <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> tlmg_trig_in_usecall_tb
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// If one has chosen to manually push input data sets to the
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// processing buffer, we must send that command now.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgInputBufferTriggerMode,"Automatic")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// csr.writeCommand(INPUT_PUSH_BIT_MASK);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;csr.writeCommand(INPUT_PUSH_BIT_MASK);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_closefile">%closefile</span> tlmg_trig_in_usecall_tb
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>----------<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>buffers<span style="padding-left:9.5px"></span>-----------
+</span> <br><span class="tlc_openfile">%openfile</span> tlmg_trig_out_setupcall_tb
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// Set the buffer triggering mode.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// ------------------------------------------------------
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// The core component can be programmed as to how to move output data sets
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// from the output buffers to an output register.  The default is for the 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// buffer to be moved automatically upon the read of the output register.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// However, one can also setup the core component to require a manual CSR
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// command to move the data.  Such a manual mode is helpful if the initiator
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// is using a full input/output memory map and knows that only certain
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// output data is changing or is only interested in a subset of the output
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// data.  (For example, the initiator wants to decimate the output data
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// samples by 5.)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// In your TLM environment, this mode can be changed dynamically during
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// simulation, but for this testbench we set it just once at the beginning
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// of the simulation based on the 'TLM Testbench' configset options.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgOutputBufferTriggerMode,"Automatic")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;csr.readModifyWrite(OUTPUT_AUTMOD_BIT_MASK, OUTPUT_AUTMOD_BIT_MASK); // auto mode
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// csr.readModifyWrite(OUTPUT_AUTMOD_BIT_MASK, 0); // manual mode
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// csr.readModifyWrite(OUTPUT_AUTMOD_BIT_MASK, OUTPUT_AUTMOD_BIT_MASK); // auto mode
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;csr.readModifyWrite(OUTPUT_AUTMOD_BIT_MASK, 0); // manual mode
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_closefile">%closefile</span> tlmg_trig_out_setupcall_tb
+ <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> tlmg_trig_out_usecall_tb
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// If one has chosen to manually pull output data sets to the
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// register, we must send that command now.
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;//
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(tlmg_config.tlmgOutputBufferTriggerMode,"Automatic")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;// csr.writeCommand(OUTPUT_PULL_BIT_MASK);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;csr.writeCommand(OUTPUT_PULL_BIT_MASK);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br><span class="tlc_closefile">%closefile</span> tlmg_trig_out_usecall_tb
+ <br>&nbsp; <br></body></html>

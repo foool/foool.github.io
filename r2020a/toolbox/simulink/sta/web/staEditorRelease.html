@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<!-- staRelease.html -->
+<!-- Copyright 2015-2019 The MathWorks, Inc. -->
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- Ensure that upon opening, layout will be displayed properly at 1:1 scale -->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">    
+    
+    <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+   
+    <!-- LINKS-->
+    <!-- Include web widget required css files -->
+    <!-- CSS : implied media="all" -->
+    <link rel="stylesheet" type="text/css" href="release/css/webwidget.dojoRelease.css"/>
+    <link rel="stylesheet" type="text/css" href="release/css/webwidget.css"/>
+    <!--[if IE 9]>
+    <link href="release/SigAuth/css/overrides_ie9.css" rel="stylesheet" type="text/css"/>
+    <![endif]-->
+
+    <!-- CSS Required by AxesWidget from SDI -->
+    <link rel="stylesheet" type="text/css" href="release/SDI2/css/axesWidget.css"/>
+
+    <!-- Custom CSS Imports -->
+    <link rel="stylesheet" type="text/css" href="release/SigAuth/css/editor_main.css"/>
+    <link rel="stylesheet" type="text/css" href="release/SigAuth/css/staToolstrip.css"/>    
+    <link rel="stylesheet" type="text/css" href="release/SigAuth/css/treeTable.css"/>    
+    
+    <link rel="stylesheet" type="text/css" href="release/SigAuth/css/dragndrop_dgrid.css" />
+    <link rel="stylesheet" type="text/css" href="release/SigAuth/css/editor_icons.css" />
+    <link rel="stylesheet" type="text/css" href="release/SigAuth/css/simulink_dgrid.css" />
+    <link rel="stylesheet" type="text/css" href="release/SigAuth/css/simulink_containers.css" />
+    <link rel="stylesheet" type="text/css" href="release/SigAuth/css/editor_containers.css" />
+    <link rel="stylesheet" type="text/css" href="release/SigAuth/css/editor_scenariotree.css" />
+    <link rel="stylesheet" type="text/css" href="release/SigAuth/css/insertdefaults.css" />
+    <link rel="stylesheet" type="text/css" href="release/SigAuth/css/editor_table.css"/>
+    <link rel="stylesheet" type="text/css" href="release/SigAuth/css/generatedCss.css" />
+    <link rel="stylesheet" type="text/css" href="release/shared_sl_web_widgets/js/AuthorSignal/css/author.css" />
+    <link rel="stylesheet" type="text/css" href="release/shared_sl_web_widgets/js/Components/css/paintaxes.css" />
+    <link rel="stylesheet" type="text/css" href="release/SigAuth/css/histogramHelpers.css" />
+    <link rel="stylesheet" type="text/css" href="release/shared_sl_web_widgets/js/CustomFileDialog/css/customfiledialog.css" />
+    <!-- END Custom CSS Imports -->
+
+    <!---END LINKS-->
+    <script src="release/SigAuth/dojoConfig-release-global.js"></script>
+
+    <script type="text/javascript">
+        var facade;
+        var staViewModel;
+        var viewModel = {
+            modelName: 'notAModel',//'slexAutotransRootInportsExample',
+            fileName : "blah.mat",
+            cachedhilite: null
+
+        };
+    </script>
+
+</head>
+
+<body class="tundra">
+<div id="staSpinnerDiv" data-tag="mainSpinner" data-focus="accept" tabindex="-1"></div>
+<div id="staEditorGlassDiv"></div>
+<div id="appDiv"></div>
+
+
+<!-- Include dojo release build -->
+<script type="text/javascript" src="release/dojo/dojo.js"></script>
+
+<!--
+    Note that the dojo.js, webwidget.browsercheck, and webwidget libs are the compressed and
+    minified versions of those libs.
+-->
+<script type="text/javascript">
+    // Require browser compatibility check lib
+    require(["SigAuth/browsercheck"], function () {
+        // Require browser compatibility check module, which will run the checks
+        require(["mw-browser-utils/BrowserCheck!"], function () {
+            // If the browser compatibility check passes, require in the web widget lib
+            require(["SigAuth/SigAuth"], function () {
+                            // Load in application code
+				require([
+					"dojo/dom",
+					"dojo/dom-attr",
+					"SigAuth/js/EditorApp/EditorApp",
+					"shared_sl_web_widgets/js/Utils/staFeatureControl"
+				], function (dom, domAttr, EditorApp, staFeatureControl) {
+					staFeatureControl.getStaFeatureControl().then(function (data) {
+						staFeatureControl.features = data[0];
+
+						//create a new EditorApp
+						var editorView = new EditorApp();
+
+						//show the application and attach it to the appDiv
+						editorView.show({ attachPoint: "appDiv" });
+					});
+
+				});
+            });
+        });
+    });
+</script>
+</body>
+</html>

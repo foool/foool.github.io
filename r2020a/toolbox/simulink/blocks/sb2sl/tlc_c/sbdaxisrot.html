@@ -1,0 +1,108 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>File<span style="padding-left:9.5px"></span>:<span style="padding-left:9.5px"></span>diraxisrot.tlc
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>defines<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>three-axis<span style="padding-left:9.5px"></span>transformation<span style="padding-left:9.5px"></span>on<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>input<span style="padding-left:9.5px"></span>vector
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>through<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>Euler<span style="padding-left:9.5px"></span>angle<span style="padding-left:9.5px"></span>rotation<span style="padding-left:9.5px"></span>described<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>an<span style="padding-left:9.5px"></span>axis<span style="padding-left:9.5px"></span>rotation<span style="padding-left:9.5px"></span>sequence.
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Initial<span style="padding-left:9.5px"></span>coding<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>A<span style="padding-left:9.5px"></span>S<span style="padding-left:9.5px"></span>Bozin
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1997-2010<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_implements">%implements</span> sbdaxisrot "C"
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>BlockTypeSetup<span style="padding-left:9.5px"></span>===================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="BlockTypeSetup" class="tlc_func">BlockTypeSetup</a>(block, system) <span class="tlc_fkw">void</span>
+ <br><span class="tlc_fkw">%endfunction</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Outputs<span style="padding-left:9.5px"></span>==========================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sfcnName = ParamSettings.FunctionName
+ <br>&nbsp;&nbsp;/* %<<span>Type</span>> Block: (%<<span>sfcnName</span>>): %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibParentMaskBlockName">LibParentMaskBlockName</a>(block)> */
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_comment">%%</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalWidth">LibBlockOutputSignalWidth</a>(0)
+ <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = width
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> uvect%<idx+1> = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0,"","","%<<span>tRealPart</span>>%<<span>idx</span>>")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> yvect%<idx+1> = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0,"","","%<<span>tRealPart</span>>%<<span>idx</span>>")
+ <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;real_T       us1,us2,us3;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;real_T       ys1,ys2,ys3;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;real_T       alpha, cosa, sina;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ys1 = %<<span>uvect1</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ys2 = %<<span>uvect2</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;ys3 = %<<span>uvect3</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Loop through the axis sequence
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rollVars = ["u1", "<param>/P1"]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_roll">%roll</span> idx = RollRegions, lcv = 2, block, "Roller", rollVars
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> angle = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(1, "", lcv, "%<<span>tRealPart</span>>%<<span>idx</span>>")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> p1 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#LibBlockParameter">LibBlockParameter</a>(P1, "", lcv, idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cosa = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMathFcnCall">LibGenMathFcnCall</a>("cos", tSS_DOUBLE, "alpha = %<<span>angle</span>>","")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sina = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMathFcnCall">LibGenMathFcnCall</a>("sin", tSS_DOUBLE, "alpha", "")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;us1 = ys1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;us2 = ys2;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;us3 = ys3;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Unrolled loops
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;switch ((int)%<<span>p1</span>>) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 1:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ys1 = us1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ys2 = cosa * us2 + sina * us3;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ys3 = cosa * us3 - sina * us2;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 2:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ys1 = cosa * us1 - sina * us3;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ys2 = us2;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ys3 = sina * us1 + cosa * us3;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 3:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ys1 = cosa * us1 + sina * us2;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ys2 = cosa * us2 - sina * us1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ys3 = us3;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ys1 = us1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ys2 = us2;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ys3 = us3;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endroll">%endroll</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;/*
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* Transformed vector coordinates
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>yvect1</span>> = ys1;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>yvect2</span>> = ys2;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>yvect3</span>> = ys3;
+ <br>&nbsp;&nbsp;}
+ <br><span class="tlc_fkw">%endfunction</span>  <span class="tlc_comment">%% Outputs</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span>diraxisrot.tlc
+</span> <br></body></html>

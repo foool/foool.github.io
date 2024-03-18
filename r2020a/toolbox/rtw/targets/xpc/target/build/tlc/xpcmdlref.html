@@ -1,0 +1,56 @@
+<html>
+<head>
+
+<style>
+p {color : black; font-family:courier; font-size: 80%;}
+body {line-height: 100%; font-family:courier;}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_function {color: green;}.tlc_endfunction {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}
+.tlc_bifunc {color: brown;}
+</style>
+
+</head>
+<body>
+%% ============================================================================
+ <br>%% 
+ <br>%% 
+ <br>%% 
+ <br>%%
+ <br>%% Abstract:
+ <br>%%      This system file creates model.xml which is to load the model hierachy
+ <br>%%      tree in the xPC Target Explorer.
+ <br>%%
+ <br>%% Copyright 1996-2005 The MathWorks, Inc.
+ <br>%%
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_XPCMDLREF_") == 0
+ <br><span class="tlc_assign">%assign</span> _XPCMDLREF_ = 1
+ <br>&nbsp; <br><span class="tlc_include">%include</span> "xPCGenLib.tlc"
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> buildDir = <span class="tlc_bifunc">FEVAL</span>("rtwprivate", "rtwattic", "getBuildDir")
+ <br><span class="tlc_assign">%assign</span> filesep = <span class="tlc_bifunc">FEVAL</span>("filesep")
+ <br><span class="tlc_assign">%assign</span> upDir = "%&lt;filesep&gt;..%&lt;filesep&gt;"
+ <br><span class="tlc_assign">%assign</span> buildDirRoot = "%&lt;buildDir&gt;%&lt;upDir&gt;"
+ <br>&nbsp; <br><span class="tlc_realformat">%realformat</span> "CONCISE"
+ <br>&nbsp; <br><span class="tlc_selectfile">%selectfile</span> STDOUT
+ <br><span class="tlc_if">%if</span> RTWVerbose
+ <br>### Creating model %&lt;CompiledModel.Name&gt;_ref.m
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp;&nbsp; <br>&nbsp;&nbsp; <br><span class="tlc_assign">%assign</span> warned = 0
+ <br><span class="tlc_assign">%assign</span> bhm = CompiledModel.BlockHierarchyMap
+ <br><span class="tlc_assign">%assign</span> gmm = CompiledModel.GlobalMemoryMap
+ <br><span class="tlc_assign">%assign</span> numBlockSignals = 0
+ <br><span class="tlc_assign">%assign</span> numTotalSignals = 0
+ <br>&nbsp; <br>%%openfile ModelRef = "%&lt;buildDirRoot&gt;%&lt;Name&gt;_ref.m"
+ <br>%%selectfile ModelRef
+ <br><span class="tlc_with">%with</span> CompiledModel
+ <br>&nbsp;&nbsp;<span class="tlc_with">%with</span> gmm
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcgenlib.html#xPCRefDotMOpen">xPCRefDotMOpen</a>()&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> mdlRefBlks = <span class="tlc_bifunc">EXISTS</span>(CompiledModel.ModelReferenceBlocks) ?  CompiledModel.ModelReferenceBlocks : []
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcgenlib.html#xPCGenMMIHierachyInfo">xPCGenMMIHierachyInfo</a>(mdlRefBlks)&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%&lt;<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/xpcgenlib.html#xPCRefDotMClose">xPCRefDotMClose</a>()&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%%closefile ModelRef
+ <br>&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
+ <br><span class="tlc_endwith">%endwith</span>
+ <br><span class="tlc_endif">%endif</span> %% _mdlxml_
+ <br>&nbsp; <br>&nbsp; <br>&nbsp; <br>%% [EOF] <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/tlc/mdlxml.html">mdlxml.tlc</a>
+ <br></body></html>

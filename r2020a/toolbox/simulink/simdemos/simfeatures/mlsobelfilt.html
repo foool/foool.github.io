@@ -1,0 +1,254 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TLC<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>Level-2<span style="padding-left:9.5px"></span>MATLAB<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>S-Function<span style="padding-left:9.5px"></span>mlsobelfilt.m<span style="padding-left:9.5px"></span>used<span style="padding-left:9.5px"></span>in
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>image<span style="padding-left:9.5px"></span>edge<span style="padding-left:9.5px"></span>detection<span style="padding-left:9.5px"></span>demo.
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_implements">%implements</span> mlsobelfilt "C"
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>Outputs<span style="padding-left:9.5px"></span>==========================================================
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_fkw">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block, system) <span class="tlc_fkw">Output</span>
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dir = ParamSettings.Direction
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hor = (dir == 2)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ver = (dir == 1)
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rollVars = ["U", "Y"]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dims = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalDimensions">LibBlockOutputSignalDimensions</a>(0)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> M = dims[0]
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> N = dims[1]
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;double  g;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ver
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static const short hv[9] = {1,2,1,0,0,0,-1,-2,-1};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> hor 
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static const short hh[9] = {1,0,-1,2,0,-2,1,0,-1};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static const short hv[9] = {1,2,1,0,0,0,-1,-2,-1};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static const short hh[9] = {1,0,-1,2,0,-2,1,0,-1};
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> y  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", "",0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u1 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u2 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "", M)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u3 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "", 1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u4 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "", M+1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Top-left corner pixel */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ver
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hv[4]*%<<span>u1</span>>+hv[5]*%<<span>u2</span>>+hv[7]*%<<span>u3</span>>+hv[8]*%<<span>u4</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> hor
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hh[4]*%<<span>u1</span>>+hh[5]*%<<span>u2</span>>+hh[7]*%<<span>u3</span>>+hh[8]*%<<span>u4</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hv[4]*%<<span>u1</span>>+hv[5]*%<<span>u2</span>>+hv[7]*%<<span>u3</span>>+hv[8]*%<<span>u4</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = g+abs(hh[4]*%<<span>u1</span>>+hh[5]*%<<span>u2</span>>+hh[7]*%<<span>u3</span>>+hh[8]*%<<span>u4</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (g > 255) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = 255;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>y</span>> = (uint8_T)g;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> y  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", "",  M-1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u1 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "",   M-2)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u2 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "",   2*M-2)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u3 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "",   M-1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u4 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "",   2*M-1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Bottom-left corner pixel */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ver    
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hv[1]*%<<span>u1</span>>+hv[2]*%<<span>u2</span>>+hv[4]*%<<span>u3</span>>+hv[5]*%<<span>u4</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> hor
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hh[1]*%<<span>u1</span>>+hh[2]*%<<span>u2</span>>+hh[4]*%<<span>u3</span>>+hh[5]*%<<span>u4</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hv[1]*%<<span>u1</span>>+hv[2]*%<<span>u2</span>>+hv[4]*%<<span>u3</span>>+hv[5]*%<<span>u4</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = g+abs(hh[1]*%<<span>u1</span>>+hh[2]*%<<span>u2</span>>+hh[4]*%<<span>u3</span>>+hh[5]*%<<span>u4</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (g > 255) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = 255;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>y</span>> = (uint8_T)g;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> y  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", "",(N-1)*M)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u1 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "", (N-2)*M)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u2 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "", (N-1)*M)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u3 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "", (N-2)*M+1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u4 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "", (N-1)*M+1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Top-right corner pixel */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ver
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hv[3]*%<<span>u1</span>>+hv[4]*%<<span>u2</span>>+hv[6]*%<<span>u3</span>>+hv[7]*%<<span>u4</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> hor
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hh[3]*%<<span>u1</span>>+hh[4]*%<<span>u2</span>>+hh[6]*%<<span>u3</span>>+hh[7]*%<<span>u4</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hv[3]*%<<span>u1</span>>+hv[4]*%<<span>u2</span>>+hv[6]*%<<span>u3</span>>+hv[7]*%<<span>u4</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = g+abs(hh[3]*%<<span>u1</span>>+hh[4]*%<<span>u2</span>>+hh[6]*%<<span>u3</span>>+hh[7]*%<<span>u4</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (g > 255) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = 255;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>y</span>> = (uint8_T)g;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> y  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", "",N*M-1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u1 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "", (N-1)*M-2)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u2 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "", N*M-2)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u3 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "", (N-1)*M-1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u4 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", "",  N*M-1)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Bottom-right corner pixel */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ver
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hv[0]*%<<span>u1</span>>+hv[1]*%<<span>u2</span>>+hv[3]*%<<span>u3</span>>+hv[4]*%<<span>u4</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> hor
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hh[0]*%<<span>u1</span>>+hh[1]*%<<span>u2</span>>+hh[3]*%<<span>u3</span>>+hh[4]*%<<span>u4</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hv[0]*%<<span>u1</span>>+hv[1]*%<<span>u2</span>>+hv[3]*%<<span>u3</span>>+hv[4]*%<<span>u4</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = g+abs(hh[0]*%<<span>u1</span>>+hh[1]*%<<span>u2</span>>+hh[3]*%<<span>u3</span>>+hh[4]*%<<span>u4</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;if (g > 255) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = 255;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>y</span>> = (uint8_T)g;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Left edge */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hLen = M-3
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rollRegions = [0:%<<span>hLen</span>>]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_roll">%roll</span> k = rollRegions, lcv = RollThreshold, block, "Roller", rollVars
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> center = lcv+"+1"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u1 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", lcv,           k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u2 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", lcv+"+%<<span>M</span>>",   k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u3 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", center,        k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmp = M+2
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u4 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", lcv+"+%<<span>tmp</span>>", k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u5 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", lcv+"+2",      k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmp = M+3
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u6 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", lcv+"+%<<span>tmp</span>>", k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> y = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", center,        k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ver
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hv[1]*%<<span>u1</span>>+hv[2]*%<<span>u2</span>>+hv[4]*%<<span>u3</span>>+hv[5]*%<<span>u4</span>>+hv[7]*%<<span>u5</span>>+hv[8]*%<<span>u6</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> hor
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hh[1]*%<<span>u1</span>>+hh[2]*%<<span>u2</span>>+hh[4]*%<<span>u3</span>>+hh[5]*%<<span>u4</span>>+hh[7]*%<<span>u5</span>>+hh[8]*%<<span>u6</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hv[1]*%<<span>u1</span>>+hv[2]*%<<span>u2</span>>+hv[4]*%<<span>u3</span>>+hv[5]*%<<span>u4</span>>+hv[7]*%<<span>u5</span>>+hv[8]*%<<span>u6</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;g = g+abs(hh[1]*%<<span>u1</span>>+hh[2]*%<<span>u2</span>>+hh[4]*%<<span>u3</span>>+hh[5]*%<<span>u4</span>>+hh[7]*%<<span>u5</span>>+hh[8]*%<<span>u6</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (g > 255) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;g = 255;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>y</span>> = (uint8_T)g;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endroll">%endroll</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Right edge */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rollRegions = [0:%<<span>hLen</span>>]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_roll">%roll</span> k = rollRegions, lcv = RollThreshold, block, "Roller", rollVars
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> center = lcv+"+1"
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u1 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", lcv+"-%<<span>M</span>>",   k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u2 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", lcv,           k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmp = M-1
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u3 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", lcv+"-%<<span>tmp</span>>", k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u4 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", center,        k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmp = M-2
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u5 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", lcv+"-%<<span>tmp</span>>", k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u6 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", lcv+"+2",      k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> y = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", center,        k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ver
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hv[0]*%<<span>u1</span>>+hv[1]*%<<span>u2</span>>+hv[3]*%<<span>u3</span>>+hv[4]*%<<span>u4</span>>+hv[6]*%<<span>u5</span>>+hv[7]*%<<span>u6</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> hor
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hh[0]*%<<span>u1</span>>+hh[1]*%<<span>u2</span>>+hh[3]*%<<span>u3</span>>+hh[4]*%<<span>u4</span>>+hh[6]*%<<span>u5</span>>+hh[7]*%<<span>u6</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hv[0]*%<<span>u1</span>>+hv[1]*%<<span>u2</span>>+hv[3]*%<<span>u3</span>>+hv[4]*%<<span>u4</span>>+hv[6]*%<<span>u5</span>>+hv[7]*%<<span>u6</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;g = g+abs(hh[0]*%<<span>u1</span>>+hh[1]*%<<span>u2</span>>+hh[3]*%<<span>u3</span>>+hh[4]*%<<span>u4</span>>+hh[6]*%<<span>u5</span>>+hh[7]*%<<span>u6</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (g > 255) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;g = 255;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>y</span>> = (uint8_T)g;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endroll">%endroll</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Top edge */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vLen = N-3
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rollRegions = [0:%<<span>vLen</span>>]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_roll">%roll</span> k = rollRegions, lcv = RollThreshold, block, "Roller", rollVars
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> center =  "("+lcv+"+1)*%<<span>M</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u1 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", center+"-%<<span>M</span>>",   k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u2 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", center,           k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u3 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", center+"+%<<span>M</span>>",   k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u4 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", center+"-%<<span>M</span>>+1", k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u5 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", center+"+1",      k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u6 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", center+"+%<<span>M</span>>+1", k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> y = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", center,           k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ver
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hv[3]*%<<span>u1</span>>+hv[4]*%<<span>u2</span>>+hv[5]*%<<span>u3</span>>+hv[6]*%<<span>u4</span>>+hv[7]*%<<span>u5</span>>+hv[8]*%<<span>u6</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> hor
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hh[3]*%<<span>u1</span>>+hh[4]*%<<span>u2</span>>+hh[5]*%<<span>u3</span>>+hh[6]*%<<span>u4</span>>+hh[7]*%<<span>u5</span>>+hh[8]*%<<span>u6</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hv[3]*%<<span>u1</span>>+hv[4]*%<<span>u2</span>>+hv[5]*%<<span>u3</span>>+hv[6]*%<<span>u4</span>>+hv[7]*%<<span>u5</span>>+hv[8]*%<<span>u6</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;g = g+abs(hh[3]*%<<span>u1</span>>+hh[4]*%<<span>u2</span>>+hh[5]*%<<span>u3</span>>+hh[6]*%<<span>u4</span>>+hh[7]*%<<span>u5</span>>+hh[8]*%<<span>u6</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (g > 255) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;g = 255;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>y</span>> = (uint8_T)g;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endroll">%endroll</span>
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Bottom edge */
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vLen = N-2
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rollRegions = [1:%<<span>vLen</span>>]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_roll">%roll</span> k = rollRegions, lcv = RollThreshold, block, "Roller", rollVars
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> center =  "("+lcv+"+1)*%<<span>M</span>>+%<<span>M</span>>-1"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u1 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", lcv+"*%<<span>M</span>>-2",    k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u2 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", center+"-1",      k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u3 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", center+"+%<<span>M</span>>-2", k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u4 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", lcv+"*%<<span>M</span>>-1",    k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u5 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", center,           k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u6 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", center+"+%<<span>M</span>>",   k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> y = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", center,           k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ver
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hv[0]*%<<span>u1</span>>+hv[1]*%<<span>u2</span>>+hv[2]*%<<span>u3</span>>+hv[3]*%<<span>u4</span>>+hv[4]*%<<span>u5</span>>+hv[5]*%<<span>u6</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> hor
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hh[0]*%<<span>u1</span>>+hh[1]*%<<span>u2</span>>+hh[2]*%<<span>u3</span>>+hh[3]*%<<span>u4</span>>+hh[4]*%<<span>u5</span>>+hh[5]*%<<span>u6</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hv[0]*%<<span>u1</span>>+hv[1]*%<<span>u2</span>>+hv[2]*%<<span>u3</span>>+hv[3]*%<<span>u4</span>>+hv[4]*%<<span>u5</span>>+hv[5]*%<<span>u6</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;g = g+abs(hh[0]*%<<span>u1</span>>+hv[1]*%<<span>u2</span>>+hh[2]*%<<span>u3</span>>+hh[3]*%<<span>u4</span>>+hh[4]*%<<span>u5</span>>+hh[5]*%<<span>u6</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (g > 255) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;g = 255;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>y</span>> = (uint8_T)g;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endroll">%endroll</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> vrollRegions = [0:%<<span>vLen</span>>]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hrollRegions = [0:%<<span>hLen</span>>]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_roll">%roll</span> j = vrollRegions, lcv = RollThreshold, block, "Roller", rollVars
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hidx = "("+lcv+"+1)"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_roll">%roll</span> k = hrollRegions, lcv = RollThreshold, block, "Roller", ""
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> center =  "("+lcv+"+1)+%<<span>hidx</span>>*%<<span>M</span>>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u1 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", center+"-%<<span>M</span>>-1",   k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u2 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", center+"-1",        k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u3 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", center+"+%<<span>M</span>>-1",   k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u4 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", center+"-%<<span>M</span>>",     k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u5 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", center,             k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u6 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", center+"+%<<span>M</span>>",     k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u7 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", center+"-%<<span>M</span>>+1",   k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u8 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", center+"+1",        k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u9 = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(0, "", center+"+%<<span>M</span>>+1",   k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> y = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(0, "", center,             k)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ver
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hv[0]*%<<span>u1</span>>+hv[1]*%<<span>u2</span>>+hv[2]*%<<span>u3</span>>+hv[3]*%<<span>u4</span>>+hv[4]*%<<span>u5</span>>+hv[5]*%<<span>u6</span>>+hv[6]*%<<span>u7</span>>+hv[7]*%<<span>u8</span>>+hv[8]*%<<span>u9</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> hor
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hh[0]*%<<span>u1</span>>+hh[1]*%<<span>u2</span>>+hh[2]*%<<span>u3</span>>+hh[3]*%<<span>u4</span>>+hh[4]*%<<span>u5</span>>+hh[5]*%<<span>u6</span>>+hh[6]*%<<span>u7</span>>+hh[7]*%<<span>u8</span>>+hh[8]*%<<span>u9</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = abs(hv[0]*%<<span>u1</span>>+hv[1]*%<<span>u2</span>>+hv[2]*%<<span>u3</span>>+hv[3]*%<<span>u4</span>>+hv[4]*%<<span>u5</span>>+hv[5]*%<<span>u6</span>>+hv[6]*%<<span>u7</span>>+hv[7]*%<<span>u8</span>>+hv[8]*%<<span>u9</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = g+abs(hh[0]*%<<span>u1</span>>+hh[1]*%<<span>u2</span>>+hh[2]*%<<span>u3</span>>+hh[3]*%<<span>u4</span>>+hh[4]*%<<span>u5</span>>+hh[5]*%<<span>u6</span>>+hh[6]*%<<span>u7</span>>+hh[7]*%<<span>u8</span>>+hh[8]*%<<span>u9</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;if (g > 255) {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g = 255;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span>y</span>> = (uint8_T)g;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endroll">%endroll</span>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endroll">%endroll</span>   
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;}
+ <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_fkw">%endfunction</span> 
+ <br>&nbsp;&nbsp;&nbsp; <br></body></html>

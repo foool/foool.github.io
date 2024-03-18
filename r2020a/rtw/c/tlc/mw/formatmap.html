@@ -1,0 +1,107 @@
+<html>
+<head>
+
+<style>
+p {
+    color : black; font-family:courier; font-size: 80%;
+}
+body {
+    line-height: 120%; font-family:courier; font-zize:60%;
+}
+.tlc_func {color : blue; font-weight: bold; font-size:120%;}
+.tlc_comment {color : #9aa;}
+.tlc_if {color: green;}.tlc_assign {color: green;}.tlc_each {color: green;}.tlc_foreach {color: green;}.tlc_endif {color: green;}.tlc_switch {color: green;}.tlc_case {color: green;}.tlc_return {color: green;}.tlc_elseif {color: green;}.tlc_else {color: green;}.tlc_assert {color: green;}.tlc_endwith {color: green;}.tlc_endforeach {color: green;}.tlc_generatefile {color: green;}.tlc_includepath {color: green;}.tlc_include {color: green;}.tlc_sprintf {color: green;}.tlc_while {color: green;}.tlc_endwhile {color: green;}.tlc_default {color: green;}.tlc_createrecord {color: green;}.tlc_mergerecord {color: green;}.tlc_language {color: green;}.tlc_roll {color: green;}.tlc_endroll {color: green;}.tlc_with {color: green;}.tlc_selectfile {color: green;}.tlc_openfile {color: green;}.tlc_closefile {color: green;}.tlc_def {color: green;}.tlc_undef {color: green;}.tlc_realformat {color: green;}.tlc_endswitch {color: green;}.tlc_addtorecord {color: green;}.tlc_break {color: green;}
+.tlc_bifunc {color: brown;}
+.tlc_fkw {color:blue; font-weight: 800;}
+.tlc_output {color:#FFF; font-style:italic;}
+.tlc_mchar {color:purple;}
+</style>
+
+</head>
+<body>
+<span class="tlc_comment">%%<span style="padding-left:9.5px"></span>============================================================================
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>This<span style="padding-left:9.5px"></span>system<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>creates<span style="padding-left:9.5px"></span>model.dt<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>generation's<span style="padding-left:9.5px"></span>RealTime<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Embedded-c<span style="padding-left:9.5px"></span>code<span style="padding-left:9.5px"></span>formats.<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>map<span style="padding-left:9.5px"></span>file<span style="padding-left:9.5px"></span>contains<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>mapping<span style="padding-left:9.5px"></span>information<span style="padding-left:9.5px"></span>for
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>monitoring<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>outputs<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>modifying<span style="padding-left:9.5px"></span>block<span style="padding-left:9.5px"></span>parameters.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Copyright<span style="padding-left:9.5px"></span>1994-2010<span style="padding-left:9.5px"></span>The<span style="padding-left:9.5px"></span>MathWorks,<span style="padding-left:9.5px"></span>Inc.
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_if">%if</span> <span class="tlc_bifunc">EXISTS</span>("_FORMATMAP_") == 0
+ <br><span class="tlc_assign">%assign</span> _FORMATMAP_ = 1
+ <br>&nbsp; <br><span class="tlc_realformat">%realformat</span> "CONCISE"
+ <br>&nbsp; <br><span class="tlc_assign">%assign</span> DataTypeTransHdr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibGetDataTypeTransHdrBaseName">LibGetDataTypeTransHdrBaseName</a>()
+ <br><span class="tlc_if">%if</span> RTWVerbose
+ <br><span class="tlc_selectfile">%selectfile</span> STDOUT
+ <br>### Creating data type transition file %<<span>DataTypeTransHdr</span>>.h
+ <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_openfile">%openfile</span> ModelDotDT = "%<<span>DataTypeTransHdr</span>>.h"
+ <br>/*
+ <br>&nbsp;* %<<span>DataTypeTransHdr</span>>.h
+ <br>&nbsp;*
+ <br>%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdrlib.html#SLibCommonHeaderInfo">SLibCommonHeaderInfo</a>()</span>>/
+ <br>&nbsp;*/
+ <br>&nbsp; <br><span class="tlc_if">%if</span> ExtMode == 1
+ <br>&nbsp;&nbsp;#include "ext_types.h"
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Datatype<span style="padding-left:9.5px"></span>info<span style="padding-left:9.5px"></span>for<span style="padding-left:9.5px"></span>rapid<span style="padding-left:9.5px"></span>accelerator
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_if">%if</span> ::isRAccel &amp;&amp; <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetNumDataTypesInModel">LibGetNumDataTypesInModel</a>() > 0
+ <br>&nbsp;&nbsp;static DataTypeInfo rtDataTypeInfoTable[] = 
+ <br>&nbsp;&nbsp;{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonmaplib.html#SLibDumpDataTypeInfoTable">SLibDumpDataTypeInfoTable</a>()</span>>/    
+ <br>&nbsp;&nbsp;};
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Sizes<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>names
+</span> <br><span class="tlc_comment">%%
+</span> <br>&nbsp; <br><span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetNumDataTypesInModel">LibGetNumDataTypesInModel</a>() > 0
+ <br>&nbsp;&nbsp;/* data type size table */
+ <br>&nbsp;&nbsp;static uint_T rtDataTypeSizes[] = {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonmaplib.html#SLibDumpDataTypeSizeTable">SLibDumpDataTypeSizeTable</a>()</span>>/
+ <br>&nbsp;&nbsp;};
+ <br>&nbsp; <br>&nbsp;&nbsp;/* data type name table */
+ <br>&nbsp;&nbsp;static const char_T * rtDataTypeNames[] = {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonmaplib.html#SLibDumpDataTypeNameTable">SLibDumpDataTypeNameTable</a>()</span>>/
+ <br>&nbsp;&nbsp;};
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Block<span style="padding-left:9.5px"></span>I/O
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonmaplib.html#SLibBlockIODataTypeTransitionTableIsEmpty">SLibBlockIODataTypeTransitionTableIsEmpty</a>()
+ <br>&nbsp; <br>&nbsp;&nbsp;/* data type transitions for block I/O structure */
+ <br>&nbsp;&nbsp;static DataTypeTransition rtBTransitions[] = {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonmaplib.html#SLibDumpBlockIODataTypeTransitionTable">SLibDumpBlockIODataTypeTransitionTable</a>()</span>>/
+ <br>&nbsp;&nbsp;};
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;/* data type transition table for block I/O structure */
+ <br>&nbsp;&nbsp;static DataTypeTransitionTable rtBTransTable = {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonmaplib.html#SLibDumpBlockIOMapInfo">SLibDumpBlockIOMapInfo</a>()</span>>/
+ <br>&nbsp;&nbsp;};
+ <br><span class="tlc_endif">%endif</span>
+ <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Parameters
+</span> <br><span class="tlc_comment">%%
+</span> <br><span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonmaplib.html#SLibParametersDataTypeTransitionTableIsEmpty">SLibParametersDataTypeTransitionTableIsEmpty</a>()
+ <br>&nbsp; <br>&nbsp;&nbsp;/* data type transitions for Parameters structure */
+ <br>&nbsp;&nbsp;static DataTypeTransition rtPTransitions[] = {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonmaplib.html#SLibDumpParametersDataTypeTransitionTable">SLibDumpParametersDataTypeTransitionTable</a>()</span>>/
+ <br>&nbsp;&nbsp;};
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;/* data type transition table for Parameters structure */
+ <br>&nbsp;&nbsp;static DataTypeTransitionTable rtPTransTable = {
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonmaplib.html#SLibDumpParametersMapInfo">SLibDumpParametersMapInfo</a>()</span>>/
+ <br>&nbsp;&nbsp;};
+ <br><span class="tlc_endif">%endif</span>
+ <br>&nbsp; <br>/* [EOF] %<<span>DataTypeTransHdr</span>>.h */
+ <br><span class="tlc_closefile">%closefile</span> ModelDotDT
+ <br>%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#SLibAddGeneratedFileToList">SLibAddGeneratedFileToList</a>("%<<span>DataTypeTransHdr</span>>.h","interface","header","")>
+ <br><span class="tlc_selectfile">%selectfile</span> NULL_FILE
+ <br>&nbsp; <br><span class="tlc_endif">%endif</span> <span class="tlc_comment">%% _FORMATMAP_</span>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/formatmap.html">formatmap.tlc</a>
+</span> <br></body></html>
