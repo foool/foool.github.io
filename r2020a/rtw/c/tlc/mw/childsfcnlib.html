@@ -37,7 +37,7 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGenChildSfcnTermMemFreeCode" class="tlc_func">SLibGenChildSfcnTermMemFreeCode</a>(s) <span class="tlc_fkw">Output</span>
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isSfcnCF = (CodeFormat == "S-Function")
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nulldef  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibGetNullDefinitionFromTfl">SLibGetNullDefinitionFromTfl</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nulldef  = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibGetNullDefinitionFromTfl">SLibGetNullDefinitionFromTfl</a>()
  <br>&nbsp;&nbsp;if( %<<span>s</span>> != %<<span>nulldef</span>> ) {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Level independent allocation</span>
@@ -51,7 +51,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% free params not tunable array</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/sfunction_private_api.html#LibSFunctionLevel">LibSFunctionLevel</a>() == "Level2"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/private_api/sfunction_private_api.html#LibSFunctionLevel">LibSFunctionLevel</a>() == "Level2"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#if defined(MATLAB_MEX_FILE)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint_T *attribs = ...
@@ -68,7 +68,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> argIdx = numArgs
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%assign paramIdx = </span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> paramVal = "P%<argIdx + 1>"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#SLibGetBlockParameterStorageClass">SLibGetBlockParameterStorageClass</a>(%<<span>paramVal</span>>) == "Auto_SFCN"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#SLibGetBlockParameterStorageClass">SLibGetBlockParameterStorageClass</a>(%<<span>paramVal</span>>) == "Auto_SFCN"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% S-Function parameters marked as tunable are allocated and</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% freed by Simulink and don't need to be handled by the S-Function</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% termination function</span>
@@ -168,7 +168,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ssGetInputPortSignalPtrs(%<<span>s</span>>, %<<span>ipIdx</span>>);
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_FREE(ptr);
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nDims = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalNumDimensions">LibBlockInputSignalNumDimensions</a>(ipIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nDims = <a href="https://foool.github.io/r2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalNumDimensions">LibBlockInputSignalNumDimensions</a>(ipIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> nDims >= matrixDimensionThreshhold &amp;&amp; UsingMalloc
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !isSfcnCF
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_FREE(ssGetInputPortDimensions(%<<span>s</span>>, %<<span>ipIdx</span>>));
@@ -190,7 +190,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> opIdx = NumDataOutputPorts
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nDims = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalNumDimensions">LibBlockOutputSignalNumDimensions</a>(opIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nDims = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalNumDimensions">LibBlockOutputSignalNumDimensions</a>(opIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> nDims >= matrixDimensionThreshhold &amp;&amp; UsingMalloc
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !isSfcnCF
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rt_FREE(ssGetOutputPortDimensions(%<<span>s</span>>, %<<span>opIdx</span>>));
@@ -229,14 +229,14 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>S-Functions<span style="padding-left:9.5px"></span>which<span style="padding-left:9.5px"></span>make<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>calls.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibCacheRTCallSys" class="tlc_func">SLibCacheRTCallSys</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> CodeFormat != "S-Function"  &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>() &amp;&amp; ::CompiledModel.NumChildSFunctions > 0
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> CodeFormat != "S-Function"  &amp;&amp; !<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>() &amp;&amp; ::CompiledModel.NumChildSFunctions > 0
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> childIdx = NumChildSFunctions
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> thisBlock = ChildSFunctionList[childIdx]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> thisBlock
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> NumSFcnSysOutputCallDsts > 0 || ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="tlc_bifunc">ISFIELD</span>(ParamSettings,"RTWGenerated") &amp;&amp; ParamSettings.RTWGenerated == 1)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Need Helper functions</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMathFcnCall">LibGenMathFcnCall</a>("sfcnhelpers", <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#FcnGetDataTypeIdFromName">FcnGetDataTypeIdFromName</a>("double"), ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/mathlib.html#LibGenMathFcnCall">LibGenMathFcnCall</a>("sfcnhelpers", <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/mathlib.html#FcnGetDataTypeIdFromName">FcnGetDataTypeIdFromName</a>("double"), ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"sizeof(real_T)", "")>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -258,8 +258,8 @@ body {
  <br>&nbsp;&nbsp;&nbsp;*/
  <br>&nbsp;&nbsp;struct {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Fixed non-inlined sfunction elements</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceForASimstructBasedTarget">IsModelReferenceForASimstructBasedTarget</a>()
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceForASimstructBasedTarget">IsModelReferenceForASimstructBasedTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RTWSfcnInfo *sfcnInfo;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RTWSfcnInfo sfcnInfo;
@@ -302,10 +302,10 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> num_vardims_inports = 0
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> ipIdx = NumDataInputPorts
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ip    = DataInputPort[ipIdx]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtype = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetRecordDataTypeName">SLibGetRecordDataTypeName</a>(ip,"")
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalWidth">LibBlockInputSignalWidth</a>(ipIdx)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dims  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalDimensions">LibBlockInputSignalDimensions</a>(ipIdx)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nDims = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalNumDimensions">LibBlockInputSignalNumDimensions</a>(ipIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtype = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetRecordDataTypeName">SLibGetRecordDataTypeName</a>(ip,"")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width = <a href="https://foool.github.io/r2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalWidth">LibBlockInputSignalWidth</a>(ipIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dims  = <a href="https://foool.github.io/r2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalDimensions">LibBlockInputSignalDimensions</a>(ipIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nDims = <a href="https://foool.github.io/r2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalNumDimensions">LibBlockInputSignalNumDimensions</a>(ipIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_switch">%switch</span> ParamSettings.FunctionLevel
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> 1
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ParamSettings.UsingUPtrs == "yes"
@@ -321,7 +321,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> nDims >= matrixDimensionThreshhold
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T iDims%<<span>ipIdx</span>>[%<<span>nDims</span>>];
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibGetIsInputPortVarDims">LibGetIsInputPortVarDims</a>(ipIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibGetIsInputPortVarDims">LibGetIsInputPortVarDims</a>(ipIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> num_vardims_inports = num_vardims_inports + 1
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span> <span class="tlc_comment">%%NumDataInputPorts</span>
@@ -339,11 +339,11 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> num_vardims_outports = 0
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> opIdx = NumDataOutputPorts
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> oNumDims = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalNumDimensions">LibBlockOutputSignalNumDimensions</a>(opIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> oNumDims = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalNumDimensions">LibBlockOutputSignalNumDimensions</a>(opIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> %<<span>oNumDims</span>> >= matrixDimensionThreshhold
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T oDims%<<span>opIdx</span>>[%<<span>oNumDims</span>>];
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibGetIsOutputPortVarDims">LibGetIsOutputPortVarDims</a>(opIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibGetIsOutputPortVarDims">LibGetIsOutputPortVarDims</a>(opIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> num_vardims_outports = num_vardims_outports + 1
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span> <span class="tlc_comment">%%NumDataOutputPorts</span>
@@ -364,7 +364,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Parameters</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numArgs = Parameters[0] / 2
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> numArgs > 0
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/private_api/sfunction_private_api.html#LibSFunctionLevel">LibSFunctionLevel</a>() == "Level2"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/private_api/sfunction_private_api.html#LibSFunctionLevel">LibSFunctionLevel</a>() == "Level2"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint_T attribs[%<<span>numArgs</span>>];
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mxArray *params[%<<span>numArgs</span>>];
@@ -379,11 +379,11 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Function calls</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> NumSFcnSysOutputCallDsts > 0
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pZeroWidth = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalWidth">LibBlockOutputSignalWidth</a>(0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pZeroWidth = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalWidth">LibBlockOutputSignalWidth</a>(0)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T callSysOutputs[%<<span>pZeroWidth</span>>];
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;void *callSysArgs1[%<<span>pZeroWidth</span>>];
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int_T callSysArgs2[%<<span>pZeroWidth</span>>];
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>()
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% The Model Reference Simulation Target doesn't support</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Initialization function pointers</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SysOutputFcn callSysFcns[%<3*pZeroWidth>];
@@ -400,5 +400,5 @@ body {
  <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> tmpFcnBuf
  <br><span class="tlc_fkw">%endfunction</span>
  <br>&nbsp; <br><span class="tlc_endif">%endif</span> <span class="tlc_comment">%% _CHILDSFCNLIB_</span>
- <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/childsfcnlib.html">childsfcnlib.tlc</a>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/childsfcnlib.html">childsfcnlib.tlc</a>
 </span> <br></body></html>

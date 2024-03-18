@@ -39,7 +39,7 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/codevariants/tcodevariants9.m
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="GetTheOtherReusableArgInFPC" class="tlc_func">GetTheOtherReusableArgInFPC</a>(fpc, argIdx)
- <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsFPCIgnored">IsFPCIgnored</a>(fpc)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsFPCIgnored">IsFPCIgnored</a>(fpc)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> -1
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> numArgs = <span class="tlc_bifunc">SIZE</span>(fpc.ArgSpecData, 1)
@@ -74,7 +74,7 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>step(&amp;in,<span style="padding-left:9.5px"></span>&amp;out);
 </span> <br><span class="tlc_fkw">%function</span> <a id="GetReusableInoutAssignmentsFromFPC" class="tlc_func">GetReusableInoutAssignmentsFromFPC</a>(fpc, mSysIdx, block, sysFcnName, mdlRefIdx, canInputInfo)
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retStr = ""
- <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsFPCIgnored">IsFPCIgnored</a>(fpc)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsFPCIgnored">IsFPCIgnored</a>(fpc)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> retStr
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> retStr
@@ -93,19 +93,19 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> inportNum = <span class="tlc_bifunc">CAST</span>("Number", fpc.ArgSpecData[nextArgIdx].PortNum)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outportNum = <span class="tlc_bifunc">CAST</span>("Number", fpc.ArgSpecData[argIdx].PortNum)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalWidth">LibBlockInputSignalWidth</a>(inportNum)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width = <a href="https://foool.github.io/r2020a/rtw/c/tlc/public_api/blkio_api.html#LibBlockInputSignalWidth">LibBlockInputSignalWidth</a>(inportNum)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> width < RollThreshold
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rollVars = ["u%<<span>inportNum</span>>", "y%<<span>outportNum</span>>"]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_roll">%roll</span> sigIdx = RollRegions, lcv = RollThreshold, block, "Roller", rollVars
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(inportNum, "", lcv, sigIdx)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> y = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(outportNum, "", lcv, sigIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> u = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignal">LibBlockInputSignal</a>(inportNum, "", lcv, sigIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> y = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(outportNum, "", lcv, sigIdx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>y</span>> = %<<span>u</span>>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endroll">%endroll</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalDataTypeName">LibBlockInputSignalDataTypeName</a>(inportNum, "")
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> uAddr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(inportNum, "", "", 0)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> yAddr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(outportNum, "", "", 0)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(void) %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/mathlib.html#LibGenMemFcnCall">LibGenMemFcnCall</a>("memcpy", "%<<span>yAddr</span>>", "%<<span>uAddr</span>>", "%<<span>width</span>>*sizeof(%<<span>dataType</span>>)")>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataType = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalDataTypeName">LibBlockInputSignalDataTypeName</a>(inportNum, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> uAddr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(inportNum, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> yAddr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalAddr">LibBlockOutputSignalAddr</a>(outportNum, "", "", 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(void) %<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/mathlib.html#LibGenMemFcnCall">LibGenMemFcnCall</a>("memcpy", "%<<span>yAddr</span>>", "%<<span>uAddr</span>>", "%<<span>width</span>>*sizeof(%<<span>dataType</span>>)")>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
@@ -122,7 +122,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> arg.ArgName
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
- <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("Cannot find input arg name.")>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("Cannot find input arg name.")>
  <br><span class="tlc_fkw">%endfunction</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Returns<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>argument<span style="padding-left:9.5px"></span>name<span style="padding-left:9.5px"></span>at<span style="padding-left:9.5px"></span>output<span style="padding-left:9.5px"></span>port<span style="padding-left:9.5px"></span>number<span style="padding-left:9.5px"></span>portNum<span style="padding-left:9.5px"></span>in<span style="padding-left:9.5px"></span>function
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>prototype<span style="padding-left:9.5px"></span>control<span style="padding-left:9.5px"></span>fpc
@@ -134,9 +134,9 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> arg.ArgName
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
- <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("Cannot find output arg name.")>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("Cannot find output arg name.")>
  <br><span class="tlc_fkw">%endfunction</span>
- <br>&nbsp; <br>>>>> ORIGINAL //mw/Bslcgfe/matlab/rtw/c/tlc/mw/<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html">ertfcnprotocontrol.tlc</a>#15
+ <br>&nbsp; <br>>>>> ORIGINAL //mw/Bslcgfe/matlab/rtw/c/tlc/mw/<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html">ertfcnprotocontrol.tlc</a>#15
  <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Caches<span style="padding-left:9.5px"></span>reusable<span style="padding-left:9.5px"></span>inports<span style="padding-left:9.5px"></span>and<span style="padding-left:9.5px"></span>outports<span style="padding-left:9.5px"></span>defined<span style="padding-left:9.5px"></span>by<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>prototype<span style="padding-left:9.5px"></span>control.
 </span> <br><span class="tlc_fkw">%function</span> <a id="CacheFPCReusableIOsInstance" class="tlc_func">CacheFPCReusableIOsInstance</a>(fcnData) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buffer
@@ -145,20 +145,20 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(ei, "ReuseBufferName")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comment  = "/* '%<<span>ei.BlockName</span>>' */"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetRecordContainerTypeName">SLibGetRecordContainerTypeName</a>(ei)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> optWidth = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibOptionalVectorWidth">LibOptionalVectorWidth</a>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordSymbolicWidth">LibGetRecordSymbolicWidth</a>(ei))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataType = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetRecordContainerTypeName">SLibGetRecordContainerTypeName</a>(ei)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> optWidth = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibOptionalVectorWidth">LibOptionalVectorWidth</a>(<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordSymbolicWidth">LibGetRecordSymbolicWidth</a>(ei))
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% ReuseBufferName is the identifier</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id = ei.ReuseBufferName
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> identifier = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#GetInputArgNameFromFPC">GetInputArgNameFromFPC</a>(fcnData, idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> identifier = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#GetInputArgNameFromFPC">GetInputArgNameFromFPC</a>(fcnData, idx)
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> definition = ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>dataType</span>> %<<span>id</span>>%<<span>optWidth</span>>;"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> commentForExtraGlobal = "/* Global variable due to the usage of reusable inport: %<<span>identifier</span>> */"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>commentForExtraGlobal</span>>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cgT = ::CompiledModel.CGTypes.CGType[ei.CGTypeIdx]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span>(ei.Alignment > 0 &amp;&amp; cgT.Constructor != "complex")
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> align = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#SLibGetAlignmentSyntax">SLibGetAlignmentSyntax</a>(::CompiledModel.Name, id, dataType, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> align = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/syslib.html#SLibGetAlignmentSyntax">SLibGetAlignmentSyntax</a>(::CompiledModel.Name, id, dataType, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ei.Alignment, "DATA_ALIGNMENT_GLOBAL_VAR")
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#LibGlobalDefinitionWithAlignment">LibGlobalDefinitionWithAlignment</a>(definition, comment, align)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/commonprmlib.html#LibGlobalDefinitionWithAlignment">LibGlobalDefinitionWithAlignment</a>(definition, comment, align)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>definition</span>> %<<span>comment</span>>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -172,20 +172,20 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkIdx       = eo.Block[1]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outportBlock = System[sysIdx].Block[blkIdx]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comment  = "/* '%<<span>outportBlock.Name</span>>' */"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetRecordContainerTypeName">SLibGetRecordContainerTypeName</a>(eo)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> optWidth = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibOptionalVectorWidth">LibOptionalVectorWidth</a>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordSymbolicWidth">LibGetRecordSymbolicWidth</a>(eo))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataType = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetRecordContainerTypeName">SLibGetRecordContainerTypeName</a>(eo)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> optWidth = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibOptionalVectorWidth">LibOptionalVectorWidth</a>(<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordSymbolicWidth">LibGetRecordSymbolicWidth</a>(eo))
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% ReuseBufferName is the identifier</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id = eo.ReuseBufferName
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> identifier = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#GetOutputArgNameFromFPC">GetOutputArgNameFromFPC</a>(fcnData, idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> identifier = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#GetOutputArgNameFromFPC">GetOutputArgNameFromFPC</a>(fcnData, idx)
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> definition = ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>dataType</span>> %<<span>id</span>>%<<span>optWidth</span>>;"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> commentForExtraGlobal = "/* Global variable due to the usage of reusable outport: %<<span>identifier</span>> */"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>commentForExtraGlobal</span>>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cgT = ::CompiledModel.CGTypes.CGType[ei.CGTypeIdx]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span>(eo.Alignment > 0 &amp;&amp; cgT.Constructor != "complex")
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> align = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#SLibGetAlignmentSyntax">SLibGetAlignmentSyntax</a>(::CompiledModel.Name, id, dataType, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> align = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/syslib.html#SLibGetAlignmentSyntax">SLibGetAlignmentSyntax</a>(::CompiledModel.Name, id, dataType, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ei.Alignment, "DATA_ALIGNMENT_GLOBAL_VAR")
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#LibGlobalDefinitionWithAlignment">LibGlobalDefinitionWithAlignment</a>(definition, comment, align)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/commonprmlib.html#LibGlobalDefinitionWithAlignment">LibGlobalDefinitionWithAlignment</a>(definition, comment, align)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>definition</span>> %<<span>comment</span>>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -202,7 +202,7 @@ body {
 </span> <br><span class="tlc_fkw">%function</span> <a id="DeclareFcnProtoCtrlInportVariableComments" class="tlc_func">DeclareFcnProtoCtrlInportVariableComments</a>(fcnData, idx) <span class="tlc_fkw">Output</span>
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> inSpec = fcnData.ArgSpecData[idx]
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> extInp = ExternalInputs.ExternalInput[inSpec.PortNum]
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#GetTheOtherReusableArgInFPC">GetTheOtherReusableArgInFPC</a>(fcnData, idx)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outIdx = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#GetTheOtherReusableArgInFPC">GetTheOtherReusableArgInFPC</a>(fcnData, idx)
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> outIdx < 0
  <br>&nbsp;&nbsp;&nbsp;&nbsp;/* '%<<span>extInp.BlockName</span>>' */
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span>
@@ -393,7 +393,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> noArgOnList=TLC_TRUE
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> argData.SLObjectType == "Inport"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> argData.Category == "None" &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceRTWTarget">IsModelReferenceRTWTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> argData.Category == "None" &amp;&amp; !<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceRTWTarget">IsModelReferenceRTWTarget</a>()
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hasGlobalAccessForInport = TLC_TRUE
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> inportsArgSpecMapping[argData.PortNum] = argDataIdx
@@ -403,7 +403,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> argData.SLObjectType == "Outport"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> argData.Category == "None" &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceRTWTarget">IsModelReferenceRTWTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> argData.Category == "None" &amp;&amp; !<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceRTWTarget">IsModelReferenceRTWTarget</a>()
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> hasGlobalAccessForOutport = TLC_TRUE
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outportsArgSpecMapping[argData.PortNum] = argDataIdx
@@ -430,7 +430,7 @@ body {
  <br><span class="tlc_fkw">%endfunction</span>
  <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>local<span style="padding-left:9.5px"></span>function<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>determine<span style="padding-left:9.5px"></span>whether<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>is<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>scalar
 </span> <br><span class="tlc_fkw">%function</span> <a id="isScalar" class="tlc_func">isScalar</a>(port) <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portWidth = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertsystemgraphmaplib.html#SLibGetFunctionIOWidth">SLibGetFunctionIOWidth</a>(port)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portWidth = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertsystemgraphmaplib.html#SLibGetFunctionIOWidth">SLibGetFunctionIOWidth</a>(port)
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> flag = (portWidth == 1)
  <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> flag
  <br><span class="tlc_fkw">%endfunction</span>
@@ -450,10 +450,10 @@ body {
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> haveReturnValue
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> entry = fcnData.ArgSpecData[0]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outport    = ExternalOutputs.ExternalOutput[entry.PortNum]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimensions = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDimensions">LibGetRecordDimensions</a>(outport)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataType   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeName">LibGetRecordDataTypeName</a>(outport, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dimensions = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDimensions">LibGetRecordDimensions</a>(outport)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataType   = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeName">LibGetRecordDataTypeName</a>(outport, "")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> argName    =  entry.ArgName
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portWidth  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordSymbolicWidth">LibGetRecordSymbolicWidth</a>(outport)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portWidth  = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordSymbolicWidth">LibGetRecordSymbolicWidth</a>(outport)
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> mode == "ReturnType"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !haveReturnValue
@@ -491,7 +491,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "/nreturn %<<span>argName</span>>;/n"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("Unknown mode: %<<span>mode</span>>")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("Unknown mode: %<<span>mode</span>>")>
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br><span class="tlc_fkw">%endfunction</span>
  <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="FcnGetRootInport" class="tlc_func">FcnGetRootInport</a>(port, width, memberStr, chunkIdx, ucv, indexExpr) <span class="tlc_fkw">void</span>
@@ -501,33 +501,33 @@ body {
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varGroupIdx = extInp.VarGroupIdx[0]
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> memberIdx   = extInp.VarGroupIdx[1]
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varGroup    = ::CompiledModel.VarGroups.VarGroup[varGroupIdx]
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portVarName  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSLibCGIRGetVarGroupMemberName">FcnSLibCGIRGetVarGroupMemberName</a>(varGroupIdx, memberIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portVarName  = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/opaquelib.html#FcnSLibCGIRGetVarGroupMemberName">FcnSLibCGIRGetVarGroupMemberName</a>(varGroupIdx, memberIdx)
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isPointer   = TLC_FALSE
- <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibAccessArgHelper">SLibAccessArgHelper</a>(extInp,"",System[SystemIdx].CurrentTID)>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/sysarglib.html#SLibAccessArgHelper">SLibAccessArgHelper</a>(extInp,"",System[SystemIdx].CurrentTID)>
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> identifier = "%<<span>varGroup.Name</span>>.%<<span>portVarName</span>>"
- <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#SLibHasGlobalExternalInputsWithFPC">SLibHasGlobalExternalInputsWithFPC</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#SLibHasGlobalExternalInputsWithFPC">SLibHasGlobalExternalInputsWithFPC</a>()
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> identifier = "%<::tSimStruct>->%<<span>identifier</span>>"
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnCGIRSimpleCGVarHelper">FcnCGIRSimpleCGVarHelper</a>(identifier, isPointer, width, memberStr, chunkIdx, ucv, indexExpr, TLC_FALSE)
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/opaquelib.html#FcnCGIRSimpleCGVarHelper">FcnCGIRSimpleCGVarHelper</a>(identifier, isPointer, width, memberStr, chunkIdx, ucv, indexExpr, TLC_FALSE)
  <br><span class="tlc_fkw">%endfunction</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/CondExecutedVSS/tContPortHighlight.m
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="FcnGetRootOutport" class="tlc_func">FcnGetRootOutport</a>(port, width, memberStr, chunkIdx, ucv, indexExpr) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> SystemIdx == NumSystems-1 || RTWSystemCode != 2
- <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>() &amp;&amp; !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceRTWTarget">IsModelReferenceRTWTarget</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceSimTarget">IsModelReferenceSimTarget</a>() &amp;&amp; !<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceRTWTarget">IsModelReferenceRTWTarget</a>()
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> extOut      = ::CompiledModel.ExternalOutputs.ExternalOutput[port]
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varGroupIdx = extOut.VarGroupIdx[0]
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> memberIdx   = extOut.VarGroupIdx[1]
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varGroup    = ::CompiledModel.VarGroups.VarGroup[varGroupIdx]
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portVarName     = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnSLibCGIRGetVarGroupMemberName">FcnSLibCGIRGetVarGroupMemberName</a>(varGroupIdx, memberIdx)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portVarName     = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/opaquelib.html#FcnSLibCGIRGetVarGroupMemberName">FcnSLibCGIRGetVarGroupMemberName</a>(varGroupIdx, memberIdx)
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> currentTID  = System[SystemIdx].CurrentTID
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isPointer   = TLC_FALSE
- <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#SLibAccessArgHelper">SLibAccessArgHelper</a>(extOut,"",currentTID)>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/sysarglib.html#SLibAccessArgHelper">SLibAccessArgHelper</a>(extOut,"",currentTID)>
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> identifier = "%<<span>varGroup.Name</span>>.%<<span>portVarName</span>>"
- <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#SLibHasGlobalExternalOutputsWithFPC">SLibHasGlobalExternalOutputsWithFPC</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/commonhdr_extiolib.html#SLibHasGlobalExternalOutputsWithFPC">SLibHasGlobalExternalOutputsWithFPC</a>()
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> identifier = "%<::tSimStruct>->%<<span>identifier</span>>"
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#FcnCGIRSimpleCGVarHelper">FcnCGIRSimpleCGVarHelper</a>(identifier, isPointer, width, memberStr, chunkIdx, ucv, indexExpr, TLC_FALSE)
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/opaquelib.html#FcnCGIRSimpleCGVarHelper">FcnCGIRSimpleCGVarHelper</a>(identifier, isPointer, width, memberStr, chunkIdx, ucv, indexExpr, TLC_FALSE)
  <br><span class="tlc_fkw">%endfunction</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>write<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>inputs<span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>on<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>lower-level<span style="padding-left:9.5px"></span>step<span style="padding-left:9.5px"></span>function
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>argument<span style="padding-left:9.5px"></span>list
@@ -537,7 +537,7 @@ body {
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::BlockFcn = "OutputUpdate"
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootSystem        = System[NumSystems-1]
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isPeriodicRateGrouping    = ...
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibSystemFcnPeriodicRateGrouping">SLibSystemFcnPeriodicRateGrouping</a>(rootSystem, ::BlockFcn)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/sysbodlib.html#SLibSystemFcnPeriodicRateGrouping">SLibSystemFcnPeriodicRateGrouping</a>(rootSystem, ::BlockFcn)
  <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpBuf
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = fcnData.NumArgSpecData
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> spec = fcnData.ArgSpecData[idx]
@@ -549,16 +549,16 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (<span class="tlc_bifunc">ISFIELD</span>(extInp, "Inactive"))
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ifCond = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIfVariantCondition">SLibIfVariantCondition</a>(extInp)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ifEndCond = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibEndIfVariantCondition">SLibEndIfVariantCondition</a>(extInp)
- <br>&nbsp; <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#GetTheOtherReusableArgInFPC">GetTheOtherReusableArgInFPC</a>(fcnData, idx)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ifCond = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibIfVariantCondition">SLibIfVariantCondition</a>(extInp)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ifEndCond = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibEndIfVariantCondition">SLibEndIfVariantCondition</a>(extInp)
+ <br>&nbsp; <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outIdx = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#GetTheOtherReusableArgInFPC">GetTheOtherReusableArgInFPC</a>(fcnData, idx)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> extInp.RequiresGlobalAccess == "yes"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% model reference at the presence of FPC is in IR,</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% the following TLC-code-generation mechanism has no IR implementation.</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% so we protect ourselves by this assertion.</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
- <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeName">LibGetRecordDataTypeName</a>(extInp, "")
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width    = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordSymbolicWidth">LibGetRecordSymbolicWidth</a>(extInp)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataType = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeName">LibGetRecordDataTypeName</a>(extInp, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width    = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordSymbolicWidth">LibGetRecordSymbolicWidth</a>(extInp)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> argName =  spec.ArgName
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> inVar   = "%<<span>argName</span>>"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isPointer = (spec.Category == "Pointer")
@@ -568,12 +568,12 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>ifCond</span>>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> width != "1"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeName">LibCGTypeName</a>(::CompiledModel.CGTypes.IndexType)> i;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeName">LibCGTypeName</a>(::CompiledModel.CGTypes.IndexType)> i;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i = 0; i < %<<span>width</span>>; i++)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnGetRootInport">FcnGetRootInport</a>(spec.PortNum, width, "", -1, "i", 0)> = %<<span>inVar</span>>[i];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnGetRootInport">FcnGetRootInport</a>(spec.PortNum, width, "", -1, "i", 0)> = %<<span>inVar</span>>[i];
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnGetRootInport">FcnGetRootInport</a>(spec.PortNum, width, "", -1, "", 0)> = %<<span>deref</span>>%<<span>inVar</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnGetRootInport">FcnGetRootInport</a>(spec.PortNum, width, "", -1, "", 0)> = %<<span>deref</span>>%<<span>inVar</span>>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>ifEndCond</span>>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> outIdx >= 0
@@ -583,11 +583,11 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outSpec = fcnData.ArgSpecData[outIdx]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> extOut = ExternalOutputs.ExternalOutput[outSpec.PortNum]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> extOut.RequiresGlobalAccess == "yes"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysIdx       = extOut.Block[0]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkIdx       = extOut.Block[1]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outportBlock = System[sysIdx].Block[blkIdx]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width        = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordSymbolicWidth">LibGetRecordSymbolicWidth</a>(extOut)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width        = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordSymbolicWidth">LibGetRecordSymbolicWidth</a>(extOut)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isPointer    = (outSpec.Category == "Pointer")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> deref        = isPointer ? "*" : ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> argName      = outSpec.ArgName
@@ -596,36 +596,36 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>ifCond</span>>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> width != "1"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeName">LibCGTypeName</a>(::CompiledModel.CGTypes.IndexType)> i;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeName">LibCGTypeName</a>(::CompiledModel.CGTypes.IndexType)> i;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i=0; i<%<<span>width</span>>; i++)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnGetRootOutport">FcnGetRootOutport</a>(outSpec.PortNum, width, "", -1, "i", 0)> = %<<span>outVar</span>>[i];
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnGetRootOutport">FcnGetRootOutport</a>(outSpec.PortNum, width, "", -1, "i", 0)> = %<<span>outVar</span>>[i];
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnGetRootOutport">FcnGetRootOutport</a>(outSpec.PortNum, width, "", -1, "", 0)> = %<<span>deref</span>>%<<span>outVar</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnGetRootOutport">FcnGetRootOutport</a>(outSpec.PortNum, width, "", -1, "", 0)> = %<<span>deref</span>>%<<span>outVar</span>>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>ifEndCond</span>>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> baseSysIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> baseSysIdx = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> interface   = System[baseSysIdx].Interface
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> argName = spec.ArgName
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> argUsed = TLC_FALSE
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> canIdx = interface.NumCanonicalInputArgDefs
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> argName == <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(interface.CanonicalInputArgDef[canIdx])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> argName == <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(interface.CanonicalInputArgDef[canIdx])
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> argUsed = TLC_TRUE
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_break">%break</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !argUsed
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#SLibUnusedParameter">SLibUnusedParameter</a>(spec.ArgName)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/syslib.html#SLibUnusedParameter">SLibUnusedParameter</a>(spec.ArgName)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% CGIR only reuses inports by outports, but does not remove inports.</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% TLC removes the unused inports. Therefore we do not take them as unused</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% parameters.</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/sysarglib.html#FcnArgNeeded">FcnArgNeeded</a>(extInp,rootSystem.CurrentTID,isPeriodicRateGrouping) &amp;&amp; ...
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#GetTheOtherReusableArgInFPC">GetTheOtherReusableArgInFPC</a>(fcnData, idx) < 0
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/syslib.html#SLibUnusedParameter">SLibUnusedParameter</a>(spec.ArgName)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/sysarglib.html#FcnArgNeeded">FcnArgNeeded</a>(extInp,rootSystem.CurrentTID,isPeriodicRateGrouping) &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#GetTheOtherReusableArgInFPC">GetTheOtherReusableArgInFPC</a>(fcnData, idx) < 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/syslib.html#SLibUnusedParameter">SLibUnusedParameter</a>(spec.ArgName)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span> <span class="tlc_comment">%%NumArgSpecData</span>
@@ -656,10 +656,10 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portNum  = spec.PortNum
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> extOup   = ExternalOutputs.ExternalOutput[spec.PortNum]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width        = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordSymbolicWidth">LibGetRecordSymbolicWidth</a>(extOup)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width        = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordSymbolicWidth">LibGetRecordSymbolicWidth</a>(extOup)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isPointer        = (spec.Category == "Pointer")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> deref        = isPointer ? "*" : ""
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataType     = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeName">LibGetRecordDataTypeName</a>(extOup, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataType     = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeName">LibGetRecordDataTypeName</a>(extOup, "")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> argName      =  spec.ArgName
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> inVar        = "%<<span>argName</span>>"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysIdx       = extOup.Block[0]
@@ -673,62 +673,62 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> variantCondition = ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ifCond = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIfVariantConditionForm">SLibIfVariantConditionForm</a>(variantCondition)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ifEndCond = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibEndIfVariantConditionForm">SLibEndIfVariantConditionForm</a>(variantCondition)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ifCond = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibIfVariantConditionForm">SLibIfVariantConditionForm</a>(variantCondition)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ifEndCond = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibEndIfVariantConditionForm">SLibEndIfVariantConditionForm</a>(variantCondition)
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> extOup.RequiresGlobalAccess == "yes"
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% model reference at the presence of FPC is in IR,</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% the following TLC-code-generation mechanism has no IR implementation.</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% so we protect ourselves by this assertion.</span>
- <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Copy value for root outport '%<<span>outportBlock.Name</span>>' since it is accessed globally */
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>ifCond</span>>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> width != "1"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeName">LibCGTypeName</a>(::CompiledModel.CGTypes.IndexType)> i;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibCGTypeName">LibCGTypeName</a>(::CompiledModel.CGTypes.IndexType)> i;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(i = 0; i < %<<span>width</span>>; i++)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>inVar</span>>[i] = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnGetRootOutport">FcnGetRootOutport</a>(spec.PortNum, width, "", -1, "i", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>inVar</span>>[i] = %<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnGetRootOutport">FcnGetRootOutport</a>(spec.PortNum, width, "", -1, "i", 0)>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>deref</span>>%<<span>inVar</span>> = %<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnGetRootOutport">FcnGetRootOutport</a>(spec.PortNum, width, "", -1, "", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>deref</span>>%<<span>inVar</span>> = %<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnGetRootOutport">FcnGetRootOutport</a>(spec.PortNum, width, "", -1, "", 0)>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span>ifEndCond</span>>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>()
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% this code is only useful for cases that model reference is not in IR,</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% which is, non-reusable inside reusable, or output as return value.</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEQUAL</span>(outportBlock.TID, "constant")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% This code cannot be enhanced to support symbolic dims because it unrolls the loop.</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% The TLC code coverage shows it is not in use. Perhaps it is dead code.</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibRecordHasSymbolicWidth">LibRecordHasSymbolicWidth</a>(extOup)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibRecordHasSymbolicWidth">LibRecordHasSymbolicWidth</a>(extOup)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> outportBlock
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portObj  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#FcnGetInputPortRecord">FcnGetInputPortRecord</a>(0)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> signalRec = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#SLibGetSourceRecord">SLibGetSourceRecord</a>(portObj, 0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portObj  = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#FcnGetInputPortRecord">FcnGetInputPortRecord</a>(0)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> signalRec = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#SLibGetSourceRecord">SLibGetSourceRecord</a>(portObj, 0)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(signalRec, "InitialValue")
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeId = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeId">LibGetRecordDataTypeId</a>(signalRec)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> complex = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetRecordIsComplex">SLibGetRecordIsComplex</a>(signalRec)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> multiWord = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibIsDataTypeMultiWordFixpt">LibIsDataTypeMultiWordFixpt</a>(dTypeId)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dTypeId = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeId">LibGetRecordDataTypeId</a>(signalRec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> complex = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetRecordIsComplex">SLibGetRecordIsComplex</a>(signalRec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> multiWord = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibIsDataTypeMultiWordFixpt">LibIsDataTypeMultiWordFixpt</a>(dTypeId)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> width != "1"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> sigIdx = %<<span>width</span>>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> suffix = complex ? ".%<<span>tRealPart</span>>" : ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> var = <span class="tlc_bifunc">STRING</span>(inVar) + "[" + <span class="tlc_bifunc">STRING</span>(sigIdx) + "]" + suffix
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> multiWord
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> val = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#FcnGetNonBuiltInRe">FcnGetNonBuiltInRe</a>(signalRec.InitialValue[sigIdx])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> val = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#FcnGetNonBuiltInRe">FcnGetNonBuiltInRe</a>(signalRec.InitialValue[sigIdx])
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">TYPE</span>(signalRec.InitialValue[sigIdx]) != "String"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> val = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetFormattedValue">SLibGetFormattedValue</a>(signalRec, <span class="tlc_bifunc">REAL</span>(signalRec.InitialValue[sigIdx]))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> val = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetFormattedValue">SLibGetFormattedValue</a>(signalRec, <span class="tlc_bifunc">REAL</span>(signalRec.InitialValue[sigIdx]))
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !complex
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> val = signalRec.InitialValue[sigIdx]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonreglib.html#SLibInitDataInitialValue">SLibInitDataInitialValue</a>(dTypeId, var, val)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/commonreglib.html#SLibInitDataInitialValue">SLibInitDataInitialValue</a>(dTypeId, var, val)>/
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> complex
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> var = <span class="tlc_bifunc">STRING</span>(inVar) + "[" + <span class="tlc_bifunc">STRING</span>(sigIdx) + "]." + tImagPart
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> multiWord
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> val = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#FcnGetNonBuiltInIm">FcnGetNonBuiltInIm</a>(signalRec.InitialValue[sigIdx])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> val = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#FcnGetNonBuiltInIm">FcnGetNonBuiltInIm</a>(signalRec.InitialValue[sigIdx])
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> val = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetFormattedValue">SLibGetFormattedValue</a>(signalRec, <span class="tlc_bifunc">IMAG</span>(signalRec.InitialValue[sigIdx]))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> val = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetFormattedValue">SLibGetFormattedValue</a>(signalRec, <span class="tlc_bifunc">IMAG</span>(signalRec.InitialValue[sigIdx]))
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonreglib.html#SLibInitDataInitialValue">SLibInitDataInitialValue</a>(dTypeId, var, val)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/commonreglib.html#SLibInitDataInitialValue">SLibInitDataInitialValue</a>(dTypeId, var, val)>/
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
@@ -743,16 +743,16 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> multiWord
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> val = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#FcnGetNonBuiltInRe">FcnGetNonBuiltInRe</a>(signalRec.InitialValue[0])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> val = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#FcnGetNonBuiltInRe">FcnGetNonBuiltInRe</a>(signalRec.InitialValue[0])
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">TYPE</span>(signalRec.InitialValue[0]) != "String"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> val = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetFormattedValue">SLibGetFormattedValue</a>(signalRec, <span class="tlc_bifunc">REAL</span>(signalRec.InitialValue[0]))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> val = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetFormattedValue">SLibGetFormattedValue</a>(signalRec, <span class="tlc_bifunc">REAL</span>(signalRec.InitialValue[0]))
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !complex
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> val = signalRec.InitialValue[0]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonreglib.html#SLibInitDataInitialValue">SLibInitDataInitialValue</a>(dTypeId, var, val)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/commonreglib.html#SLibInitDataInitialValue">SLibInitDataInitialValue</a>(dTypeId, var, val)>/
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> complex
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(deref)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> var = "(" + <span class="tlc_bifunc">STRING</span>(deref) + <span class="tlc_bifunc">STRING</span>(inVar) + ")." + tImagPart
@@ -760,11 +760,11 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> var = <span class="tlc_bifunc">STRING</span>(inVar) + "." + tImagPart
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> multiWord
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> val = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/paramlib.html#FcnGetNonBuiltInIm">FcnGetNonBuiltInIm</a>(signalRec.InitialValue[0])
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> val = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/paramlib.html#FcnGetNonBuiltInIm">FcnGetNonBuiltInIm</a>(signalRec.InitialValue[0])
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> val = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetFormattedValue">SLibGetFormattedValue</a>(signalRec, <span class="tlc_bifunc">IMAG</span>(signalRec.InitialValue[0]))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> val = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetFormattedValue">SLibGetFormattedValue</a>(signalRec, <span class="tlc_bifunc">IMAG</span>(signalRec.InitialValue[0]))
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonreglib.html#SLibInitDataInitialValue">SLibInitDataInitialValue</a>(dTypeId, var, val)>/
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/commonreglib.html#SLibInitDataInitialValue">SLibInitDataInitialValue</a>(dTypeId, var, val)>/
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -790,8 +790,8 @@ body {
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="FcnModelStepFcnArgs" class="tlc_func">FcnModelStepFcnArgs</a>(fcnData, mode) <span class="tlc_fkw">void</span>
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% This is the smart code, doesn't depend on the function prototype control record in the RTW file</span>
- <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>() &amp;&amp; mode == "WrapperDec"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> baseSysIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#IsModelReferenceTarget">IsModelReferenceTarget</a>() &amp;&amp; mode == "WrapperDec"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> baseSysIdx = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% For multitasking, the TID should be passed into LibGetFcnInfo to get the correct fcnInfo</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(fcnData,"CurrentTID")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tid = %<<span>fcnData.CurrentTID</span>>
@@ -799,10 +799,10 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tid = ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !(::CompiledModel.FixedStepOpts.SolverMode == "MultiTasking" || ...
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsExplicitTaskingExportFcnRateGrouping">SLibIsExplicitTaskingExportFcnRateGrouping</a>("OutputUpdate",tid))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibIsExplicitTaskingExportFcnRateGrouping">SLibIsExplicitTaskingExportFcnRateGrouping</a>("OutputUpdate",tid))
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tid = ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnInfo = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#LibGetFcnInfo">LibGetFcnInfo</a>(::CompiledModel.System[baseSysIdx], "OutputUpdate", tid)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnInfo = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefsfcnlib.html#LibGetFcnInfo">LibGetFcnInfo</a>(::CompiledModel.System[baseSysIdx], "OutputUpdate", tid)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(fcnInfo)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> fcnInfo.Params
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
@@ -832,15 +832,15 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isReference = (spec.Category == "Reference")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> argName = spec.ArgName
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> spec.SLObjectType == "Inport"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#GetTheOtherReusableArgInFPC">GetTheOtherReusableArgInFPC</a>(fcnData, idx) >= 0
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#GetTheOtherReusableArgInFPC">GetTheOtherReusableArgInFPC</a>(fcnData, idx) >= 0
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% CGIR has reused the inport. Do not put it in the argument list.</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> extInp    = ExternalInputs.ExternalInput[spec.PortNum]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portWidth = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordSymbolicWidth">LibGetRecordSymbolicWidth</a>(extInp)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portWidth = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordSymbolicWidth">LibGetRecordSymbolicWidth</a>(extInp)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isScalar  = portWidth == "1"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataType  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeName">LibGetRecordDataTypeName</a>(extInp, "")
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isStdContainer = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordIsStdContainer">LibGetRecordIsStdContainer</a>(extInp)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataType  = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeName">LibGetRecordDataTypeName</a>(extInp, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isStdContainer = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordIsStdContainer">LibGetRecordIsStdContainer</a>(extInp)
  <br>&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> wrapperCall
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> deref = ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% take the underlying data for std container</span>
@@ -896,13 +896,13 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> recArgs = recArgs + "%<<span>argName</span>>"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("Should not be here.")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("Should not be here.")>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> spec.SLObjectType == "Outport"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> extOut       = ExternalOutputs.ExternalOutput[spec.PortNum]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portWidth    = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordSymbolicWidth">LibGetRecordSymbolicWidth</a>(extOut)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> portWidth    = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordSymbolicWidth">LibGetRecordSymbolicWidth</a>(extOut)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isScalar     = portWidth == "1"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataType     = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeName">LibGetRecordDataTypeName</a>(extOut, "")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataType     = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeName">LibGetRecordDataTypeName</a>(extOut, "")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sysIdx       = extOut.Block[0]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> blkIdx       = extOut.Block[1]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> outportBlock = System[sysIdx].Block[blkIdx]
@@ -913,7 +913,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_continue">%continue</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> argName = spec.ArgName
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isStdContainer = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordIsStdContainer">LibGetRecordIsStdContainer</a>(extOut)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isStdContainer = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordIsStdContainer">LibGetRecordIsStdContainer</a>(extOut)
  <br>&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> wrapperCall
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !isScalar
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isStdContainer
@@ -980,10 +980,10 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> recArgs = recArgs + "%<<span>argName</span>>"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("Should not be here.")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("Should not be here.")>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("Should not be here.")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("Should not be here.")>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span> <span class="tlc_comment">%% NumArgSpecData</span>
  <br>&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span> <span class="tlc_comment">%%fcnData</span>
@@ -1001,7 +1001,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> calledInStep
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("Should not be here.")>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibReportFatalError">LibReportFatalError</a>("Should not be here.")>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = <span class="tlc_bifunc">SIZE</span>(recArgs,1)
@@ -1016,31 +1016,31 @@ body {
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>call<span style="padding-left:9.5px"></span>the<span style="padding-left:9.5px"></span>models<span style="padding-left:9.5px"></span>lower-level<span style="padding-left:9.5px"></span>step<span style="padding-left:9.5px"></span>function
 </span> <br><span class="tlc_fkw">%function</span> <a id="FcnInternalModelStepFcn" class="tlc_func">FcnInternalModelStepFcn</a>(fcnData) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> tmpFcnBuf
- <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/codetemplatelib.html#LibIsSingleRateModel">LibIsSingleRateModel</a>()
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/codetemplatelib.html#LibIsSingleRateModel">LibIsSingleRateModel</a>()
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tid = ""
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tid = "0"
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;/* Calls the model step function. */
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertmodelarg.html#SLibModelStepFcnName">SLibModelStepFcnName</a>(tid)>(%<<span>tid</span>>);
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertmodelarg.html#SLibModelStepFcnName">SLibModelStepFcnName</a>(tid)>(%<<span>tid</span>>);
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> tmpFcnBuf
  <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> tmpFcnBuf
  <br><span class="tlc_fkw">%endfunction</span>
  <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>TopTester:<span style="padding-left:9.5px"></span>test/toolbox/simulink/variants/CondExecutedVSS/tContPortHighlight.m
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibWriteCustomModelStepFunction" class="tlc_func">SLibWriteCustomModelStepFunction</a>() <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibFcnProtoCtrlActive">SLibFcnProtoCtrlActive</a>()
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsAsyncTaskOnlyModel">SLibIsAsyncTaskOnlyModel</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibFcnProtoCtrlActive">SLibFcnProtoCtrlActive</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibIsAsyncTaskOnlyModel">SLibIsAsyncTaskOnlyModel</a>()
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> warnTxt="Customized model step function is not generated since the model has only asynchronous rates."
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibReportWarning">LibReportWarning</a>(warnTxt)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibReportWarning">LibReportWarning</a>(warnTxt)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnData = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnGetFunctionPrototypeRecord">FcnGetFunctionPrototypeRecord</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnData = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnGetFunctionPrototypeRecord">FcnGetFunctionPrototypeRecord</a>()
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = fcnData.FunctionName
- <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnModelStepFcnReturnCode">FcnModelStepFcnReturnCode</a>(fcnData,"ReturnType")
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retType = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnModelStepFcnReturnCode">FcnModelStepFcnReturnCode</a>(fcnData,"ReturnType")
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnArgs = ""
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnArgs = fcnArgs + <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnModelStepFcnArgs">FcnModelStepFcnArgs</a>(fcnData,"WrapperDec")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnArgs = fcnArgs + <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnModelStepFcnArgs">FcnModelStepFcnArgs</a>(fcnData,"WrapperDec")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> ::CompiledModel.MultiInstanceERTCode
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsSelfStructured">SLibIsSelfStructured</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibIsSelfStructured">SLibIsSelfStructured</a>()
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comma = ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(fcnArgs)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> comma = ", "
@@ -1051,18 +1051,18 @@ body {
  <br>&nbsp; <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> fcnProtoBuf
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* Customized model step function */
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !::GenCPP
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibExternInFcnDecls">LibExternInFcnDecls</a>()</span>>%<<span>fcnProto</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibExternInFcnDecls">LibExternInFcnDecls</a>()</span>>%<<span>fcnProto</span>>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#ifdef __cplusplus
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extern "C" {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#endif
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibExternInFcnDecls">LibExternInFcnDecls</a>()</span>>%<<span>fcnProto</span>>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<span><a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibExternInFcnDecls">LibExternInFcnDecls</a>()</span>>%<<span>fcnProto</span>>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#ifdef __cplusplus
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#endif
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_closefile">%closefile</span> fcnProtoBuf
- <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mdl_fcn_decl", fcnProtoBuf)>
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mdl_fcn_decl", fcnProtoBuf)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br><span class="tlc_fkw">%endfunction</span> <span class="tlc_comment">%%%%%%SLibWriteModelStepWrapperFunction</span>
@@ -1071,17 +1071,17 @@ body {
 </span> <br><span class="tlc_fkw">%function</span> <a id="SLibGetStepMethodDecl" class="tlc_func">SLibGetStepMethodDecl</a>(inClass, tid) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> decl = ""
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> GenerateClassInterface
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> classConfObj = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnGetRTWCPPStepPrototypeRecord">FcnGetRTWCPPStepPrototypeRecord</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> classConfObj = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnGetRTWCPPStepPrototypeRecord">FcnGetRTWCPPStepPrototypeRecord</a>()
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% For multitasking mode, we include tid info in classConfObj</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (::CompiledModel.FixedStepOpts.SolverMode == "MultiTasking") || ...
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsExplicitTaskingExportFcnRateGrouping">SLibIsExplicitTaskingExportFcnRateGrouping</a>("OutputUpdate",tid)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibIsExplicitTaskingExportFcnRateGrouping">SLibIsExplicitTaskingExportFcnRateGrouping</a>("OutputUpdate",tid)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISFIELD</span>(classConfObj, "CurrentTID")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> classConfObj CurrentTID "%<<span>tid</span>>"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> classConfObj.CurrentTID = "%<<span>tid</span>>"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsExplicitTaskingExportFcnRateGrouping">SLibIsExplicitTaskingExportFcnRateGrouping</a>("OutputUpdate",tid))
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span>(<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibIsExplicitTaskingExportFcnRateGrouping">SLibIsExplicitTaskingExportFcnRateGrouping</a>("OutputUpdate",tid))
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = ::CompiledModel.SampleTime[tid].EntryFcnName
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> <span class="tlc_bifunc">ISFIELD</span>(classConfObj,"FunctionName")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fcnName = classConfObj.FunctionName
@@ -1092,9 +1092,9 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> classConfObj.CurrentTID = "%<<span>tid</span>>"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> className = classConfObj.ModelClassName
- <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retType = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnModelStepFcnReturnCode">FcnModelStepFcnReturnCode</a>(classConfObj,"ReturnType")
- <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> theArgs = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnModelStepFcnArgs">FcnModelStepFcnArgs</a>(classConfObj,"WrapperDec")
- <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/sysbodlib.html#SLibSingleTasking">SLibSingleTasking</a>()
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> retType = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnModelStepFcnReturnCode">FcnModelStepFcnReturnCode</a>(classConfObj,"ReturnType")
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> theArgs = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/ertfcnprotocontrol.html#FcnModelStepFcnArgs">FcnModelStepFcnArgs</a>(classConfObj,"WrapperDec")
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/sysbodlib.html#SLibSingleTasking">SLibSingleTasking</a>()
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> inClass
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> decl = "%<<span>retType</span>> %<<span>fcnName</span>>(%<<span>theArgs</span>>);"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
@@ -1102,7 +1102,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span> <span class="tlc_comment">%%MR/MT, must be void-void case</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> inClass
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#LibAsynchronousTriggeredTID">LibAsynchronousTriggeredTID</a>(tid) || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsExplicitTaskingExportFcnRateGrouping">SLibIsExplicitTaskingExportFcnRateGrouping</a>("OutputUpdate",tid)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#LibAsynchronousTriggeredTID">LibAsynchronousTriggeredTID</a>(tid) || <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibIsExplicitTaskingExportFcnRateGrouping">SLibIsExplicitTaskingExportFcnRateGrouping</a>("OutputUpdate",tid)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> decl = "%<<span>retType</span>> %<<span>fcnName</span>>(%<<span>theArgs</span>>);/n"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> decl = "%<<span>retType</span>> %<<span>fcnName</span>>%<<span>tid</span>>(%<<span>theArgs</span>>);/n"

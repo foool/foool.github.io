@@ -18,18 +18,18 @@ body {line-height: 100%; font-family:courier;}
  <br>%%  
  <br>&nbsp; <br><span class="tlc_implements">%implements</span> xpcdouble2bit "C"
  <br>&nbsp; <br><span class="tlc_function">%function</span> <a id="Outputs" class="tlc_func">Outputs</a>(block, system) Output
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> masks     = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcdouble2bit.html#getMasks">getMasks</a>()
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nbitsZero = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcdouble2bit.html#getNBitsZero">getNBitsZero</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> masks     = <a href="https://foool.github.io/r2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcdouble2bit.html#getMasks">getMasks</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> nbitsZero = <a href="https://foool.github.io/r2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcdouble2bit.html#getNBitsZero">getNBitsZero</a>()
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> map = block.SFcnParamSettings.Map
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> len = block.SFcnParamSettings.Lengths
  <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> buf = ""
  <br>&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpVarNeeded = 0
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;<span class="tlc_openfile">%openfile</span> buf
  <br>&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> i = block.NumDataOutputPorts
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cast = "(%&lt;<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalDataTypeName">LibBlockOutputSignalDataTypeName</a>(i,"")&gt;)"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cast = "(%&lt;<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignalDataTypeName">LibBlockOutputSignalDataTypeName</a>(i,"")&gt;)"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> line = ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> specMap = <span class="tlc_bifunc">FEVAL</span>("getmap", map, i)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> oExpr   = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcbit2double.html#genBitPack">genBitPack</a>(specMap)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> oExpr   = <a href="https://foool.github.io/r2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcbit2double.html#genBitPack">genBitPack</a>(specMap)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% if length is negative, it is a signed type. Then, if the last bit is
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% one, we need to sign extend it. We sign extend to 32 bits, then the
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%% casting at the end will take care of the data.
@@ -40,9 +40,9 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (tmp & %<nbitsZero[-len[i] - 1]>) {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tmp |= %<nbitsZero[-len[i] - 1]>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(i, "", "", 0)> = %&lt;cast&gt;tmp;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(i, "", "", 0)> = %&lt;cast&gt;tmp;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(i, "", "", 0)> = %&lt;cast&gt;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockOutputSignal">LibBlockOutputSignal</a>(i, "", "", 0)> = %&lt;cast&gt;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%&lt;oExpr&gt;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
@@ -50,7 +50,7 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;/* Bit Unpacking: %&lt;block.Name&gt; */
  <br>&nbsp;&nbsp;{
  <br>&nbsp;&nbsp;&nbsp;&nbsp;const uint32_T *y = /
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(const uint32_T *)%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(0, "", "", 0)>;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(const uint32_T *)%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/blkiolib.html#LibBlockInputSignalAddr">LibBlockInputSignalAddr</a>(0, "", "", 0)>;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> tmpVarNeeded
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uint32_T tmp;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
@@ -59,21 +59,21 @@ body {line-height: 100%; font-family:courier;}
  <br><span class="tlc_endfunction">%endfunction</span>
  <br>&nbsp; <br>%% Return the code for one mask/shift operation.
  <br><span class="tlc_function">%function</span> <a id="oneLine" class="tlc_func">oneLine</a>(map)
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> masks = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcdouble2bit.html#getMasks">getMasks</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> masks = <a href="https://foool.github.io/r2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcdouble2bit.html#getMasks">getMasks</a>()
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> oOff   = map[0]
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> len    = map[1]
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> iChunk = map[2]
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> iOff   = map[3]
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> expr   = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcbit2double.html#shiftWithParams">shiftWithParams</a>(masks[len - 1], iOff, 0)
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> expr   = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcbit2double.html#shiftWithParams">shiftWithParams</a>("(y[%&lt;iChunk&gt;] & %&lt;expr&gt;)", oOff, iOff)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> expr   = <a href="https://foool.github.io/r2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcbit2double.html#shiftWithParams">shiftWithParams</a>(masks[len - 1], iOff, 0)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> expr   = <a href="https://foool.github.io/r2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcbit2double.html#shiftWithParams">shiftWithParams</a>("(y[%&lt;iChunk&gt;] & %&lt;expr&gt;)", oOff, iOff)
  <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> "%&lt;expr&gt;"
  <br><span class="tlc_endfunction">%endfunction</span>
  <br>&nbsp; <br>%% Return the code for one output based on map.
  <br><span class="tlc_function">%function</span> <a id="genBitPack" class="tlc_func">genBitPack</a>(map)
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> maskExpr = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcbit2double.html#oneLine">oneLine</a>(<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcbit2double.html#getRow">getRow</a>(map, 0))
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> maskExpr = <a href="https://foool.github.io/r2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcbit2double.html#oneLine">oneLine</a>(<a href="https://foool.github.io/r2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcbit2double.html#getRow">getRow</a>(map, 0))
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> addParen = 0
  <br>&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> row = <span class="tlc_bifunc">SIZE</span>(map, 0) - 1
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> maskExpr = maskExpr + " |/n%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcbit2double.html#oneLine">oneLine</a>(<a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcbit2double.html#getRow">getRow</a>(map, row + 1))>"
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> maskExpr = maskExpr + " |/n%<<a href="https://foool.github.io/r2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcbit2double.html#oneLine">oneLine</a>(<a href="https://foool.github.io/r2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcbit2double.html#getRow">getRow</a>(map, row + 1))>"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> addParen = 1
  <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> addParen == 1
@@ -84,7 +84,7 @@ body {line-height: 100%; font-family:courier;}
  <br>&nbsp; <br>%% Return the expr with an appropriate shift expression. If the shift
  <br>%% expression is non-empty, surround the whole thing with params.
  <br><span class="tlc_function">%function</span> <a id="shiftWithParams" class="tlc_func">shiftWithParams</a>(expr, o, i)
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> s = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcbit2double.html#shift">shift</a>(o, i)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> s = <a href="https://foool.github.io/r2020a/toolbox/rtw/targets/xpc/target/build/xpcblocks/tlc_c/xpcbit2double.html#shift">shift</a>(o, i)
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> s == ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> expr
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>

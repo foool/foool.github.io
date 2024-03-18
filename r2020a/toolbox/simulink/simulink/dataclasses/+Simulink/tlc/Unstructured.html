@@ -24,29 +24,29 @@ body {
 </span> <br><span class="tlc_implements">%implements</span> * "C"
  <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%=============================================================================
 </span> <br><span class="tlc_fkw">%function</span> <a id="GetTypeAndName" class="tlc_func">GetTypeAndName</a>(cscDefn, msDefn, datarec)
- <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id        = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(datarec)
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id        = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(datarec)
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> useStdContainerName = TLC_FALSE
- <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsContainerCGTypeND">SLibIsContainerCGTypeND</a>(datarec) || <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsNdIndexingFeatureOn">SLibIsNdIndexingFeatureOn</a>()
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dims = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordVectorDims">LibGetRecordVectorDims</a>(datarec)
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibIsContainerCGTypeND">SLibIsContainerCGTypeND</a>(datarec) || <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibIsNdIndexingFeatureOn">SLibIsNdIndexingFeatureOn</a>()
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dims = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordVectorDims">LibGetRecordVectorDims</a>(datarec)
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalmaplib.html#LibGetDataSymbolicWidth">LibGetDataSymbolicWidth</a>(datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/globalmaplib.html#LibGetDataSymbolicWidth">LibGetDataSymbolicWidth</a>(datarec)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dims  = (width == "1") ? "" : "[%<<span>width</span>>]"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(dims) &amp;&amp; <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/utillib.html#SLibIsContainerCGTypeStdContainer">SLibIsContainerCGTypeStdContainer</a>(datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(dims) &amp;&amp; <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/utillib.html#SLibIsContainerCGTypeStdContainer">SLibIsContainerCGTypeStdContainer</a>(datarec)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dims = ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> useStdContainerName = TLC_TRUE
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isPointer = (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDataAccess">SLibGetDataAccess</a>(cscDefn, datarec) == "Pointer")
- <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> type      = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordCompositeOptStdDataTypeName">LibGetRecordCompositeOptStdDataTypeName</a>(datarec, useStdContainerName)
- <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionRequired">SLibAutosarCompilerAbstractionRequired</a>()
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> isPointer = (<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDataAccess">SLibGetDataAccess</a>(cscDefn, datarec) == "Pointer")
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> type      = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordCompositeOptStdDataTypeName">LibGetRecordCompositeOptStdDataTypeName</a>(datarec, useStdContainerName)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionRequired">SLibAutosarCompilerAbstractionRequired</a>()
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% CONST is part of compiler abstraction macro</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> qualifier   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetQualifierWithoutConst">SLibGetQualifierWithoutConst</a>(msDefn)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> abstraction = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionForDataDecl">SLibAutosarCompilerAbstractionForDataDecl</a>(msDefn.IsConst, type, isPointer, TLC_FALSE, id, "DataGlobal")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> qualifier   = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetQualifierWithoutConst">SLibGetQualifierWithoutConst</a>(msDefn)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> abstraction = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/autosarsup.html#SLibAutosarCompilerAbstractionForDataDecl">SLibAutosarCompilerAbstractionForDataDecl</a>(msDefn.IsConst, type, isPointer, TLC_FALSE, id, "DataGlobal")
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> qualifier + abstraction + dims
  <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> qualifier = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetQualifier">SLibGetQualifier</a>(msDefn)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> qualifier = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetQualifier">SLibGetQualifier</a>(msDefn)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> isPointer
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDataScope">SLibGetDataScope</a>(cscDefn, datarec) == "Imported")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDataScope">SLibGetDataScope</a>(cscDefn, datarec) == "Imported")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> qualifier + type + " " + "*" + id
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% Direct access</span>
@@ -59,71 +59,71 @@ body {
  <br>&nbsp;&nbsp;<span class="tlc_comment">%% The data's DataScope shall not be "File" if getting here</span>
  <br>&nbsp;&nbsp;<span class="tlc_comment">%% The data's DataInit shall not be "Macro" if getting here</span>
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Put Description field of SDO in comments if the option is on</span>
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> desc = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDescriptionForData">SLibGetDescriptionForData</a>(datarec)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> desc = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDescriptionForData">SLibGetDescriptionForData</a>(datarec)
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> desc = <span class="tlc_bifunc">ISEMPTY</span>(desc) ? "" : "/* %<<span>desc</span>> */"
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> ["", "%<<span>desc</span>>", ""]
  <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
  <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%=============================================================================
 </span> <br><span class="tlc_fkw">%function</span> <a id="GetDeclUnstructured" class="tlc_func">GetDeclUnstructured</a>(cscDefn, msDefn, datarec) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_comment">%% The data's DataScope shall not be "File" if getting here</span>
- <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(datarec)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(datarec)
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Special case for compiler flag (imported macro without header file)</span>
- <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ((<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDataInitForData">SLibGetDataInitForData</a>(cscDefn, datarec) == "Macro") &amp;&amp; ...
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDataScope">SLibGetDataScope</a>(cscDefn, datarec) == "Imported") &amp;&amp; ...
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="tlc_bifunc">WHITE_SPACE</span>(<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetHeaderFile">SLibGetHeaderFile</a>(cscDefn, datarec))))
+ <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ((<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDataInitForData">SLibGetDataInitForData</a>(cscDefn, datarec) == "Macro") &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDataScope">SLibGetDataScope</a>(cscDefn, datarec) == "Imported") &amp;&amp; ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="tlc_bifunc">WHITE_SPACE</span>(<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetHeaderFile">SLibGetHeaderFile</a>(cscDefn, datarec))))
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeAndName = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/Unstructured.html#GetTypeAndName">GetTypeAndName</a>(cscDefn, msDefn, datarec)
+ <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeAndName = <a href="https://foool.github.io/r2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/Unstructured.html#GetTypeAndName">GetTypeAndName</a>(cscDefn, msDefn, datarec)
  <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> "extern " + typeAndName + ";"
  <br>&nbsp;&nbsp;&nbsp; <br><span class="tlc_fkw">%endfunction</span>
  <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%=============================================================================
 </span> <br><span class="tlc_fkw">%function</span> <a id="GetDefnCommentForData" class="tlc_func">GetDefnCommentForData</a>(cscDefn, msDefn, datarec) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_comment">%% The data's DataScope shall not be "Imported" when getting here,</span>
  <br>&nbsp;&nbsp;<span class="tlc_comment">%% because Imported should not be defined by us.</span>
- <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/Unstructured.html#GetDeclCommentForData">GetDeclCommentForData</a>(cscDefn, msDefn, datarec)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/Unstructured.html#GetDeclCommentForData">GetDeclCommentForData</a>(cscDefn, msDefn, datarec)
  <br><span class="tlc_fkw">%endfunction</span>
  <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%=============================================================================
 </span> <br><span class="tlc_fkw">%function</span> <a id="GetDefnUnstructured" class="tlc_func">GetDefnUnstructured</a>(cscDefn, msDefn, datarec) <span class="tlc_fkw">void</span>
  <br>&nbsp;&nbsp;<span class="tlc_comment">%% The data's DataScope shall not be "Imported" when getting here,</span>
  <br>&nbsp;&nbsp;<span class="tlc_comment">%% because Imported should not be defined by us.</span>
- <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(datarec)
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataInit = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDataInitForData">SLibGetDataInitForData</a>(cscDefn, datarec)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> id = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetRecordIdentifier">LibGetRecordIdentifier</a>(datarec)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataInit = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDataInitForData">SLibGetDataInitForData</a>(cscDefn, datarec)
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> dataInit == "Macro"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageVerifyRecordIsScalar">LibCustomStorageVerifyRecordIsScalar</a>(datarec)>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageVerifyRecordIsNonComplex">LibCustomStorageVerifyRecordIsNonComplex</a>(datarec)>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageVerifyRecordIsNonStruct">LibCustomStorageVerifyRecordIsNonStruct</a>(datarec)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageVerifyRecordIsScalar">LibCustomStorageVerifyRecordIsScalar</a>(datarec)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageVerifyRecordIsNonComplex">LibCustomStorageVerifyRecordIsNonComplex</a>(datarec)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageVerifyRecordIsNonStruct">LibCustomStorageVerifyRecordIsNonStruct</a>(datarec)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeAndName = "#define " + id
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStr     = " " + <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#LibParameterInstanceInitStr">LibParameterInstanceInitStr</a>(datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStr     = " " + <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/commonprmlib.html#LibParameterInstanceInitStr">LibParameterInstanceInitStr</a>(datarec)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> terminator  = ""
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataAccess  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDataAccess">SLibGetDataAccess</a>(cscDefn, datarec)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeAndName = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/Unstructured.html#GetTypeAndName">GetTypeAndName</a>(cscDefn, msDefn, datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataAccess  = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDataAccess">SLibGetDataAccess</a>(cscDefn, datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> typeAndName = <a href="https://foool.github.io/r2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/Unstructured.html#GetTypeAndName">GetTypeAndName</a>(cscDefn, msDefn, datarec)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStr     = ""
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% If data is accessed by pointer it should always be imported (do not generate definition)</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDataScope">SLibGetDataScope</a>(cscDefn, datarec) != "Imported")
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDataScope">SLibGetDataScope</a>(cscDefn, datarec) != "Imported")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> (dataAccess == "Direct")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (dataInit == "Auto" || dataInit == "Static") &amp;&amp; (dataAccess == "Direct")
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageRecordIsModelParameter">LibCustomStorageRecordIsModelParameter</a>(datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageRecordIsModelParameter">LibCustomStorageRecordIsModelParameter</a>(datarec)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% For parameters with "Auto" or "Static" initialization</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonprmlib.html#LibParameterInstanceInitStr">LibParameterInstanceInitStr</a>(datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/commonprmlib.html#LibParameterInstanceInitStr">LibParameterInstanceInitStr</a>(datarec)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStr = " = %<<span>initStr</span>>"
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_elseif">%elseif</span> dataInit == "Static"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% For signals or dworks with "Static" initialization</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% it is impossible to generate static initialization for symbolic dims.</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% CSC front end will check this.</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibRecordHasSymbolicWidth">LibRecordHasSymbolicWidth</a>(datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibRecordHasSymbolicWidth">LibRecordHasSymbolicWidth</a>(datarec)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% thus from now on, %<<span>width</span>> is an integer.</span>
- <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cmplx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetRecordIsComplex">SLibGetRecordIsComplex</a>(datarec)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtIdx = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeId">LibGetRecordDataTypeId</a>(datarec)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/globalmaplib.html#LibGetDataSymbolicWidth">LibGetDataSymbolicWidth</a>(datarec)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cmplx = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetRecordIsComplex">SLibGetRecordIsComplex</a>(datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtIdx = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeId">LibGetRecordDataTypeId</a>(datarec)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> width = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/globalmaplib.html#LibGetDataSymbolicWidth">LibGetDataSymbolicWidth</a>(datarec)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% For signal/dwork CSC static init, use InitialValue if suitable</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISEMPTY</span>(datarec.InitialValue)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ground  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetGroundInitFromId">LibGetGroundInitFromId</a>(dtIdx)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibExpandGroundForStaticInit">SLibExpandGroundForStaticInit</a>(width, TLC_FALSE, cmplx, ground)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ground  = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetGroundInitFromId">LibGetGroundInitFromId</a>(dtIdx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#SLibExpandGroundForStaticInit">SLibExpandGroundForStaticInit</a>(width, TLC_FALSE, cmplx, ground)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStr = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibExpandInitialValueForStaticInit">SLibExpandInitialValueForStaticInit</a>(width, TLC_FALSE, ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStr = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#SLibExpandInitialValueForStaticInit">SLibExpandInitialValueForStaticInit</a>(width, TLC_FALSE, ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmplx, dtIdx, datarec.InitialValue)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> initStr  = " = %<<span>initStr</span>>"
@@ -131,7 +131,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> terminator = ";"
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
- <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> verScope = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/data_customdata.html#FcnVerifyDataScope">FcnVerifyDataScope</a>(datarec, cscDefn.DataScope)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> verScope = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/data_customdata.html#FcnVerifyDataScope">FcnVerifyDataScope</a>(datarec, cscDefn.DataScope)
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataScope = verScope[0]
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> fileScope = (dataScope == "File")
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> ::GenCPP &amp;&amp; msDefn.IsConst &amp;&amp; <span class="tlc_bifunc">EXISTS</span>(qualifier) &amp;&amp; ...
@@ -163,7 +163,7 @@ body {
  <br><span class="tlc_fkw">%endfunction</span>  <span class="tlc_comment">%% of GetCSCDefnComment</span>
  <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>GetContentsUnstructured<span style="padding-left:9.5px"></span>=======<span style="padding-left:9.5px"></span>====================================
 </span> <br><span class="tlc_fkw">%function</span> <a id="GetContentsUnstructured" class="tlc_func">GetContentsUnstructured</a>(cscDefn, msDefn, record, idx, reim) <span class="tlc_fkw">void</span>
- <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibDefaultCustomStorageContents">LibDefaultCustomStorageContents</a>(record, idx, reim)
+ <br>&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibDefaultCustomStorageContents">LibDefaultCustomStorageContents</a>(record, idx, reim)
  <br><span class="tlc_fkw">%endfunction</span>
  <br>&nbsp; <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Function:<span style="padding-left:9.5px"></span>DataAccess<span style="padding-left:9.5px"></span>=========================================================
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>Abstract:
@@ -171,54 +171,54 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>information<span style="padding-left:9.5px"></span>corresponding<span style="padding-left:9.5px"></span>to<span style="padding-left:9.5px"></span>data<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>a<span style="padding-left:9.5px"></span>custom<span style="padding-left:9.5px"></span>storage<span style="padding-left:9.5px"></span>class.
 </span> <br><span class="tlc_comment">%%
 </span> <br><span class="tlc_fkw">%function</span> <a id="DataAccess" class="tlc_func">DataAccess</a>(record, request, idx, reim) <span class="tlc_fkw">void</span>
- <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cscDefn = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetCSCDefForData">SLibGetCSCDefForData</a>(record)
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> msDefn = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetMemorySectionDefForData">SLibGetMemorySectionDefForData</a>(record)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cscDefn = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetCSCDefForData">SLibGetCSCDefForData</a>(record)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> msDefn = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetMemorySectionDefForData">SLibGetMemorySectionDefForData</a>(record)
  <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !cscDefn.IsGrouped
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> request
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "declComment"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/Unstructured.html#GetDeclCommentForData">GetDeclCommentForData</a>(cscDefn, msDefn, record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/Unstructured.html#GetDeclCommentForData">GetDeclCommentForData</a>(cscDefn, msDefn, record)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "declare"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/Unstructured.html#GetDeclUnstructured">GetDeclUnstructured</a>(cscDefn, msDefn, record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/Unstructured.html#GetDeclUnstructured">GetDeclUnstructured</a>(cscDefn, msDefn, record)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "defnComment"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/Unstructured.html#GetDefnCommentForData">GetDefnCommentForData</a>(cscDefn, msDefn, record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/Unstructured.html#GetDefnCommentForData">GetDefnCommentForData</a>(cscDefn, msDefn, record)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "define"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/Unstructured.html#GetDefnUnstructured">GetDefnUnstructured</a>(cscDefn, msDefn, record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/Unstructured.html#GetDefnUnstructured">GetDefnUnstructured</a>(cscDefn, msDefn, record)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "contents"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/Unstructured.html#GetContentsUnstructured">GetContentsUnstructured</a>(cscDefn, msDefn, record, idx, reim)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/Unstructured.html#GetContentsUnstructured">GetContentsUnstructured</a>(cscDefn, msDefn, record, idx, reim)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "address"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataInit = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDataInitForData">SLibGetDataInitForData</a>(cscDefn, record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataInit = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDataInitForData">SLibGetDataInitForData</a>(cscDefn, record)
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> dataInit == "Macro"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cscName = cscDefn.Name
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> "address not supported for %<<span>cscName</span>>"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtn       = <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/Unstructured.html#GetContentsUnstructured">GetContentsUnstructured</a>(cscDefn, msDefn, record, idx, reim)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtypeId   = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeId">LibGetRecordDataTypeId</a>(record)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cmplx     = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordIsComplex">LibGetRecordIsComplex</a>(record)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cast      = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetNonVolatileCmplxPointerCast">LibGetNonVolatileCmplxPointerCast</a>(msDefn, dtypeId, cmplx, idx)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtn       = <a href="https://foool.github.io/r2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/Unstructured.html#GetContentsUnstructured">GetContentsUnstructured</a>(cscDefn, msDefn, record, idx, reim)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dtypeId   = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordDataTypeId">LibGetRecordDataTypeId</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cmplx     = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#LibGetRecordIsComplex">LibGetRecordIsComplex</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cast      = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibGetNonVolatileCmplxPointerCast">LibGetNonVolatileCmplxPointerCast</a>(msDefn, dtypeId, cmplx, idx)
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rtn = "(%<<span>cast</span>>&amp;(%<<span>rtn</span>>))"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> rtn
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "initialize"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageRecordIsModelParameter">LibCustomStorageRecordIsModelParameter</a>(record)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataInit = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDataInitForData">SLibGetDataInitForData</a>(cscDefn, record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibCustomStorageRecordIsModelParameter">LibCustomStorageRecordIsModelParameter</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataInit = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDataInitForData">SLibGetDataInitForData</a>(cscDefn, record)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> (dataInit == "Dynamic") || (dataInit == "Auto")
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/commonreglib.html#SLibRemoveZeroInitForDataDefault">SLibRemoveZeroInitForDataDefault</a>(record)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> gndValue = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetDefaultInitialValue">SLibGetDefaultInitialValue</a>(record, tRealPart)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/commonreglib.html#SLibRemoveZeroInitForDataDefault">SLibRemoveZeroInitForDataDefault</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> gndValue = <a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/dtypelib.html#SLibGetDefaultInitialValue">SLibGetDefaultInitialValue</a>(record, tRealPart)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ...
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+mpt/tlc/MPTUnstructured.html#DataAccess">DataAccess</a>(record, "contents", idx, reim)> = " + ...
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<<a href="https://foool.github.io/r2020a/toolbox/simulink/simulink/dataclasses/+mpt/tlc/MPTUnstructured.html#DataAccess">DataAccess</a>(record, "contents", idx, reim)> = " + ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"%<<span>gndValue</span>>;"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "layout"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataInit = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDataInitForData">SLibGetDataInitForData</a>(cscDefn, record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataInit = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetDataInitForData">SLibGetDataInitForData</a>(cscDefn, record)
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> dataInit == "Macro"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ["other"]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_else">%else</span>
@@ -226,7 +226,7 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% be used when the data is laid out in memory like built-in Simulink</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% data.  If the data is not laid out in memory like Simulink data,</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% return the vector ["other"].</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibDefaultCustomStorageLayout">LibDefaultCustomStorageLayout</a>(record)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibDefaultCustomStorageLayout">LibDefaultCustomStorageLayout</a>(record)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
@@ -248,12 +248,12 @@ body {
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>Expecting<span style="padding-left:9.5px"></span>record<span style="padding-left:9.5px"></span>of<span style="padding-left:9.5px"></span>GlobalMemoryMap->CustomData,
 </span> <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span><span style="padding-left:9.5px"></span>not<span style="padding-left:9.5px"></span>CompiledModel->CustomStorageClass.
 </span> <br>&nbsp; <br><span class="tlc_fkw">%function</span> <a id="ClassAccess" class="tlc_func">ClassAccess</a>(record, request) <span class="tlc_fkw">void</span>
- <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cscDefn = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetCSCDefForCSC">SLibGetCSCDefForCSC</a>(record)
- <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> msDefn = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetMemorySectionDefForCSC">SLibGetMemorySectionDefForCSC</a>(record)
+ <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cscDefn = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetCSCDefForCSC">SLibGetCSCDefForCSC</a>(record)
+ <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> msDefn = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#SLibGetMemorySectionDefForCSC">SLibGetMemorySectionDefForCSC</a>(record)
  <br>&nbsp;&nbsp;<span class="tlc_assert">%assert</span> !cscDefn.IsGrouped
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_switch">%switch</span> request
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "setup"
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#SLibCheckForUndefinedImportedMacros">SLibCheckForUndefinedImportedMacros</a>(record)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#SLibCheckForUndefinedImportedMacros">SLibCheckForUndefinedImportedMacros</a>(record)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> ""
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "comment"
@@ -262,22 +262,22 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "typeComment"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> cscDefn.CommentSource == "Default"
- <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetCSCTypeComment">GetCSCTypeComment</a>(cscDefn, msDefn, record)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetCSCTypeComment">GetCSCTypeComment</a>(cscDefn, msDefn, record)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "declComment"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> cscDefn.CommentSource == "Default"
- <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetCSCDeclComment">GetCSCDeclComment</a>(cscDefn, msDefn, record)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetCSCDeclComment">GetCSCDeclComment</a>(cscDefn, msDefn, record)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_case">%case</span> "defnComment"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assert">%assert</span> cscDefn.CommentSource == "Default"
- <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetCSCDefnComment">GetCSCDefnComment</a>(cscDefn, msDefn, record)
+ <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/toolbox/simulink/simulink/dataclasses/+Simulink/tlc/FlatStructure.html#GetCSCDefnComment">GetCSCDefnComment</a>(cscDefn, msDefn, record)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_default">%default</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% You should invoke LibDefaultCustomStorageUnknownClassAccessType</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% for unrecognized requests.  It gracefully errors for unhandled</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% critical cases, and supplies safe defaults for unhandled</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%% noncritical requests.</span>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/customstoragelib.html#LibDefaultCustomStorageUnknownClassAccessType">LibDefaultCustomStorageUnknownClassAccessType</a>(record, request)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_return">%return</span> <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/customstoragelib.html#LibDefaultCustomStorageUnknownClassAccessType">LibDefaultCustomStorageUnknownClassAccessType</a>(record, request)
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_comment">%%break</span>
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_endswitch">%endswitch</span>
  <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>

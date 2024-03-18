@@ -48,7 +48,7 @@ body {
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">ISEMPTY</span>(SFMachineHdrs) 
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_foreach">%foreach</span> idx = <span class="tlc_bifunc">SIZE</span>(SFMachineHdrs,1)-1
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> incFileName = <span class="tlc_bifunc">FEVAL</span>("regexprep", SFMachineHdrs[idx], "/"", "")
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>(incFileName)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/lib/cachelib.html#LibAddToCommonIncludes">LibAddToCommonIncludes</a>(incFileName)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> rootSystem = ::CompiledModel.System[::CompiledModel.NumSystems - 1]
@@ -61,13 +61,13 @@ body {
  <br>&nbsp;&nbsp;<span class="tlc_if">%if</span> <span class="tlc_bifunc">ISFIELD</span>(rootSystem, "MachineLocalDataVarGroupIndex")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> varGroupIndex   = rootSystem.MachineLocalDataVarGroupIndex[0]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> machineVarGroup = ::CompiledModel.VarGroups.VarGroup[varGroupIndex]
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> machineTypeDef  = <a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/opaquelib.html#SLibGetVarGroupTypeDef">SLibGetVarGroupTypeDef</a>(machineVarGroup)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mdl_priv_data_typedef", machineTypeDef)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> machineTypeDef  = <a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/opaquelib.html#SLibGetVarGroupTypeDef">SLibGetVarGroupTypeDef</a>(machineVarGroup)
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mdl_priv_data_typedef", machineTypeDef)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> cgType = ::CompiledModel.CGTypes.CGType[machineVarGroup.CGTypeIdx] 
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> dataDecl = "%<<span>cgType.Name</span>> %<<span>machineVarGroup.Name</span>>;"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> externDataDecl = "extern " + dataDecl
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mdl_priv_extern_data_decl", externDataDecl)>
- <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheSystemCodeToFile">SLibCacheSystemCodeToFile</a>("sys_data_decl", rootSystem, dataDecl)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheCodeToFile">SLibCacheCodeToFile</a>("mdl_priv_extern_data_decl", externDataDecl)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/filepackaginglib.html#SLibCacheSystemCodeToFile">SLibCacheSystemCodeToFile</a>("sys_data_decl", rootSystem, dataDecl)>
  <br>&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Generate the machine tlc file</span>
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> pwd = <span class="tlc_bifunc">FEVAL</span>("pwd")
@@ -84,19 +84,19 @@ body {
  <br>&nbsp;&nbsp;<span class="tlc_generatefile">%generatefile</span> "machineSource" "%<<span>machineTLCFILE</span>>.tlc"
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> prevBlockFcn = ::BlockFcn
  <br>&nbsp;&nbsp;<span class="tlc_with">%with</span> ::CompiledModel
- <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> System[<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()]
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_with">%with</span> System[<a href="https://foool.github.io/r2020a/rtw/c/tlc/mw/modelrefutil.html#GetBaseSystemIdx">GetBaseSystemIdx</a>()]
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::BlockFcn = "Initialize"
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpBuf = ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">GENERATE_TYPE</span>(block,"GlobalMachineInitializer","machineSource")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(tmpBuf)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/stateflow/src/tlc/sflib.html#SLibSetMachineInitialize">SLibSetMachineInitialize</a>(tmpBuf)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/toolbox/stateflow/src/tlc/sflib.html#SLibSetMachineInitialize">SLibSetMachineInitialize</a>(tmpBuf)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp; <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> IncludeMdlTerminateFcn
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> ::BlockFcn = "Terminate"  
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> tmpBuf = ...
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_bifunc">GENERATE_TYPE</span>(block,"GlobalMachineTerminator","machineSource")
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_if">%if</span> !<span class="tlc_bifunc">WHITE_SPACE</span>(tmpBuf)
- <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/toolbox/stateflow/src/tlc/sflib.html#SLibSetMachineTerminate">SLibSetMachineTerminate</a>(tmpBuf)>
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/toolbox/stateflow/src/tlc/sflib.html#SLibSetMachineTerminate">SLibSetMachineTerminate</a>(tmpBuf)>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endif">%endif</span>
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_endwith">%endwith</span>
@@ -148,8 +148,8 @@ body {
  <br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="tlc_assign">%assign</span> sfInfo = sfInfo + %<<span>fieldName</span>>
  <br>&nbsp;&nbsp;<span class="tlc_endforeach">%endforeach</span>
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_addtorecord">%addtorecord</span> block SFInfo sfInfo
- <br>&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/block_api.html#LibBlockSetIsExpressionCompliant">LibBlockSetIsExpressionCompliant</a>(block)>
- <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/MATLAB/R2020a/rtw/c/tlc/public_api/block_api.html#LibBlockSetCustomStorageComplianceLevel">LibBlockSetCustomStorageComplianceLevel</a>(block, 2)> 
+ <br>&nbsp; <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/public_api/block_api.html#LibBlockSetIsExpressionCompliant">LibBlockSetIsExpressionCompliant</a>(block)>
+ <br>&nbsp;&nbsp;%<<a href="https://foool.github.io/r2020a/rtw/c/tlc/public_api/block_api.html#LibBlockSetCustomStorageComplianceLevel">LibBlockSetCustomStorageComplianceLevel</a>(block, 2)> 
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_comment">%% Setup flags to determine what is needed by stateflow code.</span>
  <br>&nbsp;&nbsp;<span class="tlc_comment">%% attach to block since they are used across functions</span>
  <br>&nbsp; <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> SFChartInstanceDeclaration = ""
@@ -172,7 +172,7 @@ body {
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> block.SFInfo = block.SFInfo + UniqueIdentifier
  <br>&nbsp;&nbsp;<span class="tlc_assign">%assign</span> block.SFInfo = block.SFInfo + BelongsToEnabledSubsystem
  <br>&nbsp; <br><span class="tlc_fkw">%endfunction</span>
- <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/MATLAB/R2020a/toolbox/stateflow/src/tlc/stateflow.html">stateflow.tlc</a>
+ <br>&nbsp; <br><span class="tlc_comment">%%<span style="padding-left:9.5px"></span>[EOF]<span style="padding-left:9.5px"></span><a href="https://foool.github.io/r2020a/toolbox/stateflow/src/tlc/stateflow.html">stateflow.tlc</a>
 </span> <br>&nbsp; <br>/%  LocalWords:  priv decl TLCFILE tlh Protos
  <br>&nbsp;%/
  <br></body></html>
